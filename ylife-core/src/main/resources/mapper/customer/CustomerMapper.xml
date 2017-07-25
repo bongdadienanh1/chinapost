@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.customer.mapper.CustomerMapper">
+    <!-- customer  -->
+    <resultMap id="BaseResultMap" type="com.ylife.customer.model.Customer">
+        <id column="customer_id" jdbcType="BIGINT" property="customerId"/>
+        <result column="customer_username" jdbcType="VARCHAR" property="customerUsername"/>
+        <result column="customer_password" jdbcType="VARCHAR" property="customerPassword"/>
+        <result column="customer_nickname" jdbcType="VARCHAR" property="customerNickname"/>
+        <result column="customer_img" jdbcType="VARCHAR" property="customerImg"/>
+        <result column="is_mobile" jdbcType="CHAR" property="isMobile"/>
+        <result column="is_email" jdbcType="CHAR" property="isEmail"/>
+        <result column="is_flag" jdbcType="CHAR" property="isFlag"/>
+        <result column="is_seller" jdbcType="CHAR" property="isSeller"/>
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
+        <result column="del_flag" jdbcType="CHAR" property="delFlag"/>
+        <result column="is_seller" jdbcType="CHAR" property="isSeller"/>
+        <result column="third_id" jdbcType="BIGINT" property="thirdId"/>
+        <result column="del_time" jdbcType="TIMESTAMP" property="delTime"/>
+        <result column="login_key" jdbcType="VARCHAR" property="loginKey"/>
+        <result column="is_site_manager" jdbcType="CHAR" property="isSiteManager"/>
+        <result column="ordernumber" jdbcType="BIGINT" property="orderNumber"/>
+        <result column="ordermoney" jdbcType="DECIMAL" property="orderMoney"/>
+        <result column="login_error_count" jdbcType="BIGINT" property="loginErrorCount"/>
+        <result column="login_lock_time" jdbcType="TIMESTAMP" property="loginLockTime"/>
+    </resultMap>
+    <!-- customerInfo  -->
+    <resultMap type="com.ylife.customer.model.CustomerAllInfo" id="cusinfoMap" extends="BaseResultMap">
+        <result column="info_mobile" jdbcType="VARCHAR" property="infoMobile"/>
+        <result column="info_email" jdbcType="VARCHAR" property="infoEmail"/>
+        <result column="info_realname" jdbcType="VARCHAR" property="infoRealname"/>
+        <result column="info_cardid" jdbcType="VARCHAR" property="infoCardid"/>
+        <result column="info_gender" jdbcType="CHAR" property="infoGender"/>
+        <result column="point_level_name" jdbcType="VARCHAR" property="pointLevelName"/>
+        <result column="point_level_id" jdbcType="BIGINT" property="pointLevelId"/>
+        <result column="info_birthday" jdbcType="VARCHAR" property="infoBirthday"/>
+        <result column="info_regip" jdbcType="VARCHAR" property="infoRegip"/>
+        <result column="info_province" jdbcType="VARCHAR" property="infoProvince"/>
+        <result column="info_city" jdbcType="VARCHAR" property="infoCity"/>
+        <result column="info_county" jdbcType="VARCHAR" property="infoCounty"/>
+        <result column="infoStreet" jdbcType="VARCHAR" property="infoStreet"/>
+        <result column="info_marital" jdbcType="CHAR" property="infoMarital"/>
+        <result column="info_salary" jdbcType="VARCHAR" property="infoSalary"/>
+        <result column="info_interest" jdbcType="VARCHAR" property="infoInterest"/>
+        <result column="balance_sum" jdbcType="DECIMAL" property="balanceSum"/>
+        <result column="info_point_sum" jdbcType="INTEGER" property="infoPointSum"/>
+        <result column="info_address" jdbcType="VARCHAR" property="infoAddress"/>
+        <result column="customer_img" jdbcType="VARCHAR" property="customerImg"/>
+        <association property="province" column="info_province" select="selectProvinceById"></association>
+        <association property="city" column="info_city" select="selectCityByPid"></association>
+        <association property="district" column="info_county" select="selectDistrictByCid"></association>
+        <association property="customerAddress" column="customer_id"
+                     select="com.ylife.customer.mapper.CustomerAddressMapper.selectByCustomerId"></association>
+    </resultMap>
+    <!-- order  -->
+    <resultMap type="com.ylife.customer.model.OrderInfoBean" id="orderMap">
+        <result column="other_amount" property="otherAmount" jdbcType="DECIMAL"/>
+        <result column="ucoin_prise" property="ucoinPrise" jdbcType="DECIMAL"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="shopping_addr_id" property="addressId" jdbcType="BIGINT"/>
+        <result column="order_code" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="order_status" property="orderStatus" jdbcType="BIGINT"/>
+        <result column="order_price" property="moneyPaid" jdbcType="DECIMAL"/>
+        <result column="order_old_price" property="oldPrice" jdbcType="DECIMAL"/>
+        <result column="order_pre_price" property="prePrice" jdbcType="DECIMAL"/>
+        <result column="order_line_pay" property="orderLinePay" jdbcType="VARCHAR"/>
+        <result column="order_cargo_status" property="orderCargoStatus" jdbcType="VARCHAR"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="addTime" jdbcType="TIMESTAMP"/>
+        <result column="order_cancel_time" property="cancelTime" jdbcType="TIMESTAMP"/>
+        <result column="express_price" property="shippingFee" jdbcType="DECIMAL"/>
+        <result column="jf_price" property="jfPrice" jdbcType="DECIMAL"/>
+        <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR"/>
+        <result column="shipping_province" property="shippingProvince" jdbcType="VARCHAR"/>
+        <result column="shipping_city" property="shippingCity" jdbcType="VARCHAR"/>
+        <result column="shipping_county" property="shippingCounty" jdbcType="VARCHAR"/>
+        <result column="shipping_address" property="shippingAddress" jdbcType="VARCHAR"/>
+        <result column="shipping_person" property="shippingPerson" jdbcType="VARCHAR"/>
+        <result column="shipping_phone" property="shippingPhone" jdbcType="VARCHAR"/>
+        <result column="shipping_mobile" property="shippingMobile" jdbcType="VARCHAR"/>
+        <result column="order_cancel_remark" property="cancelRemark" jdbcType="VARCHAR"/>
+        <result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR"/>
+        <result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR"/>
+        <result column="share_flag" property="shareFlag" jdbcType="VARCHAR"/>
+        <result column="pay_id" property="payId" jdbcType="BIGINT"/>
+        <result column="order_Integral" property="orderIntegral" jdbcType="BIGINT"/>
+        <result column="order_express_type" property="orderExpressType" jdbcType="BIGINT"/>
+        <result column="order_m_type" property="orderMType" jdbcType="BIGINT"/>
+        <result column="is_ucoin" property="isUcoin" jdbcType="CHAR"/>
+        <result column="delivery_code" property="deliveryCode" jdbcType="VARCHAR"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="self_pick" property="selfPick" jdbcType="TINYINT"/>
+        <result column="is_valet" property="isValet" jdbcType="TINYINT"/>
+        <collection property="expressno" column="order_id" javaType="ArrayList" select="com.ylife.order.mapper.OrderContainerRelationMapper.selectListByOrderIds"></collection>
+        <collection property="goods" column="order_id" javaType="ArrayList"
+                    select="com.ylife.customer.mapper.CustomerMapper.selectGoodsByOrderId"></collection>
+    </resultMap>
+    <!-- goods -->
+    <resultMap type="com.ylife.customer.model.GoodsBean" id="goodsMap">
+        <result column="goods_info_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="goods_info_num" property="goodsNum" jdbcType="BIGINT"/>
+        <result column="goods_info_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_info_price" property="goodsPrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_img_id" property="goodsImg" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--  退货明细表-->
+    <resultMap type="com.ylife.order.model.CreditOrder" id="backOrderMap">
+        <id column="back_order_id"  property="backOrderId" jdbcType="BIGINT"/>
+        <result column="back_order_code" property="backOrderCode" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="back_time" property="backTime" jdbcType="TIMESTAMP"/>
+        <result column="back_remark" property="backRemark" jdbcType="VARCHAR"/>
+        <result column="back_price" property="backPrice" jdbcType="DECIMAL"/>
+        <result column="back_check" property="backCheck" />
+        <result column="back_real_name" property="backRealName" jdbcType="VARCHAR"/>
+        <result column="back_status" property="backStatus" jdbcType="BIGINT"/>
+        <result column="back_gid_gsum" property="backGidGsum" jdbcType="VARCHAR"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="is_back" property="isBack" jdbcType="CHAR"/>
+        <association property="order" javaType="com.ylife.order.model.CreditOrder$OriginalOrder"
+                     resultMap="orderResult"/>
+        <!--<collection property="order" column="order_id" javaType="com.ylife.order.model.CreditOrder$OriginalOrder" select="selectOrderById"></collection>-->
+        <collection property="products" ofType="com.ylife.order.model.OrderProduct"
+                    resultMap="com.ylife.order.mapper.OrderProductMapper.BaseResultMap"/>
+    </resultMap>
+    <!--  交易明细表-->
+    <resultMap type="com.ylife.order.model.CreditOrder$OriginalOrder" id="orderResult">
+        <result column="order_id"  property="orderId" jdbcType="BIGINT"/>
+        <result column="order_code"  property="orderCode" jdbcType="VARCHAR"/>
+        <result column="order_price"  property="orderPrice" jdbcType="DECIMAL"/>
+        <result column="express_price"  property="expressPrice" jdbcType="DECIMAL"/>
+        <!--<result column="business_id" property="businessId" jdbcType="BIGINT" />-->
+        <!--<result column="order_status"  property="orderStatus" jdbcType="VARCHAR" />-->
+        <result column="self_pick" property="selfPick" jdbcType="TINYINT"/>
+        <result column="is_valet" property="isValet" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		c.customer_id, c.customer_username, c.customer_password, c.customer_nickname,
+		c.is_mobile,c.is_email, c.is_flag, c.login_ip, c.login_time, c.create_time, 
+		c.modified_time,c.del_flag, c.del_time,is_seller,third_id,login_key,login_error_count,
+		login_lock_time,c.customer_img
+	</sql>
+    <sql id="cusSql">
+		
+		c.customer_id, c.customer_username, c.customer_password, c.customer_nickname,
+		c.is_mobile, c.is_email, c.is_flag, c.login_ip, c.login_time, c.create_time, 
+		c.modified_time, c.del_flag, c.del_time,c.is_seller,c.login_key,c.third_id,
+		c.is_site_manager,
+		i.info_realname,i.info_mobile,i.info_email,i.info_cardid,i.info_gender,
+		i.point_level_name,i.point_level_id,i.info_birthday ,i.info_regip,i.info_province,
+		i.info_city,i.info_county,i.infoStreet,i.info_marital,i.info_salary,i.info_interest,
+		i.balance_sum,i.info_point_sum,i.info_address,c.customer_img
+	</sql>
+
+    <sql id="ordersql">
+        o.order_id,o.order_code,o.order_price,o.order_pre_price,o.order_old_price,o.pay_time, o.create_time,
+        o.order_status,o.customer_id ,o.shopping_addr_id,o.shipping_province,o.shipping_city,o.shipping_county,
+        o.shipping_address,o.shipping_person,o.shipping_phone,o.shipping_mobile,o.pay_id,o.express_price, order_cargo_status,o.jf_price,
+        o.invoice_type,o.invoice_title,o.invoice_content,o.order_cancel_time,o.order_cancel_remark,o.order_line_pay,o.order_m_type,o.order_express_type,o.other_amount,o.ucoin_prise,
+        o.self_pick,o.is_valet
+	</sql>
+
+    <!-- 查询订单内商品 -->
+    <select id="selectGoodsByOrderId"  parameterType="java.lang.Object" resultMap="goodsMap">
+		select
+		gi.goods_info_id ,gi.goods_info_name,o.goods_info_price,o.goods_info_num,gi.goods_info_img_id
+		from np_order_goods o 
+		inner join np_goods_info gi on gi.goods_info_id =o.goods_info_id
+		inner join np_goods g on gi.goods_id=g.goods_id
+		where o.order_id=#{orderId,jdbcType=BIGINT} and o.del_flag = '0'
+		order by o.goods_info_price desc
+	</select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="cusSql"/>
+        from np_customer c left join np_customer_info i on
+        i.customer_id=c.customer_id
+        where c.customer_id = #{customerId,jdbcType=BIGINT}
+    </select>
+
+    <!-- selectByUserName -->
+    <select id="selectByUserName" parameterType="java.lang.String" resultType="java.lang.Long">
+		select count(c.customer_username)
+		from np_customer c
+		where c.customer_username =  #{customerName} and del_flag='0'
+	</select>
+
+    <!-- 高级搜索 查询会员详细信息 -->
+    <select id="selectCustmerSize" resultType="java.lang.Long" parameterType="com.ylife.customer.model.CustomerAllInfo">
+        select
+        count(c.customer_id)
+        from np_customer c left join np_customer_info i on
+        i.customer_id=c.customer_id
+        where c.del_flag = '0' and
+        <if test="customerUsername != null and customerUsername !=''">
+            c.customer_username like CONCAT(CONCAT('%', #{customerUsername}),'%') and
+        </if>
+        <if test="infoRealname != null and infoRealname !=''">
+            i.info_realname like CONCAT(CONCAT('%', #{infoRealname}),'%') and
+        </if>
+        <if test="infoMobile != null and infoMobile !=''">
+            i.info_mobile like CONCAT(CONCAT('%', #{infoMobile}),'%') and
+        </if>
+        <if test="infoEmail != null and infoEmail !=''">
+            i.info_email like CONCAT(CONCAT('%', #{infoEmail}),'%') and
+        </if>
+        <if test="isMobile != null and isMobile !=''">
+            c.is_mobile = #{isMobile} and
+        </if>
+        <if test="isSeller != null and isSeller !=''">
+            c.is_seller = #{isSeller} and
+        </if>
+        <if test="isEmail != null and isEmail !=''">
+            c.is_email = #{isEmail} and
+        </if>
+        <if test="isFlag != null and isFlag !=''">
+            c.is_flag = #{isFlag} and
+        </if>
+        <if test="loginTime != null and loginTime !='' and loginTimeTo != null and loginTimeTo!=''">
+            c.login_time between #{loginTime} and #{loginTimeTo} and
+        </if>
+
+        <if test="loginTime != null and loginTime !='' and loginTimeTo == null or loginTimeTo==''">
+            c.login_time &gt; #{loginTime} and
+        </if>
+        <if test="loginTimeTo != null and loginTimeTo !='' and loginTime == null or loginTime ==''">
+            c.login_time &lt; #{loginTimeTo} and
+        </if>
+        1=1 and (c.is_seller = '0' or c.is_seller = '1')
+    </select>
+
+    <!-- 高级搜索 查询会员详细信息 -->
+    <select id="selectCustmerByAllInfo" resultMap="cusinfoMap" parameterType="com.ylife.customer.model.CustomerAllInfo">
+        select
+        <include refid="cusSql"/>
+        from np_customer c left join np_customer_info i on
+        i.customer_id=c.customer_id
+        where c.del_flag = '0' and
+        <if test="customerUsername != null and customerUsername !=''">
+            c.customer_username like CONCAT(CONCAT('%', #{customerUsername}),'%') and
+        </if>
+        <if test="infoRealname != null and infoRealname !=''">
+            i.info_realname like CONCAT(CONCAT('%', #{infoRealname}),'%') and
+        </if>
+        <if test="infoMobile != null and infoMobile !=''">
+            i.info_mobile like CONCAT(CONCAT('%', #{infoMobile}),'%') and
+        </if>
+        <if test="infoEmail != null and infoEmail !=''">
+            i.info_email like CONCAT(CONCAT('%', #{infoEmail}),'%') and
+        </if>
+        <if test="isMobile != null and isMobile !=''">
+            c.is_mobile = #{isMobile} and
+        </if>
+        <if test="isEmail != null and isEmail !=''">
+            c.is_email = #{isEmail} and
+        </if>
+        <if test="isFlag != null and isFlag !=''">
+            c.is_flag = #{isFlag} and
+        </if>
+        <if test="isSeller != null and isSeller !=''">
+            c.is_seller = #{isSeller} and
+        </if>
+        <if test="loginTime != null and loginTime !='' and loginTimeTo != null and loginTimeTo!=''">
+            c.login_time between #{loginTime} and #{loginTimeTo} and
+        </if>
+        <if test="loginTime != null and loginTime !='' and loginTimeTo == null or loginTimeTo==''">
+            c.login_time &gt; #{loginTime} and
+        </if>
+        <if test="loginTimeTo != null and loginTimeTo !='' and loginTime == null or loginTime ==''">
+            c.login_time &lt; #{loginTimeTo} and
+        </if>
+        1=1 and (c.is_seller = '0' or c.is_seller = '1')
+        order by c.login_time desc
+        limit #{startRowNum,jdbcType=BIGINT},#{endRowNum,jdbcType=BIGINT}
+    </select>
+    <!-- 标记删除用户 -->
+    <update id="deleteCustomerById" parameterType="java.lang.Object">
+		update np_customer
+		set del_flag = '1', del_time = SYSDATE()
+		where customer_id = #{customerId,jdbcType=BIGINT} 
+	</update>
+    <!-- 添加用户 返回新增的ID -->
+    <select id="selectLastId" resultType="java.lang.Long">
+  		select LAST_INSERT_ID()
+  	</select>
+    <!-- 添加用户 -->
+    <insert id="insertSelective" parameterType="com.ylife.customer.model.CustomerAllInfo" useGeneratedKeys="true" keyProperty="customerId">
+        insert into np_customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="thirdId != null">
+                third_id,
+            </if>
+            <if test="isSeller != null">
+                is_seller,
+            </if>
+            <if test="customerUsername != null">
+                customer_username,
+            </if>
+            <if test="customerPassword != null">
+                customer_password,
+            </if>
+            <if test="customerNickname != null">
+                customer_nickname,
+            </if>
+            <if test="isMobile == null">
+                is_mobile,
+            </if>
+            <if test="isEmail == null">
+                is_email,
+            </if>
+            <if test="isMobile != null">
+                is_mobile,
+            </if>
+            <if test="isEmail != null">
+                is_email,
+            </if>
+            <if test="isFlag == null">
+                is_flag,
+            </if>
+            <if test="loginIp != null">
+                login_ip,
+            </if>
+            <if test="loginTime == null">
+                login_time,
+            </if>
+            <if test="createTime == null">
+                create_time,
+            </if>
+            <if test="modifiedTime == null">
+                modified_time,
+            </if>
+            <if test="delFlag == null">
+                del_flag,
+            </if>
+            <if test="delTime == null">
+                del_time,
+            </if>
+            <if test="aeadTime == null">
+                aead_time,
+            </if>
+            <if test="customerImg != null">
+                customer_img,
+            </if>
+            <if test="thirdId == null">
+                third_id,
+            </if>
+            <if test="loginKey != null">
+                login_key,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="thirdId != null">
+                #{thirdId,jdbcType=BIGINT},
+            </if>
+            <if test="isSeller != null">
+                #{isSeller,jdbcType=BIGINT},
+            </if>
+            <if test="customerUsername != null">
+                #{customerUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPassword != null">
+                md5(#{customerPassword,jdbcType=VARCHAR}),
+            </if>
+            <if test="customerNickname != null">
+                #{customerNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="isMobile == null">
+                '0',
+            </if>
+            <if test="isEmail == null">
+                '0',
+            </if>
+            <if test="isMobile != null">
+                #{isMobile,jdbcType=CHAR},
+            </if>
+            <if test="isEmail != null">
+                #{isEmail,jdbcType=CHAR},
+            </if>
+            <if test="isFlag == null">
+                '0',
+            </if>
+            <if test="loginIp != null">
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime == null">
+                SYSDATE(),
+            </if>
+            <if test="createTime == null">
+                SYSDATE(),
+            </if>
+            <if test="modifiedTime == null">
+                SYSDATE(),
+            </if>
+            <if test="delFlag == null">
+                '0',
+            </if>
+            <if test="delTime == null">
+                SYSDATE(),
+            </if>
+            <if test="aeadTime == null">
+                date_sub(now(), INTERVAL 1 DAY),
+            </if>
+            <if test="customerImg != null">
+                #{customerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdId == null">
+                '0',
+            </if>
+            <if test="loginKey != null">
+                #{loginKey,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!-- 修改用户 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.customer.model.CustomerAllInfo">
+        update np_customer
+        <set>
+            <if test="customerUsername != null">
+                customer_username = #{customerUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPassword != null">
+                customer_password = #{customerPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="customerNickname != null">
+                customer_nickname = #{customerNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="isMobile != null">
+                is_mobile = #{isMobile,jdbcType=CHAR},
+            </if>
+            <if test="isEmail != null">
+                is_email = #{isEmail,jdbcType=CHAR},
+            </if>
+            <if test="isFlag != null">
+                is_flag = #{isFlag,jdbcType=CHAR},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delTime != null">
+                del_time = #{delTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="customerImg != null">
+                customer_img =#{customerImg,jdbcType=VARCHAR},
+            </if>
+            <if test="thirdId != null">
+                third_id =#{thirdId,jdbcType=VARCHAR},
+            </if>
+            <if test="isSeller != null">
+                is_seller =#{isSeller,jdbcType=VARCHAR},
+            </if>
+            <if test="loginKey != null">
+                login_key =#{loginKey,jdbcType=VARCHAR},
+            </if>
+            <if test="isSiteManager != null">
+                is_site_manager=#{isSiteManager,jdbcType=CHAR},
+            </if>
+            modified_time = SYSDATE()
+        </set>
+        where customer_id = #{customerId,jdbcType=BIGINT}
+    </update>
+    <!--更新密码-->
+    <update id="updateCustomerPassword" parameterType="java.util.Map">
+        update np_customer
+        <set>
+            <if test="customerPassword != null">
+                customer_password =  md5(#{customerPassword,jdbcType=VARCHAR}),
+            </if>
+            modified_time = SYSDATE()
+        </set>
+        where customer_id = #{customerId,jdbcType=BIGINT}
+    </update>
+    <!-- 根据会员id修改头像 -->
+    <update id="updateImgByPrimaryKeySelective" parameterType="java.util.Map">
+        update np_customer
+        <set>
+            <if test="customerImg != null">
+                customer_img =#{customerImg,jdbcType=VARCHAR},
+            </if>
+            modified_time = SYSDATE()
+        </set>
+        where customer_id = #{customerId,jdbcType=BIGINT}
+    </update>
+    <!-- 检测邮箱存在性 -->
+    <select id="checkEmailExist" parameterType="java.lang.String" resultType="java.lang.Long">
+		select    
+		count(1)    
+		from np_customer_info i  
+		INNER JOIN np_customer c on c.customer_id = i.customer_id    
+		where  i.info_email= #{email} and i.del_flag ='0' and c.del_flag = '0'
+	</select>
+    <!-- 检测手机存在性 -->
+    <select id="checkMobileExist" parameterType="java.lang.String" resultType="java.lang.Long">
+		select
+		count(1)
+		from np_customer_info i
+		INNER JOIN np_customer c on c.customer_id = i.customer_id
+		where  i.info_mobile= #{mobile} and i.del_flag ='0' and c.del_flag = '0'
+	</select>
+
+    <!-- 根据用户名补全用户名 -->
+    <select id="selectCustomerByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from np_customer c
+        where c.del_flag = '0' and c.customer_username = #{userName} limit 0,1
+    </select>
+    <!-- 根据主键 获取单个会员信息-->
+    <select id="getCustomerByCusId" parameterType="java.util.Map"  resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List" />
+        from np_customer c  where 1=1
+        <if test="customerId != null">
+            and c.customer_id = #{customerId}
+        </if>
+    </select>
+    <!-- 按条件查询订单 -->
+    <select id="queryAllMyOrders" parameterType="java.util.Map" resultMap="orderMap">
+        select distinct
+        <include refid="ordersql"/>
+        from np_order o
+        <if test="paramString != null" >
+            inner join np_order_goods g on o.order_id=g.order_id
+            inner join np_goods_info gi on gi.goods_info_id=g.goods_id
+            inner join np_goods gs on gs.goods_id=gi.goods_id
+        </if>
+        <if test="type == 4">
+            inner join np_order_goods g on o.order_id=g.order_id
+        </if>
+        where o.customer_id= #{customerId,jdbcType=BIGINT} and
+        <if test="paramString != null" >
+            gs.goods_name like  CONCAT(CONCAT('%', #{paramString}),'%') or o.order_no like CONCAT(CONCAT('%', #{paramString}),'%')   and
+        </if>
+        <if test="type == 1" >
+            o.order_status = 'SUBMITED' and o.order_line_pay = '1' and
+        </if>
+        <if test="type == 2" >
+            (o.order_status = 'PAYED' or o.order_status = '5' or o.order_status = '6')  and
+        </if>
+        <if test="type == 3" >
+            o.order_status = 'DELIVERED'  and
+        </if>
+        <if test="type == 4" >
+            (o.order_status = 'PAYED' and o.is_valet='0' and o.self_pick='1') and
+        </if>
+        <if test="type == 6" >
+            (o.order_status = '7' or o.order_status = 'RETURN_AGREED' or o.order_status = 'RETURN_DENIED' or o.order_status = 'REFUND_AGREED' or o.order_status = 'REFUND_DENIED' or o.order_status = 'RETURN_APPLIED'
+            or o.order_status = 'REFUND_APPLIED' or o.order_status = '17' or o.order_status = 'REFUND_FINISHED') and
+        </if>
+        <if test="date != null" >
+            <if test="date == 0" >
+                <![CDATA[
+		    		o.create_time>= date_sub(now(), INTERVAL  30 DAY)  AND o.create_time<= now() and
+		    	]]>
+            </if>
+            <if test="date == 1">
+                <![CDATA[
+		    		o.create_time<= date_sub(now(), INTERVAL  30 DAY) and
+		    	]]>
+            </if>
+        </if>
+        <if test="state!=null">
+            o.is_ucoin='1' AND
+        </if>
+        o.del_flag = '0'
+        order by o.create_time desc
+        limit #{startRowNum},#{endRowNum}
+    </select>
+    <!-- 查询会员下面的订单条数 -->
+    <select id="searchTotalCount" useCache="false" parameterType="java.util.Map" resultType="java.lang.Long">
+        select
+        count(o.order_id)
+        from np_order o
+        <if test="type == 4">
+            inner join np_order_goods g on o.order_id=g.order_id
+        </if>
+        where o.customer_id= #{customerId,jdbcType=BIGINT} and
+        <if test="paramString != null" >
+            gs.goods_name like  CONCAT(CONCAT('%', #{paramString}),'%') or o.order_no like CONCAT(CONCAT('%', #{paramString}),'%')   and
+        </if>
+        <if test="type == 1" >
+            o.order_status = 'SUBMITED' and
+        </if>
+        <if test="type == 2" >
+            (o.order_status = 'PAYED' or o.order_status = '5' or o.order_status = '6')  and
+        </if>
+        <if test="type == 3" >
+            o.order_status = 'DELIVERED'  and
+        </if>
+        <if test="type == 4" >
+            (o.order_status = 'PAYED' and o.is_valet='0' and o.self_pick='1') and
+        </if>
+        <if test="date != null" >
+            <if test="date == 0" >
+                <![CDATA[
+		    		o.create_time>= date_sub(now(), INTERVAL  30 DAY)  AND o.create_time<= now() and
+		    	]]>
+            </if>
+            <if test="date == 1">
+                <![CDATA[
+		    		o.create_time<= date_sub(now(), INTERVAL  30 DAY) and
+		    	]]>
+            </if>
+        </if>
+        <if test="state!=null">
+            o.is_ucoin='1' AND
+        </if>
+        o.del_flag = '0'
+    </select>
+    <!--查询会员下面所有的退单信息-->
+    <select id="queryAllMyBackOrders" parameterType="java.util.Map" resultMap="backOrderMap">
+        SELECT
+        back_order_id,np_back_order.back_order_code,np_back_order.order_id,np_back_order.business_id,back_time,np_back_order.back_price,back_check,back_gid_gsum,is_back,
+        np_order.order_code,np_order.order_price,np_order.express_price,np_order.self_pick,np_order.is_valet,
+        np_order_goods.goods_info_name,
+        np_order_goods.goods_info_image,
+        np_order_goods.goods_info_id,
+        np_order_goods.goods_info_num,np_order_goods.goods_info_price
+        FROM
+        np_back_order
+        left join np_order
+        on np_order.order_id = np_back_order.order_id
+        left join np_order_goods on
+        np_order.order_id = np_order_goods.order_id
+        WHERE
+        back_del_flag = '0'
+        <if test="customerId != null">
+            AND np_back_order.customer_id = #{customerId,jdbcType=BIGINT}
+        </if>
+        ORDER BY back_time DESC
+        limit #{startRowNum},#{endRowNum};
+    </select>
+    <!--查询会员下面的退单条数-->
+    <select id="searchTotalCountBack" parameterType="java.util.Map" resultType="java.lang.Long">
+        SELECT
+        COUNT(1)
+        FROM
+        np_back_order
+        WHERE
+        back_del_flag = '0'
+        <if test="customerId != null">
+            AND customer_id = #{customerId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据订单 会员编号查找订单 -->
+    <select id="queryOrderByParamMap" parameterType="java.util.Map" resultMap="orderMap">
+        select
+        <include refid="ordersql"/>,o.order_integral,o.jf_price,o.delivery_code,o.enterprise_id
+        from np_order o
+        where o.customer_id = #{customerId,jdbcType=BIGINT} and o.order_id= #{orderId,jdbcType=BIGINT} and o.del_flag =
+        '0'
+    </select>
+</mapper>

@@ -1,0 +1,93 @@
+package com.ylife.chinapost.boss.service.impl;
+
+import com.ylife.chinapost.boss.controller.utils.Constants;
+import com.ylife.chinapost.boss.service.GoodsBrandBossService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsBrand;
+import com.ylife.goods.service.GoodsBrandService;
+import com.ylife.utils.Assert;
+import com.ylife.utils.DateUtil;
+import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2017/6/30.
+ */
+@Service
+public class GoodsBrandBossServiceImpl implements GoodsBrandBossService {
+
+	@Resource
+	GoodsBrandService goodsBrandService;
+
+	@Override
+	public Page<GoodsBrand> queryBrandByNameOrBrandNickname(String brandName, String brandNickname, Pageable pageable) {
+		return goodsBrandService.queryBrandByNameOrBrandNickname(brandName, brandNickname, pageable);
+	}
+	/*添加商品品牌信息*/
+	@Override
+	public int insertGoodsBrand(String brandName, String brandNickname, String brandUrl ,Integer brandSort, String userName) {
+		GoodsBrand goodsBrand = new GoodsBrand();
+		goodsBrand.setBrandName(brandName);
+		if(brandNickname != null) {
+			goodsBrand.setBrandNickname(brandNickname);
+		}
+		if(brandUrl != null) {
+			goodsBrand.setBrandUrl(brandUrl);
+		}
+		goodsBrand.setBrandSort(brandSort);
+		goodsBrand.setBrandCreateName(userName);
+		goodsBrand.setBrandDelflag("0");
+		goodsBrand.setBrandCreateTime(new Date());
+		goodsBrand.setGoodsInfoType(1);
+		return goodsBrandService.insertGoodsBrand(goodsBrand);
+	}
+	/*删除商品品牌信息*/
+	@Override
+	public int deleteGoodsBrand(Long brandId, String deleteName) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("brandId", brandId.toString());
+		map.put("del_name", deleteName);
+		return goodsBrandService.deleteGoodsBrand(map);
+	}
+
+	/*修改商品品牌信息*/
+	@Override
+	public int updateGoodsBrad(Long brandId, String brandName, String brandNickname, String brandUrl ,Integer brandSort, String userName) {
+		GoodsBrand goodsBrand = goodsBrandService.queryBrandById(brandId);
+		Assert.notNull(goodsBrand);
+		goodsBrand.setBrandName(brandName);
+		if(brandNickname != null) {
+			goodsBrand.setBrandNickname(brandNickname);
+		}
+		if(brandUrl != null) {
+			goodsBrand.setBrandUrl(brandUrl);
+		}
+		goodsBrand.setBrandSort(brandSort);
+		goodsBrand.setBrandModifiedName(userName);
+		goodsBrand.setBrandModifiedTime(new Date());
+		return goodsBrandService.updateGoodsBrad(goodsBrand);
+
+	}
+
+	@Override
+	public List<GoodsBrand> queryAllBrand() {
+		return goodsBrandService.queryAllBrand();
+	}
+
+	@Override
+	public int selectByBrandName(String brandName) {
+		return goodsBrandService.selectByBrandName(brandName);
+	}
+
+	@Override
+	public GoodsBrand queryBrandById(long brandId) {
+		return goodsBrandService.queryBrandById(brandId);
+	}
+}

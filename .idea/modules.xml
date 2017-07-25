@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/chinapost-boss/chinapost-boss.iml" filepath="$PROJECT_DIR$/chinapost-boss/chinapost-boss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chinapost-enterprise/chinapost-enterprise.iml" filepath="$PROJECT_DIR$/chinapost-enterprise/chinapost-enterprise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chinapost-mobile/chinapost-mobile.iml" filepath="$PROJECT_DIR$/chinapost-mobile/chinapost-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chinapost-third/chinapost-third.iml" filepath="$PROJECT_DIR$/chinapost-third/chinapost-third.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ucoin-core/ucoin-core.iml" filepath="$PROJECT_DIR$/ucoin-core/ucoin-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ucoin-platform-client/ucoin-platform-client.iml" filepath="$PROJECT_DIR$/ucoin-platform-client/ucoin-platform-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ylife-common/ylife-common.iml" filepath="$PROJECT_DIR$/ylife-common/ylife-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ylife-core/ylife-core.iml" filepath="$PROJECT_DIR$/ylife-core/ylife-core.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.order.mapper.LogisticsMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.order.model.Logistics">
+        <id column="np_logistics_id" property="npLogisticsId" jdbcType="BIGINT"/>
+        <result column="np_logistics_no" property="npLogisticsNo" jdbcType="VARCHAR"/>
+        <result column="np_logistics_name" property="npLogisticsName" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="back_order_Id" property="backOrderId" jdbcType="BIGINT"/>
+        <result column="temp" property="temp" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        np_logistics_id, np_logistics_no, np_logistics_name, createtime, back_order_Id, temp
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from np_logistics
+        where np_logistics_id = #{npLogisticsId,jdbcType=BIGINT}
+    </select>
+    <select id="selectBybackOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from np_logistics
+        where back_order_Id = #{backOrderId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from np_logistics
+        where np_logistics_id = #{npLogisticsId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ylife.order.model.Logistics">
+        insert into np_logistics (np_logistics_id, np_logistics_no, np_logistics_name,
+        createtime, back_order_Id, temp
+        )
+        values (#{npLogisticsId,jdbcType=BIGINT}, #{npLogisticsNo,jdbcType=VARCHAR},
+        #{npLogisticsName,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP}, #{backOrderId,jdbcType=BIGINT}, #{temp,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ylife.order.model.Logistics">
+        insert into np_logistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="npLogisticsId != null">
+                np_logistics_id,
+            </if>
+            <if test="npLogisticsNo != null">
+                np_logistics_no,
+            </if>
+            <if test="npLogisticsName != null">
+                np_logistics_name,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="backOrderId != null">
+                back_order_Id,
+            </if>
+            <if test="temp != null">
+                temp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="npLogisticsId != null">
+                #{npLogisticsId,jdbcType=BIGINT},
+            </if>
+            <if test="npLogisticsNo != null">
+                #{npLogisticsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="npLogisticsName != null">
+                #{npLogisticsName,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backOrderId != null">
+                #{backOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="temp != null">
+                #{temp,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.order.model.Logistics">
+        update np_logistics
+        <set>
+            <if test="npLogisticsNo != null">
+                np_logistics_no = #{npLogisticsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="npLogisticsName != null">
+                np_logistics_name = #{npLogisticsName,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backOrderId != null">
+                back_order_Id = #{backOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="temp != null">
+                temp = #{temp,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where np_logistics_id = #{npLogisticsId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ylife.order.model.Logistics">
+        update np_logistics
+        set np_logistics_no = #{npLogisticsNo,jdbcType=VARCHAR},
+        np_logistics_name = #{npLogisticsName,jdbcType=VARCHAR},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+        back_order_Id = #{backOrderId,jdbcType=BIGINT},
+        temp = #{temp,jdbcType=VARCHAR}
+        where np_logistics_id = #{npLogisticsId,jdbcType=BIGINT}
+    </update>
+</mapper>

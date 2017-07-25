@@ -1,0 +1,298 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>商城第三方后台-商品管理</title>
+<#assign basePath=request.contextPath />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/third.css?v=201707011506"/>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/css/bootstrap.min.css?v=20151016234"/>
+    <link href="http://cdn.bootcss.com/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.min.css?v=20151016234" rel="stylesheet">
+    <link href="${basePath}/static/css/material.css?v=20151016234" rel="stylesheet">
+    <link href="${basePath}/static/css/ripples.css?v=20151016234" rel="stylesheet">
+    <link rel="stylesheet" href="${basePath}/static/css/style.css?v=20170630"/>
+    <link rel="stylesheet" href="${basePath}/static/css/select2.min.css"/>
+    <link rel="stylesheet" href="${basePath}/static/css/bootstrap-datetimepicker.min.css" >
+    <script type="text/javascript" src="${basePath}/static/js/jquery.min.js?v=20151016234"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/js/bootstrap.min.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/ripples.min.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/material.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/third.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/goods_vali.js?v=20151016234"></script>
+<#--<script type="text/javascript" src="${basePath}/static/js/goods/thirdgoods.js?v=20170702"></script>-->
+    <script type="text/javascript" src="${basePath}/static/js/goods/thirdOrderList.js?v=20170704"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/newupload.js?v=201707021754"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/artDialog4.1.7/artDialog.source.js?skin=default"></script>
+    <script type="text/javascript" src="${basePath}/static/js/artDialog4.1.7/plugins/iframeTools.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.slimscroll.min.js?v=20151016234"></script>
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/summernote.css?v=20151016234">
+    <script type="text/javascript" src="${basePath}/static/js/summernote.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/summernote-zh-CN.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.validate.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common/common_alert.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common/common_date.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/app.js?v=20151016234"></script>
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/goodsAdd.css?v=20151016234"/>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css?v=20151016234"/>
+    <link rel="stylesheet" href="${basePath}/static/css/bootstrap-chosen.css?v=20151016234"/>
+    <script src="${basePath}/static/js/chosen.jquery.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/angular.min.js?v=20151016234"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/kindeditor.js"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/plugins/code/prettify.js"></script>
+    <script src="${basePath}/static/js/select2.min.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<#--引入头部-->
+<#include "index/indextop.ftl">
+
+
+<div class="wp">
+    <div class="ui-sidebar">
+        <div class="sidebar-nav">
+        <#import "index/indexleft.ftl" as leftmenu>
+        <@leftmenu.leftmenu '${basePath}' />
+        </div>
+    </div>
+
+    <div class="app show_text" style="display: none;"">
+    <div class="app-container">
+        <ol class="breadcrumb">
+            <li>您所在的位置</li>
+            <li>订单管理</li>
+            <li class="active" style="color: #07d;">订单列表</li>
+        </ol>
+    </div>
+    <div class="search-block">
+        <form action="${basePath}/orderManage/getOrders" class="searchThirdOrderList" method="post">
+            <input type="hidden" id="page" name="page" value="${pageBean.number}">
+            <input type="hidden" name="status" id="status" value="${status}">
+            <div class="filter-groups">
+                <div class="control-group">
+                    <label class="control-label">订单编号：</label>
+                    <div class="controls">
+                        <input class="form-control" name="orderNo" id="orderCode"
+                               onkeyup="value=value.replace(/[^\w\/]/ig,'')"
+                               value="${orderNo!''}" type="text"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">手机号码：</label>
+                    <div class="controls">
+                        <input class="form-control" name="contactPhone" id="shippingMobile" value="<#if contactPhone??>${contactPhone!''}</#if>" type="text"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">收货人姓名：</label>
+                    <div class="controls">
+                        <input class="form-control" name="username" value="${username!''}" type="text" />
+                    </div>
+                </div>
+                <div class="control-group lg-group">
+                    <label class="control-label">下单时间：</label>
+                    <div class="controls">
+                        <input type="text" name="createStart" id="createStart" value="${createStart!''}" class="form-control sm-input datepicker"/>
+                        ~
+                        <input type="text" name="createEnd" id="createEnd" value="${createEnd!''}" class="form-control sm-input datepicker"/>
+                    </div>
+                </div>
+                <div class="control-group lg-group">
+                    <label class="control-label">付款时间：</label>
+                    <div class="controls">
+                        <input type="text" name="payTimeStart" id="payStart" value="${payStart!''}" class="form-control sm-input datepicker"/>
+                        ~
+                        <input type="text" name="payTimeEnd" id="payEnd" value="${payEnd!''}" class="form-control sm-input datepicker"/>
+                    </div>
+                </div>
+            </div>
+            <div class="search-operation">
+                <button class="btn btn-primary btn-sm"  onclick="searchOrder()" type="button">查询<i class="glyphicon glyphicon-search"></i></button>
+                <#--<button class="btn btn-default btn-sm"  onclick="resetThirdOrder()"  type="button">重置<i class="glyphicon glyphicon-refresh"></i></button>-->
+            </div>
+        </form>
+    </div>
+    <button class="btn btn-primary btn-sm"  onclick="exportThirdOrder()" type="button">导出订单</button>
+    <ul class="nav nav-tabs">
+        <li class="tb_barterOrder <#if status==''>active</#if>" onclick="changTbl('')"><a href="javascript:;">全部订单</a></li>
+        <li class="tb_backOrderSH  <#if status=='待付款'>active</#if>" onclick="changTbl('SUBMITED')"><a href="javascript:;">待付款</a></li>
+        <li class="tb_backOrderTg  <#if status=='待发货'>active</#if>" onclick="changTbl('PAYED')"><a href="javascript:;">待发货</a></li>
+        <li class="tb_backOrderJj  <#if status=='已发货'>active</#if>" onclick="changTbl('DELIVERED')"><a href="javascript:;">已发货</a></li>
+        <li class="tb_backOrderYt  <#if status=='已完成'>active</#if>" onclick="changTbl('RECIEVED')"><a href="javascript:;">已完成</a></li>
+        <li class="tb_backOrderover <#if status=='已取消'>active</#if>" onclick="changTbl('CANCELED')"><a href="javascript:;">已取消</a></li>
+    </ul>
+    <div class="cfg-content">
+        <form class="simple_search" action="<#if map.pb.url??&&map.pb??>${map.pb.url}<#else> </#if>" method="post">
+        </form>
+        <form class="high_search" action="<#if map.pb.url??&&map.pb??>${map.pb.url}<#else> </#if>" method="post">
+            <div class="ops-bar"></div>
+            <table class="table table-bordered orders-table">
+                <thead>
+                <tr>
+                    <th width="30%">商品</th>
+                    <th>商品数量（总金额）</th>
+                    <th>买家</th>
+                    <th width="10%">下单时间</th>
+                    <th>订单状态</th>
+                    <th>结算价</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#if (pageBean.content?size) &gt; 0 >
+                    <#list pageBean.content as order>
+                        <tr class="separation-row">
+                            <td colspan="8"></td>
+                        </tr>
+                        <tr class="header-row">
+                            <td colspan="6">
+                                <p>订单号：${order.orderCode!''}</p>
+                            </td>
+                            <td class="row-ops" colspan="2">
+
+                            </td>
+                        </tr>
+                        <tr class="content-row">
+                            <td class="order-pros">
+                                <#--商品数量-->
+                                <#assign goodsCont = 0/>
+                                <#--订单结算价-->
+                                <#assign goodsInfoSettlePrice=0/>
+                            <#--遍历该订单下面的所有商品的信息-->
+                                <#list order.orderGoodsList as goods>
+                                    <a href="javascript:;" title="${goods.goodsInfoName}"><img src="${goods.goodsImg!''}" alt="${goods.goodsInfoName}" width="60" height="60"/></a>
+                                    <#assign goodsCont = goodsCont+goods.goodsInfoNum/>
+                                    <#--计算结算价-->
+                                    <#assign goodsInfoSettlePrice=goodsInfoSettlePrice+goods.goodsInfoSettlePrice*goods.goodsInfoNum/>
+                                </#list>
+                            </td>
+                            <td>
+                                ${goodsCont!'0'}件<br/>
+                                ${order.orderPrice!'0.00'}邮豆
+                            </td>
+                            <td style="line-height: 20px;">${order.shippingPerson!''}<br/>${order.shippingMobile!''}</td>
+                            <td>${order.payTime?string('yyyy/MM/dd hh:mm:ss')}</td>
+                            <td>
+                                ${order.orderStatus!''}
+                            </td>
+                        <#--判断是店铺入驻商城还是供货商入驻商城的订单-->
+                            <td>￥ ${goodsInfoSettlePrice}</td>
+                            <td>
+                                <div class="btn-group" style="width: 112px;">
+
+                                    <button type="button" class="btn btn-primary btn-sm"  onclick="javascript:window.location.href='${basePath}/orderManage/getOrderGoods?orderId=${order.orderId}'">查看详情</button>
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <#--<ul class="dropdown-menu" role="menu">-->
+                                    <#--&lt;#&ndash;<li><a href="" data-toggle="modal" onclick="fnModifyBackOrder(<#if order.backOrderId??>${order.backOrderId}</#if>)" data-target="#modifyState">订单审核</a></li>&ndash;&gt;-->
+                                        <#--<li><a href="" data-toggle="modal" onclick="fnModifyBackOrderMoney(${order.backOrderId},${order.mallId})" data-target="#Order_Money">退货审核</a></li>-->
+                                    <#--</ul>-->
+                                </div>
+                                <#--<div class="btn-group" style="width: 112px;">-->
+                                    <#--<a class="btn btn-primary btn-sm btn_css" href="${basePath}/orderManage/getOrderGoods?orderId=${order.orderId}" style="color: #ffffff">查看详情</a>-->
+                                <#--</div>-->
+                            </td>
+
+                        </tr>
+                    </#list>
+                <#else >
+                    <td colspan="12">
+                        <center>暂无相关商品信息</center>
+                    </td>
+                </#if>
+                </tbody>
+            </table>
+            <div class="footer-operation">
+                <#include "index/searchPag.ftl">
+            </div>
+        <#--<#else>-->
+        <#--<tfoot>-->
+        <#--<tr>-->
+        <#--<td colspan="12">暂无信息</td>-->
+        <#--</tr>-->
+        <#--</tfoot>-->
+        <#--</#if>-->
+        </form>
+    </div>
+
+
+</div>
+</div>
+</div>
+<#--</form>-->
+<#include "common/leftfooter.ftl">
+
+
+<#--<script type="text/javascript" src="${basePath}/static/js/navmenu.js?v=20151016234"></script>-->
+<script>
+    $(function(){
+        $.material.init();
+        $(".chosen-select").chosen();
+        $(".brandsChosen").chosen();
+        $('.datepicker').datetimepicker({
+            format: 'yyyy/mm/dd hh:mm:ss',
+            weekStart : 1,
+            autoclose : true,
+            language : 'zh-CN',
+            todayBtn : true,
+            viewSelect : 'hour'
+        })
+        /* /!* 富文本编辑框 *!/
+         $('.summernotedesc').summernote({
+             height: 300,
+             tabsize: 2,
+             lang: 'zh-CN',
+             onImageUpload: function(files, editor, $editable) {
+                 sendFile(files,editor,$editable);
+             }
+         });
+
+
+         /!* 富文本编辑框 *!/
+         $('.summernotemobile').summernote({
+             height: 300,
+             tabsize: 2,
+             lang: 'zh-CN',
+             onImageUpload: function(files, editor, $editable) {
+                 sendFile(files,editor,$editable);
+             }
+         });*/
+    });
+
+    /*用于控制显示div层  先显示头部和左边 稍后在显示里面的内容*/
+    function show(){
+        $(".show_text").fadeOut(1000).fadeIn(1000);
+    }
+    setTimeout("show()",1000);
+
+    function getInputVal(obj){
+        $("#basic-proPack").html($(obj).val()+"/箱");
+    }
+    //搜索
+    function searchOrder(){
+        $(".searchThirdOrderList").attr('action','${basePath}/orderManage/getOrders');
+        searchData(1)
+    }
+    //分页
+    function searchData(pageNumber){
+        $("#page").val(pageNumber);
+        $(".searchThirdOrderList").submit();
+    }
+    //tab切换
+    function changTbl(status){
+        $("#status").val(status);
+        $("#page").val(1);
+        $(".searchThirdOrderList").submit();
+    }
+</script>
+<#--<#import "common/selectindex.ftl" as selectindex>-->
+<#--<@selectindex.selectindex "${n!''}" "${l!''}" />-->
+
+</body>
+</html>

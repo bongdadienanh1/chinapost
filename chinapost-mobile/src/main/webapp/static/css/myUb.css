@@ -1,0 +1,67 @@
+/*U宝样式*/
+.nameText{height:100%;line-height: 90px;font-size: 14px;margin-left: -36px;color: #333333;width: 90%;}
+.nameText a{ line-height:90px;display:inline-block;font-size:18px; margin-left:-36px;color:#333333;}
+.nameText span{display:inline-block; font-size:16px;position:absolute; top:0px;right:2px;}
+.imgLeft{ margin-left:-36px;}
+.mui-appbar{min-height: 45px; height: 45px; line-height: 45px; background: #c71818; border-bottom: 1px solid rgba(0,0,0,.26); position: relative;}
+.mui-appbar .back-btn{position: absolute; top: 0; left: 15px; color: #fff; font-size: 1.0rem;}
+.mui-appbar h2{margin: 0; padding: 0; line-height: 45px; font-size: 1.0rem;text-align:center;color: #fff;letter-spacing:3px;}
+.mui-text-right{position:absolute;top:2px;right:6px;}
+.modal-dialog{position:absolute;top:50%;left:0; margin-top:-100px;overflow:hidden;}
+.cart-edit{color:#c47c42;}
+.cart-head_icon{display:inline-block;width:13px;height:13px;position:absolute;top:18px;right:80px;background:url(../img/tishiicon.png);background-size:13px 13px;}
+.cart-list li{margin-bottom:12px;background-color:#fff;}
+.modal-content{width:100%; margin:0 auto;}
+
+/*专区商铺*/
+.my_balance .cover{padding:1em 0 .2em  0;background:#fff;}
+.cover p{color:#666!important;line-height:26px;margin-top: .3em;}
+.cover img{display:block; margin:0 auto;width:60px;height:60px;}
+.cover p a{color:#c71818;font-size:1.0em;}
+.cover p a:hover{color:#fea177;}
+.cover p a:hover .u_mall{background-position:-14px 0;}
+.ocoupon_list{padding:0.5em;background:#fff;}
+.ocoupon_list .coupon_item{position:relative;z-index:1;padding:0.5em;background:#fff;margin-bottom:0.2em;border-bottom:1px solid #F3F3F3;}
+.ocoupon_list .coupon_item .time{position:absolute;right:0.5em;top:0.5em; line-height:34px;}
+.ocoupon_list .coupon_item h4 small{display:block;margin-top:.5em;}
+.my_balance .cover h2{color:#2D2D2D !important;font-size:2.1em;font-family: "微软雅黑";line-height: 1.6em;}
+.my_balance h1{text-align:center;margin-top:6px;font-size:18px;color:#666;margin-bottom:6px;}
+.u_mall{display:inline-block;width:12px;height:11px;padding:4px;background:url(../img/icon_store_my_youbao.png) 0 0 no-repeat;background-size:12px auto;margin-right: .2em;}
+
+/*U宝账单*/
+.ml40{margin-left:40px;}
+.propic_left img{ width:60px;height:60px !important;}
+.u_selected{position:absolute;top:15px;left:0;line-height:20px;text-align:center;font-size:12px;}
+.prodescTitle a{line-height:21px; margin-top:22px;display:inline-block;}
+.prodescTitle a span{color:#BBBABA;}
+.prodesc_left{display:inline-block; font-size:20px;position:absolute; top:32px;right:2px;}
+.propic{border-radius:60px;border:none !important;}
+
+/*账单详情*/
+.coverTitle{position: relative;width: 100%;height: 112px; border-bottom:1px solid #F3F3F3;}
+.coverTitle h2.title{position:absolute;top:10px;left:1.0em;color:#666;font-size:1.1em;display:block;width:215px;height:1.2em;overflow:hidden;white-space:normal;}
+.coverTitle p.text{position:absolute;top:48px;left:.4em;display:block;color:#2d2d2d;font-size:40px;font-weight: 300;font-family: "微软雅黑"}
+.logoBox{padding:6px;padding-left:16px!important;;}
+.logoBox img{display:inline-block; width:39px; height:39px;vertical-align:middle}
+.logoBox span{display:inline-block;vertical-align:middle;}
+.common_line p{padding:8px;}
+.common_line p span{display:inline-block;float:right;color:red;}
+.content-home{overflow:hidden;}
+
+/*支付密码*/
+.passHeight{ padding:30px 5px 30px 5px;}
+.passContainer {border: 1px solid #ccc;border-radius: 16px;height: 50px;overflow: hidden;padding:0;position: relative;}
+.passItem {width: 16.66666%;height: 100%;float: left;margin: 0;box-sizing: border-box;}
+.passItem:not(:last-child) {border-right: inherit;}
+.passwordInput{width: 100%;height: 100%;background-color: transparent;background: transparent;position: absolute;border: none;padding: 0 10px;outline: none;font-size: 24px;font-family: "courier new", sans-serif;letter-spacing:1.6em;text-align: left;text-indent:0.4em;}
+.btn-primary{background-color:#E63D59 !important;color:#fff!important;}
+.modal-footer{ text-align:center;}
+
+/*我的U宝主页*/
+.u_main{height:100%;overflow:hidden;width:100%;padding-bottom:52px;}
+.u_main li{ width:50%;height:50%;overflow:hidden;float:left;background-color:#fff;position:relative;border-left:1px solid #f0f0f0;border-top:1px solid #f0f0f0;}
+.u_main li a{display:inline-block;width:100%;height:100%;}
+.u_main li img{display:inline-block;width:100px;height:100px;}
+.u_main li h3{text-align:center;color:#333333;font-size:1.6em;padding-top:8px;}
+.u_main li p{text-align:center;}
+.u_main li .u_icon{position:absolute;left:50%; top:50%; margin-left:-90px;margin-top:-107px;padding:40px;}

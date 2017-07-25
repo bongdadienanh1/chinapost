@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.customer.mapper.ChinapostCustomerMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.customer.model.ChinapostCustomer">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="idCard_no" property="idcardNo" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="paykey" property="paykey" jdbcType="VARCHAR"/>
+        <result column="phone_no" property="phoneNo" jdbcType="VARCHAR"/>
+        <result column="mobile_checked" property="mobileChecked" jdbcType="TINYINT"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="male" property="male" jdbcType="TINYINT"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
+        <result column="contact_addr" property="contactAddr" jdbcType="VARCHAR"/>
+        <result column="is_active" property="isActive" jdbcType="TINYINT"/>
+        <result column="non_disabled" property="nonDisabled" jdbcType="TINYINT"/>
+        <result column="manager_no" property="managerNo" jdbcType="VARCHAR"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="street_id" property="streetId" jdbcType="BIGINT"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, idCard_no, password, paykey, phone_no, mobile_checked, fullname, male, img_url,
+        contact_phone, contact_addr, is_active, non_disabled, manager_no,enterprise_id, creator_id, remark, province_id,
+        city_id, district_id, street_id, addr,last_login_time
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="checkPaykey" resultType="java.lang.Boolean">
+        select
+        count(*)
+        from chinapost_customer
+        where
+        id = #{customerId,jdbcType=BIGINT}
+        and
+        paykey = md5(#{paykey,jdbcType=VARCHAR})
+    </select>
+
+    <select id="checkpassword" resultType="java.lang.Boolean">
+        select
+        count(*)
+        from chinapost_customer
+        where
+        id = #{customerId,jdbcType=BIGINT}
+        and
+        password = md5(#{password,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectByIdCard" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer
+        where idCard_no = #{idcardNo,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCustomerModelSelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer
+        <trim prefix="where" prefixOverrides="and">
+            <if test="model.id != null">
+                id = #{model.id,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.idcardNo != null">
+                idCard_no = #{model.idcardNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.password != null">
+                password = md5(#{model.password,jdbcType=VARCHAR}) and
+            </if>
+            <if test="model.paykey != null">
+                paykey = md5(#{model.paykey,jdbcType=VARCHAR}) and
+            </if>
+            <if test="model.phoneNo != null">
+                phone_no = #{model.phoneNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.mobileChecked != null">
+                mobile_checked = #{model.mobileChecked,jdbcType=TINYINT} and
+            </if>
+            <if test="model.fullname != null">
+                fullname = #{model.fullname,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.male != null">
+                male = #{model.male,jdbcType=TINYINT} and
+            </if>
+            <if test="model.imgUrl != null">
+                img_url = #{model.imgUrl,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactPhone != null">
+                contact_phone = #{model.contactPhone,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactAddr != null">
+                contact_addr = #{model.contactAddr,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.isActive != null">
+                is_active = #{model.isActive,jdbcType=TINYINT} and
+            </if>
+            <if test="model.nonDisabled != null">
+                non_disabled = #{model.nonDisabled,jdbcType=TINYINT} and
+            </if>
+            <if test="model.managerNo != null">
+                manager_no = #{model.managerNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.creatorId != null">
+                creator_id = #{model.creatorId,jdbcType=BIGINT} and
+            </if>
+            <if test="model.remark != null">
+                remark = #{model.remark,jdbcType=VARCHAR} and
+            </if>
+        </trim>
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByCustomerModelSelective" resultType="java.lang.Integer">
+        select
+        count(*)
+        from chinapost_customer
+        <trim prefix="where" prefixOverrides="and">
+            <if test="model.id != null">
+                id = #{model.id,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.idcardNo != null">
+                idCard_no = #{model.idcardNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.password != null">
+                password = md5(#{model.password,jdbcType=VARCHAR}) and
+            </if>
+            <if test="model.paykey != null">
+                paykey = md5(#{model.paykey,jdbcType=VARCHAR}) and
+            </if>
+            <if test="model.phoneNo != null">
+                phone_no = #{model.phoneNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.mobileChecked != null">
+                mobile_checked = #{model.mobileChecked,jdbcType=TINYINT} and
+            </if>
+            <if test="model.fullname != null">
+                fullname = #{model.fullname,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.male != null">
+                male = #{model.male,jdbcType=TINYINT} and
+            </if>
+            <if test="model.imgUrl != null">
+                img_url = #{model.imgUrl,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactPhone != null">
+                contact_phone = #{model.contactPhone,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactAddr != null">
+                contact_addr = #{model.contactAddr,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.isActive != null">
+                is_active = #{model.isActive,jdbcType=TINYINT} and
+            </if>
+            <if test="model.nonDisabled != null">
+                non_disabled = #{model.nonDisabled,jdbcType=TINYINT} and
+            </if>
+            <if test="model.managerNo != null">
+                manager_no = #{model.managerNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.creatorId != null">
+                creator_id = #{model.creatorId,jdbcType=BIGINT} and
+            </if>
+            <if test="model.remark != null">
+                remark = #{model.remark,jdbcType=VARCHAR} and
+            </if>
+        </trim>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.ylife.customer.model.ChinapostCustomer" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into chinapost_customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="idcardNo != null">
+                idCard_no,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="paykey != null">
+                paykey,
+            </if>
+            <if test="phoneNo != null">
+                phone_no,
+            </if>
+            <if test="mobileChecked != null">
+                mobile_checked,
+            </if>
+            <if test="fullname != null">
+                fullname,
+            </if>
+            <if test="male != null">
+                male,
+            </if>
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="contactPhone != null">
+                contact_phone,
+            </if>
+            <if test="contactAddr != null">
+                contact_addr,
+            </if>
+            <if test="isActive != null">
+                is_active,
+            </if>
+            <if test="nonDisabled != null">
+                non_disabled,
+            </if>
+            <if test="managerNo != null">
+                manager_no,
+            </if>
+            <if test="enterpriseId!=null">
+                enterprise_id,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="provinceId != null">
+                province_id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="districtId != null">
+                district_id,
+            </if>
+            <if test="streetId != null">
+                street_id,
+            </if>
+            <if test="addr != null">
+                addr,
+            </if>
+            <if test="lastLoginTime!=null">
+                last_login_time,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="idcardNo != null">
+                #{idcardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                md5(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="paykey != null">
+                md5(#{paykey,jdbcType=VARCHAR}),
+            </if>
+            <if test="phoneNo != null">
+                #{phoneNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileChecked != null">
+                #{mobileChecked,jdbcType=TINYINT},
+            </if>
+            <if test="fullname != null">
+                #{fullname,jdbcType=VARCHAR},
+            </if>
+            <if test="male != null">
+                #{male,jdbcType=TINYINT},
+            </if>
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="contactAddr != null">
+                #{contactAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="isActive != null">
+                #{isActive,jdbcType=TINYINT},
+            </if>
+            <if test="nonDisabled != null">
+                #{nonDisabled,jdbcType=TINYINT},
+            </if>
+            <if test="managerNo != null">
+                #{managerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId!=null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="streetId != null">
+                #{streetId,jdbcType=BIGINT},
+            </if>
+            <if test="addr != null">
+                #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime!=null">
+                #{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime!=null">
+                #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdCardSelective" parameterType="com.ylife.customer.model.ChinapostCustomer">
+        update chinapost_customer
+        <set>
+            <if test="password != null">
+                password = md5(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="paykey != null">
+                paykey = md5(#{paykey,jdbcType=VARCHAR}),
+            </if>
+            <if test="phoneNo != null">
+                phone_no = #{phoneNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileChecked != null">
+                mobile_checked = #{mobileChecked,jdbcType=TINYINT},
+            </if>
+            <if test="fullname != null">
+                fullname = #{fullname,jdbcType=VARCHAR},
+            </if>
+            <if test="male != null">
+                male = #{male,jdbcType=TINYINT},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                contact_phone = #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="contactAddr != null">
+                contact_addr = #{contactAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="isActive != null">
+                is_active = #{isActive,jdbcType=TINYINT},
+            </if>
+            <if test="nonDisabled != null">
+                non_disabled = #{nonDisabled,jdbcType=TINYINT},
+            </if>
+            <if test="managerNo != null">
+                manager_no = #{managerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId!=null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="streetId != null">
+                street_id = #{streetId,jdbcType=BIGINT},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime!=null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where idCard_no = #{idcardNo,jdbcType=VARCHAR}
+    </update>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.customer.model.ChinapostCustomer">
+        update chinapost_customer
+        <set>
+            <if test="password != null">
+                password = md5(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="paykey != null">
+                paykey = md5(#{paykey,jdbcType=VARCHAR}),
+            </if>
+            <if test="phoneNo != null">
+                phone_no = #{phoneNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileChecked != null">
+                mobile_checked = #{mobileChecked,jdbcType=TINYINT},
+            </if>
+            <if test="fullname != null">
+                fullname = #{fullname,jdbcType=VARCHAR},
+            </if>
+            <if test="male != null">
+                male = #{male,jdbcType=TINYINT},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                contact_phone = #{contactPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="contactAddr != null">
+                contact_addr = #{contactAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="isActive != null">
+                is_active = #{isActive,jdbcType=TINYINT},
+            </if>
+            <if test="nonDisabled != null">
+                non_disabled = #{nonDisabled,jdbcType=TINYINT},
+            </if>
+            <if test="managerNo != null">
+                manager_no = #{managerNo,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId!=null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="streetId != null">
+                street_id = #{streetId,jdbcType=BIGINT},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime!=null">
+                last_login_time=#{lastLoginTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.customer.model.ChinapostCustomer">
+        update chinapost_customer
+        set idCard_no = #{idcardNo,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        paykey = #{paykey,jdbcType=VARCHAR},
+        phone_no = #{phoneNo,jdbcType=VARCHAR},
+        mobile_checked = #{mobileChecked,jdbcType=TINYINT},
+        fullname = #{fullname,jdbcType=VARCHAR},
+        male = #{male,jdbcType=TINYINT},
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+        contact_addr = #{contactAddr,jdbcType=VARCHAR},
+        is_active = #{isActive,jdbcType=TINYINT},
+        non_disabled = #{nonDisabled,jdbcType=TINYINT},
+        manager_no = #{managerNo,jdbcType=VARCHAR},
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+        creator_id = #{creatorId,jdbcType=BIGINT},
+        remark = #{remark,jdbcType=VARCHAR}
+        province_id = #{provinceId,jdbcType=BIGINT},
+        city_id = #{cityId,jdbcType=BIGINT},
+        district_id = #{districtId,jdbcType=BIGINT},
+        street_id = #{streetId,jdbcType=BIGINT},
+        addr = #{addr,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectId" parameterType="java.lang.String" resultType="java.lang.Long">
+        select id from chinapost_customer where idCard_no = #{idcardNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByUsernamePassword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer
+        where
+        idCard_no = #{username,jdbcType=VARCHAR}
+        and password = md5(#{password,jdbcType=VARCHAR})
+    </select>
+
+    <update id="updateByBatch">
+        <foreach collection="map" separator=";" item="item" index="id">
+            update chinapost_customer
+            <set>
+                <if test="item.password != null">
+                    password = md5(#{item.password,jdbcType=VARCHAR}),
+                </if>
+                <if test="item.paykey != null">
+                    paykey = md5(#{item.paykey,jdbcType=VARCHAR}),
+                </if>
+                <if test="item.phoneNo != null">
+                    phone_no = #{item.phoneNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.mobileChecked != null">
+                    mobile_checked = #{item.mobileChecked,jdbcType=TINYINT},
+                </if>
+                <if test="item.fullname != null">
+                    fullname = #{item.fullname,jdbcType=VARCHAR},
+                </if>
+                <if test="item.male != null">
+                    male = #{item.male,jdbcType=TINYINT},
+                </if>
+                <if test="item.imgUrl != null">
+                    img_url = #{item.imgUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="item.contactPhone != null">
+                    contact_phone = #{item.contactPhone,jdbcType=VARCHAR},
+                </if>
+                <if test="item.contactAddr != null">
+                    contact_addr = #{item.contactAddr,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isActive != null">
+                    is_active = #{item.isActive,jdbcType=TINYINT},
+                </if>
+                <if test="item.nonDisabled != null">
+                    non_disabled = #{item.nonDisabled,jdbcType=TINYINT},
+                </if>
+                <if test="item.managerNo != null">
+                    manager_no = #{item.managerNo,jdbcType=VARCHAR},
+                </if>
+                <if test="item.enterpriseId!=null">
+                    enterprise_id = #{item.enterpriseId,jdbcType=BIGINT},
+                </if>
+                <if test="item.creatorId != null">
+                    creator_id = #{item.creatorId,jdbcType=BIGINT},
+                </if>
+                <if test="item.remark != null">
+                    remark = #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.provinceId != null">
+                    province_id = #{item.provinceId,jdbcType=BIGINT},
+                </if>
+                <if test="item.cityId != null">
+                    city_id = #{item.cityId,jdbcType=BIGINT},
+                </if>
+                <if test="item.districtId != null">
+                    district_id = #{item.districtId,jdbcType=BIGINT},
+                </if>
+                <if test="item.streetId != null">
+                    street_id = #{item.streetId,jdbcType=BIGINT},
+                </if>
+                <if test="item.addr != null">
+                    addr = #{item.addr,jdbcType=VARCHAR},
+                </if>
+                <if test="item.lastLoginTime!=null">
+                    last_login_time=#{item.lastLoginTime,jdbcType=TIMESTAMP}
+                </if>
+                <if test="item.createTime!=null">
+                    create_time=#{item.createTime,jdbcType=TIMESTAMP}
+                </if>
+            </set>
+            where id = #{item.id,jdbcType=VARCHAR}
+        </foreach>
+
+    </update>
+
+
+</mapper>

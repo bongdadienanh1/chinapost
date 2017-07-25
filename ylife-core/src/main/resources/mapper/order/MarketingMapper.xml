@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.order.mapper.MarketingMapper">
+	<resultMap id="BaseResultMap" type="com.ylife.order.model.Marketing">
+		<id column="marketing_id" property="marketingId" jdbcType="BIGINT" />
+		<result column="marketing_name" property="marketingName"
+			jdbcType="VARCHAR" />
+		<result column="marketing_des" property="marketingDes"
+			jdbcType="VARCHAR" />
+		<result column="codex_name" property="codexName"
+			jdbcType="VARCHAR" />
+		<result column="is_repeat" property="isRepeat"
+			jdbcType="CHAR" />
+		<result column="marketing_type" property="marketingType"
+			jdbcType="CHAR" />
+		<result column="marketing_begin" property="marketingBegin"
+			jdbcType="TIMESTAMP" />
+		<result column="marketing_end" property="marketingEnd"
+			jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+		<result column="flag" property="flag" jdbcType="CHAR" />
+		<result column="is_all" property="isAll" jdbcType="CHAR" />
+		<result column="codex_id" property="codexId" jdbcType="BIGINT" />
+        <result column="codex_type" property="codexType" jdbcType="CHAR" />
+    	<result column="business_id" property="businessId" jdbcType="BIGINT" />
+    	<result column="third_id" property="thirId" jdbcType="BIGINT" />
+    	<result column="preferential_name" property="preferentialName" jdbcType="VARCHAR" />
+    	<result column="info_realname" property="infoRealname" jdbcType="VARCHAR" />
+    	<result column="group_id" property="groupId" jdbcType="BIGINT" />
+    	<result column="m_group_id" property="marketGroupId" jdbcType="BIGINT" />
+    	<result column="add_give_type" property="addGiveType" jdbcType="CHAR" /> 
+    	<result column="give_integral" property="giveIntegral" jdbcType="INTEGER" /> 
+    	<result column="coupon_id" property="couponId" jdbcType="BIGINT" /> 
+    	<result column="active_site_type" property="activeSiteType" jdbcType="CHAR" /> 
+    	<result column="coupon_name" property="couponName" jdbcType="VARCHAR" /> 
+    	<result column="shipping_money" property="shippingMoney" jdbcType="DECIMAL" /> 
+    	<!-- <result column="limit_num" property="limitNum" jdbcType="INTEGER" /> 
+    	<result column="is_free" property="isFree" jdbcType="CHAR" />  -->
+    	<!--<collection property="marketLogos"-->
+    	<!--column="marketing_id" select="com.ysh.dao.MarketLogoMapper.queryLogoByMarketingId"></collection>-->
+    	<!--<collection property="marketLelvels"-->
+    	<!--column="marketing_id" select="com.ysh.dao.MarketLelvelMapper.queryLevelNameByMarketingId"></collection>-->
+	</resultMap>
+	
+	<resultMap id="GrouponResultMap" type="com.ylife.order.model.Marketing">
+		<id column="marketing_id" property="marketingId" jdbcType="BIGINT" />
+		<result column="marketing_name" property="marketingName"
+			jdbcType="VARCHAR" />
+		<result column="marketing_des" property="marketingDes"
+			jdbcType="VARCHAR" />
+		<result column="codex_name" property="codexName"
+			jdbcType="VARCHAR" />
+		<result column="is_repeat" property="isRepeat"
+			jdbcType="CHAR" />
+		<result column="marketing_type" property="marketingType"
+			jdbcType="CHAR" />
+		<result column="marketing_begin" property="marketingBegin"
+			jdbcType="TIMESTAMP" />
+		<result column="marketing_end" property="marketingEnd"
+			jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+		<result column="flag" property="flag" jdbcType="CHAR" />
+		<result column="is_all" property="isAll" jdbcType="CHAR" />
+		<result column="codex_id" property="codexId" jdbcType="BIGINT" />
+        <result column="codex_type" property="codexType" jdbcType="CHAR" />
+    	<result column="business_id" property="businessId" jdbcType="BIGINT" />
+    	<result column="third_id" property="thirId" jdbcType="BIGINT" />
+    	<result column="preferential_name" property="preferentialName" jdbcType="VARCHAR" />
+    	<result column="info_realname" property="infoRealname" jdbcType="VARCHAR" />
+    	<result column="group_id" property="groupId" jdbcType="BIGINT" />
+    	<result column="m_group_id" property="marketGroupId" jdbcType="BIGINT" />
+    	<!--<association property="groupon"-->
+    	<!--column="marketing_id" select="com.ysh.web.dao.GrouponMapper.selectByMarketId"></association>-->
+	</resultMap>
+	
+	<resultMap id="MarketingRushResultMap" type="com.ylife.order.model.Marketing">
+		<id column="marketing_id" property="marketingId" jdbcType="BIGINT" />
+		<result column="marketing_name" property="marketingName"
+			jdbcType="VARCHAR" />
+		<result column="marketing_des" property="marketingDes"
+			jdbcType="VARCHAR" />
+		<result column="codex_name" property="codexName"
+			jdbcType="VARCHAR" />
+		<result column="is_repeat" property="isRepeat"
+			jdbcType="CHAR" />
+		<result column="marketing_type" property="marketingType"
+			jdbcType="CHAR" />
+		<result column="marketing_begin" property="marketingBegin"
+			jdbcType="TIMESTAMP" />
+		<result column="marketing_end" property="marketingEnd"
+			jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="mod_time" property="modTime" jdbcType="TIMESTAMP" />
+		<result column="flag" property="flag" jdbcType="CHAR" />
+		<result column="is_all" property="isAll" jdbcType="CHAR" />
+		<result column="codex_id" property="codexId" jdbcType="BIGINT" />
+        <result column="codex_type" property="codexType" jdbcType="CHAR" />
+    	<result column="business_id" property="businessId" jdbcType="BIGINT" />
+    	<result column="third_id" property="thirId" jdbcType="BIGINT" />
+    	<result column="preferential_name" property="preferentialName" jdbcType="VARCHAR" />
+    	<result column="info_realname" property="infoRealname" jdbcType="VARCHAR" />
+    	<result column="group_id" property="groupId" jdbcType="BIGINT" />
+    	<result column="m_group_id" property="marketGroupId" jdbcType="BIGINT" />
+    	<!--<collection property="rushs"-->
+    	<!--column="marketing_id" select="com.ysh.marketing.dao.MarketingRushMapper.selectByMarketId"></collection>-->
+	</resultMap>
+	<sql id="Base_Column_List">
+		marketing_id, marketing_name, marketing_des, marketing_type, marketing_begin,
+		marketing_end,
+		create_time, mod_time, flag,is_repeat,is_all,m_group_id
+	</sql>
+	
+	<!-- 查询商品下所属的订单促销 -->
+  <select id="queryOrderMarketingByGoodsId" parameterType="java.util.Map" resultMap="BaseResultMap">
+      select m.marketing_id,m.marketing_name,codex.codex_type,info.third_id,m.shipping_money
+		from np_marketing m ,np_marketing_codex mc,np_codex codex,np_marketing_scope scope,np_goods_info info
+		where m.marketing_id = mc.marketing_id and mc.codex_id = codex.codex_id  and mc.flag='0' and scope.scope_id=info.goods_info_id
+      and m.marketing_id = scope.marketing_id and m.flag='0'
+     and  <![CDATA[ m.marketing_begin <= now() and  m.marketing_end   > now() ]]>
+ 	 and scope.scope_id in 
+ 	 	<foreach collection="list" item="goodsId" open="(" separator="," close=")">
+    			 #{goodsId,jdbcType=BIGINT}
+   		</foreach> and info.third_id=#{thirdId}
+   		GROUP BY   m .marketing_id,info.third_id
+  </select>
+
+	<!-- 根据商品id，商品品牌id，商品类型id，分组id，查询 -->
+	<select id="queryByCreatimemarketings" resultMap="BaseResultMap" parameterType="java.util.Map">
+	 select  m.marketing_id
+		 from np_marketing m ,np_marketing_scope sc 
+			where m.marketing_id = sc.marketing_id 
+			 and  sc.flag = '0' AND
+		    sc.scope_id = #{goodsInfoId}   and m.flag='0'
+				 and m.m_group_id=#{groupId}
+				 and   NOW()  >= m.marketing_begin AND m.marketing_end >=NOW()
+	 GROUP BY m.marketing_id
+	 ORDER BY m.create_time desc
+	</select>
+
+
+    <!-- 根据商品id和类型查询商品下所属的订单促销 -->
+    <select id="queryMarketingByGoodIdAndtype" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select m.marketing_id,m.marketing_name,codex.codex_type,info.third_id,m.shipping_money
+        from np_marketing m ,np_marketing_codex mc,np_codex codex,np_marketing_scope scope,np_goods_info info
+        where m.marketing_id = mc.marketing_id and mc.codex_id = codex.codex_id and mc.flag='0' and
+        scope.scope_id=info.goods_info_id
+        and m.marketing_id = scope.marketing_id and m.flag='0'and scope.flag='0'
+        and  <![CDATA[ m.marketing_begin <= now() and  m.marketing_end   > now() ]]>
+        <if test="goodsId !=null and goodsId !=''">
+            and scope.scope_id = #{goodsId}
+        </if>
+        <if test="codeType !=null and codeType !=''">
+            and codex.codex_type = #{codeType}
+        </if>
+        limit 0,1
+    </select>
+
+    <!-- 查询促销详细信息 -->
+    <select id="marketingDetail" resultMap="BaseResultMap"
+            parameterType="java.lang.Object">
+        select mgroup.preferential_name,mgroup.group_id, m.marketing_id, m.marketing_name,m.shipping_money,
+        m.marketing_des, m.marketing_type, m.marketing_begin,
+        m.marketing_end,m.is_repeat,
+        m.create_time, m.mod_time, m.flag,m.is_all,codex.codex_name,codex.codex_id,codex.codex_type
+        from np_marketing m ,np_marketing_codex mc,np_codex codex,np_marketing_group mgroup
+        where m.marketing_id = mc.marketing_id and mc.codex_id = codex.codex_id  and mc.flag='0'
+        and codex.codex_status=mgroup.group_id
+        and m.marketing_id = #{marketingId,jdbcType=BIGINT}
+        and <![CDATA[ m.marketing_begin <= now() and  m.marketing_end   > now() ]]>
+    </select>
+</mapper>

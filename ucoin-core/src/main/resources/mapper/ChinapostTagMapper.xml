@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.customer.mapper.ChinapostTagMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.customer.model.ChinapostTag">
+        <id column="tag_id" property="tagId" jdbcType="INTEGER"/>
+        <result column="tag_name" property="tagName" jdbcType="VARCHAR"/>
+        <result column="tag_desc" property="tagDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        chinapost_tag.tag_id, chinapost_tag.tag_name, chinapost_tag.tag_desc
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_tag
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_tag
+    </select>
+
+    <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_tag
+        right join chinapost_customer_tag on
+        chinapost_tag.tag_id = chinapost_customer_tag.tag_id
+        where chinapost_customer_tag.customer_id = #{customerId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from chinapost_tag
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.customer.model.ChinapostTag">
+        insert into chinapost_tag (tag_id, tag_name, tag_desc
+        )
+        values (#{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{tagDesc,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.customer.model.ChinapostTag">
+        insert into chinapost_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="tagDesc != null">
+                tag_desc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="tagDesc != null">
+                #{tagDesc,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.customer.model.ChinapostTag">
+        update chinapost_tag
+        <set>
+            <if test="tagName != null">
+                tag_name = #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="tagDesc != null">
+                tag_desc = #{tagDesc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.customer.model.ChinapostTag">
+        update chinapost_tag
+        set tag_name = #{tagName,jdbcType=VARCHAR},
+        tag_desc = #{tagDesc,jdbcType=VARCHAR}
+        where tag_id = #{tagId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

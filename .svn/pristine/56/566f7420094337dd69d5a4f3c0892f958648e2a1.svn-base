@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.payorder.mapper.PayOrderMapper">
+
+	<resultMap type="com.ylife.payorder.entity.PayOrderEntity" id="BaseResultMap">
+        <id property="id" column="id" />
+        <result property="orderCode" column="order_code" />
+        <result property="goodsInfoId" column="goods_info_id" />
+        <result property="thirdId" column="third_id" />
+        <result property="enterpriseId" column="enterprise_id" />
+        <result property="price" column="price" />
+        <result property="settlePrice" column="settle_price" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time" />
+        <result property="createTime" column="create_time" />
+        <result property="goodsInfoName" column="goods_info_name" />
+        <result property="thirdName" column="third_name" />
+	</resultMap>
+
+	<resultMap type="com.ylife.payorder.entity.PayOrderEntityVo" id="PayOrderEntityVo">
+        <result property="orderCode" column="order_code" />
+        <result property="price" column="price" />
+        <result property="settlePrice" column="settle_price" />
+        <result property="goodsInfoName" column="goods_info_name" />
+        <result property="thirdName" column="third_name" />
+        <result property="orderCreateTime" column="order_create_time" />
+        <result property="payTime" column="pay_time" />
+        <result property="enterpriseName" column="enterprise_name" />
+	</resultMap>
+
+	<sql id="PayOrderAll_column">
+		payorder.id as id,
+		payorder.order_code as orderCode,
+		payorder.goods_info_id as goodsInfoId,
+		payorder.third_id as thirdId,
+		payorder.enterprise_id as enterpriseId,
+		payorder.price as price,
+		payorder.settle_price as settlePrice,
+		payorder.start_time as startTime,
+		payorder.end_time as endTime,
+		payorder.create_time as createTime,
+		payorder.goods_info_name as goodsInfoName,
+		payorder.third_name as thirdName
+	</sql>
+
+	<sql id="PayOrderAllVo">
+		payorder.order_code as order_code,
+		sum(payorder.price) as price,
+		sum(payorder.settle_price) as settle_price,
+		payorder.goods_info_name as goods_info_name,
+		payorder.third_name as third_name,
+		ord.pay_time as pay_time,
+		ord.create_time as order_create_time,
+		info.enterprise_name as enterprise_name
+	</sql>
+
+	<sql id="PayOrderAll_where">
+		<where>
+				1=1
+			<if test="id != null and id !=''">
+				AND payorder.id =#{id}
+			</if>
+			<if test="orderCode != null and orderCode !=''">
+				AND payorder.order_code =#{orderCode}
+			</if>
+			<if test="goodsInfoId != null and goodsInfoId !=''">
+				AND payorder.goods_info_id =#{goodsInfoId}
+			</if>
+			<if test="thirdId != null and thirdId !=''">
+				AND payorder.third_id =#{thirdId}
+			</if>
+			<if test="enterpriseId != null and enterpriseId !=''">
+				AND payorder.enterprise_id =#{enterpriseId}
+			</if>
+			<if test="price != null and price !=''">
+				AND payorder.price =#{price}
+			</if>
+			<if test="settlePrice != null and settlePrice !=''">
+				AND payorder.settle_price =#{settlePrice}
+			</if>
+			<if test="startTime != null and startTime !=''">
+				AND payorder.start_time =#{startTime}
+			</if>
+			<if test="endTime != null and endTime !=''">
+				AND payorder.end_time =#{endTime}
+			</if>
+			<if test="createTime != null and createTime !=''">
+				AND payorder.create_time =#{createTime}
+			</if>
+			<if test="goodsInfoName != null and goodsInfoName !=''">
+				AND payorder.goods_info_name =#{goodsInfoName}
+			</if>
+			<if test="thirdName != null and thirdName !=''">
+				AND payorder.third_name =#{thirdName}
+			</if>
+			<if test="orderPayStartTime != null and orderPayStartTime != ''">
+				AND
+				<![CDATA[ord.pay_time > #{orderPayStartTime}]]>
+			</if>
+			<if test="orderPayEndTime != null and orderPayEndTime != ''">
+				AND
+				<![CDATA[ord.pay_time < #{orderPayEndTime}]]>
+			</if>
+		</where>
+	</sql>
+	<sql id="PayOrderAll_table">
+		FROM
+		ysh_pay_order payorder
+	</sql>
+	<!-- 查全部 -->
+	<select id="queryAllPayOrder"
+		resultMap="BaseResultMap" parameterType="com.ylife.payorder.entity.PayOrderEntity">
+		SELECT
+		<include refid="PayOrderAll_column" />
+		<include refid="PayOrderAll_table" />
+		<include refid="PayOrderAll_where"/>
+	</select>
+	<select id="queryAllPayOrderVo"
+		resultMap="PayOrderEntityVo" parameterType="com.ylife.payorder.entity.PayOrderEntity">
+		SELECT
+		<include refid="PayOrderAllVo" />
+		<include refid="PayOrderAll_table" />
+		LEFT JOIN np_order ord on payorder.order_code = ord.order_code
+		LEFT JOIN ysh_enterprise_info info on payorder.enterprise_id = info.enterprise_id
+		<include refid="PayOrderAll_where"/>
+		GROUP BY payorder.order_code,payorder.third_id,payorder.enterprise_id
+		HAVING
+		settle_price > 0
+	</select>
+	<!-- 查全部分页 -->
+	<select id="queryListForPagePayOrder"
+		resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+		<include refid="PayOrderAll_column" />
+		<include refid="PayOrderAll_table" />
+		<include refid="PayOrderAll_where"/>
+		<if test="startRowNum != null">
+			Limit #{startRowNum},#{pageSize}
+		</if>
+	</select>
+	<!-- 查全部分页 -->
+	<select id="queryListForPagePayOrderVo"
+		resultMap="PayOrderEntityVo" parameterType="java.util.Map">
+		SELECT
+		<include refid="PayOrderAllVo" />
+		<include refid="PayOrderAll_table" />
+		LEFT JOIN np_order ord on payorder.order_code = ord.order_code
+		LEFT JOIN ysh_enterprise_info info on payorder.enterprise_id = info.enterprise_id
+		<include refid="PayOrderAll_where"/>
+		GROUP BY payorder.order_code,payorder.third_id,payorder.enterprise_id
+		HAVING
+		settle_price > 0
+		ORDER BY ord.pay_time DESC
+		<if test="startRowNum != null">
+			Limit #{startRowNum},#{pageSize}
+		</if>
+	</select>
+	<!-- 查数量 -->
+	<select id="queryCountPayOrder" resultType="java.lang.Integer" parameterType="com.ylife.payorder.entity.PayOrderEntity">
+		SELECT
+		count(1)
+		<include refid="PayOrderAll_table" />
+		<include refid="PayOrderAll_where"/>
+	</select>
+	<!-- 查数量 -->
+	<select id="queryCountPayOrderVo" resultType="java.lang.Integer" parameterType="com.ylife.payorder.entity.PayOrderEntity">
+		select count(1) from (SELECT
+		count(1),sum(settle_price) as settle_price
+		<include refid="PayOrderAll_table" />
+		LEFT JOIN np_order ord on payorder.order_code = ord.order_code
+		LEFT JOIN ysh_enterprise_info info on payorder.enterprise_id = info.enterprise_id
+		<include refid="PayOrderAll_where"/>
+		GROUP BY payorder.order_code,payorder.third_id,payorder.enterprise_id
+		HAVING
+		settle_price > 0) as demo
+	</select>
+	<!-- 按主键查询  -->
+	<select id="queryById"	resultMap="BaseResultMap"  parameterType="java.lang.Long">
+		SELECT 
+		<include refid="PayOrderAll_column" />
+		<include refid="PayOrderAll_table" />
+		WHERE payorder.id =#{id}
+	</select>
+    <!-- 根据主键批量查询 -->
+    <select id="queryByIds"	resultMap="BaseResultMap"  parameterType="java.util.List">
+        SELECT
+        <include refid="PayOrderAll_column" />
+        <include refid="PayOrderAll_table" />
+        <where>
+            1=1
+            <if test="ids !=null">
+                and id in
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+				#{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+	<!-- 修改  -->
+	<update id="updatePayOrder" parameterType="com.ylife.payorder.entity.PayOrderEntity">
+		UPDATE
+		ysh_pay_order payorder
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderCode != null">payorder.order_code =#{orderCode},</if>
+            <if test="goodsInfoId != null">payorder.goods_info_id =#{goodsInfoId},</if>
+            <if test="thirdId != null">payorder.third_id =#{thirdId},</if>
+            <if test="enterpriseId != null">payorder.enterprise_id =#{enterpriseId},</if>
+            <if test="price != null">payorder.price =#{price},</if>
+            <if test="settlePrice != null">payorder.settle_price =#{settlePrice},</if>
+            <if test="startTime != null">payorder.start_time =#{startTime},</if>
+            <if test="endTime != null">payorder.end_time =#{endTime},</if>
+            <if test="createTime != null">payorder.create_time =#{createTime},</if>
+            <if test="goodsInfoName != null">payorder.goods_info_name =#{goodsInfoName},</if>
+            <if test="thirdName != null">payorder.third_name =#{thirdName},</if>
+        </trim>
+        WHERE payorder.id =#{id}
+	</update>
+	<!-- 新增  -->
+	<insert id="addPayOrder" parameterType="com.ylife.payorder.entity.PayOrderEntity">
+		INSERT INTO ysh_pay_order
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				
+				<if test="orderCode != null">order_code,</if>
+				<if test="goodsInfoId != null">goods_info_id,</if>
+				<if test="thirdId != null">third_id,</if>
+				<if test="enterpriseId != null">enterprise_id,</if>
+				<if test="price != null">price,</if>
+				<if test="settlePrice != null">settle_price,</if>
+				<if test="startTime != null">start_time,</if>
+				<if test="endTime != null">end_time,</if>
+				<if test="createTime != null">create_time,</if>
+				<if test="goodsInfoName != null">goods_info_name,</if>
+				<if test="thirdName != null">third_name</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+				
+				<if test="orderCode != null">#{orderCode},</if>
+				<if test="goodsInfoId != null">#{goodsInfoId},</if>
+				<if test="thirdId != null">#{thirdId},</if>
+				<if test="enterpriseId != null">#{enterpriseId},</if>
+				<if test="price != null">#{price},</if>
+				<if test="settlePrice != null">#{settlePrice},</if>
+				<if test="startTime != null">#{startTime},</if>
+				<if test="endTime != null">#{endTime},</if>
+				<if test="createTime != null">#{createTime},</if>
+				<if test="goodsInfoName != null">#{goodsInfoName},</if>
+				<if test="thirdName != null">#{thirdName}</if>
+        </trim>
+	</insert>
+
+	<!--批量 新增  -->
+	<insert id="addPayOrders" parameterType="java.util.List">
+		INSERT INTO ysh_pay_order (
+		order_code,
+		goods_info_id,
+		third_id,
+		enterprise_id,
+		price,
+		settle_price,
+		start_time,
+		end_time,
+		create_time,
+		goods_info_name,
+		third_name  
+		)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+		#{item.orderCode},
+		#{item.goodsInfoId},
+		#{item.thirdId},
+		#{item.enterpriseId},
+		#{item.price},
+		#{item.settlePrice},
+		#{item.startTime},
+		#{item.endTime},
+		#{item.createTime},
+		#{item.goodsInfoName},
+		#{item.thirdName } 
+			)
+		</foreach>
+	</insert>
+	
+</mapper>

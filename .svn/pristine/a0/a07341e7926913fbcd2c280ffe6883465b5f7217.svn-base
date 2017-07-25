@@ -1,0 +1,74 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSON;
+import com.ylife.chinapost.boss.service.BackOrderBossService;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.CreditOrder;
+import com.ylife.order.model.CreditOrderStatus;
+import com.ylife.order.service.CreditOrderService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value = "/BackOrderAdmin")
+public class BackOrderController  {
+
+	@Resource
+	private BackOrderBossService backOrderBossService;
+
+	/**
+	* BackOrderEntity List页面
+	* @author henry
+	* @date 2017-07-02 17:33:16
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView backOrderListPage(String backOrderNo,String shippingMobile,String orderCode,
+										  CreditOrderStatus status, String start, String end,
+										  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+										  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		return new ModelAndView(returnPath("thirdOrderBackList"))
+				.addObject("backOrderNo",backOrderNo).addObject("shippingMobile",shippingMobile).addObject("orderCode",orderCode)
+				.addObject("status",status).addObject("start",start).addObject("end",end)
+				.addObject("pageBean",backOrderBossService.queryListForPageBackOrder(backOrderNo,shippingMobile,orderCode,status,start,end,new Pageable(page,size)));
+	}
+
+	/**
+	* 查询BackOrderEntity
+	* @author henry
+	* @date 2017-07-02 17:33:16
+	* */
+	/*@RequestMapping(value = "/queryById")
+	@ResponseBody
+	public String findBackOrderData(String id) {
+		return JSON.toJSONString(backOrderBossService.queryById(Long.parseLong(id)));
+	}*/
+
+	/**
+	* 导出BackOrderEntity
+	* @author henry
+	* @date 2017-07-02 17:33:16
+	* @return
+	*/
+	/*@RequestMapping(value = "/exportBackOrderExcel")
+	public void exportBackOrderExcel(BackOrderEntity backOrderEntity,String ids,HttpServletResponse response) {
+		backOrderBossService.exportBackOrder(backOrderEntity, ids, response);
+	}*/
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

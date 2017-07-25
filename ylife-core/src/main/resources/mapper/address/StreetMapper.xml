@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.address.mapper.StreetMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.address.model.Street">
+        <id column="street_id" property="streetId" jdbcType="BIGINT"/>
+        <result column="street_name" property="streetName" jdbcType="VARCHAR"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        street_id, street_name, district_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from np_sys_street
+        where street_id = #{streetId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByDistrictId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from np_sys_street
+        where district_id = #{districtId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

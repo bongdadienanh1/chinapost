@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 定时器开关 开始 -->
+    <bean name="ucoinStatisticalServiceImpl" class="com.ylife.chinapost.service.impl.UcoinStatisticalServiceImpl">
+        <constructor-arg index="0" value="${email.receivers}"/>
+        <constructor-arg index="1" value="${email.send.enable}"/>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="syncChannels"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="inventoryHistoryServiceImpl"/>
+        <property name="targetMethod" value="insertByBatch"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="syncChannelsTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncChannels"/>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 30 23 L * ?"/>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="syncsaveGoodsProducts"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="goodsProductServiceImpl"/>
+        <property name="targetMethod" value="saveGoodsProducts"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="syncGoodsProductTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncsaveGoodsProducts"/>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 0/5 * * * ?"/>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="syncOrderStatus"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="orderServiceImpl"/>
+        <property name="targetMethod" value="updateOrderStatus"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="syncOrderStatusTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncOrderStatus"/>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 0/10 * * * ?"/>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="syncBackOrderStatus"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="creditOrderServiceImpl"/>
+        <property name="targetMethod" value="updateBackOrderStatus"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="syncBackOrderStatusTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncBackOrderStatus"/>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 0/10 * * * ?"/>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="syncCancelOrder"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="orderManageServiceImpl"/>
+        <property name="targetMethod" value="cancelOrderTiming"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="syncCancelOrderTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncCancelOrder"/>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 0/10 * * * ?"/>
+    </bean>
+
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="syncUcoinStatistical"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject" ref="ucoinStatisticalServiceImpl"/>
+        <property name="targetMethod" value="ucoinStatistical"/>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="syncUcoinStatisticalTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="syncUcoinStatistical"/>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 30 8 * * ?"/>
+    </bean>
+
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+    <bean id="startQuertz" lazy-init="false"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="syncChannelsTrigger"/>
+                <ref bean="syncGoodsProductTrigger"/>
+                <ref bean="syncOrderStatusTrigger"/>
+                <ref bean="syncBackOrderStatusTrigger"/>
+                <ref bean="syncCancelOrderTrigger"/>
+                <ref bean="syncUcoinStatisticalTrigger"/>
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">buy_it_now</prop>
+                <prop key="org.quartz.threadPool.threadCount">2</prop>
+                <prop key="org.quartz.plugin.shutdownhook.class">org.quartz.plugins.management.ShutdownHookPlugin</prop>
+                <prop key="org.quartz.plugin.shutdownhook.cleanShutdown">true</prop>
+                <prop key="org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread">true</prop>
+            </props>
+        </property>
+    </bean>
+
+
+</beans>

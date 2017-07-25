@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!-- 配置无需过滤的路径 -->
+    <http pattern="/images/**" security="none"/>
+    <http pattern="/web/api/ucoingrand/isNew" security="none"/>
+    <http pattern="/web/Ubao_Search" security="none"/>
+
+    <!-- ################################################## backend ######################################################## -->
+    <http use-expressions="true" auto-config="false" pattern="/web/**"
+          authentication-manager-ref="enterpriseAuthenticationManager"
+          entry-point-ref="enterpriseAuthenticationEntryPoint">
+
+        <!--
+        <form-login login-processing-url="/web/login"
+                    username-parameter="username" password-parameter="password"
+                    authentication-success-handler-ref="enterpriseAuthenticationSuccessHandler"
+                    authentication-failure-handler-ref="enterpriseAuthenticationFailureHandler"/>
+        -->
+
+        <logout invalidate-session="true" logout-url="/web/logout" success-handler-ref="eventLogoutSuccessHandler"/>
+
+        <!-- session-fixation-protection="none" 此设置禁用默认的SessionManagementFilter -->
+        <session-management session-fixation-protection="none"/>
+        <remember-me user-service-ref="enterpriseUserDetailServiceImpl"/>
+        <access-denied-handler ref="enterpriseAccessDeniedHandler"/>
+
+        <custom-filter ref="enterpriseAuthenticaionFilter"
+                       position="FORM_LOGIN_FILTER"/>
+        <custom-filter ref="enterpriseSessionManagementFilter"
+                       position="SESSION_MANAGEMENT_FILTER"/>
+        <custom-filter ref="enterpriseConCurrentSessionFilter"
+                       position="CONCURRENT_SESSION_FILTER"/>
+        <custom-filter ref="enterpriseUserSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+    </http>
+
+    <beans:bean id="enterpriseLogoutFilter" class="com.ylife.security.captcha.CaptchaAuthenticaionFilter">
+        <beans:property name="usernameParameter" value="username"/>
+        <beans:property name="passwordParameter" value="password"/>
+        <beans:property name="filterProcessesUrl" value="/web/login"/>
+        <beans:property name="authenticationManager" ref="enterpriseAuthenticationManager"/>
+        <beans:property name="authenticationFailureHandler" ref="enterpriseAuthenticationFailureHandler"/>
+        <beans:property name="authenticationSuccessHandler" ref="enterpriseAuthenticationSuccessHandler"/>
+    </beans:bean>
+
+    <beans:bean id="enterpriseAuthenticaionFilter" class="com.ylife.security.captcha.CaptchaAuthenticaionFilter">
+        <beans:property name="usernameParameter" value="username"/>
+        <beans:property name="passwordParameter" value="password"/>
+        <beans:property name="filterProcessesUrl" value="/web/login"/>
+        <beans:property name="eventHandler" ref="logEventHandler"/>
+        <beans:property name="authenticationManager" ref="enterpriseAuthenticationManager"/>
+        <beans:property name="authenticationFailureHandler" ref="enterpriseAuthenticationFailureHandler"/>
+        <beans:property name="authenticationSuccessHandler" ref="enterpriseAuthenticationSuccessHandler"/>
+    </beans:bean>
+
+    <!-- UserSecurityFilter配置 -->
+    <beans:bean id="enterpriseUserSecurityFilter" class="com.ylife.security.YlifeSecurityFilter">
+        <!-- 用户拥有的权限 -->
+        <beans:property name="authenticationManager" ref="enterpriseAuthenticationManager"/>
+        <!-- 用户是否拥有所请求资源的权限 -->
+        <beans:property name="accessDecisionManager" ref="enterpriseAccessDecisionManager"/>
+        <!-- 资源与权限对应关系 -->
+        <beans:property name="securityMetadataSource" ref="enterpriseSecurityMetadataSource"/>
+    </beans:bean>
+
+    <beans:bean id="enterpriseSessionManagementFilter"
+                class="org.springframework.security.web.session.SessionManagementFilter">
+        <beans:constructor-arg name="securityContextRepository" ref="securityContextRepository"/>
+        <beans:property name="authenticationFailureHandler" ref="enterpriseAuthenticationFailureHandler"/>
+        <beans:property name="invalidSessionStrategy" ref="enterpriseInvalidSessionStrategy"/>
+    </beans:bean>
+
+    <beans:bean id="enterpriseConCurrentSessionFilter"
+                class="com.ylife.security.event.filter.EventConcurrentSessionFilter">
+        <beans:property name="eventHandler" ref="logEventHandler"/>
+        <beans:property name="loginExpiredHandler" ref="partJsonLoginExpiredHandler"/>
+    </beans:bean>
+
+    <beans:bean id="partJsonLoginExpiredHandler"
+                class="com.ylife.security.handler.PartJsonLoginExpiredHandler">
+        <beans:property name="checker" ref="enterpriseAjaxSendJsonDecider"/>
+    </beans:bean>
+
+    <!-- 操作被拒绝 AccessDeniedHandler -->
+    <beans:bean id="enterpriseAccessDeniedHandler"
+                class="com.ylife.security.handler.PartSendJsonURLAccessDeniedHandler">
+        <beans:property name="errorPage" value="/web/login.htm"/>
+        <beans:property name="decider" ref="enterpriseAjaxSendJsonDecider"/>
+    </beans:bean>
+
+    <!-- 验证失败 AuthenticationFailureHandler -->
+    <beans:bean id="enterpriseAuthenticationFailureHandler"
+                class="com.ylife.security.captcha.CaptchaAuthenticationFailureHandler">
+    </beans:bean>
+
+    <!-- 验证通过 AuthenticationSuccessHandler -->
+    <beans:bean id="enterpriseAuthenticationSuccessHandler"
+                class="com.ylife.security.handler.JsonAuthenticationSuccessHandler">
+    </beans:bean>
+
+    <!-- InvalidSessionStrategy -->
+    <beans:bean id="enterpriseInvalidSessionStrategy"
+                class="com.ylife.security.handler.PartSendJsonURLInvalidSessionStrategy">
+        <beans:constructor-arg name="invalidSessionUrl" value="/web/login.htm"/>
+        <beans:property name="decider" ref="enterpriseAjaxSendJsonDecider"/>
+    </beans:bean>
+
+    <!-- AuthenticationEntryPoint配置 -->
+    <beans:bean id="enterpriseAuthenticationEntryPoint"
+                class="com.ylife.security.PartSendJsonURLAuthenticationEntryPoint">
+        <beans:constructor-arg name="loginFormUrl" value="/web/login.htm"/>
+        <beans:property name="decider" ref="enterpriseAjaxSendJsonDecider"/>
+    </beans:bean>
+
+    <!-- SendJsonDecider -->
+    <beans:bean id="enterpriseAjaxSendJsonDecider"
+                class="com.ylife.chinapost.security.EnterpriseAjaxSendJsonDecider">
+    </beans:bean>
+
+    <!-- AuthenticationManager配置 -->
+    <authentication-manager id="enterpriseAuthenticationManager">
+        <authentication-provider ref="enterpriseAuthenticationProvider"/>
+    </authentication-manager>
+
+    <beans:bean id="enterpriseAuthenticationProvider"
+                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="enterpriseUserDetailServiceImpl"/>
+        <beans:property name="hideUserNotFoundExceptions" value="false"/>
+        <beans:property name="passwordEncoder" ref="passwordEncoder"/>
+    </beans:bean>
+
+    <!-- UserDetailService 配置 -->
+    <beans:bean id="enterpriseUserDetailServiceImpl"
+                class="com.ylife.chinapost.security.EnterpriseUserDetailServiceImpl"/>
+
+    <!-- SecurityMetadataSource 配置 -->
+    <beans:bean id="enterpriseSecurityMetadataSource"
+                class="com.ylife.chinapost.security.EnterpriseSecurityMetadataSource"/>
+
+    <beans:bean id="enterpriseAccessDecisionManager"
+                class="com.ylife.chinapost.security.EnterpriseAccessDecisionManager"/>
+
+    <!--<beans:bean id="logEventHandler" class="com.ylife.chinapost.security.LogEventHandler"/>-->
+
+    <beans:bean id="eventLogoutSuccessHandler" class="com.ylife.security.handler.EventLogoutSuccessHandler">
+        <beans:property name="eventHandler" ref="logEventHandler"/>
+        <beans:property name="defaultTargetUrl" value="/web/login.htm"/>
+    </beans:bean>
+
+    <!-- ################################################## common ######################################################## -->
+
+
+    <!-- securityContextRepository -->
+    <beans:bean id="securityContextRepository"
+                class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>
+
+
+    <!-- 密码的加密算法 -->
+    <beans:bean id="passwordEncoder"
+                class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/>
+
+
+    <beans:bean id="sendJsonAuthenticationEntryPoint"
+                class="com.ylife.security.SendJsonAuthenticationEntryPoint"/>
+
+    <beans:bean id="jsonAccessDeniedHandler"
+                class="com.ylife.security.handler.JsonAccessDeniedHandler"/>
+
+    <beans:bean id="jsonAuthenticationFailureHandler"
+                class="com.ylife.security.handler.JsonAuthenticationFailureHandler"/>
+
+    <beans:bean id="jsonAuthenticationSuccessHandler"
+                class="com.ylife.security.handler.JsonAuthenticationSuccessHandler"/>
+
+    <beans:bean id="jsonInvalidSessionStrategy"
+                class="com.ylife.security.handler.JsonInvalidSessionStrategy"/>
+
+
+    <beans:bean id="messageSource"
+                class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="classpath:messages_zh_CN"/>
+    </beans:bean>
+
+    <beans:bean id="localeResolver"
+                class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver"/>
+
+</beans:beans>

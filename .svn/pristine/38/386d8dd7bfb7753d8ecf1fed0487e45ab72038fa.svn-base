@@ -1,0 +1,235 @@
+package com.ylife.chinapost.third.service.impl;
+
+import com.ylife.chinapost.third.service.OrderManageService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.*;
+import com.ylife.order.service.CreditOrderService;
+import com.ylife.order.service.OrderService;
+import com.ylife.utils.ExcelUtil;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by InThEnd on 2016/5/2.
+ * OrderManageServiceImpl
+ */
+@Service
+public class OrderManageServiceImpl implements OrderManageService {
+
+    @Resource
+    private CreditOrderService creditOrderService;
+    @Resource
+    private OrderService orderService;
+
+    public Page<Order> getOrders(Long orderNo,
+                                 OrderStatus status,
+                                 String  orderCargoStatus,
+                                 String username,
+                                 String receiver,
+                                 String contactPhone,
+                                 Date createStart,
+                                 Date createEnd,
+                                 Date payStart,
+                                 Date payEnd,
+                                 Long businessId,
+                                 String goodsInfoType,
+                                 Pageable pageable) {
+
+        Order model = new Order();
+        if (status != null) {
+            model.setOrderStatus(status);
+        }
+        model.setOrderCode(orderNo);
+        model.setShippingPerson(receiver);
+        model.setShippingMobile(contactPhone);
+        model.setBusinessId(businessId);
+        model.setGoodsInfoType(goodsInfoType);
+        model.setOrderCargoStatus(orderCargoStatus);
+        return orderService.getOrder(model, null, null, username, createStart, createEnd, payStart, payEnd, pageable);
+    }
+
+    public Page<CreditOrder> getBackOrder(Long backOrderNo,
+                                          String phoneNo,
+                                          Long orderNo,
+                                          CreditOrderStatus status,
+                                          Date start,
+                                          Date end,
+                                          Long businessId,
+                                          String goodsInfoType,
+                                          Pageable pageable) {
+        return creditOrderService.getBackOrder(backOrderNo, null, null, phoneNo, orderNo, status, start, end,businessId,goodsInfoType,pageable);
+    }
+
+    @Transactional
+    public void reviewCreditOrder(long creditOrderNo, boolean agree, String message) {
+
+    }
+
+    @Transactional
+    public void receiveCreditOrder(long creditOrderNo, boolean receive, String enterpriseMsg, String customerMsg) {
+        //1、非顶级企业退货单收货
+        creditOrderService.receiveCreditOrder(creditOrderNo, receive, enterpriseMsg, customerMsg);
+    }
+
+    @Transactional
+    public void refund(long creditOrderNo, BigDecimal price, String msg,BigDecimal backSubsidyPrice) {
+
+    }
+
+
+    /**
+     * 获取订单商品详情
+     * */
+    public Order getOrderGoods(Long orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+
+    public List<BackOrderGoods> getBackOrderGoodsByOrderId(Long orderId) {
+        return creditOrderService.getBackOrderByOrderId(orderId);
+    }
+
+    /**
+     * 导入快递单 导入excel解析
+     * @param file
+     * @return
+     */
+    public Map<String, Object> parseFile(HttpServletRequest request, MultipartFile file)  throws IOException, InvalidFormatException {
+        List<List<String>> excelList;
+        excelList = ExcelUtil.readExcel(file.getInputStream(), 1);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        StringBuilder message = new StringBuilder();//失败返回的记录
+        StringBuilder msg = new StringBuilder();//之前导入的记录
+        StringBuilder sb = new StringBuilder();//未批量出库导入的记录
+        Long record = 0L;//成功的条数
+
+        //订单号集合
+        String orderCodeStr="";
+        for (int row = 0; row < excelList.size(); row++) {
+            String orderCode = excelList.get(row).get(0).trim(); // 订单号
+            orderCodeStr += orderCode.concat(",");
+        }
+        List<Order> orderList =  orderService.getOrderByCodes(orderCodeStr);
+
+        // 拿取登陆管理员的名字
+        Long thirdId = null;
+        if(request.getSession().getAttribute("loginStoreId") != null){
+            thirdId = Long.parseLong(request.getSession().getAttribute("loginStoreId").toString());
+        }
+
+        for (int i = 1; i < excelList.size(); i++) {
+            String orderCode = excelList.get(i).get(0).trim(); // 订单号
+            String customerMobile = excelList.get(i).get(1).trim(); //收货人手机
+            String expressName = excelList.get(i).get(2).trim(); //快递公司
+            String expressNo = excelList.get(i).get(3).trim(); //快递单号
+            boolean flag = false;
+            try{
+                for (Order listVo : orderList) {
+                    if (listVo.getOrderCargoStatus().equals("3") && listVo.getOrderStatus().equals("DELIVERED") && listVo.getOrderCode().equals(orderCode) && listVo.getShippingMobile().equals(customerMobile)) {
+                        flag = true;
+                        msg.append(orderCode.concat(","));
+                        break;
+                    }
+                    if (listVo.getOrderCargoStatus().equals("0") && listVo.getOrderStatus().equals("PAYED") && listVo.getOrderCode().equals(orderCode) && listVo.getShippingMobile().equals(customerMobile)) {
+                        flag = true;
+                        sb.append(orderCode.concat(","));
+                        break;
+                    }
+                    if (listVo.getOrderCargoStatus().equals("2") && listVo.getOrderStatus().equals("PAYED") && listVo.getOrderCode().equals(orderCode) && listVo.getShippingMobile().equals(customerMobile)) {
+                        // 查询包裹是否存在
+                        List<OrderContainerRelation> relations = orderService.queryContainerRalation(listVo.getOrderId());
+                        if(relations.size() == 1){
+                            // 更新运货单
+                            orderService.updateThirdSendOrderGoods(new Long[]{relations.get(0).getRelationId()}, expressNo, expressName);
+                            // 修改订单状态
+                            orderService.updateOrderStatus(listVo.getOrderId(), OrderStatus.DELIVERED, thirdId);
+                        }
+                        record++;//成功导入累加
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (!flag) {
+                    message.append(orderCode.concat(","));
+                }
+            }catch (Exception e){
+                map.put("message", "导入格式不正确，请检查格式！");
+                return  map;
+            }
+
+        }
+        String resultMessage = "导入数量"+excelList.size()+"条，成功导入"+record+"条。\n";
+        if(!message.toString().equals("")){
+            resultMessage+="其中未导入的如下："+message.toString()+"请检查订单号与手机号正确性及一致性！\n";
+        }
+        if(!sb.toString().equals("")){
+            resultMessage+="需要先批量出库再导入快递单的如下："+sb.toString()+"\n";
+        }
+        if(!msg.toString().equals("")){
+            resultMessage+="已出库（之前导入的，无需导入）的如下："+msg.toString();
+        }
+        map.put("message", resultMessage);
+        return map;
+    }
+
+    /**
+     * 订单状态变更
+     * @param request
+     * @param backOrderCode
+     * @param whetherType
+     * @return
+     */
+    @Transactional
+    public int orderStateChange(HttpServletRequest request,Long backOrderCode,String whetherType) {
+        // 拿取登陆管理员的名字
+        Long thirdId = null;
+        if(request.getSession().getAttribute("loginStoreId") != null){
+            thirdId = Long.parseLong(request.getSession().getAttribute("loginStoreId").toString());
+        }
+
+        String thirdUserName = "";
+        if(request.getSession().getAttribute("thirdUserName") != null){
+            thirdUserName = request.getSession().getAttribute("thirdUserName").toString();
+        }
+
+        // 拿取退单详情
+        CreditOrder creditOrder = creditOrderService.selectByCreditOrderCode(backOrderCode);
+        OrderStatus status = null;
+        CreditOrderStatus creditOrderStatus = null;
+        if("1".equals(whetherType)){ //同意（退款、退货）
+            if (Long.valueOf(creditOrder.getIsBack()) == 1) {
+                // 同意退货
+                status = OrderStatus.RETURN_WAIT_DELIVER_INFO;
+                creditOrderStatus = CreditOrderStatus.RETURN_WAIT_DELIVER_INFO;
+            }else if(Long.valueOf(creditOrder.getIsBack()) == 2){
+                // 同意退款
+                status = OrderStatus.REFUND_AGREED;
+                creditOrderStatus = CreditOrderStatus.REFUND_AGREED;
+            }
+        }else if("2".equals(whetherType)){ // 拒绝（退款、退货）
+            status = OrderStatus.RETURN_DENIED;
+            creditOrderStatus = CreditOrderStatus.RETURN_DENIED;
+        }
+        boolean orderFlag = orderService.updateOrderStatus(creditOrder.getOrderId(),status,thirdId)> 0?true:false;
+        boolean creditFlag = creditOrderService.updateBackOrderStatus(creditOrder.getBackOrderId(),creditOrderStatus,thirdUserName)> 0?true:false;
+        if(orderFlag && creditFlag){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}

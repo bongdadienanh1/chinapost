@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.enterprise.mapper.EnterpriseFunctionMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.enterprise.model.EnterpriseFunction">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="store_id" property="storeId" jdbcType="BIGINT"/>
+        <result column="paykey" property="paykey" jdbcType="VARCHAR"/>
+        <result column="undistributed_price" property="undistributedPrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="ucoin_price" property="ucoinPrice" jdbcType="DECIMAL"/>
+        <result column="ucoincode_price" property="ucoincodePrice" jdbcType="DECIMAL"/>
+        <result column="inventory_forewarn" property="inventoryForewarn" jdbcType="INTEGER"/>
+        <result column="account_time" property="accountTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="has_permit" property="hasPermit" jdbcType="TINYINT"/>
+        <result column="discount_pct" property="discountPct" jdbcType="DECIMAL"/>
+        <result column="catalog" property="catalog" jdbcType="BIGINT"/>
+        <result column="end" property="end" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, parent_id, store_id, paykey, undistributed_price, price, ucoin_price, ucoincode_price, inventory_forewarn,
+        account_time, is_delete, has_permit, discount_pct, catalog, end
+    </sql>
+
+    <select id="selectSon" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_func
+        where id=#{enterpriseId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_func
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_func
+        where id = #{id,jdbcType=BIGINT}
+        for update
+    </select>
+
+    <select id="selectMaxCatalogByParentId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select
+        max(catalog)
+        from
+        ysh_enterprise_func
+        where
+        parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectCatalogsByParentId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select
+        ysh_enterprise_func.catalog
+        from
+        ysh_enterprise_func
+        where
+        parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByParentIdForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_func
+        where
+        parent_id = #{parentId,jdbcType=BIGINT}
+        for update
+    </select>
+
+    <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_func
+        where
+        parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+    <select id="selectByCatalog" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select
+        id
+        from
+        ysh_enterprise_func
+        where
+        <if test="minCatalog != null">
+            <![CDATA[
+                    catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+    </select>
+
+
+    <select id="checkPayKey" resultType="java.lang.Boolean">
+        select
+        count(*)
+        from
+        ysh_enterprise_func
+        where
+        id = #{id,jdbcType=BIGINT} and
+        paykey = md5(#{payKey,jdbcType=VARCHAR})
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_enterprise_func
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.enterprise.model.EnterpriseFunction" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into ysh_enterprise_func
+        (parent_id, store_id, paykey, undistributed_price, price,
+        ucoin_price, ucoincode_price, inventory_forewarn, account_time,
+        is_delete, has_permit, discount_pct, catalog, end)
+        values (
+        #{parentId,jdbcType=BIGINT},
+        #{storeId,jdbcType=BIGINT},
+        md5(#{paykey,jdbcType=VARCHAR}),
+        #{undistributedPrice,jdbcType=DECIMAL},
+        #{price,jdbcType=DECIMAL},
+        #{ucoinPrice,jdbcType=DECIMAL},
+        #{ucoincodePrice,jdbcType=DECIMAL},
+        #{inventoryForewarn,jdbcType=DECIMAL},
+        #{accountTime,jdbcType=TIMESTAMP},
+        #{isDelete,jdbcType=TINYINT},
+        #{hasPermit,jdbcType=TINYINT},
+        #{discountPct,jdbcType=DECIMAL},
+        #{catalog,jdbcType=BIGINT},
+        #{end,jdbcType=TINYINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.enterprise.model.EnterpriseFunction" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into ysh_enterprise_func
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="paykey != null">
+                paykey,
+            </if>
+            <if test="undistributedPrice != null">
+                undistributed_price,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="ucoinPrice != null">
+                ucoin_price,
+            </if>
+            <if test="ucoincodePrice != null">
+                ucoincode_price,
+            </if>
+            <if test="inventoryForewarn != null">
+                inventory_forewarn,
+            </if>
+            <if test="accountTime != null">
+                account_time,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="hasPermit != null">
+                has_permit,
+            </if>
+            <if test="discountPct != null">
+                discount_pct,
+            </if>
+            <if test="catalog != null">
+                catalog,
+            </if>
+            <if test="end != null">
+                end,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="paykey != null">
+                md5(#{paykey,jdbcType=VARCHAR}),
+            </if>
+            <if test="undistributedPrice != null">
+                #{undistributedPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="ucoinPrice != null">
+                #{ucoinPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="ucoincodePrice != null">
+                #{ucoincodePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="inventoryForewarn != null">
+                #{inventoryForewarn,jdbcType=INTEGER},
+            </if>
+            <if test="accountTime != null">
+                #{accountTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="hasPermit != null">
+                #{hasPermit,jdbcType=TINYINT},
+            </if>
+            <if test="discountPct != null">
+                #{discountPct,jdbcType=DECIMAL},
+            </if>
+            <if test="catalog != null">
+                #{catalog,jdbcType=BIGINT},
+            </if>
+            <if test="end != null">
+                #{end,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.enterprise.model.EnterpriseFunction">
+        update ysh_enterprise_func
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="paykey != null">
+                paykey = md5(#{paykey,jdbcType=VARCHAR}),
+            </if>
+            <if test="undistributedPrice != null">
+                undistributed_price = #{undistributedPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="ucoinPrice != null">
+                ucoin_price = #{ucoinPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="ucoincodePrice != null">
+                ucoincode_price = #{ucoincodePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="inventoryForewarn != null">
+                inventory_forewarn = #{inventoryForewarn,jdbcType=INTEGER},
+            </if>
+            <if test="accountTime != null">
+                account_time = #{accountTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="hasPermit != null">
+                has_permit = #{hasPermit,jdbcType=TINYINT},
+            </if>
+            <if test="discountPct != null">
+                discount_pct = #{discountPct,jdbcType=DECIMAL},
+            </if>
+            <if test="catalog != null">
+                catalog = #{catalog,jdbcType=BIGINT},
+            </if>
+            <if test="end != null">
+                end = #{end,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.enterprise.model.EnterpriseFunction">
+        update ysh_enterprise_func
+        set
+        parent_id = #{parentId,jdbcType=BIGINT},
+        store_id = #{storeId,jdbcType=BIGINT},
+        paykey = md5(#{paykey,jdbcType=VARCHAR}),
+        undistributed_price = #{undistributedPrice,jdbcType=DECIMAL},
+        price = #{price,jdbcType=DECIMAL},
+        ucoin_price = #{ucoinPrice,jdbcType=DECIMAL},
+        ucoincode_price = #{ucoincodePrice,jdbcType=DECIMAL},
+        inventory_forewarn = #{inventoryForewarn,jdbcType=INTEGER},
+        account_time = #{accountTime,jdbcType=TIMESTAMP},
+        is_delete = #{isDelete,jdbcType=TINYINT},
+        has_permit = #{hasPermit,jdbcType=TINYINT},
+        discount_pct = #{discountPct,jdbcType=DECIMAL},
+        catalog = #{catalog,jdbcType=BIGINT},
+        end = #{end,jdbcType=TINYINT}
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateUndistributedPrice">
+        update ysh_enterprise_func
+        set undistributed_price = #{backSubsidyPrice,jdbcType=DECIMAL}+undistributed_price
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

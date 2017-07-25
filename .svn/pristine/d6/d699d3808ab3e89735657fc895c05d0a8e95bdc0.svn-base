@@ -1,0 +1,5 @@
+/*      校验样式    */
+.inputTestError{
+    color:#FF3300;
+    font: 13px '微软雅黑';
+}

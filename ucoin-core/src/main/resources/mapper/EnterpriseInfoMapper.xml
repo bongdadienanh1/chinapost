@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.enterprise.mapper.EnterpriseInfoMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.enterprise.model.EnterpriseInfo">
+        <id column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="identification" property="identification" jdbcType="VARCHAR"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="profile" property="profile" jdbcType="VARCHAR"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="business_license_no" property="businessLicenseNo" jdbcType="VARCHAR"/>
+        <result column="legal_person" property="legalPerson" jdbcType="VARCHAR"/>
+        <result column="register_address" property="registerAddress" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="addr_detail" property="addrDetail" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="linkman" property="linkman" jdbcType="VARCHAR"/>
+        <result column="link_mobile" property="linkMobile" jdbcType="VARCHAR"/>
+        <result column="business_start_time" property="businessStartTime" jdbcType="TIMESTAMP"/>
+        <result column="business_end_time" property="businessEndTime" jdbcType="TIMESTAMP"/>
+        <result column="discount_pct" property="discountPct" jdbcType="DECIMAL"/>
+        <result column="end" property="end" jdbcType="TINYINT"/>
+        <result column="has_permit" property="hasPermit" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ysh_enterprise_info.enterprise_id,
+        ysh_enterprise_info.account_name,
+        ysh_enterprise_info.identification,
+        ysh_enterprise_info.enterprise_name,
+        ysh_enterprise_info.profile,
+        ysh_enterprise_info.img_url,
+        ysh_enterprise_info.business_license_no,
+        ysh_enterprise_info.legal_person,
+        ysh_enterprise_info.register_address,
+        ysh_enterprise_info.province_id,
+        ysh_enterprise_info.city_id,
+        ysh_enterprise_info.district_id,
+        ysh_enterprise_info.addr_detail,
+        ysh_enterprise_info.address,
+        ysh_enterprise_info.mobile,
+        ysh_enterprise_info.linkman,
+        ysh_enterprise_info.link_mobile,
+        ysh_enterprise_info.business_start_time,
+        ysh_enterprise_info.business_end_time
+    </sql>
+
+    <sql id="Func_Column_List">
+        ysh_enterprise_func.discount_pct,
+        ysh_enterprise_func.end,
+        ysh_enterprise_func.has_permit
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        ysh_enterprise_manager.username
+        from ysh_enterprise_info
+        left join ysh_enterprise_manager on
+        ysh_enterprise_info.enterprise_id = ysh_enterprise_manager.enterprise_id
+        where
+        ysh_enterprise_info.enterprise_id = #{id,jdbcType=BIGINT}
+        and ysh_enterprise_manager.is_primary = true
+    </select>
+
+
+    <select id="selectAllOrganization" resultMap="BaseResultMap">
+        select enterprise_id,enterprise_name,account_name from ysh_enterprise_info where
+        (select end from ysh_enterprise_func where id = ysh_enterprise_info.enterprise_id) = 1
+    </select>
+
+    <select id="selectInfoByOrganization" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        from ysh_enterprise_info where account_name = #{accountName,jdbcType=VARCHAR} and
+        (select end from ysh_enterprise_func where id = ysh_enterprise_info.enterprise_id) = 1
+    </select>
+
+    <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        ysh_enterprise_manager.username,
+        ysh_enterprise_func.discount_pct,
+        ysh_enterprise_func.end,
+        ysh_enterprise_func.has_permit
+        from ysh_enterprise_info
+        left join ysh_enterprise_func on
+        ysh_enterprise_info.enterprise_id = ysh_enterprise_func.id
+        left join ysh_enterprise_manager on
+        ysh_enterprise_info.enterprise_id = ysh_enterprise_manager.enterprise_id
+        where
+        ysh_enterprise_func.parent_id = #{parentId,jdbcType=BIGINT}
+        and ysh_enterprise_manager.is_primary = true
+        order by ysh_enterprise_info.enterprise_id desc
+    </select>
+
+    <select id="selectByParentIdIsNull" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Func_Column_List"/>
+        from ysh_enterprise_info
+        left join ysh_enterprise_func on
+        ysh_enterprise_func.id = ysh_enterprise_info.enterprise_id
+        where ysh_enterprise_func.parent_id is null
+    </select>
+
+    <select id="selectRightJoinUcoinByCustomerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select distinct
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_info
+        right join ysh_custom_ucion on
+        ysh_enterprise_info.enterprise_id = ysh_custom_ucion.enterprise_id
+        where
+        ysh_custom_ucion.customer_id = #{customerId,jdbcType=BIGINT}
+        and ysh_enterprise_info.enterprise_id != (select id from ysh_enterprise_func where parent_id is null)
+        and (select end from ysh_enterprise_func where id = ysh_enterprise_info.enterprise_id) = 1
+    </select>
+
+    <select id="selectByDistrictId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_info
+        where
+        ysh_enterprise_info.district_id = #{districtId,jdbcType=BIGINT}
+        and ysh_enterprise_info.enterprise_id != (select id from ysh_enterprise_func where parent_id is null)
+        and (select end from ysh_enterprise_func where id = ysh_enterprise_info.enterprise_id) = 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_enterprise_info
+        where enterprise_id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.enterprise.model.EnterpriseInfo">
+        insert into ysh_enterprise_info (enterprise_id, account_name,identification, enterprise_name,
+        profile, img_url, business_license_no, legal_person, register_address, province_id, city_id, district_id,
+        addr_detail, address, mobile, linkman, link_mobile, business_start_time, business_end_time)
+        values (#{enterpriseId,jdbcType=BIGINT}, #{accountName,jdbcType=VARCHAR},#{identification,jdbcType=VARCHAR}, #{enterpriseName,jdbcType=VARCHAR},
+        #{profile,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{businessLicenseNo,jdbcType=VARCHAR},
+        #{legalPerson,jdbcType=VARCHAR}, #{registerAddress,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT},
+        #{cityId,jdbcType=BIGINT}, #{districtId,jdbcType=BIGINT}, #{addrDetail,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR},
+        #{linkMobile,jdbcType=VARCHAR}, #{businessStartTime,jdbcType=TIMESTAMP}, #{businessEndTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.enterprise.model.EnterpriseInfo">
+        insert into ysh_enterprise_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="accountName != null">
+                account_name,
+            </if>
+            <if test="identification != null">
+                identification,
+            </if>
+            <if test="enterpriseName != null">
+                enterprise_name,
+            </if>
+            <if test="profile != null">
+                profile,
+            </if>
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="businessLicenseNo != null">
+                business_license_no,
+            </if>
+            <if test="legalPerson != null">
+                legal_person,
+            </if>
+            <if test="registerAddress != null">
+                register_address,
+            </if>
+            <if test="provinceId != null">
+                province_id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="districtId != null">
+                district_id,
+            </if>
+            <if test="addrDetail != null">
+                addr_detail,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="linkman != null">
+                linkman,
+            </if>
+            <if test="linkMobile != null">
+                link_mobile,
+            </if>
+            <if test="businessStartTime != null">
+                business_start_time,
+            </if>
+            <if test="businessEndTime != null">
+                business_end_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="accountName != null">
+                #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="identification != null">
+                #{identification,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseName != null">
+                #{enterpriseName,jdbcType=VARCHAR},
+            </if>
+            <if test="profile != null">
+                #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicenseNo != null">
+                #{businessLicenseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPerson != null">
+                #{legalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="registerAddress != null">
+                #{registerAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="addrDetail != null">
+                #{addrDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null">
+                #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="linkMobile != null">
+                #{linkMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="businessStartTime != null">
+                #{businessStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="businessEndTime != null">
+                #{businessEndTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.enterprise.model.EnterpriseInfo">
+        update ysh_enterprise_info
+        <set>
+            <if test="accountName != null">
+                account_name = #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="identification != null">
+                identification = #{identification,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseName != null">
+                enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+            </if>
+            <if test="profile != null">
+                profile = #{profile,jdbcType=VARCHAR},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicenseNo != null">
+                business_license_no = #{businessLicenseNo,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPerson != null">
+                legal_person = #{legalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="registerAddress != null">
+                register_address = #{registerAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=BIGINT},
+            </if>
+            <if test="addrDetail != null">
+                addr_detail = #{addrDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null">
+                linkman = #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="linkMobile != null">
+                link_mobile = #{linkMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="businessStartTime != null">
+                business_start_time = #{businessStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="businessEndTime != null">
+                business_end_time = #{businessEndTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.enterprise.model.EnterpriseInfo">
+        update ysh_enterprise_info
+        set account_name = #{accountName,jdbcType=VARCHAR},
+        identification = #{identification,jdbcType=VARCHAR},
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+        profile = #{profile,jdbcType=VARCHAR},
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+        business_license_no = #{businessLicenseNo,jdbcType=VARCHAR},
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+        register_address = #{registerAddress,jdbcType=VARCHAR},
+        province_id = #{provinceId,jdbcType=BIGINT},
+        city_id = #{cityId,jdbcType=BIGINT},
+        district_id = #{districtId,jdbcType=BIGINT},
+        addr_detail = #{addrDetail,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        mobile = #{mobile,jdbcType=VARCHAR},
+        linkman = #{linkman,jdbcType=VARCHAR},
+        link_mobile = #{linkMobile,jdbcType=VARCHAR},
+        business_start_time = #{businessStartTime,jdbcType=TIMESTAMP},
+        business_end_time = #{businessEndTime,jdbcType=TIMESTAMP}
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    </update>
+</mapper>

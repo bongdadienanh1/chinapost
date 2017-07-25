@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.wealth.mapper.EnterpriseAllocationMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.wealth.model.EnterpriseAllocation">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="in_id" property="inId" jdbcType="BIGINT"/>
+        <result column="out_id" property="outId" jdbcType="BIGINT"/>
+        <result column="out_name" property="outName" jdbcType="VARCHAR"/>
+        <result column="in_name" property="inName" jdbcType="VARCHAR"/>
+        <result column="fee" property="fee" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="batch_id" property="batchId" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, in_id, out_id, fee, create_time, batch_id ,code
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_allocation
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByInIdAndCodeAndCreateDate" resultMap="BaseResultMap">
+        select
+        yea.id,
+        yea.in_id,
+        yea.out_id,
+        yea.fee,
+        yea.create_time,
+        yea.batch_id,
+        yea.code,
+        yei1.enterprise_name as out_name,
+        yei2.enterprise_name as in_name
+        from ysh_enterprise_allocation as yea
+        left join ysh_enterprise_info as yei1 on
+        yea.out_id = yei1.enterprise_id
+        left join ysh_enterprise_info as yei2 on
+        yea.in_id = yei2.enterprise_id
+        where
+        yea.in_id = #{inId,jdbcType=BIGINT}
+        <if test="code != null">
+            and
+            yea.code = #{code,jdbcType=BIGINT}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            yea.create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            yea.create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        order by yea.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByInIdAndCodeAndCreateDate" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_enterprise_allocation as yea
+        where yea.in_id = #{inId,jdbcType=BIGINT}
+        <if test="code != null">
+            and
+            yea.code = #{code,jdbcType=BIGINT}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            yea.create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            yea.create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+    </select>
+
+
+    <select id="selectByBatchId" resultMap="BaseResultMap">
+        select
+        yea.id,
+        yea.in_id,
+        yea.out_id,
+        yea.fee,
+        yea.create_time,
+        yea.batch_id,
+        yea.code,
+        yei1.enterprise_name as out_name,
+        yei2.enterprise_name as in_name
+        from ysh_enterprise_allocation as yea
+        left join ysh_enterprise_info as yei1 on
+        yea.out_id = yei1.enterprise_id
+        left join ysh_enterprise_info as yei2 on
+        yea.in_id = yei2.enterprise_id
+        where yea.batch_id = #{batchId,jdbcType=BIGINT}
+        order by yea.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByBatchId" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_enterprise_allocation
+        where batch_id = #{batchId,jdbcType=BIGINT}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_enterprise_allocation
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.wealth.model.EnterpriseAllocation">
+        insert into
+        ysh_enterprise_allocation (id, in_id, out_id, fee, create_time, batch_id, code)
+        values
+        (#{id,jdbcType=BIGINT},
+        #{inId,jdbcType=BIGINT},
+        #{outId,jdbcType=BIGINT},
+        #{fee,jdbcType=DECIMAL},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{batchId,jdbcType=BIGINT},
+        #{code,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.wealth.model.EnterpriseAllocation">
+        insert into ysh_enterprise_allocation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="inId != null">
+                in_id,
+            </if>
+            <if test="outId != null">
+                out_id,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="batchId != null">
+                batch_id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="inId != null">
+                #{inId,jdbcType=BIGINT},
+            </if>
+            <if test="outId != null">
+                #{outId,jdbcType=BIGINT},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="batchId != null">
+                #{batchId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.wealth.model.EnterpriseAllocation">
+        update ysh_enterprise_allocation
+        <set>
+            <if test="inId != null">
+                in_id = #{inId,jdbcType=BIGINT},
+            </if>
+            <if test="outId != null">
+                out_id = #{outId,jdbcType=BIGINT},
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="batchId != null">
+                batch_id = #{batchId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                code = #{batchId,jdbcType=BIGINT},
+            </if>
+        </set>
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.wealth.model.EnterpriseAllocation">
+        update ysh_enterprise_allocation
+        set
+        in_id = #{inId,jdbcType=BIGINT},
+        out_id = #{outId,jdbcType=BIGINT},
+        fee = #{fee,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        batch_id = #{batchId,jdbcType=BIGINT},
+        code = #{code,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

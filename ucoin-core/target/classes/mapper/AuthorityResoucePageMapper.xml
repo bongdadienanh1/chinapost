@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.authority.mapper.AuthorityResoucePageMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.authority.model.AuthorityPageKey">
+        <id column="authority_id" property="authorityId" jdbcType="BIGINT"/>
+        <id column="page_id" property="pageId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.ylife.authority.model.AuthorityPageKey">
+        delete from ysh_enterprise_authority_page
+        where authority_id = #{authorityId,jdbcType=BIGINT}
+        and page_id = #{pageId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByAuthorityId" parameterType="java.lang.Long">
+        delete from
+        ysh_enterprise_authority_page
+        where
+        authority_id = #{authorityId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.authority.model.AuthorityPageKey">
+        insert into ysh_enterprise_authority_page (authority_id, page_id)
+        values (#{authorityId,jdbcType=BIGINT}, #{pageId,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into
+        ysh_enterprise_authority_page
+        (authority_id, page_id)
+        values
+        <foreach collection="list" separator="," item="item">
+            (#{item.authorityId,jdbcType=BIGINT}, #{item.pageId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+    <select id="exist" parameterType="com.ylife.authority.model.AuthorityPageKey" resultType="java.lang.Boolean">
+        select count(*)
+        from ysh_enterprise_authority_page
+        where authority_id = #{authorityId,jdbcType=BIGINT}
+        and page_id = #{pageId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAuthorityIdByPageId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select authority_id
+        from ysh_enterprise_authority_page
+        where page_id = #{pageId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAuthorityIdAndParentByPageId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select authority_id
+        from ysh_enterprise_authority_page
+        where (page_id = #{pageId,jdbcType=BIGINT} or page_id = (select parent_id from ysh_enterprise_page where id = #{pageId,jdbcType=BIGINT}))
+          and page_id != 14
+          and (select parent_id from ysh_enterprise_page where id = #{pageId,jdbcType=BIGINT}) != 14
+          and ((SELECT	parent_id	FROM ysh_enterprise_page WHERE id = (	SELECT	parent_id	FROM	ysh_enterprise_page	WHERE	id = #{pageId,jdbcType=BIGINT})) is null or
+       (SELECT	parent_id	FROM ysh_enterprise_page WHERE id = (	SELECT	parent_id	FROM	ysh_enterprise_page	WHERE	id = #{pageId,jdbcType=BIGINT}))!=14)
+      union ALL
+      select authority_id
+        from ysh_enterprise_authority_page
+        where (page_id = 14
+						or (select parent_id from ysh_enterprise_page where id = #{pageId,jdbcType=BIGINT}) = 14
+						or (select parent_id from ysh_enterprise_page where id = (select parent_id from ysh_enterprise_page where id = #{pageId,jdbcType=BIGINT}))=14
+				)and page_id= #{pageId,jdbcType=BIGINT}
+
+
+
+    </select>
+
+</mapper>

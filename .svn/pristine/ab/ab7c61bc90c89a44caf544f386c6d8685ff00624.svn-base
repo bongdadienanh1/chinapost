@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.inventory.mapper.InventoryBillHistoryMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.inventory.model.InventoryBillHistory">
+        <id column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <id column="bill_id" property="billId" jdbcType="BIGINT"/>
+        <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        enterprise_id, bill_id, operate_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="com.ylife.inventory.model.InventoryBillHistoryKey">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill_history
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        and bill_id = #{billId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.ylife.inventory.model.InventoryBillHistoryKey">
+        delete from chinapost_inventory_bill_history
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        and bill_id = #{billId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.inventory.model.InventoryBillHistory">
+        insert into chinapost_inventory_bill_history (enterprise_id, bill_id, operate_time)
+        values
+        (#{enterpriseId,jdbcType=BIGINT}, #{billId,jdbcType=BIGINT}, #{operateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.inventory.model.InventoryBillHistory">
+        insert into chinapost_inventory_bill_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="billId != null">
+                bill_id,
+            </if>
+            <if test="operateTime != null">
+                operate_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="billId != null">
+                #{billId,jdbcType=BIGINT},
+            </if>
+            <if test="operateTime != null">
+                #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.inventory.model.InventoryBillHistory">
+        update chinapost_inventory_bill_history
+        <set>
+            <if test="operateTime != null">
+                operate_time = #{operateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        and bill_id = #{billId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.inventory.model.InventoryBillHistory">
+        update chinapost_inventory_bill_history
+        set operate_time = #{operateTime,jdbcType=TIMESTAMP}
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        and bill_id = #{billId,jdbcType=BIGINT}
+    </update>
+</mapper>

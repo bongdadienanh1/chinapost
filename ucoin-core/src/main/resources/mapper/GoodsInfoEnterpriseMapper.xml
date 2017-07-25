@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.product.mapper.GoodsInfoEnterpriseMapper" >
+  <resultMap id="BaseResultMap" type="com.ylife.product.model.GoodsInfoEnterpriseKey" >
+    <id column="enterprise_id" property="enterpriseId" jdbcType="BIGINT" />
+    <id column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.ylife.product.model.GoodsInfoEnterpriseKey" >
+    delete from np_goods_info_enterprise
+    where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+      and goods_info_id = #{goodsInfoId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ylife.product.model.GoodsInfoEnterpriseKey" >
+    insert into np_goods_info_enterprise (enterprise_id, goods_info_id)
+    values (#{enterpriseId,jdbcType=BIGINT}, #{goodsInfoId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylife.product.model.GoodsInfoEnterpriseKey" >
+    insert into np_goods_info_enterprise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="goodsInfoId != null" >
+        goods_info_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsInfoId != null" >
+        #{goodsInfoId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

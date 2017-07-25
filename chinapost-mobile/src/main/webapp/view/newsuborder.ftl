@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<#assign basePath=request.contextPath>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>订单确认</title>
+<link rel="stylesheet" href="${basePath}/static/css/style.min.css?v=201601151630"/>
+<link rel="stylesheet" href="${basePath}/static/css/ui-dialog.css"/>
+    <style>
+        .ui-dialog-title{
+            text-align: center;
+            padding-left: 35px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<!--计算总商品数量-->
+<#assign num=0>
+<!--计算boss商品数量-->
+<#assign bossNum=0>
+<!--记录第三方商品数量-->
+<#assign thirdNum=0>
+<!--计算优惠金额-->
+<#assign  youhui=map.youhui/>
+<!--U宝抵扣运费标识，1为抵扣，0为未抵扣-->
+<#assign expressPriceFlag=0>
+<form  method="post" id="subForm" style="padding-bottom:42px;">
+    <!--支付方式 1在线支付 2 货到付款-->
+    <input type="hidden"name="ch_pay" id="chPay"/>
+    <input type="hidden" name="typeId" value="${typeId!}" id="typeId">
+    <input type="hidden" name="deliveryPointId" value="${deliveryPointId!'0'}" id="deliveryPointId">
+    <#--<#if coupon??>-->
+        <#--<input type="hidden" name="codeNo" value="${coupon.codeNo}">-->
+    <#--</#if>-->
+    <#--<input type="hidden" value="${invoiceType!'0'}" name="invoiceType" id="invoiceType">-->
+    <#--<input type="hidden" value="${invoiceTitle!''}" name="invoiceTitle" id="invoiceTitle">-->
+    <input type="hidden"name="addressId" value="${orderAddress.addressId!''}" id="addressId"/>
+    <input type="hidden"name="enterpriseId" value="${enterpriseId!''}" id="enterpriseId"/>
+    <input type="hidden"name="addressName" value="${addressName!''}" id="addressName"/>
+    <input type="hidden" name="enterpriseName" value="${enterpriseName}" id="enterpriseName">
+    <#--<input id="sumOldPrice" type="hidden" value="${map.sumOldPrice!''}"/>-->
+    <#--<input id="sumPrice" type="hidden" value="${map.sumPrice!''}"/>-->
+    <#--<input id="zhek"  type="hidden" value="${map.zheKPrice}"/>-->
+    <#--<input id="fPrice"  type="hidden" value="${map.fPrice.freightmoney!''}"/>-->
+    <#--<input id="jfen" type="hidden" value="${map.customerPoint}"/>-->
+    <#--<input id="pointSet" type="hidden" value="${map.pointSet}"/>-->
+    <#--<input id="payPassword" name="payPassword" type="hidden" />-->
+    <#--<input id="useUcoinPayFlag" name="useUcoinPayFlag" type="hidden" />-->
+<!--商品优惠价格-->
+<#assign preprice=0>
+    <#if map.shoplist??&&map.shoplist?size!=0>
+        <#list map.shoplist as cart>
+            <#if cart.goodsDetailBean??&&cart.goodsDetailBean.productVo.thirdId??>
+                <#if cart.goodsDetailBean.productVo.thirdId!=0>
+                    <#assign thirdNum=thirdNum+1>
+                <#elseif cart.goodsDetailBean.productVo.thirdId==0>
+                    <#assign bossNum=bossNum+1>
+                </#if>
+            </#if>
+        </#list>
+    </#if>
+<div class="order content-order-confirm">
+    <div class="receive-info">
+        <#if orderAddress??&&orderAddress.addressId?? || enterpriseId??>
+            <#--<input type="hidden"name="addressId" value="${orderAddress.addressId!''}" id="addressId"/>-->
+            <div class="list-item">
+                <div class="send-way">
+                    <i class="arrow-right"></i>
+                    <h3 class="item-head" style="margin-left: 0em;">配送方式</h3>
+                    <div class="list-value" style="margin-left: -1.0em;">
+                        <p class="btn-grey logisticsBtn selected">
+                            <a href="${basePath}/distribution?enterpriseId=${enterpriseId!''}&addressName=${addressName!''}&enterpriseName=${enterpriseName!''}">物流配送</a>
+                        </p>
+                        <#--<p class="btn-grey sinceBtn">-->
+                           <#--<a href="${basePath}/distribution?enterpriseId=${enterpriseId!''}&addressName=${addressName!''}&enterpriseName=${enterpriseName!''}&selfFlag=0"> 网点自提</a>-->
+                        <#--</p>-->
+                    </div>
+                </div>
+            </div>
+
+            <a href="${basePath}/distribution?enterpriseId=${enterpriseId!''}&addressName=${addressName!''}&enterpriseName=${enterpriseName!''}<#if enterpriseId??>&selfFlag=0</#if>">
+                <div class="list-item logistics">
+                        <#if enterpriseId??>
+                            <h3>
+                                <span>${enterpriseName!''}</span>
+                                <p class="dress-info" class="phoneNum">${addressName!""}</p>
+                                <#if unInventoryGoodsInfo??>
+                                    <p class="goodName">
+                                        <span class="title">网点缺货，请更换提货网点或修改订单中商品<br/>${unInventoryGoodsInfo!''}</span>
+                                    </p>
+                                </#if>
+                            </h3>
+                        <#else >
+                            <h3>
+                                <span>${(orderAddress.addressName)!""}</span>
+                                <span class="phoneNum">${(orderAddress.addressPhone)!""}</span>
+                                <p class="dress-info">${(orderAddress.addressDetail)!""}&nbsp;
+                                ${(orderAddress.addressDetailInfo)!""}</p>
+                            </h3>
+                        </#if>
+                        <#--<span class="name">-->
+                                <#--${enterpriseName!''}-->
+                            <#--<#if enterpriseId??>-->
+                                <#--${enterpriseName!''}-->
+                            <#--<#elseif orderAddress.addressName??>-->
+                                <#--${(orderAddress.addressName)!""}-->
+                            <#--</#if>-->
+                        <#--</span>-->
+                        <#--<#if enterpriseId??>-->
+                            <#--<span class="phoneNum">${addressName!""}</span>-->
+                        <#--<#elseif orderAddress.addressPhone??>-->
+                            <#--<span class="phoneNum">${(orderAddress.addressPhone)!""}</span>-->
+                        <#--</#if>-->
+                    <#--</h3>-->
+                    <#--<p class="dress-info">${(orderAddress.addressDetail)!""}&nbsp;-->
+                    <#--${(orderAddress.addressDetailInfo)!""}</p>-->
+                    <#--<i class="arrow-right"></i>-->
+                 </div>
+
+                <div class="list-item sinceId" style="display: none;">
+                    <p class="dress-info enterpriseName"></p>
+                    <p class="dress-info selfAddress"></p>
+                </div>
+            </a>
+        <#else>
+            <div class="list-item">
+                <div class="send-way">
+                        <i class="arrow-right"></i>
+                        <h3 class="item-head">配送方式</h3>
+                        <div class="list-value">
+                            <p class="btn-grey logisticsBtn selected">
+                                <a href="${basePath}/distribution?enterpriseId=${enterpriseId!''}&addressName=${addressName!''}&enterpriseName=${enterpriseName!''}">物流配送</a>
+                            </p>
+                            <#--<p class="btn-grey sinceBtn">-->
+                                <#--<a href="${basePath}/distribution?enterpriseId=${enterpriseId!''}&addressName=${addressName!''}&enterpriseName=${enterpriseName!''}&selfFlag=0"> 网点自提</a>-->
+                            <#--</p>-->
+                        </div>
+                </div>
+            </div>
+            <a href="${basePath}/distribution?enterpriseId=${enterpriseId!''}&addressName=${addressName!''}&enterpriseName=${enterpriseName!''}">
+                <div class="list-item">
+                        <p style="padding:5px 10px;text-align: center;font-size:1.1em;">
+                            <i class="ion-plus-round"></i>
+                            <span>添加收货地址</span>
+                        </p>
+                </div>
+            </a>
+        </#if>
+    </div>
+<#--<#if bossNum!=0>-->
+    <div class="order-info mt10">
+        <div class="list-body-line">
+                <#--<#assign bnum=0/>-->
+                            <#--<#if cart.goodsDetailBean??&&cart.goodsDetailBean.productVo??&&cart.goodsDetailBean.productVo.thirdId?? &&cart.goodsDetailBean.productVo.thirdId==0>-->
+                                <#--<#assign bnum=bnum?number+1 />-->
+                                <#--<#assign storeFlag=false />-->
+            <#if enterpriseId?? || enterpriseId != ''>
+                <#assign bnum=0/>
+                <#list map.shoplist as cart>
+                    <#assign bnum=bnum?number+1/>
+                    <div class="list-item confirm-pro-item" <#if (bnum?number>3)>style="display: none;" </#if>>
+                    <#--<#if bnum==1>-->
+                    <#--</#if>-->
+                        <a href="${basePath}/productdetail?productId=${cart.goodsDetailBean.productVo.goodsInfoId}" title="${cart.goodsDetailBean.productVo.productName}">
+                            <div class="pro-item">
+                                <div class="propic">
+                                    <input type="hidden" value="${cart.shoppingCartId}" name="shoppingCartId">
+                                    <img src="${cart.goodsDetailBean.productVo.goodsInfoImgId}" alt="产品图">
+                                </div>
+                                <div class="prodesc">
+                                    <h3 class="title">${cart.goodsDetailBean.productVo.productName!''}</h3>
+
+                                    <p class="price">
+                                    <span class="num">
+                                    ${cart.goodsDetailBean.productVo.goodsInfoPreferPrice!''}
+                                    </span>
+                                        邮豆
+                                    </p>
+                                    <span class="pro-num">×${cart.goodsNum!''}</span>
+                                    <#if cart.marketingList??&&cart.marketingList?size!=0>
+                                        <#list cart.marketingList as mar>
+                                            <#if cart.marketingActivityId??&&mar.marketingId==cart.marketingActivityId>
+                                                <p class="some-info">优惠：<span>${mar.marketingName}</span></p>
+                                            </#if>
+                                        </#list>
+                                    </#if>
+
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </#list>
+            <#else >
+                <#list map.storeList as store>
+                    <div class="profrom-way">
+                        <i style="display: inline-block;width: 17px;height: 17px;"class="icon_order"></i>
+                        <span class="couponName">${store.thirdName}</span>
+                    </div>
+                    <#list map.shoplist as cart>
+                        <#if store.thirdId==cart.goodsDetailBean.productVo.thirdId>
+                            <div class="list-item confirm-pro-item" >
+                        <#--</#if>-->
+                            <a href="${basePath}/productdetail?productId=${cart.goodsDetailBean.productVo.goodsInfoId}" title="${cart.goodsDetailBean.productVo.productName}">
+                                <div class="pro-item">
+                                    <div class="propic">
+                                        <input type="hidden" value="${cart.shoppingCartId}" name="shoppingCartId">
+                                        <img src="${cart.goodsDetailBean.productVo.goodsInfoImgId}" alt="产品图">
+                                    </div>
+                                    <div class="prodesc">
+                                        <h3 class="title">${cart.goodsDetailBean.productVo.productName!''}</h3>
+
+                                        <p class="price">
+                                        <span class="num">
+                                        ${cart.goodsDetailBean.productVo.goodsInfoPreferPrice!''}
+                                        </span>
+                                            邮豆
+                                        </p>
+                                        <span class="pro-num">×${cart.goodsNum!''}</span>
+                                        <#if cart.marketingList??&&cart.marketingList?size!=0>
+                                            <#list cart.marketingList as mar>
+                                                <#if cart.marketingActivityId??&&mar.marketingId==cart.marketingActivityId>
+                                                    <p class="some-info">优惠：<span>${mar.marketingName}</span></p>
+                                                </#if>
+                                            </#list>
+                                        </#if>
+
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                        </#if>
+                    </#list>
+                     <div class="all-info">
+                       <p class="freightBox"><label for="">运费</label><span class="value freight text-them">${map.fPrice.freightmoney!''}邮豆</span></p>
+                    </div>
+                    <div class="all-info">
+                    <#--<input id="bossPrice" type="hidden" value="${map.bossPrice?number-bosscouponPrice?number+map.fPrice.bossfreight?number}"/>-->
+                    <#--<input id="bosscouponPrice" type="hidden" value="${bosscouponPrice}"/>-->
+                    <#--<input id="youhui" type="hidden"  value="${youhui}"/>-->
+
+                    <#--订单备注-->
+                        <div class="list-item">
+                            <div class="use-remark on-off" on="on" onclick="useRemar(this)"></div>
+                            <h3 class="item-head">订单备注
+                                <small><span class="small">给商家留言</span></small>
+                            </h3>
+                        </div>
+                        <div class="list-item use-remark-form" style="display: none;">
+                            <h3 class="item-head">
+                                <textarea rows="4"  id="remark" name='remark' placeholder="请输入要留言的内容，限制45个字。" class="text"></textarea>
+                            </h3>
+                        </div>
+                    </div>
+                </#list>
+            </#if>
+        </div>
+        <#if (bossNum>3) && enterpriseId??>
+            <div class="list-item see-all" onclick="showGoods(this)">
+                <input type="hidden" class="storeId" value="0">
+                — — — — 显示其他${bossNum-3}件商品 — — — —
+            </div>
+        </#if>
+    </div>
+<#--</#if>-->
+    <#--<#if thirdNum!=0>-->
+        <#--<#list map.thirds as store>-->
+            <#--<#if store.thirdId!=0>-->
+                <#--<div class="order-info mt10">-->
+                        <#--<#assign tNum=0 />-->
+                        <#--<#list  map.shoplist as cart>-->
+                            <#--<#if cart.goodsDetailBean??&& cart.goodsDetailBean.productVo.thirdId?? && cart.goodsDetailBean.productVo.thirdId==store.thirdId&&store.thirdId!=0>-->
+                                <#--<#assign tNum=tNum+1/>-->
+                            <#--<div class="list-item  goods${store.thirdId}"  <#if (tNum?number>3)>style="display:none" </#if>>-->
+                                <#--<#if tNum==1>-->
+                                <#--<div class="profrom-way"><span class="some-tip">${store.thirdName}</span></div>-->
+                                <#--</#if>-->
+                                        <#--<div class="pro-item" >-->
+                                           <#--<a href="${basePath}/item/${cart.goodsDetailBean.productVo.goodsInfoId}.html" target="_blank" title="${cart.goodsDetailBean.productVo.productName}">-->
+                                            <#--<div class="propic">-->
+                                                <#--<input type="hidden" value="${cart.shoppingCartId}" name="shoppingCartId">-->
+                                                <#--<img src="${cart.goodsDetailBean.productVo.goodsInfoImgId}" alt="产品图">-->
+                                            <#--</div>-->
+                                            <#--<div class="prodesc">-->
+                                                <#--<h3 class="title">${cart.goodsDetailBean.productVo.productName!''}</h3>-->
+
+                                                <#--<p class="price"><span class="num">${cart.goodsDetailBean.productVo.goodsInfoPreferPrice!'0.00'}</span>邮宝</p>-->
+                                                <#--<span class="pro-num">×${cart.goodsNum!''}</span>-->
+                                                <#--<#if cart.marketingList??&&cart.marketingList?size!=0>-->
+                                                    <#--<#list cart.marketingList as mar>-->
+                                                        <#--<#if cart.marketingActivityId??&&mar.marketingId==cart.marketingActivityId>-->
+                                                            <#--<p class="some-info">优惠：<span>${mar.marketingName}</span></p>-->
+                                                        <#--</#if>-->
+                                                    <#--</#list>-->
+                                                <#--</#if>-->
+
+                                            <#--</div>-->
+                                         <#--</a>-->
+                                        <#--</div>-->
+                            <#--</div>-->
+                            <#--</#if>-->
+                        <#--</#list>-->
+
+                    <#--<#if (tNum>3)>-->
+                        <#--<div class="list-item see-all" onclick="showGoods(this)">-->
+                            <#--<input type="hidden" class="storeId" value="${store.thirdId}">-->
+                            <#--— — — — 显示其他${tNum-3}件商品 — — — —-->
+                        <#--</div>-->
+                    <#--</#if>-->
+                <#--</div>-->
+             <#--</#if>-->
+        <#--</#list>-->
+    <#--</#if>-->
+    <#if enterpriseId?? || enterpriseId !=''>
+        <div class="all-info mt10">
+            <#--<input id="bossPrice" type="hidden" value="${map.bossPrice?number-bosscouponPrice?number+map.fPrice.bossfreight?number}"/>-->
+            <#--<input id="bosscouponPrice" type="hidden" value="${bosscouponPrice}"/>-->
+            <#--<input id="youhui" type="hidden"  value="${youhui}"/>-->
+
+    <#--订单备注-->
+        <div class="list-item">
+            <div id="use-remark" class="use-remark on-off" on="on"></div>
+            <h3 class="item-head">订单备注
+                <small><span class="small">给商家留言</span></small>
+            </h3>
+        </div>
+        <div id="use-remark-form" class="list-item use-remark-form" style="display: none;">
+            <h3 class="item-head">
+                <textarea rows="4"  id="remark" name='remark' placeholder="请输入要留言的内容，限制45个字。" class="text"></textarea>
+            </h3>
+        </div>
+        </div>
+    </#if>
+    <div class="all-info mt10">
+        <div class="list-item">
+            <ul class="price-total">
+                <li style="line-height: 40px;">
+                    <label for="">邮豆余额</label><span class="value text-them" id="ucoinPayFee"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="all-info mt10">
+        <div class="list-item">
+            <ul class="price-total">
+                <li><label for="">商品金额</label><span class="value">${map.sumOldPrice!''}邮豆</span></li>
+                <li><label for="">运费</label><span class="value freight" id="allFreight"></span></li>
+                <#--<li><p class="textDetailed">订单总价及支付明细</p></li>-->
+                <li><label for="">订单总价（含运费）</label><span class="value text-them" id="sPrice">${map.sumOldPrice!''} 邮豆</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="all-info mt10">
+        <div class="pay-bar mui-clearfix">
+            <div class="pay-cont">
+                合计： <span id="payPrice">${map.sumOldPrice!''} 邮豆</span>
+            </div>
+            <button class="mui-btn mui-btn-danger" type="button" id="payorder" >提交订单</button>
+        </div>
+    </div>
+</div>
+    </form>
+<input type="hidden" id="orderId"/>
+<input value="${basePath}" type="hidden" id="basePath"/>
+<script src="${basePath}/static/js/jquery-1.10.1.js"></script>
+<script src="${basePath}/static/js/dialog-min.js"></script>
+<script type="text/javascript" src="${basePath}/static/js/shoppingCar/jsOperation.js"></script>
+<#--<script src="${basePath}/static/js/wxforward.js"></script>-->
+<script>
+    var selfPick = false;
+    $(function() {
+        var enterpriseId = $("#enterpriseId").val();
+        if(enterpriseId != null && enterpriseId != ""){
+            selfPick = true;
+            //选择自提扣除运费
+            $(".freight").html("0.00邮豆");
+            var newSprice = ${(map.sumOldPrice?number+map.fPrice.freightmoney?number)} - ${(map.fPrice.freightmoney!'0')};
+            $("#sPrice").html(newSprice+'邮豆');
+            $("#payPrice").html(newSprice+'邮豆');
+            //获取自提id
+            $(".selfAddress").html( $("#addressName").val());
+            $(".enterpriseName").html($("#enterpriseName").val());
+            //清除物流地址
+            $("#addressId").val("");
+            $("#addressName").val("");
+            $(".logisticsBtn").removeClass("selected");
+            $(".logisticsBtn").next().addClass("selected");
+        }else {
+            selfPick = false;
+            $(".sinceBox").show()
+            $(".logisticsBox").hide();
+            $(".logistics").show();
+            $(".sinceId").hide();
+            $(".sinceBtn").removeClass("selected");
+            $(".sinceBtn").prev().addClass("selected");
+            //总运费
+            var freight = $(".freightBox");
+            var allFreight = 0;
+            var num = 0;
+            for(var i=0;i<freight.length;i++){
+                num = parseInt(freight.eq(i).find(".freight").text());
+                allFreight += Number(num);
+            }
+            $("#allFreight").html(allFreight+'邮豆');
+            //商品总额加运费
+            var sPrice = parseInt($("#sPrice").text());
+            $("#sPrice").html(Number(allFreight)+Number(sPrice)+'邮豆');
+            $("#payPrice").html(Number(allFreight)+Number(sPrice)+'邮豆');
+        };
+        $.post("myUcoinBalance",{},function(data){
+            if(data.response =="success"){
+                $("#ucoinPayFee").html(data.data+'邮豆');
+            }
+        });
+        /* 订单备注 */
+        $('#use-remark').click(function () {
+            $(this).toggleClass('on');
+            $('#use-remark-form').slideToggle('fast');
+            if ($("#use-remark").parent().find(".on").length == 0) {
+                $("#jifen").val('');
+            }
+        });
+        /* 使用邮宝,弹出密码框 */
+//        $('#use-ubs').click(function () {
+//            $(this).toggleClass('on');
+//            $('#use-ubs-form').slideToggle('fast');
+//
+//            //不使用U宝时
+//            if ($('#use-ubs').parent().find(".on").length == 0) {
+//                $("#ucoinPayFee").text('￥0.00');
+//                $("#otherPayFee").text('￥' + parseFloat($("#payPrice").text()).toFixed(2));
+//                $("#useUcoinPayFlag").val('0');
+//            } else {//使用U宝
+//                $("#ucoinPayFee").text('￥' + parseFloat($('#ucoinPayAmount').val()).toFixed(2));
+//                $("#otherPayFee").text('￥' + ($("#payPrice").text() - $('#ucoinPayAmount').val()).toFixed(2));
+//                $("#useUcoinPayFlag").val('1');
+//            }
+
+            /* 提交订单 */
+            $('#payorder').click(function () {
+                if ($("#addressId").val() == '' && $("#enterpriseId").val() == '') {
+                    setTimeout(function () {
+                        $('.tip-box').remove();
+                        $('body').append('<div class="tip-box" style="z-index:99999"><div class="tip-body"><i class="failed"></i><h3>请选择收货地址！</h3></div></div>');
+                    }, 10);
+                    setTimeout(function () {
+                        $(".tip-box").hide();
+                    }, 1000)
+                    return;
+                };
+
+                    $.post('${basePath}/checkExistsPayPassWord', {}, function (tt) {
+                        if (tt.response == "success") {
+                            var zhifumima = dialog({
+                                title:"请输入支付密码",
+                                width: 260,
+                                content: '<p class="tc" style="font-size: 16px "><span style="color: red;font-size: 20px">'+parseInt($("#payPrice").html())+'</span>邮豆<div class="passContainer"> <div class="input-box"> <input type="number" value="" class="passwordInput" maxlength="6"/> </div> <div class="passItem-box"> <div class="passItem"></div> <div class="passItem"></div> <div class="passItem"></div> <div class="passItem"></div> <div class="passItem"></div> <div class="passItem"></div></div> </div></p> ',
+                                });
+                            zhifumima.showModal();
+
+                            $('.passContainer').click(function () {
+                                $('.passwordInput').focus();
+                            });
+
+                            $('.passwordInput').bind("input propertychange change", function (event) {
+                                if (event.type != "propertychange" || event.originalEvent.propertyName == "value") {
+                                    if ($('.passwordInput').val().length > 6) {
+                                        $('.passwordInput').val($('.passwordInput').val().substr(0, 6));
+                                    }
+                                    if($('.passwordInput').val().length == 6){
+                                        payOrder();
+                                    }
+
+                                    $('.passContainer .passItem-box .passItem').html("");
+                                    for (var i = 0; i < $('.passwordInput').val().length; i++) {
+                                        $('.passContainer .passItem-box .passItem').eq(i).html("*");
+                                    }
+                                }
+                            });
+
+
+                            $('.passwordInput').focus();
+
+                        } else {
+                            var shezhimima = dialog({
+                                width: 260,
+                                content: '<p class="tc">去设置支付密码</p> ',
+                                okValue: '去设置支付密码',
+                                cancelValue: '取消',
+                                ok: function () {
+                                    window.location.href = '${basePath}/paypassword';
+                                },
+                                cancel: function () {
+                                    //停留在当前页面
+                                    return true;
+                                }
+                            });
+                            shezhimima.showModal();
+                        }
+                    });
+            });
+
+        });
+        /* 显示隐藏的商品 */
+        function showGoods(obj) {
+            var storeId = $(obj).find("input").val();
+            if (storeId == '0') {
+                $('.confirm-pro-item').show();
+            } else {
+                $('.goods' + storeId).show();
+            }
+            $(obj).remove();
+        }
+        /* 订单备注 */
+        function useRemar(obj){
+            $(obj).toggleClass('on');
+            $(obj).parent().next(".use-remark-form").slideToggle('fast');
+            if ($(obj).parent().find(".on").length == 0) {
+                $("#jifen").val('');
+            };
+        }
+
+        function payOrder(){
+            var shoppingCartId = new Array();
+            $("input[name='shoppingCartId']").each(function(){
+                shoppingCartId.push($(this).val());
+            })
+            //提交订单
+            $.ajax({
+                type: "POST",
+                url: "submitorder",
+                data: {addressId:$("#addressId").val(), shoppingCartId:shoppingCartId,
+                    selfPick:selfPick,
+                    remark:$("#remark").val(),
+                    enterpriseId:$("#enterpriseId").val(),
+                    paykey:$(".passwordInput").val()},
+                dataType: "json",
+                traditional: true,
+                success: function(data){
+                    if(data.response == "success"){
+                        window.location.href = "${basePath}/paysuccess?deliveryCode="+data.data;
+                    }else {
+                        var text = data.data.text;
+                        alertStr(text);
+                        if(data.data.text != "支付密码错误！"){
+                            setTimeout(function(){
+                                window.location.href = "${basePath}/payerror";
+                            },1000);
+                        }
+                        $('.passContainer .passItem-box .passItem').html("");
+                        $('.passwordInput').val("");
+                    <#--window.location.href = "${basePath}/myorder"-->
+                    }
+                }
+            });
+        }
+</script>
+
+<script src="${basePath}/static/js/common.js"></script>
+</body>
+</html>

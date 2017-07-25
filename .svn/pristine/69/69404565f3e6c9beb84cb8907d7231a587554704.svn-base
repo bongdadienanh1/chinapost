@@ -1,0 +1,103 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSON;
+import com.ylife.data.page.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import com.ylife.thirdplatform.entity.ThirdPlatformEntity;
+import com.ylife.chinapost.boss.service.ThirdPlatformBossService;
+
+@Controller
+@RequestMapping(value = "/ThirdPlatformAdmin")
+public class ThirdPlatformController  {
+
+	@Resource(name="thirdPlatformBossService")
+	private ThirdPlatformBossService thirdPlatformBossService;
+
+
+	/**
+	* ThirdPlatformEntity List页面
+	* @author henry
+	* @date 2017-06-30 09:14:43
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView thirdPlatformListPage(ThirdPlatformEntity thirdPlatformEntity, String flag,
+											  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+											  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		return new ModelAndView(returnPath("thirdPlatformList")).addObject("flag",flag)
+				.addObject("pageBean",thirdPlatformBossService.queryListForPageThirdPlatform(thirdPlatformEntity,new Pageable(page,size)))
+				.addObject("thirdPlatformEntity",thirdPlatformEntity);
+	}
+
+	/**
+	* ThirdPlatformEntity详细页
+	* @author henry
+	* @date 2017-06-30 09:14:43
+	* */
+	@RequestMapping(value = "/EditPage")
+	public ModelAndView thirdPlatformEditPage(ThirdPlatformEntity thirdPlatformEntity) {
+		return new ModelAndView(returnPath("thirdPlatformAdd"));
+	}
+
+	/**
+	* 查询ThirdPlatformEntity
+	* @author henry
+	* @date 2017-06-30 09:14:43
+	* */
+	@RequestMapping(value = "/queryById")
+	@ResponseBody
+	public String findThirdPlatformData(String id) {
+		return JSON.toJSONString(thirdPlatformBossService.queryById(Long.parseLong(id)));
+	}
+
+	/**
+	* 保存或更新ThirdPlatform
+	* @author henry
+	* @date 2017-06-30 09:14:43
+	*
+	* */
+	@RequestMapping(value = "/saveThirdPlatform")
+	@ResponseBody
+	public String saveThirdPlatformData(ThirdPlatformEntity thirdPlatformEntity,String ids) {
+		boolean result = true;
+		if(thirdPlatformEntity!=null){
+			if(thirdPlatformEntity.getId()!=null){
+				result = thirdPlatformBossService.updateThirdPlatform(thirdPlatformEntity);
+			}else{
+				result = thirdPlatformBossService.addThirdPlatform(thirdPlatformEntity);
+			}
+		}
+		if(result){
+			return "200";
+		}
+		return "201";
+	}
+
+	/**
+	* 导出ThirdPlatformEntity
+	* @author henry
+	* @date 2017-06-30 09:14:43
+	* @return
+	*/
+	@RequestMapping(value = "/exportThirdPlatformExcel")
+	public void exportThirdPlatformExcel(ThirdPlatformEntity thirdPlatformEntity,String ids,HttpServletResponse response) {
+		thirdPlatformBossService.exportThirdPlatform(thirdPlatformEntity, ids, response);
+	}
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

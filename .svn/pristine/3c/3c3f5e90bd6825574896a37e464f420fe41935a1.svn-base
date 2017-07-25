@@ -1,0 +1,100 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsProduct;
+import com.ylife.goods.service.GoodsProductService;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+import com.ylife.product.service.GoodsInfoService;
+import com.ylife.utils.StringUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value = "/GoodsInfoAdmin")
+public class GoodsInfoController  {
+
+	@Resource
+	private GoodsProductService goodsProductService;
+	@Resource
+	private GoodsInfoService goodsInfoService;
+
+
+	/**
+	* GoodsInfoEntity List页面
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView goodsInfoListPage(GoodsProduct goodsProduct, String flag,
+										  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+										  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		String auditStatus = goodsProduct.getAuditStatus();
+		if(StringUtil.isBlank(auditStatus)){
+			auditStatus = null;
+		}
+		Page<GoodsManagerResult> pageBean = goodsInfoService.getGoods(goodsProduct.getGoodsInfoName(),goodsProduct.getGoodsInfoItemNo(),null,null,null,null,2,null,null,auditStatus,new Pageable(page,size));
+		return new ModelAndView(returnPath("PlantGoodsList")).addObject("flag",flag).addObject("goodsProduct",goodsProduct)
+				.addObject("pageBean",pageBean);
+	}
+
+	/**
+	* GoodsInfoEntity详细页
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	* */
+	/*@RequestMapping(value = "/EditPage")
+	public ModelAndView goodsInfoEditPage(GoodsInfoEntity goodsInfoEntity) {
+		return new ModelAndView(returnPath("goodsInfoAdd"));
+	}*/
+
+	/**
+	* 查询GoodsInfoEntity
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	* */
+/*	@RequestMapping(value = "/queryById")
+	@ResponseBody
+	public String findGoodsInfoData(String id) {
+		return JSON.toJSONString(goodsInfoBossService.queryById(Long.parseLong(id)));
+	}*/
+
+	/**
+	* 审核
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	*
+	* */
+	@RequestMapping(value = "/batchUpdateAuditStatus")
+	public ModelAndView batchUpdateAuditStatus(HttpServletRequest request) {
+        goodsProductService.batchUpdateAuditStatus(request);
+		return new ModelAndView("redirect:ListPage?flag=1");
+	}
+
+	/**
+	* 导出GoodsInfoEntity
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	* @return
+	*/
+/*	@RequestMapping(value = "/exportGoodsInfoExcel")
+	public void exportGoodsInfoExcel(GoodsInfoEntity goodsInfoEntity,String ids,HttpServletResponse response) {
+		goodsInfoBossService.exportGoodsInfo(goodsInfoEntity, ids, response);
+	}*/
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

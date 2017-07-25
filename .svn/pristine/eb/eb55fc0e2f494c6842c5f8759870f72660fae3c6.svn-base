@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.ucoin.mapper.CustomerUcoinHistoryMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.ucoin.model.CustomerUcoinHistory">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="batch_id" property="batchId" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="market_price" property="marketPrice" jdbcType="DECIMAL"/>
+        <result column="sales_price" property="salesPrice" jdbcType="DECIMAL"/>
+        <result column="balance_price" property="balancePrice" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="business_time" property="businessTime" jdbcType="TIMESTAMP"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+        <result column="serial_num" property="serialNum" jdbcType="VARCHAR"/>
+        <result column="param_json" property="paramJson" jdbcType="VARCHAR"/>
+        <result column="pay_settle_price" property="paySettlePrice" jdbcType="DECIMAL"/>
+        <association property="customerInfo" resultMap="CustomerResultMap"/>
+        <association property="enterpriseInfo" resultMap="EnterpriseResultMap"/>
+        <association property="orderInfo" resultMap="OrderInfoResultMap"/>
+    </resultMap>
+
+    <resultMap id="OrderInfoResultMap" type="com.ylife.ucoin.model.CustomerUcoinHistory$OrderInfo">
+        <id column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="order_code" property="orderCode" jdbcType="BIGINT"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="is_valet" property="isValet"/>
+    </resultMap>
+
+    <resultMap id="CustomerResultMap" type="com.ylife.ucoin.model.CustomerUcoinHistory$CustomerInfo">
+        <id column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="idCard_no" property="idCard" jdbcType="VARCHAR"/>
+        <result column="fullname" property="name" jdbcType="VARCHAR"/>
+        <result column="contact_phone" property="contactPhone" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="EnterpriseResultMap" type="com.ylife.ucoin.model.CustomerUcoinHistory$EnterpriseInfo">
+        <id column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="enterprise_img" property="enterpriseImg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CustomerUcoinHistoryDetailMap" type="com.ylife.ucoin.model.CustomerUcoinHistoryVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="batch_id" property="batchId" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="send_type" property="sendType" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ysh_custom_ucion_history.id,
+        ysh_custom_ucion_history.enterprise_id,
+        ysh_custom_ucion_history.customer_id,
+        ysh_custom_ucion_history.batch_id,
+        ysh_custom_ucion_history.type,
+        ysh_custom_ucion_history.price,
+        ysh_custom_ucion_history.market_price,
+        ysh_custom_ucion_history.sales_price,
+        ysh_custom_ucion_history.balance_price,
+        ysh_custom_ucion_history.business_time,
+        ysh_custom_ucion_history.create_time,
+        ysh_custom_ucion_history.order_id,
+        ysh_custom_ucion_history.type_id,
+        ysh_custom_ucion_history.remark,
+        ysh_custom_ucion_history.code,
+        ysh_custom_ucion_history.serial_num,
+        ysh_custom_ucion_history.param_json,
+        ysh_custom_ucion_history.pay_settle_price
+    </sql>
+
+    <select id="selectDetailByPrimaryKey" resultMap="CustomerUcoinHistoryDetailMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,(select GROUP_CONCAT(goods_info_name) from np_order_goods where order_id =ysh_custom_ucion_history.order_id)
+        goodsInfoNames,
+        (select enterprise_name from ysh_enterprise_info where enterprise_id = ysh_custom_ucion_history.enterprise_id)
+        accountName,
+        (select img_url from ysh_enterprise_info where enterprise_id = (select id from ysh_enterprise_func where
+        parent_id is null limit 0,1)) enterpriseLogo
+        from ysh_custom_ucion_history
+        where ysh_custom_ucion_history.id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion_history
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectBySerialNum" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion_history
+        where serial_num = #{serialNum,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByCustomerId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        ysh_enterprise_info.enterprise_name as enterprise_name
+        from ysh_custom_ucion_history left join ysh_enterprise_info
+        on ysh_custom_ucion_history.enterprise_id = ysh_enterprise_info.enterprise_id
+        where
+        customer_id = #{customerId,jdbcType=BIGINT}
+        order by create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByCustomerId" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        select
+        count(*)
+        from ysh_custom_ucion_history
+        where
+        customer_id = #{customerId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByBatchId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname
+        from ysh_custom_ucion_history
+        left join chinapost_customer on
+        ysh_custom_ucion_history.customer_id=chinapost_customer.id
+        where
+        batch_id = #{batchId,jdbcType=BIGINT}
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByBatchId" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_custom_ucion_history
+        where
+        batch_id = #{batchId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByEnterpriseIdAndTypeIdAndCreatTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        yei.account_name,
+        yei.enterprise_name,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        if(ysh_custom_ucion_history.type_id=-100,"市局统一发放",system_business_type.type_name) as type_name,
+        system_business_type.type_id
+        from ysh_custom_ucion_history left join chinapost_customer on
+        ysh_custom_ucion_history.customer_id=chinapost_customer.id
+        left join system_business_type on
+        system_business_type.type_id=ysh_custom_ucion_history.type_id
+        left join ysh_enterprise_info as yei on
+        ysh_custom_ucion_history.enterprise_id=yei.enterprise_id
+        LEFT JOIN ysh_enterprise_func AS yef ON yef.id = yei.enterprise_id
+        <where>
+            <if test="maxCatalog!=null">
+                <![CDATA[
+                    yef.catalog<=#{maxCatalog,jdbcType=BIGINT}
+                 ]]>
+            </if>
+
+            <if test="minCatalog!=null">
+                <![CDATA[
+                 and
+                 yef.catalog>=#{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="typeId != null">
+                and
+                ysh_custom_ucion_history.type_id = #{typeId,jdbcType=VARCHAR}
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY
+        ysh_custom_ucion_history.enterprise_id,
+        ysh_custom_ucion_history.id
+        order by create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByEnterpriseIdAndTypeIdAndCreatTime" resultType="java.lang.Integer">
+        select count(*)
+        from ysh_custom_ucion_history
+        left join system_business_type on
+        system_business_type.type_id=ysh_custom_ucion_history.type_id
+        left join ysh_enterprise_info as yei on
+        ysh_custom_ucion_history.enterprise_id=yei.enterprise_id
+        LEFT JOIN ysh_enterprise_func AS yef ON yef.id = yei.enterprise_id
+        <where>
+            <if test="maxCatalog!=null">
+                <![CDATA[
+                    yef.catalog<=#{maxCatalog,jdbcType=BIGINT}
+                 ]]>
+            </if>
+
+            <if test="minCatalog!=null">
+                <![CDATA[
+                 and
+                 yef.catalog>=#{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="typeId != null">
+                and
+                ysh_custom_ucion_history.type_id = #{typeId,jdbcType=VARCHAR}
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteBytime">
+         delete from ysh_custom_ucion_history
+        <where>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+    </delete>
+    
+    <select id="selectByEnterpriseIdAndCodeAndTypeAndCreateTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname as name
+        from ysh_custom_ucion_history left join chinapost_customer on
+        ysh_custom_ucion_history.customer_id=chinapost_customer.id
+        where
+        ysh_custom_ucion_history.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <if test="code != null">
+            and
+            code = #{code,jdbcType=BIGINT}
+        </if>
+        <if test="type != null">
+            and
+            type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        order by create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByEnterpriseIdAndCodeAndTypeAndCreateTime" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_custom_ucion_history
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <if test="code != null">
+            and
+            code = #{code,jdbcType=BIGINT}
+        </if>
+        <if test="type != null">
+            and
+            type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_custom_ucion_history
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.ucoin.model.CustomerUcoinHistory">
+        insert into ysh_custom_ucion_history (id, enterprise_id, customer_id, batch_id,
+        type, price, market_price, sales_price, balance_price, business_time,create_time, order_id, type_id, remark, code, param_json
+        )
+        values (#{id,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT},
+        #{customerId,jdbcType=BIGINT},#{batchId,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+        #{price,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{marketPrice,jdbcType=DECIMAL},
+        #{salesPrice,jdbcType=DECIMAL},#{balancePrice,jdbcType=DECIMAL},#{businessTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=BIGINT},
+        #{typeId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{code,jdbcType=BIGINT}, #{paramJson,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.ucoin.model.CustomerUcoinHistory">
+        insert into ysh_custom_ucion_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="batchId != null">
+                batch_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="marketPrice != null">
+                market_price,
+            </if>
+            <if test="salesPrice != null">
+                sales_price,
+            </if>
+            <if test="balancePrice != null">
+                balance_price,
+            </if>
+            <if test="businessTime!=null">
+                business_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="serialNum != null">
+                serial_num,
+            </if>
+            <if test="paramJson != null">
+                param_json,
+            </if>
+            <if test="paySettlePrice != null">
+                pay_settle_price,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="batchId != null">
+                #{batchId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="marketPrice != null">
+                #{marketPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="salesPrice != null">
+                #{salesPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="balancePrice != null">
+                #{balancePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="businessTime!=null">
+                #{businessTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=BIGINT},
+            </if>
+            <if test="serialNum != null">
+                #{serialNum,jdbcType=VARCHAR},
+            </if>
+            <if test="paramJson != null">
+                #{paramJson,jdbcType=VARCHAR},
+            </if>
+            <if test="paySettlePrice != null">
+                #{paySettlePrice,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.ucoin.model.CustomerUcoinHistory">
+        update ysh_custom_ucion_history
+        <set>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="batchId != null">
+                batch_id = #{batchId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="marketPrice != null">
+                market_price = #{marketPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="salesPrice != null">
+                sales_price = #{salesPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="balancePrice != null">
+                balance_price = #{balancePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="businessTime!=null">
+                business_time=#{businessTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=BIGINT},
+            </if>
+            <if test="serialNum != null">
+                serial_num = #{serialNum,jdbcType=VARCHAR},
+            </if>
+            <if test="paramJson != null">
+                param_json = #{paramJson,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <insert id="insertByBatch">
+        <foreach collection="list" separator=";" item="item">
+            insert into ysh_custom_ucion_history
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">
+                    id,
+                </if>
+                <if test="item.enterpriseId != null">
+                    enterprise_id,
+                </if>
+                <if test="item.customerId != null">
+                    customer_id,
+                </if>
+                <if test="item.batchId != null">
+                    batch_id,
+                </if>
+                <if test="item.type != null">
+                type,
+            </if>
+            <if test="item.price != null">
+                price,
+            </if>
+            <if test="item.marketPrice != null">
+                market_price,
+            </if>
+            <if test="item.salesPrice != null">
+                    sales_price,
+                </if>
+                <if test="item.balancePrice != null">
+                    balance_price,
+                </if>
+                <if test="item.businessTime!=null">
+                    business_time,
+                </if>
+                <if test="item.createTime != null">
+                    create_time,
+                </if>
+                <if test="item.orderId != null">
+                    order_id,
+                </if>
+                <if test="item.typeId != null">
+                    type_id,
+                </if>
+                <if test="item.remark != null">
+                    remark,
+                </if>
+                <if test="item.code != null">
+                    code,
+                </if>
+                <if test="item.serialNum != null">
+                    serial_num,
+                </if>
+                <if test="item.paramJson != null">
+                    param_json,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="item.id != null">
+                    #{item.id,jdbcType=BIGINT},
+                </if>
+                <if test="item.enterpriseId != null">
+                    #{item.enterpriseId,jdbcType=BIGINT},
+                </if>
+                <if test="item.customerId != null">
+                    #{item.customerId,jdbcType=BIGINT},
+                </if>
+                <if test="item.batchId != null">
+                    #{item.batchId,jdbcType=BIGINT},
+                </if>
+                <if test="item.type != null">
+                    #{item.type,jdbcType=VARCHAR},
+                </if>
+                <if test="item.price != null">
+                    #{item.price,jdbcType=DECIMAL},
+                </if>
+                <if test="item.marketPrice != null">
+                    #{item.marketPrice,jdbcType=DECIMAL},
+                </if>
+                <if test="item.salesPrice != null">
+                    #{item.salesPrice,jdbcType=DECIMAL},
+                </if>
+                <if test="item.balancePrice != null">
+                    #{item.balancePrice,jdbcType=DECIMAL},
+                </if>
+                <if test="item.businessTime !=null">
+                    #{item.businessTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createTime != null">
+                    #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.orderId != null">
+                    #{item.orderId,jdbcType=BIGINT},
+                </if>
+                <if test="item.typeId != null">
+                    #{item.typeId,jdbcType=INTEGER},
+                </if>
+                <if test="item.remark != null">
+                    #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.code != null">
+                    #{item.code,jdbcType=BIGINT},
+                </if>
+                <if test="item.serialNum != null">
+                     #{item.serialNum,jdbcType=VARCHAR},
+                </if>
+                <if test="item.paramJson != null">
+                    #{item.paramJson,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.ucoin.model.CustomerUcoinHistory">
+        update ysh_custom_ucion_history
+        set enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+        customer_id = #{customerId,jdbcType=BIGINT},
+        batch_id = #{batchId,jdbcType=BIGINT},
+        type = #{type,jdbcType=VARCHAR},
+        price = #{price,jdbcType=DECIMAL},
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+        sales_price = #{salesPrice,jdbcType=DECIMAL},
+        balance_price = #{balancePrice,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        order_id = #{orderId,jdbcType=BIGINT},
+        type_id = #{typeId,jdbcType=INTEGER},
+        remark = #{remark,jdbcType=VARCHAR},
+        code = #{code,jdbcType=BIGINT},
+        param_json = #{paramJson,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="ucoinStatistical" resultType="java.util.Map">
+        SELECT
+        ysh_enterprise_info.enterprise_name AS enterpriseName,
+        (
+        SELECT
+        count(*)
+        FROM
+        chinapost_customer
+        WHERE
+        enterprise_id = ysh_enterprise_info.enterprise_id
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = date_sub(curdate(), INTERVAL 1 DAY)
+        ) addMemberCount,
+        (
+        SELECT
+        count(*)
+        FROM
+        ysh_custom_ucion_history
+        WHERE
+        enterprise_id = ysh_enterprise_info.enterprise_id
+        AND type = 'ENTERPRISE_GRAND'
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = date_sub(curdate(), INTERVAL 1 DAY)
+        ) sendUcoinCount,
+        (
+        SELECT
+        sum(market_price)
+        FROM
+        ysh_custom_ucion_history
+        WHERE
+        enterprise_id = ysh_enterprise_info.enterprise_id
+        AND type = 'ENTERPRISE_GRAND'
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = date_sub(curdate(), INTERVAL 1 DAY)
+        ) marketUcoinSum,
+        (
+        SELECT
+        sum(sales_price)
+        FROM
+        ysh_custom_ucion_history
+        WHERE
+        enterprise_id = ysh_enterprise_info.enterprise_id
+        AND type = 'ENTERPRISE_GRAND'
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = date_sub(curdate(), INTERVAL 1 DAY)
+        ) salesUcoinSum,
+        (
+        SELECT
+        sum(price)
+        FROM
+        ysh_custom_ucion_history
+        WHERE
+        enterprise_id = ysh_enterprise_info.enterprise_id
+        AND type = 'ENTERPRISE_GRAND'
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = date_sub(curdate(), INTERVAL 1 DAY)
+        ) ucoinSum,
+        (
+        SELECT
+        count(*)
+        FROM
+        np_order
+        WHERE
+        enterprise_id = ysh_enterprise_info.enterprise_id
+        AND DATE_FORMAT(create_time, '%Y-%m-%d') = date_sub(curdate(), INTERVAL 1 DAY)
+        ) orderCount
+        FROM
+        ysh_enterprise_info
+        WHERE
+        (
+        SELECT
+
+        END
+        FROM
+        ysh_enterprise_func
+        WHERE
+        id = ysh_enterprise_info.enterprise_id
+        ) = 1
+        GROUP BY
+        enterprise_id;
+    </select>
+
+    <select id="selectEnterpriseSubsidy" resultMap="BaseResultMap">
+        select ysh_custom_ucion_history.price,
+        ysh_custom_ucion_history.create_time,
+        ysh_custom_ucion_history.code,
+        ysh_custom_ucion_history.type,
+        np_order.order_code,
+        np_order.order_status,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname
+        from ysh_custom_ucion_history
+        left join np_order
+        on np_order.order_id=ysh_custom_ucion_history.order_id
+        left join chinapost_customer
+        on chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_SUBSIDY"
+            <if test="enterpriseId!=null">
+                and ysh_custom_ucion_history.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+            </if>
+            <if test="code!=null">
+                and
+                ysh_custom_ucion_history.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="code!=null">
+                and
+                ysh_custom_ucion_history.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        order by ysh_custom_ucion_history.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countEnterpriseSubsidy" resultType="java.lang.Integer">
+        select count(ysh_custom_ucion_history.id)
+        from ysh_custom_ucion_history
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_SUBSIDY"
+            <if test="enterpriseId!=null">
+                and ysh_custom_ucion_history.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+            </if>
+            <if test="code!=null">
+                and
+                ysh_custom_ucion_history.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="code!=null">
+                and
+                ysh_custom_ucion_history.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+
+    </select>
+
+    <select id="customerBill" resultMap="BaseResultMap">
+        SELECT
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        chinapost_customer.contact_phone,
+        ysh_custom_ucion_history.create_time,
+        ysh_enterprise_info.enterprise_name,
+        ysh_custom_ucion_history.type,
+        ysh_custom_ucion_history.price,
+        ysh_custom_ucion_history.balance_price,
+        ysh_custom_ucion_history.order_id,
+        np_order.is_valet
+        from
+        ysh_custom_ucion_history LEFT JOIN  chinapost_customer
+        ON chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        LEFT JOIN ysh_enterprise_info
+        ON ysh_custom_ucion_history.enterprise_id=ysh_enterprise_info.enterprise_id
+        left join np_order
+        on  np_order.order_id=ysh_custom_ucion_history.order_id
+        <where>
+            <if test="idCard!=null">
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+        AND ysh_enterprise_info.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+        and ysh_custom_ucion_history.price!=0
+        order by  ysh_custom_ucion_history.create_time desc, ysh_custom_ucion_history.id desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+
+    </select>
+
+    <select id="countCustomerBill" resultType="java.lang.Integer">
+        SELECT COUNT(chinapost_customer.idCard_no)
+        from
+        ysh_custom_ucion_history LEFT JOIN  chinapost_customer
+        ON chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        LEFT JOIN ysh_enterprise_info
+        ON ysh_custom_ucion_history.enterprise_id=ysh_enterprise_info.enterprise_id
+        <where>
+            <if test="idCard!=null">
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+         AND
+         ysh_enterprise_info.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+        and ysh_custom_ucion_history.price!=0
+    </select>
+
+</mapper>

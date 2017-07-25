@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema xmlns="http://www.nirvana.com/schema/cache"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:beans="http://www.springframework.org/schema/beans"
+            xmlns:tool="http://www.springframework.org/schema/tool"
+            targetNamespace="http://www.nirvana.com/schema/cache"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.springframework.org/schema/beans"
+                schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"/>
+    <xsd:import namespace="http://www.springframework.org/schema/tool"
+                schemaLocation="http://www.springframework.org/schema/tool/spring-tool-3.2.xsd"/>
+
+
+    <xsd:element name="annotation-driven">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="interceptors" type="interceptorsType"/>
+            </xsd:sequence>
+            <xsd:attribute name="cache-manager" type="xsd:string" default="cacheManager">
+                <xsd:annotation>
+                    <xsd:documentation source="java:com.ylife.cache.CacheManager"><![CDATA[
+	The bean name of the CacheManager that is to be used to retrieve the backing caches.
+
+	This attribute is not required, and only needs to be specified
+	explicitly if the bean name of the desired CacheManager
+	is not 'cacheManager'.
+					]]></xsd:documentation>
+                    <xsd:appinfo>
+                        <tool:annotation kind="ref">
+                            <tool:expected-type type="com.ylife.cache.CacheManager"/>
+                        </tool:annotation>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:attribute>
+
+            <xsd:attribute name="key-generator" type="xsd:string"/>
+            <xsd:attribute name="mode" default="proxy">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="proxy"/>
+                        <xsd:enumeration value="aspectj"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+            <xsd:attribute name="proxy-target-class" type="xsd:boolean" default="false"/>
+            <xsd:attribute name="order" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="interceptorsType">
+        <xsd:all>
+            <xsd:element name="create-interceptor" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:attributeGroup ref="beans:beanAttributes"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="delete-interceptor" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:attributeGroup ref="beans:beanAttributes"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="update-interceptor" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:attributeGroup ref="beans:beanAttributes"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="read-interceptor" minOccurs="0" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:attributeGroup ref="beans:beanAttributes"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:all>
+    </xsd:complexType>
+
+</xsd:schema>

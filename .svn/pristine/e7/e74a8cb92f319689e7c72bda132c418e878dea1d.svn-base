@@ -1,0 +1,69 @@
+$(function() {
+    $("#queryStatus").val($("#good_tabs").find(".active").find("a").attr("data-type"));
+
+
+    /*收款单筛选交互演示用，无实际意义*/
+    $('#good_tabs a').click(function () {
+        $that = $(this);
+        $that.parent().addClass('active');
+        $("#queryStatus").val($that.attr("data-type"));
+        $that.parent().siblings().removeClass('active');
+        $('#adv_form').submit();
+
+    });
+});
+
+function searchData(pageNumber){
+    $("#page").val(pageNumber);
+    $("#searchForm").submit();
+}
+
+function checkAuditStatus(status){
+    $("#auditStatus").val(status);
+    $("#searchForm").submit();
+}
+
+function openDialog(goodsInfoId) {
+    $('#auditProductAction').attr("action","auditProductAction?goodsInfoId="+goodsInfoId);
+    $('#dialog-confirm2').modal('show');
+}
+function openRefuseDialog(goodsInfoId) {
+    $('#refuseAuditProductAction').attr("action","refuseAuditProductAction?goodsInfoId="+goodsInfoId)
+    $('#dialog-confirm3').modal('show');
+}
+
+// 批量审核
+function batchAudit(name){
+    checkData(name);
+}
+
+// 批量拒绝
+function refuseAudit(name){
+    if(checkData(name)){
+        $('#dialog-confirm3').modal('show');
+    }
+}
+
+function checkData(name){
+    var checkboxs = $("input[name="+name+"]");
+    var oneSelect = false;
+    var data_audit = false;
+    for(var j = 0; j < checkboxs.length; j++) {
+        if($(checkboxs[j]).is(':checked')==true) {
+            oneSelect = true;
+            if($(checkboxs[j]).attr("data-audit") != 0){
+                data_audit = true;
+            }
+        }
+    }
+    if(!oneSelect) {
+        showTipAlert("请至少选择一条记录！");
+        return false;
+    }
+
+    if(data_audit){
+        showTipAlert("请去掉已审核记录！");
+        return false;
+    }
+    return true;
+}

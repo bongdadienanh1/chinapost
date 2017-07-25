@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.system.mapper.OperaLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ylife.system.model.OperationLog" >
+    <id column="op_id" property="opId" jdbcType="BIGINT" />
+      <result column="op_enterprise_name" property="opEnterpriseName" jdbcType="VARCHAR" />
+    <result column="op_name" property="opName" jdbcType="VARCHAR" />
+    <result column="op_time" property="opTime" jdbcType="TIMESTAMP" />
+    <result column="op_ip" property="opIp" jdbcType="VARCHAR" />
+    <result column="op_code" property="opCode" jdbcType="VARCHAR" />
+    <result column="op_content" property="opContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    op_id,op_enterprise_name, op_name, op_time, op_ip, op_code, op_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Object" >
+    select 
+    <include refid="Base_Column_List" />
+    from ysh_operation_log
+    where op_id = #{opId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Object" >
+    delete from ysh_operation_log
+    where op_id = #{opId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ylife.system.model.OperationLog" >
+    insert into ysh_operation_log (op_id,op_enterprise_name, op_name, op_time,
+      op_ip, op_code, op_content)
+    values (#{opId,jdbcType=BIGINT},#{opEnterpriseName,jdbcType=VARCHAR} ,#{opName,jdbcType=VARCHAR}, #{opTime,jdbcType=TIMESTAMP},
+      #{opIp,jdbcType=VARCHAR}, #{opCode,jdbcType=VARCHAR}, #{opContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylife.system.model.OperationLog" >
+    insert into ysh_operation_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="opId != null" >
+        op_id,
+      </if>
+      <if test="opEnterpriseName != null" >
+        op_enterprise_name,
+      </if>
+      <if test="opName != null" >
+        op_name,
+      </if>
+      <if test="opTime != null" >
+        op_time,
+      </if>
+      <if test="opIp != null" >
+        op_ip,
+      </if>
+      <if test="opCode != null" >
+        op_code,
+      </if>
+      <if test="opContent != null" >
+        op_content,
+      </if>
+        <if test="enterpriseId != null" >
+            enterprise_id,
+        </if>
+        <if test="managerId != null" >
+            manager_id,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="opId != null" >
+        #{opId,jdbcType=BIGINT},
+      </if>
+        <if test="opEnterpriseName != null" >
+            #{opEnterpriseName,jdbcType=VARCHAR},
+        </if>
+      <if test="opName != null" >
+        #{opName,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opIp != null" >
+        #{opIp,jdbcType=VARCHAR},
+      </if>
+      <if test="opCode != null" >
+        #{opCode,jdbcType=VARCHAR},
+      </if>
+      <if test="opContent != null" >
+        #{opContent,jdbcType=VARCHAR},
+      </if>
+        <if test="enterpriseId != null" >
+            #{enterpriseId,jdbcType=BIGINT},
+        </if>
+        <if test="managerId != null" >
+            #{managerId,jdbcType=BIGINT},
+        </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylife.system.model.OperationLog" >
+    update ysh_operation_log
+    <set >
+        <if test="opEnterpriseName != null" >
+            op_enterprise_name = #{opEnterpriseName,jdbcType=VARCHAR},
+        </if>
+      <if test="opName != null" >
+        op_name = #{opName,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        op_time = #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opIp != null" >
+        op_ip = #{opIp,jdbcType=VARCHAR},
+      </if>
+      <if test="opCode != null" >
+      
+        op_code = #{opCode,jdbcType=VARCHAR},
+      </if>
+      <if test="opContent != null" >
+        op_content = #{opContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where op_id = #{opId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylife.system.model.OperationLog" >
+    update ysh_operation_log
+    set
+    op_enterprise_name = #{opEnterpriseName,jdbcType=VARCHAR},
+    op_name = #{opName,jdbcType=VARCHAR},
+      op_time = #{opTime,jdbcType=TIMESTAMP},
+      op_ip = #{opIp,jdbcType=VARCHAR},
+      op_code = #{opCode,jdbcType=VARCHAR},
+      op_content = #{opContent,jdbcType=VARCHAR}
+    where op_id = #{opId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectOperaSize" resultType="java.lang.Integer" >
+  	 select 
+     count(*)
+     from ysh_operation_log
+      <where>
+          <if test="otStartTime != null">
+              <![CDATA[
+            and
+            op_time >= #{otStartTime,jdbcType=TIMESTAMP}
+            ]]>
+          </if>
+          <if test="otEndTime != null">
+              <![CDATA[
+            and
+            op_time  <= #{otEndTime,jdbcType=TIMESTAMP}
+            ]]>
+          </if>
+          <if test="enterpriseId != null">
+             and enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+          </if>
+      </where>
+  </select>
+   <select id="selectAllOpera" resultMap="BaseResultMap">
+  	 select 
+     <include refid="Base_Column_List" />
+     from ysh_operation_log
+       <where>
+           <if test="otStartTime != null">
+               <![CDATA[
+            and
+            op_time >= #{otStartTime,jdbcType=TIMESTAMP}
+            ]]>
+           </if>
+           <if test="otEndTime != null">
+               <![CDATA[
+            and
+            op_time  <= #{otEndTime,jdbcType=TIMESTAMP}
+            ]]>
+           </if>
+           <if test="enterpriseId != null">
+            and enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+           </if>
+       </where>
+     order by op_time desc
+       <if test="pageable!=null">
+           limit
+           #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+       </if>
+  </select>
+   <select id="selectLogListByDays" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	 select 
+     <include refid="Base_Column_List" />
+     from ysh_operation_log
+     where  1=1 
+     	<if test="days != null  " >
+     		<if test="days != 0">
+     			<![CDATA[ and op_time >= date_sub(now(), INTERVAL  #{days} DAY)  AND op_time <= now()  ]]>
+     		</if>
+     	</if>
+     order by op_time desc
+  </select>
+  
+  <update id="deleteLog" parameterType="java.util.Map">
+  		delete from ysh_operation_log
+		where op_id in
+		<foreach item="item" collection="opIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+  </update>
+</mapper>

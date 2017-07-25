@@ -1,0 +1,273 @@
+package com.ylife.chinapost.third.controller;
+
+
+import com.alibaba.fastjson.JSON;
+import com.ylife.chinapost.third.controller.utils.Constants;
+import com.ylife.chinapost.third.service.GoodsManageService;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.data.order.Generator;
+import com.ylife.data.order.IdGeneratorFactory;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsCateVo;
+import com.ylife.goods.service.GoodsBrandService;
+import com.ylife.goods.service.GoodsCateService;
+import com.ylife.goods.service.GoodsSpecDetailService;
+import com.ylife.goods.service.GoodsSpecService;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.*;
+
+/**
+ * Created by XuKai on 2016/4/27.
+ * 商品管理控制器
+ */
+@Controller
+@RequestMapping(value = "/goodsManager", produces = "application/json;charset=utf-8")
+public class GoodsManagerAPIController {
+
+    @Resource
+    private GoodsManageService goodsManageService;
+    @Resource
+    private GoodsCateService goodsCateService;
+    @Resource
+    private GoodsBrandService goodsBrandService;
+    @Resource
+    private GoodsSpecService goodsSpecService;
+    @Resource
+    private GoodsSpecDetailService goodsSpecDetailService;
+
+    private Generator generator = IdGeneratorFactory.create("Goods_Info_Code", IdGeneratorFactory.SPartSize.TWO, IdGeneratorFactory.NPartSize.ONE);
+
+    @RequestMapping("/getGoodsInfo")
+    @ResponseBody
+    public String getGoodsInfo(@RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                               @RequestParam(value = "goodsInfoItemNo", required = false) String goodsInfoItemNo,
+                               @RequestParam(value = "goodsInfoAdded", required = false) String goodsInfoAdded,
+                               @RequestParam(value = "brandId", required = false) Long brandId,
+                               @RequestParam(value = "typeId", required = false) Long typeId,
+                               @RequestParam(value = "thirdId", required = false) Long thirdId,
+                               @RequestParam(value = "onlineShow", required = false) Boolean onlineShow,
+                               @RequestParam(value = "valetShow",required = false)Boolean valetShow,
+                               @RequestParam(value = "goodsInfoType",required = false)Integer goodsInfoType,
+                               @RequestParam(value = "auditStatus",required = false)String auditStatus,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsInfoItemNo = Constants.nullOrNotBlank(goodsInfoItemNo);
+        goodsInfoAdded = Constants.nullOrNotBlank(goodsInfoAdded);
+        Page<GoodsManagerResult> goodsManagerResultPage = goodsManageService.getGoods(goodsInfoName, goodsInfoItemNo, goodsInfoAdded,brandId, typeId, thirdId,goodsInfoType, onlineShow,valetShow,auditStatus,new Pageable(page, size));
+        return new JsonResponseBean(goodsManagerResultPage).toJson();
+    }
+
+    /**
+     * 根据父分类ID查询子分类集合
+     *
+     * @param catId
+     *            父分类ID {@link Long}
+     * @param cateName
+     *            分类名称
+     * @return 子分类集合{@link List}
+     */
+    @RequestMapping("/queryCateByCatIdAndName")
+    @ResponseBody
+    public String querySonCateByParentIdAndName(Long catId, String cateName) {
+        List<GoodsCateVo> cateVoList = goodsCateService.querySonCateVoByParentIdAndName(catId, cateName);
+        return new JsonResponseBean(cateVoList).toJson();
+    }
+
+
+    /**
+     * 获取所有品牌
+     * @return
+     */
+    @RequestMapping("/queryAllBrands")
+    @ResponseBody
+    public String getAllBrands(){
+        return new JsonResponseBean(goodsBrandService.queryAllBrand()).toJson();
+    }
+
+    /**
+     * 根据品牌名称查询品牌信息
+     * @param brandName
+     * @return
+     */
+    @RequestMapping("/queryBrandsByName")
+    @ResponseBody
+    public String getBrandsByName(String brandName){
+        return new JsonResponseBean(goodsBrandService.queryallbrandbyName(brandName)).toJson();
+    }
+
+    /**
+     * 获取所有的规格信息
+     * @return
+     */
+    @RequestMapping("/queryAllSpec")
+    @ResponseBody
+    public String getAllSpec(){
+        return new JsonResponseBean(goodsSpecService.queryAllSpec()).toJson();
+    }
+
+    /**
+     * 获取所有的规格值信息
+     * @return
+     */
+    @RequestMapping("/queryAllSpecDetail")
+    @ResponseBody
+    public String getAllSpecDetail(long specId){
+        return new JsonResponseBean(goodsSpecDetailService.queryBySpecId(specId)).toJson();
+    }
+
+    /**
+     * 新流程添加商品
+     *
+     */
+    @RequestMapping("/newUploadGood")
+    @ResponseBody
+    public String newUploadGood(String goodsJson,String goodsDetailDesc){
+        this.goodsManageService.saveGoods(goodsJson,goodsDetailDesc);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 修改货品
+     *
+     */
+    @RequestMapping("/updateGoodInfo")
+    @ResponseBody
+    public String updateGoodInfo(String goodsJson,String goodsDetailDesc){
+        this.goodsManageService.updateGoods(goodsJson,goodsDetailDesc);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 根据货品ID获取货品信息
+     */
+    @RequestMapping("/getGoodsInfoById")
+    @ResponseBody
+    public String getGoodsInfoById(@RequestParam(value = "id", required = true) Long id) {
+        return new JsonResponseBean(goodsManageService.getGoodsInfoById(id)).toJson();
+    }
+
+    /**
+     * 生成货品编号
+     *
+     * @param count 生成
+     */
+    @RequestMapping("/createGenerator")
+    @ResponseBody
+    public String createGenerator(int count) {
+        String[] str = new String[count];
+        for (int i=0;i<count;i++){
+            str[i]= String.valueOf(generator.generate());
+        }
+        return new JsonResponseBean(str).toJson();
+    }
+
+    // 组建数据
+    @RequestMapping(value = "/formatTableData")
+    @ResponseBody
+    public String formatTableData(String data) {
+        List<Map<String, Object>> list = JSON.parseObject(data, List.class);
+        Map<String, Map<String, Object>> keymap = new HashMap<String, Map<String, Object>>();
+        for (Map<String, Object> map : list) {
+            if (map.get("specName") != null && !map.get("specName").toString().equals("") && map.get("specValue") != null && !map.get("specValue").toString().equals("")) {
+                String key_temp = map.get("specName") + map.get("specValue").toString();
+                keymap.put(key_temp, map);
+            }
+        }
+
+        list.clear();
+        Set<String> keyset = keymap.keySet();
+        Iterator<String> it = keyset.iterator();
+        while (it.hasNext()) {
+            list.add(keymap.get(it.next()));
+        }
+
+        List<List<Map<String, Object>>> grouplist = new ArrayList<List<Map<String, Object>>>();
+        for (Map<String, Object> map : list) {
+            boolean flag = false;// 是否已经有这个属性的数组
+            Map<String, Object> temp = new HashMap<String, Object>();
+            temp.put(map.get("specName").toString(), map.get("specValue"));
+
+            for (int n = 0; n < grouplist.size(); n++) {
+                if (grouplist.get(n) != null && grouplist.get(n).size() > 0) {
+                    Map<String, Object> m = grouplist.get(n).get(0);
+                    Object keyname = null;
+                    for (Map.Entry entry : m.entrySet()) {
+                        keyname = entry.getKey();
+                    }
+                    if (keyname != null && keyname.equals(map.get("specName").toString())) {
+                        flag = true;
+                        grouplist.get(n).add(temp);
+                    }
+                }
+            }
+            if (!flag) {
+                List<Map<String, Object>> templist = new ArrayList<Map<String, Object>>();
+                templist.add(temp);
+                grouplist.add(templist);
+            }
+        }
+
+        // -- end 组建grouplist
+        List<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < grouplist.size(); i++) {
+            if (i == 0) {
+                returnList = grouplist.get(0);
+            } else {
+                returnList = mergeArr(returnList, grouplist.get(i));
+            }
+        }
+        String result = JSON.toJSONString(returnList).replaceAll("=",":");
+        return result;
+
+    }
+
+    private List<Map<String, Object>> mergeArr(List<Map<String, Object>> list1, List<Map<String, Object>> list2) {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < list1.size(); i++) {
+            for (int j = 0; j < list2.size(); j++) {
+                // 分配一个uuid;
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.putAll(list1.get(i));
+                map.putAll(list2.get(j));
+                list.add(map);
+            }
+        }
+        return list;
+    }
+
+    private boolean verifySameMap(Map<String, Object> map1, Map<String, Object> map2) {
+        boolean isEquals = true;
+
+        // 除了指定字段, 其他的都需要相等
+        for (Map.Entry<String, Object> entry : map1.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue().toString();
+            if (!"initSto".equals(key) && !"saveQty".equals(key)) {
+                if (map2.get(key) != null && !value.equals(map2.get(key).toString())) {
+                    isEquals = false;
+                }
+            }
+        }
+
+        for (Map.Entry<String, Object> entry : map2.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue().toString();
+            if (!"initSto".equals(key) && !"saveQty".equals(key)) {
+                if (map1.get(key) != null && !value.equals(map1.get(key).toString())) {
+                    isEquals = false;
+                }
+            }
+        }
+
+        return isEquals;
+    }
+
+}

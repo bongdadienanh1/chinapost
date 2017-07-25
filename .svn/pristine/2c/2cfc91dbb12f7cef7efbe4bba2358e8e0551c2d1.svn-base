@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.system.mapper.ParamValueMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.system.model.ParamValue">
+        <id column="param_value_id" property="paramValueId" jdbcType="INTEGER"/>
+        <result column="param_value_name" property="paramValueName" jdbcType="VARCHAR"/>
+        <result column="param_value" property="paramValue" jdbcType="DECIMAL"/>
+        <result column="param_id" property="paramId" jdbcType="INTEGER"/>
+        <result column="serial_no" property="serialNo" jdbcType="INTEGER"/>
+        <result column="enabled" property="enabled" jdbcType="TINYINT"/>
+        <result column="deletable" property="deletable" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        param_value_id, param_value_name, param_value, param_id, serial_no, enabled, deletable
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from system_param_value
+        where param_value_id = #{paramValueId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from system_param_value
+        where param_value_id = #{paramValueId,jdbcType=INTEGER}
+        for update
+    </select>
+
+    <select id="selectByValueNameAndId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from system_param_value
+        where param_id = #{paramId,jdbcType=INTEGER}
+        and param_value_name=#{paramValueName,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByParamId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from system_param_value
+        where param_id=#{paramId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from system_param_value
+        <where>
+            <if test="paramValueId != null">
+                and
+                param_value_id = #{paramValueId,jdbcType=INTEGER}
+            </if>
+            <if test="paramValueName != null">
+                and
+                param_value_name = #{paramValueName,jdbcType=VARCHAR}
+            </if>
+            <if test="paramValue != null">
+                and
+                param_value = #{paramValue,jdbcType=VARCHAR}
+            </if>
+            <if test="paramId != null">
+                and
+                param_id = #{paramId,jdbcType=INTEGER}
+            </if>
+            <if test="serialNo != null">
+                and
+                serial_no = #{serialNo,jdbcType=INTEGER}
+            </if>
+            <if test="enabled != null">
+                and
+                enabled = #{enabled,jdbcType=TINYINT}
+            </if>
+            <if test="deletable != null">
+                and
+                deletable = #{deletable,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByParamIdAndNameForUpdate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from system_param_value
+        where param_id = #{paramId,jdbcType=INTEGER}
+        and param_value_name = #{name,jdbcType=VARCHAR}
+        for update
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from system_param_value
+        where param_value_id = #{paramValueId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByParamId" parameterType="java.lang.Integer">
+        delete from system_param_value
+        where param_id = #{paramId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByTypeId" parameterType="java.lang.Integer">
+        delete system_param_value
+        from system_param_value
+        left join system_param on
+        system_param_value.param_id = system_param.param_id
+        where system_param.type_id = #{typeId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.system.model.ParamValue">
+        insert into system_param_value
+        (param_value_id, param_value_name, param_value, param_id, serial_no, enabled, deletable)
+        values
+        (
+        #{paramValueId,jdbcType=INTEGER}, #{paramValueName,jdbcType=VARCHAR}, #{paramValue,jdbcType=DECIMAL},
+        #{paramId,jdbcType=INTEGER}, #{serial_no,jdbcType=INTEGER}, #{enabled,jdbcType=TINYINT},
+        #{deletable,jdbcType=TINYINT}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.system.model.ParamValue" keyProperty="paramValueId"
+            useGeneratedKeys="true">
+        insert into system_param_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paramValueId != null">
+                param_value_id,
+            </if>
+            <if test="paramValueName != null">
+                param_value_name,
+            </if>
+            <if test="paramValue != null">
+                param_value,
+            </if>
+            <if test="paramId != null">
+                param_id,
+            </if>
+            <if test="serialNo != null">
+                serial_no,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="deletable != null">
+                deletable,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paramValueId != null">
+                #{paramValueId,jdbcType=INTEGER},
+            </if>
+            <if test="paramValueName != null">
+                #{paramValueName,jdbcType=VARCHAR},
+            </if>
+            <if test="paramValue != null">
+                #{paramValue,jdbcType=VARCHAR},
+            </if>
+            <if test="paramId != null">
+                #{paramId,jdbcType=INTEGER},
+            </if>
+            <if test="serialNo != null">
+                #{serialNo,jdbcType=INTEGER},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="deletable != null">
+                #{deletable,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.system.model.ParamValue">
+        update system_param_value
+        <set>
+            <if test="paramValueName != null">
+                param_value_name = #{paramValueName,jdbcType=VARCHAR},
+            </if>
+            <if test="paramValue != null">
+                param_value = #{paramValue,jdbcType=DECIMAL},
+            </if>
+            <if test="paramId != null">
+                param_id = #{paramId,jdbcType=INTEGER},
+            </if>
+            <if test="serialNo != null">
+                serial_no = #{serialNo,jdbcType=INTEGER},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="deletable != null">
+                deletable = #{deletable,jdbcType=TINYINT},
+            </if>
+        </set>
+        where param_value_id = #{paramValueId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.system.model.ParamValue">
+        update system_param_value
+        set param_value_name = #{paramValueName,jdbcType=VARCHAR},
+        param_value = #{paramValue,jdbcType=DECIMAL},
+        param_id = #{paramId,jdbcType=INTEGER},
+        serial_no = #{serialNo,jdbcType=INTEGER},
+        enabled = #{enabled,jdbcType=TINYINT},
+        deletable = #{deletable,jdbcType=TINYINT},
+        where param_value_id = #{paramValueId,jdbcType=INTEGER}
+    </update>
+</mapper>

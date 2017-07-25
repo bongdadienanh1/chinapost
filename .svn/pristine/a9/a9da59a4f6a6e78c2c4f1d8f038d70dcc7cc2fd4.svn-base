@@ -1,0 +1,164 @@
+package com.ylife.chinapost.boss.controller;
+
+import com.google.gson.reflect.TypeToken;
+import com.ylife.chinapost.boss.controller.utils.Constants;
+import com.ylife.chinapost.boss.service.GoodsBrandBossService;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsBrand;
+import com.ylife.utils.Assert;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2017/6/30.
+ * 商品品牌管理
+ */
+@Controller
+@RequestMapping(value = "/GoodsBrand")
+public class GoodsBrandController {
+
+	@Resource
+	GoodsBrandBossService goodsBrandBossService;
+
+	public static final String NAME = "name";
+
+	/**
+	 * 获取商品品牌
+	 * @param brandName
+	 * @param brandNickname
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@RequestMapping(value = "/getGoodsBrand")
+	@ResponseBody
+	public String getGoodsBrands(@RequestParam(value = "brandName", required = false) String brandName,
+	                             @RequestParam(value = "brandNickname", required = false) String brandNickname,
+	                             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+	                             @RequestParam(value = "size", required = false, defaultValue = "10") int size){
+		brandName = Constants.nullOrNotBlank(brandName);
+		brandNickname = Constants.nullOrNotBlank(brandNickname);
+		Page<GoodsBrand> pageList = goodsBrandBossService.queryBrandByNameOrBrandNickname(brandName, brandNickname, new Pageable(page, size));
+		return new JsonResponseBean(pageList).toJson();
+	}
+
+	/**
+	 * 添加商品品牌
+	 * @param brandName
+	 * @param brandNickname
+	 * @param brandUrl
+	 * @param brandSort
+	 * @return 1成功 0失败
+	 */
+	@RequestMapping(value = "/saveGoodsBrand")
+	@ResponseBody
+	public String saveGoodsBrand(@RequestParam(value = "brandName") String brandName,
+	                             @RequestParam(value = "brandNickname", required = false) String brandNickname,
+	                             @RequestParam(value = "brandUrl", required = false) String brandUrl,
+	                             @RequestParam(value = "brandSort") String brandSort, HttpServletRequest request){
+		String userName = (String) request.getSession().getAttribute(NAME);
+		Assert.notNull(brandName);
+		Assert.notNull(brandSort);
+		brandNickname = Constants.nullOrNotBlank(brandNickname);
+		brandUrl = Constants.nullOrNotBlank(brandUrl);
+		int result = this.goodsBrandBossService.insertGoodsBrand(brandName,brandNickname, brandUrl, Integer.valueOf(brandSort), userName);
+		return new JsonResponseBean(result).toJson();
+	}
+
+
+	/**
+	 * 批量删除商品品牌
+	 * @param brandIds
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteGoodsBrand")
+	@ResponseBody
+	public String deleteGoodsBrand(@RequestParam("brandIds") String brandIds, HttpServletRequest request){
+		long[] ids = Constants.SIMPLE_PARSER.parseJSON(brandIds, new TypeToken<long[]>() {
+		});
+		String deleteName = (String) request.getSession().getAttribute(NAME);
+		for (Long brandId : ids) {
+			goodsBrandBossService.deleteGoodsBrand(brandId, deleteName);
+		}
+		return JsonResponseBean.getSuccessResponse().toJson();
+	}
+
+	/**
+	 * 删除一条商品品牌
+	 * @param brandId
+	 * @return 1成功，0失败
+	 */
+	@RequestMapping(value = "/deleteOneGoodsBrand")
+	@ResponseBody
+	public String deleteOneGoodsBrand(@RequestParam("brandId") String brandId, HttpServletRequest request){
+		String deleteName = (String) request.getSession().getAttribute(NAME);
+		int result = goodsBrandBossService.deleteGoodsBrand(Long.valueOf(brandId), deleteName);
+		return new JsonResponseBean(result).toJson();
+	}
+
+
+
+	/**
+	 * 修改商品品牌信息
+	 * @param brandId
+	 * @param brandName
+	 * @param brandNickname
+	 * @param brandUrl
+	 * @param brandSort
+	 * @return 1成功，0失败
+	 */
+	@RequestMapping(value = "/editGoodsBrand")
+	@ResponseBody
+	public String editGoodsBrand(@RequestParam(value = "brandId") String brandId,
+	                             @RequestParam(value = "brandName") String brandName,
+	                             @RequestParam(value = "brandNickname", required = false) String brandNickname,
+	                             @RequestParam(value = "brandUrl", required = false) String brandUrl,
+	                             @RequestParam(value = "brandSort") String brandSort, HttpServletRequest request){
+		String userName = (String) request.getSession().getAttribute(NAME);
+		Assert.notNull(brandName);
+		Assert.notNull(brandSort);
+		brandNickname = Constants.nullOrNotBlank(brandNickname);
+		brandUrl = Constants.nullOrNotBlank(brandUrl);
+		int result = goodsBrandBossService.updateGoodsBrad(Long.valueOf(brandId), brandName, brandNickname, brandUrl, Integer.valueOf(brandSort), userName);
+		return new JsonResponseBean(result).toJson();
+	}
+
+	/**
+	 * 去添加商品品牌
+	 */
+	@RequestMapping(value = "/toAddBrand")
+	public ModelAndView toAddBrand() {
+		return new ModelAndView("jsp/goods/goodsBrandAdd");
+	}
+
+	/**
+	 * @param brandId
+	 * 去修改商品品牌
+	 */
+	@RequestMapping(value = "/toModifyBrand")
+	public ModelAndView toModifyBrand(Long brandId) {
+		return new ModelAndView("jsp/goods/goodsBrandModify", "brandId", brandId);
+	}
+
+	/**
+	 * 查询所有品牌信息
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/queryAllBrand")
+	@ResponseBody
+	public List<GoodsBrand> queryAllBrandList() {
+		// 执行方法并返回结果
+		return goodsBrandBossService.queryAllBrand();
+	}
+
+
+}

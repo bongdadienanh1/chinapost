@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.deliveryCode.mapper.DeliveryCodeMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.deliveryCode.model.DeliveryCode">
+        <id column="delivery_id" property="deliveryId" jdbcType="BIGINT"/>
+        <result column="delivery_status" property="deliveryStatus" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        delivery_id, delivery_status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_delivery_code
+        where delivery_id = #{deliveryId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_delivery_code
+        where delivery_id = #{deliveryId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.ylife.deliveryCode.model.DeliveryCode">
+        insert into ysh_delivery_code (delivery_id, delivery_status)
+        values (#{deliveryId,jdbcType=BIGINT}, #{deliveryStatus,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ylife.deliveryCode.model.DeliveryCode" keyProperty="deliveryId"
+            useGeneratedKeys="true">
+        insert into ysh_delivery_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deliveryId != null">
+                delivery_id,
+            </if>
+            <if test="deliveryStatus != null">
+                delivery_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deliveryId != null">
+                #{deliveryId,jdbcType=BIGINT},
+            </if>
+            <if test="deliveryStatus != null">
+                #{deliveryStatus,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.deliveryCode.model.DeliveryCode">
+        update ysh_delivery_code
+        <set>
+            <if test="deliveryStatus != null">
+                delivery_status = #{deliveryStatus,jdbcType=CHAR},
+            </if>
+        </set>
+        where delivery_id = #{deliveryId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ylife.deliveryCode.model.DeliveryCode">
+        update ysh_delivery_code
+        set delivery_status = #{deliveryStatus,jdbcType=CHAR}
+        where delivery_id = #{deliveryId,jdbcType=BIGINT}
+    </update>
+    <select id="selectRandomAbleDeliveryCode" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        ysh_delivery_code
+        WHERE
+        delivery_id >= (
+        (SELECT MAX(delivery_id) FROM ysh_delivery_code) - (SELECT MIN(delivery_id) FROM ysh_delivery_code)
+        ) * RAND() + (SELECT MIN(delivery_id) FROM ysh_delivery_code)
+        and delivery_status = '0'
+        LIMIT 1
+    </select>
+</mapper>

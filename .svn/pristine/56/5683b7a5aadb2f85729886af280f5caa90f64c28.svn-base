@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.order.mapper.CreditOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.order.model.CreditOrder">
+        <id column="back_order_id" property="backOrderId" jdbcType="BIGINT"/>
+        <result column="back_order_code" property="backOrderCode" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="back_time" property="backTime" jdbcType="TIMESTAMP"/>
+        <result column="back_remark" property="backRemark" jdbcType="VARCHAR"/>
+        <result column="back_price" property="backPrice" jdbcType="DECIMAL"/>
+        <result column="back_check" property="backCheck" jdbcType="VARCHAR"/>
+        <result column="back_del_flag" property="backDelFlag" jdbcType="CHAR"/>
+        <result column="back_real_name" property="backRealName" jdbcType="VARCHAR"/>
+        <result column="back_bank_name" property="backBankName" jdbcType="VARCHAR"/>
+        <result column="back_bank_account" property="backBankAccount" jdbcType="VARCHAR"/>
+        <result column="dealer_type" property="dealerType" jdbcType="CHAR"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="author_name" property="authorName" jdbcType="VARCHAR"/>
+        <result column="author_time" property="authorTime" jdbcType="TIMESTAMP"/>
+        <result column="author_log" property="authorLog" jdbcType="VARCHAR"/>
+        <result column="customer_msg" property="customerMsg" jdbcType="VARCHAR"/>
+        <result column="back_collect_phone" property="backCollectPhone" jdbcType="VARCHAR"/>
+        <result column="back_collect_address" property="backCollectAddress" jdbcType="VARCHAR"/>
+        <result column="back_collect_person" property="backCollectPerson" jdbcType="VARCHAR"/>
+        <result column="back_status" property="backStatus" jdbcType="BIGINT"/>
+        <result column="is_back" property="isBack" jdbcType="CHAR"/>
+        <result column="back_reason" property="backReason" jdbcType="CHAR"/>
+        <result column="apply_credentials" property="applyCredentials" jdbcType="VARCHAR"/>
+        <result column="upload_documents" property="uploadDocuments" jdbcType="VARCHAR"/>
+        <result column="back_way" property="backWay" jdbcType="CHAR"/>
+        <result column="back_gid_gsum" property="backGidGsum" jdbcType="VARCHAR"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="mall_id" property="mallId" jdbcType="INTEGER"/>
+        <result column="back_subsidy_price" property="backSubsidyPrice" jdbcType="DECIMAL"/>
+        <result column="subsidy_price" property="subsidyPrice" jdbcType="DECIMAL"/>
+        <association property="order" javaType="com.ylife.order.model.CreditOrder$OriginalOrder"
+                     resultMap="BaseOrderResultMap"/>
+        <association property="accountInfo" resultMap="AccountInfoResultMap"/>
+
+        <association property="business" javaType="com.ylife.order.model.CreditOrder$Business"
+                     resultMap="BaseBusinessResultMap"/>
+        <collection property="backOrderGoods" ofType="com.ylife.order.model.BackOrderGoods" javaType="ArrayList"
+                    column="back_order_id" select="com.ylife.order.mapper.BackOrderGoodsMapper.selectBybackOrderId"/>
+        <collection property="logs" ofType="com.ylife.order.model.CreditOrderLog" javaType="ArrayList"
+                    column="back_order_id" select="com.ylife.order.mapper.CreditOrderLogMapper.selectByCreditOrderId"/>
+        <collection property="logisticses" ofType="com.ylife.order.model.Logistics" javaType="ArrayList"
+                    column="back_order_id" select="com.ylife.order.mapper.LogisticsMapper.selectBybackOrderId"/>
+    </resultMap>
+
+    <resultMap id="BaseOrderResultMap" type="com.ylife.order.model.CreditOrder$OriginalOrder">
+        <id column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="order_code" property="orderCode" jdbcType="BIGINT"/>
+        <result column="order_price" property="orderPrice" jdbcType="DECIMAL"/>
+        <result column="order_old_price" property="orderOldPrice" jdbcType="DECIMAL"/>
+        <result column="express_price" property="expressPrice" jdbcType="DECIMAL"/>
+        <result column="self_pick" property="selfPick" jdbcType="TINYINT"/>
+        <result column="is_valet" property="isValet" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <resultMap id="BaseOrderRefundResultMap" type="com.ylife.order.model.BackOrderRefund">
+        <id column="back_order_Id" property="backorderId" jdbcType="BIGINT"/>
+        <result column="billing_type" property="billingType" jdbcType="VARCHAR"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="idCard_no" property="idCardNo" jdbcType="VARCHAR"/>
+        <result column="back_subsidy_price" property="backSubsidyPrice" jdbcType="DECIMAL"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="back_order_code" property="backOrderCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseBusinessResultMap" type="com.ylife.order.model.CreditOrder$Business">
+        <id column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="store_name" property="businessName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="AccountInfoResultMap" type="com.ylife.order.model.CreditOrder$AccountInfo">
+        <id column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="OpenBaseResultMap" type="com.ylife.order.model.CreditOrder">
+        <id column="back_order_id" property="backOrderId" jdbcType="BIGINT"/>
+        <result column="back_order_code" property="backOrderCode" jdbcType="VARCHAR"/>
+        <result column="back_check" property="backCheck"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        np_back_order.back_order_id,
+        np_back_order.back_order_code,
+        np_back_order.order_id,
+        np_back_order.back_time,
+        np_back_order.back_remark,
+        np_back_order.back_price,
+        np_back_order.back_check,
+        np_back_order.back_del_flag,
+        np_back_order.back_real_name,
+        np_back_order.back_bank_name,
+        np_back_order.back_bank_account,
+        np_back_order.dealer_type,
+        np_back_order.business_id,
+        np_back_order.author_name,
+        np_back_order.author_time,
+        np_back_order.author_log,
+        np_back_order.customer_msg,
+        np_back_order.back_collect_phone,
+        np_back_order.back_collect_address,
+        np_back_order.back_collect_person,
+        np_back_order.back_status,
+        np_back_order.is_back,
+        np_back_order.back_reason,
+        np_back_order.apply_credentials,
+        np_back_order.upload_documents,
+        np_back_order.back_way,
+        np_back_order.back_gid_gsum,
+        np_back_order.customer_id,
+        np_back_order.mall_id,
+        np_back_order.back_subsidy_price
+    </sql>
+
+    <sql id="Base_Order_Column_List">
+        np_order.order_code,
+        np_order.order_price,
+        np_order.order_old_price,
+        np_order.express_price,
+        np_order.self_pick,
+        np_order.is_valet,
+        np_order.subsidy_price
+    </sql>
+
+    <sql id="Base_Business_Column_List">
+        np_third_store_info.store_name
+    </sql>
+
+    <sql id="Base_AccountInfo_List">
+        ysh_enterprise_info.account_name,
+         ysh_enterprise_info.enterprise_name
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"  parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from np_back_order
+        left join np_order on
+        np_back_order.order_id = np_order.order_id
+        where np_back_order.back_order_id = #{backOrderId,jdbcType=BIGINT}
+    </select>
+
+
+
+    <select id="selectByOrderId" resultType="java.lang.Long"  parameterType="java.lang.Long">
+        select
+        back_order_id
+        from np_back_order
+        where np_back_order.order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+
+
+
+
+    <select id="selectBackOrderRefundByKey" resultMap="BaseOrderRefundResultMap"  parameterType="java.lang.Long">
+        SELECT
+        np_back_order.back_order_id,
+        chinapost_customer.fullname,
+        chinapost_customer.idCard_no,
+        1 AS count,
+        "订单退款返还" AS billing_type,
+        np_back_order.back_subsidy_price,
+        np_back_order.back_order_code,
+        np_order.pay_time
+        FROM
+        np_back_order
+        LEFT JOIN chinapost_customer ON chinapost_customer.id = np_back_order.customer_id
+        LEFT JOIN np_order ON np_back_order.order_id = np_order.order_id
+        WHERE
+        np_back_order.back_order_id = #{backOrderId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCreditOrderCode" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_Order_Column_List"/>
+        from np_back_order
+        left join np_order on
+        np_back_order.order_id = np_order.order_id
+        where np_back_order.back_order_code = #{backOrderCode,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOrderCode" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_Order_Column_List"/>
+        from np_back_order
+        left join np_order on
+        np_back_order.order_id = np_order.order_id
+        where np_order.order_code = #{orderCode,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModelSelectiveAndEnterpriseIdAndCreateDate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_Business_Column_List"/>,
+        <include refid="Base_Order_Column_List"/>,
+        <include refid="Base_AccountInfo_List"/>
+        from np_back_order
+        left join np_order on
+        np_back_order.order_id = np_order.order_id
+        left join ysh_enterprise_func ON
+        np_order.enterprise_id=ysh_enterprise_func.id
+        left join ysh_enterprise_info on ysh_enterprise_info.enterprise_id=ysh_enterprise_func.id
+        left join np_third_store_info on
+        np_back_order.business_id = np_third_store_info.store_id
+        where
+        back_order_id in (
+        select
+        ids.back_order_id
+        from
+        (
+        select
+        np_back_order.back_order_id
+        from
+        np_back_order
+        left join np_order on
+        np_back_order.order_id = np_order.order_id
+        LEFT JOIN ysh_enterprise_func ON np_order.enterprise_id = ysh_enterprise_func.id
+        <where>
+            <if test="model.backOrderCode != null">
+                and
+                back_order_code = #{model.backOrderCode,jdbcType=BIGINT}
+            </if>
+            <if test="orderCode!=null">
+                AND
+                np_order.order_code=#{orderCode,jdbcType=BIGINT}
+            </if>
+            <if test="model.orderId != null">
+                and
+                np_back_order.order_id = #{model.orderId,jdbcType=BIGINT}
+            </if>
+            <if test="model.backCollectPhone != null and model.backCollectPhone !=  ''">
+                and
+                back_collect_phone = #{model.backCollectPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="model.backCheck != null">
+                and
+                back_check = #{model.backCheck,jdbcType=VARCHAR}
+            </if>
+            <if test="start != null">
+                and
+                <![CDATA[back_time >= #{start,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="end != null">
+                and
+                <![CDATA[back_time <= #{end,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="maxCatalog!=null">
+                <![CDATA[
+                        and
+                    ysh_enterprise_func.catalog<=#{maxCatalog,jdbcType=BIGINT}
+                 ]]>
+            </if>
+
+            <if test="minCatalog!=null">
+                <![CDATA[
+                 and
+                 ysh_enterprise_func.catalog>=#{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="model.goodsInfoType != null and model.goodsInfoType !=  ''">
+                and
+                np_back_order.goods_info_type = #{model.goodsInfoType}
+            </if>
+            <if test="model.businessId != null">
+                and
+                np_order.business_id = #{model.businessId,jdbcType=BIGINT}
+            </if>
+        </where>
+        order by back_time desc
+        <if test="pageable != null">
+            limit #{pageable.index,jdbcType=INTEGER},#{pageable.length,jdbcType=INTEGER}
+        </if>
+        ) AS ids
+        )
+
+    </select>
+
+    <select id="countByModelSelectiveAndEnterpriseIdAndCreateDate" resultType="java.lang.Integer">
+        select
+        count(*)
+        from np_back_order
+        left join np_order on
+        np_back_order.order_id = np_order.order_id
+        LEFT JOIN ysh_enterprise_func ON np_order.enterprise_id = ysh_enterprise_func.id
+        <where>
+            <if test="model.backOrderCode != null">
+                and
+                back_order_code = #{model.backOrderCode,jdbcType=BIGINT}
+            </if>
+            <if test="orderCode!=null">
+                AND
+                np_order.order_code=#{orderCode,jdbcType=BIGINT}
+            </if>
+            <if test="model.orderId != null">
+                and
+                np_back_order.order_id = #{model.orderId,jdbcType=BIGINT}
+            </if>
+            <if test="model.backCollectPhone != null and model.backCollectPhone !=  ''">
+                and
+                back_collect_phone = #{model.backCollectPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="model.backCheck != null">
+                and
+                back_check = #{model.backCheck,jdbcType=VARCHAR}
+            </if>
+            <if test="start != null">
+                and
+                <![CDATA[back_time > #{start,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="end != null">
+                and
+                <![CDATA[back_time < #{end,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="maxCatalog!=null">
+                <![CDATA[
+                and
+                    ysh_enterprise_func.catalog<=#{maxCatalog,jdbcType=BIGINT}
+                 ]]>
+            </if>
+
+            <if test="minCatalog!=null">
+                <![CDATA[
+                 and
+                 ysh_enterprise_func.catalog>=#{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="model.goodsInfoType != null and model.goodsInfoType !=  ''">
+                and
+                np_back_order.goods_info_type = #{model.goodsInfoType}
+            </if>
+            <if test="model.businessId != null">
+                and
+                np_order.business_id = #{model.businessId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from np_back_order
+        where back_order_id = #{backOrderId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.order.model.CreditOrder">
+        insert into np_back_order (back_order_id, back_order_code, order_id,
+        back_time, back_remark, back_price,
+        back_check, back_del_flag, back_real_name,
+        back_bank_name, back_bank_account, dealer_type,
+        business_id, author_name, author_time,
+        author_log, customer_msg, back_collect_phone, back_collect_address,
+        back_collect_person, back_status, is_back,
+        back_reason, apply_credentials, upload_documents,
+        back_way, back_gid_gsum, customer_id,
+        mall_id)
+        values (#{backOrderId,jdbcType=BIGINT}, #{backOrderCode,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+        #{backTime,jdbcType=TIMESTAMP}, #{backRemark,jdbcType=VARCHAR}, #{backPrice,jdbcType=DECIMAL},
+        #{backCheck,jdbcType=VARCHAR}, #{backDelFlag,jdbcType=CHAR}, #{backRealName,jdbcType=VARCHAR},
+        #{backBankName,jdbcType=VARCHAR}, #{backBankAccount,jdbcType=VARCHAR}, #{dealerType,jdbcType=CHAR},
+        #{businessId,jdbcType=BIGINT}, #{authorName,jdbcType=VARCHAR}, #{authorTime,jdbcType=TIMESTAMP},
+        #{authorLog,jdbcType=VARCHAR}, #{customerMsg,jdbcType=VARCHAR} #{backCollectPhone,jdbcType=VARCHAR},
+        #{backCollectAddress,jdbcType=VARCHAR}, #{backCollectPerson,jdbcType=VARCHAR}, #{backStatus,jdbcType=BIGINT},
+        #{isBack,jdbcType=CHAR}, #{backReason,jdbcType=CHAR}, #{applyCredentials,jdbcType=VARCHAR},
+        #{uploadDocuments,jdbcType=VARCHAR}, #{backWay,jdbcType=CHAR}, #{backGidGsum,jdbcType=VARCHAR},
+        #{customerId,jdbcType=BIGINT}, #{mallId,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.order.model.CreditOrder" useGeneratedKeys="true"
+            keyProperty="backOrderId">
+        insert into np_back_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="backOrderId != null">
+                back_order_id,
+            </if>
+            <if test="backOrderCode != null">
+                back_order_code,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="backTime != null">
+                back_time,
+            </if>
+            <if test="backRemark != null">
+                back_remark,
+            </if>
+            <if test="backPrice != null">
+                back_price,
+            </if>
+            <if test="backCheck != null">
+                back_check,
+            </if>
+            <if test="backDelFlag != null">
+                back_del_flag,
+            </if>
+            <if test="backRealName != null">
+                back_real_name,
+            </if>
+            <if test="backBankName != null">
+                back_bank_name,
+            </if>
+            <if test="backBankAccount != null">
+                back_bank_account,
+            </if>
+            <if test="dealerType != null">
+                dealer_type,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="authorName != null">
+                author_name,
+            </if>
+            <if test="authorTime != null">
+                author_time,
+            </if>
+            <if test="authorLog != null">
+                author_log,
+            </if>
+            <if test="customerMsg != null">
+                customer_msg,
+            </if>
+            <if test="backCollectPhone != null">
+                back_collect_phone,
+            </if>
+            <if test="backCollectAddress != null">
+                back_collect_address,
+            </if>
+            <if test="backCollectPerson != null">
+                back_collect_person,
+            </if>
+            <if test="backStatus != null">
+                back_status,
+            </if>
+            <if test="isBack != null">
+                is_back,
+            </if>
+            <if test="backReason != null">
+                back_reason,
+            </if>
+            <if test="applyCredentials != null">
+                apply_credentials,
+            </if>
+            <if test="uploadDocuments != null">
+                upload_documents,
+            </if>
+            <if test="backWay != null">
+                back_way,
+            </if>
+            <if test="backGidGsum != null">
+                back_gid_gsum,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="mallId != null">
+                mall_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="backOrderId != null">
+                #{backOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="backOrderCode != null">
+                #{backOrderCode,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="backTime != null">
+                #{backTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backRemark != null">
+                #{backRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="backPrice != null">
+                #{backPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="backCheck != null">
+                #{backCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="backDelFlag != null">
+                #{backDelFlag,jdbcType=CHAR},
+            </if>
+            <if test="backRealName != null">
+                #{backRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="backBankName != null">
+                #{backBankName,jdbcType=VARCHAR},
+            </if>
+            <if test="backBankAccount != null">
+                #{backBankAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="dealerType != null">
+                #{dealerType,jdbcType=CHAR},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="authorName != null">
+                #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="authorTime != null">
+                #{authorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authorLog != null">
+                #{authorLog,jdbcType=VARCHAR},
+            </if>
+            <if test="customerMsg != null">
+                #{customerMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="backCollectPhone != null">
+                #{backCollectPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="backCollectAddress != null">
+                #{backCollectAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="backCollectPerson != null">
+                #{backCollectPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="backStatus != null">
+                #{backStatus,jdbcType=BIGINT},
+            </if>
+            <if test="isBack != null">
+                #{isBack,jdbcType=CHAR},
+            </if>
+            <if test="backReason != null">
+                #{backReason,jdbcType=CHAR},
+            </if>
+            <if test="applyCredentials != null">
+                #{applyCredentials,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadDocuments != null">
+                #{uploadDocuments,jdbcType=VARCHAR},
+            </if>
+            <if test="backWay != null">
+                #{backWay,jdbcType=CHAR},
+            </if>
+            <if test="backGidGsum != null">
+                #{backGidGsum,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="mallId != null">
+                #{mallId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.order.model.CreditOrder">
+        update np_back_order
+        <set>
+            <if test="backOrderCode != null">
+                back_order_code = #{backOrderCode,jdbcType=BIGINT},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=BIGINT},
+            </if>
+            <if test="backTime != null">
+                back_time = #{backTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="backRemark != null">
+                back_remark = #{backRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="backPrice != null">
+                back_price = #{backPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="backCheck != null">
+                back_check = #{backCheck,jdbcType=VARCHAR},
+            </if>
+            <if test="backDelFlag != null">
+                back_del_flag = #{backDelFlag,jdbcType=CHAR},
+            </if>
+            <if test="backRealName != null">
+                back_real_name = #{backRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="backBankName != null">
+                back_bank_name = #{backBankName,jdbcType=VARCHAR},
+            </if>
+            <if test="backBankAccount != null">
+                back_bank_account = #{backBankAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="dealerType != null">
+                dealer_type = #{dealerType,jdbcType=CHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="authorTime != null">
+                author_time = #{authorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authorLog != null">
+                author_log = #{authorLog,jdbcType=VARCHAR},
+            </if>
+            <if test="customerMsg != null">
+                customer_msg = #{customerMsg,jdbcType=VARCHAR},
+            </if>
+            <if test="backCollectPhone != null">
+                back_collect_phone = #{backCollectPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="backCollectAddress != null">
+                back_collect_address = #{backCollectAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="backCollectPerson != null">
+                back_collect_person = #{backCollectPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="backStatus != null">
+                back_status = #{backStatus,jdbcType=BIGINT},
+            </if>
+            <if test="isBack != null">
+                is_back = #{isBack,jdbcType=CHAR},
+            </if>
+            <if test="backReason != null">
+                back_reason = #{backReason,jdbcType=CHAR},
+            </if>
+            <if test="applyCredentials != null">
+                apply_credentials = #{applyCredentials,jdbcType=VARCHAR},
+            </if>
+            <if test="uploadDocuments != null">
+                upload_documents = #{uploadDocuments,jdbcType=VARCHAR},
+            </if>
+            <if test="backWay != null">
+                back_way = #{backWay,jdbcType=CHAR},
+            </if>
+            <if test="backGidGsum != null">
+                back_gid_gsum = #{backGidGsum,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="mallId != null">
+                mall_id = #{mallId,jdbcType=INTEGER},
+            </if>
+            <if test="backSubsidyPrice!= null">
+                back_subsidy_Price = #{backSubsidyPrice,jdbcType=DECIMAL}
+            </if>
+        </set>
+        where back_order_id = #{backOrderId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.order.model.CreditOrder">
+        update np_back_order
+        set back_order_code = #{backOrderCode,jdbcType=BIGINT},
+        order_id = #{orderId,jdbcType=BIGINT},
+        back_time = #{backTime,jdbcType=TIMESTAMP},
+        back_remark = #{backRemark,jdbcType=VARCHAR},
+        back_price = #{backPrice,jdbcType=DECIMAL},
+        back_check = #{backCheck,jdbcType=VARCHAR},
+        back_del_flag = #{backDelFlag,jdbcType=CHAR},
+        back_real_name = #{backRealName,jdbcType=VARCHAR},
+        back_bank_name = #{backBankName,jdbcType=VARCHAR},
+        back_bank_account = #{backBankAccount,jdbcType=VARCHAR},
+        dealer_type = #{dealerType,jdbcType=CHAR},
+        business_id = #{businessId,jdbcType=BIGINT},
+        author_name = #{authorName,jdbcType=VARCHAR},
+        author_time = #{authorTime,jdbcType=TIMESTAMP},
+        author_log = #{authorLog,jdbcType=VARCHAR},
+        customer_msg = #{customerMsg,jdbcType=VARCHAR},
+        back_collect_phone = #{backCollectPhone,jdbcType=VARCHAR},
+        back_collect_address = #{backCollectAddress,jdbcType=VARCHAR},
+        back_collect_person = #{backCollectPerson,jdbcType=VARCHAR},
+        back_status = #{backStatus,jdbcType=BIGINT},
+        is_back = #{isBack,jdbcType=CHAR},
+        back_reason = #{backReason,jdbcType=CHAR},
+        apply_credentials = #{applyCredentials,jdbcType=VARCHAR},
+        upload_documents = #{uploadDocuments,jdbcType=VARCHAR},
+        back_way = #{backWay,jdbcType=CHAR},
+        back_gid_gsum = #{backGidGsum,jdbcType=VARCHAR},
+        customer_id = #{customerId,jdbcType=BIGINT},
+        mall_id = #{mallId,jdbcType=INTEGER}
+        where back_order_id = #{backOrderId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectBackOrderListByCondition" resultMap="OpenBaseResultMap">
+        select
+        back_order_code,back_check,back_order_id
+        from np_back_order
+        where back_del_flag = '0'
+        and back_check in ('RETURN_APPLIED','REFUND_APPLIED','RETURN_DELIVERING')
+    </select>
+
+    <update id="updateStatusByBackOrderCode" parameterType="com.ylife.client.bean.BackOrder">
+        update np_back_order
+        <set>
+            <if test="backCheck !=null">
+                back_check=#{backCheck,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where back_order_code = #{backOrderCode,jdbcType=VARCHAR}
+    </update>
+</mapper>

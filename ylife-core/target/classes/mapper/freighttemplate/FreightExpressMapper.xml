@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.freighttemplate.mapper.FreightExpressMapper" >
+
+  <resultMap id="BaseResultMap" type="com.ylife.freighttemplate.model.FreightExpress" >
+    <id column="distribution_id" property="distributionId" jdbcType="BIGINT" />
+    <result column="freight_template_id" property="freightTemplateId" jdbcType="BIGINT" />
+    <result column="log_com_id" property="logComId" jdbcType="BIGINT" />
+    <result column="express_start" property="expressStart" jdbcType="BIGINT" />
+    <result column="express_postage" property="expressPostage" jdbcType="DECIMAL" />
+    <result column="express_plus_n1" property="expressPlusN1" jdbcType="BIGINT" />
+    <result column="express_postageplus" property="expressPostageplus" jdbcType="DECIMAL" />
+    <result column="express_delflag" property="expressDelflag" jdbcType="CHAR" />
+  </resultMap>
+    <resultMap id="BaseResultExpressMap" type="com.ylife.freighttemplate.model.FreightExpress" extends="BaseResultMap">
+		  <collection property="freightExpressAll" column="distribution_id" javaType="ArrayList" ofType="com.ylife.freighttemplate.model.FreightExpressAll"
+		  		select="com.ylife.freighttemplate.mapper.FreightExpressAllMapper.selectExpressAll"
+		  	></collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    distribution_id, freight_template_id, log_com_id, express_start, express_postage, 
+    express_plus_n1, express_postageplus, express_delflag
+  </sql>
+  
+  
+   <select id="selectTemplateExpress" useCache="false" resultMap="BaseResultExpressMap" parameterType="java.lang.Object" >
+    select 
+    <include refid="Base_Column_List" />
+    from np_freight_express
+    where freight_template_id = #{freightTemplateId,jdbcType=BIGINT} and express_delflag='0'
+  </select>
+  
+   
+    <select id="selectFreightExpressByDistributionId" resultMap="BaseResultExpressMap" parameterType="java.lang.Object" >
+    select 
+    <include refid="Base_Column_List" />
+    from np_freight_express
+    where distribution_id = #{distributionId,jdbcType=BIGINT} 
+  </select>
+  
+   
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Object" >
+    select 
+    <include refid="Base_Column_List" />
+    from np_freight_express
+    where distribution_id = #{distributionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Object" >
+    delete from np_freight_express
+    where distribution_id = #{distributionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ylife.freighttemplate.model.FreightExpress" >
+    insert into np_freight_express (distribution_id, freight_template_id, 
+      log_com_id, express_start, express_postage, 
+      express_plus_n1, express_postageplus, express_delflag
+      )
+    values (#{distributionId,jdbcType=BIGINT}, #{freightTemplateId,jdbcType=BIGINT}, 
+      #{logComId,jdbcType=BIGINT}, #{expressStart,jdbcType=BIGINT}, #{expressPostage,jdbcType=DECIMAL}, 
+      #{expressPlusN1,jdbcType=BIGINT}, #{expressPostageplus,jdbcType=DECIMAL}, #{expressDelflag,jdbcType=CHAR}
+      )
+  </insert>
+  
+  
+  
+  <!-- 插入新的运费模板默认设置 -->
+  <insert id="insertNewFreightExpress" parameterType="com.ylife.freighttemplate.model.FreightExpress" >
+    insert into np_freight_express
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="distributionId != null" >
+        distribution_id,
+      </if>
+      <if test="freightTemplateId != null" >
+        freight_template_id,
+      </if>
+      <if test="logComId != null" >
+        log_com_id,
+      </if>
+      <if test="expressStart != null" >
+        express_start,
+      </if>
+      <if test="expressPostage != null" >
+        express_postage,
+      </if>
+      <if test="expressPlusN1 != null" >
+        express_plus_n1,
+      </if>
+      <if test="expressPostageplus != null" >
+        express_postageplus,
+      </if>
+      <if test="expressDelflag != null" >
+        express_delflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="distributionId != null" >
+        #{distributionId,jdbcType=BIGINT},
+      </if>
+      <if test="freightTemplateId != null" >
+        #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="logComId != null" >
+        #{logComId,jdbcType=BIGINT},
+      </if>
+      <if test="expressStart != null" >
+        #{expressStart,jdbcType=BIGINT},
+      </if>
+      <if test="expressPostage != null" >
+        #{expressPostage,jdbcType=DECIMAL},
+      </if>
+      <if test="expressPlusN1 != null" >
+        #{expressPlusN1,jdbcType=BIGINT},
+      </if>
+      <if test="expressPostageplus != null" >
+        #{expressPostageplus,jdbcType=DECIMAL},
+      </if>
+      <if test="expressDelflag != null" >
+        #{expressDelflag,jdbcType=CHAR},
+      </if>
+    </trim>
+     <!--<selectKey keyProperty="distribution_id" resultType="java.lang.Long">-->
+      		<!--select LAST_INSERT_ID()-->
+      <!--</selectKey>-->
+  </insert>
+  <!-- 查询刚刚插入的Id -->
+  <select id="selectLastDistributionId" useCache="false" resultType="java.lang.Long" >
+  		select LAST_INSERT_ID()
+  </select>
+  
+  
+  <insert id="insertSelective" parameterType="com.ylife.freighttemplate.model.FreightExpress" >
+    insert into np_freight_express
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="distributionId != null" >
+        distribution_id,
+      </if>
+      <if test="freightTemplateId != null" >
+        freight_template_id,
+      </if>
+      <if test="logComId != null" >
+        log_com_id,
+      </if>
+      <if test="expressStart != null" >
+        express_start,
+      </if>
+      <if test="expressPostage != null" >
+        express_postage,
+      </if>
+      <if test="expressPlusN1 != null" >
+        express_plus_n1,
+      </if>
+      <if test="expressPostageplus != null" >
+        express_postageplus,
+      </if>
+      <if test="expressDelflag != null" >
+        express_delflag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="distributionId != null" >
+        #{distributionId,jdbcType=BIGINT},
+      </if>
+      <if test="freightTemplateId != null" >
+        #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="logComId != null" >
+        #{logComId,jdbcType=BIGINT},
+      </if>
+      <if test="expressStart != null" >
+        #{expressStart,jdbcType=BIGINT},
+      </if>
+      <if test="expressPostage != null" >
+        #{expressPostage,jdbcType=DECIMAL},
+      </if>
+      <if test="expressPlusN1 != null" >
+        #{expressPlusN1,jdbcType=BIGINT},
+      </if>
+      <if test="expressPostageplus != null" >
+        #{expressPostageplus,jdbcType=DECIMAL},
+      </if>
+      <if test="expressDelflag != null" >
+        #{expressDelflag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylife.freighttemplate.model.FreightExpress" >
+    update np_freight_express
+    <set >
+      <if test="freightTemplateId != null" >
+        freight_template_id = #{freightTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="logComId != null" >
+        log_com_id = #{logComId,jdbcType=BIGINT},
+      </if>
+      <if test="expressStart != null" >
+        express_start = #{expressStart,jdbcType=BIGINT},
+      </if>
+      <if test="expressPostage != null" >
+        express_postage = #{expressPostage,jdbcType=DECIMAL},
+      </if>
+      <if test="expressPlusN1 != null" >
+        express_plus_n1 = #{expressPlusN1,jdbcType=BIGINT},
+      </if>
+      <if test="expressPostageplus != null" >
+        express_postageplus = #{expressPostageplus,jdbcType=DECIMAL},
+      </if>
+      <if test="expressDelflag != null" >
+        express_delflag = #{expressDelflag,jdbcType=CHAR},
+      </if>
+    </set>
+    where distribution_id = #{distributionId,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+ <!-- 删除默认设置 -->
+  <update id="deleteTemplateExpress" parameterType="java.lang.Object" >
+    update np_freight_express
+    set express_delflag = '1'
+    where distribution_id = #{distributionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylife.freighttemplate.model.FreightExpress" >
+    update np_freight_express
+    set freight_template_id = #{freightTemplateId,jdbcType=BIGINT},
+      log_com_id = #{logComId,jdbcType=BIGINT},
+      express_start = #{expressStart,jdbcType=BIGINT},
+      express_postage = #{expressPostage,jdbcType=DECIMAL},
+      express_plus_n1 = #{expressPlusN1,jdbcType=BIGINT},
+      express_postageplus = #{expressPostageplus,jdbcType=DECIMAL},
+      express_delflag = #{expressDelflag,jdbcType=CHAR}
+    where distribution_id = #{distributionId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 根据  log_com_id 和 freight_template_id和   express_delflag=0 去查询默认的Id -->
+  <select id="queryDisIdByCidandTid"  parameterType="com.ylife.freighttemplate.model.FreightExpress"
+  resultMap="BaseResultExpressMap">
+    select  
+    <include refid="Base_Column_List" />
+     from  np_freight_express 
+    where log_com_id=#{logComId,jdbcType=BIGINT} and freight_template_id= #{freightTemplateId,jdbcType=BIGINT}
+    and express_delflag='0'
+  </select>
+
+    <!--根据id查询模板详细信息 -->
+    <select id="selectByFreightTemplateIds" resultMap="BaseResultExpressMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from np_freight_express
+        where freight_template_id in
+        <foreach collection="list" item="freightId" open="(" separator="," close=")">
+            #{freightId,jdbcType=BIGINT}
+        </foreach>
+        and express_delflag='0'
+    </select>
+
+    <delete id="deleteFreExpByTid" parameterType="java.lang.Object">
+    update np_freight_express set express_delflag='1'
+    
+    where freight_template_id=#{freightTemplateId,jdbcType=BIGINT}     
+  </delete>
+</mapper>

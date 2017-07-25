@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.order.mapper.BackOrderGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.ylife.order.model.BackOrderGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="backorder_id" property="backorderId" jdbcType="BIGINT" />
+    <result column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT" />
+    <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_info_name" property="goodsInfoName" jdbcType="VARCHAR" />
+    <result column="goods_info_image" property="goodsInfoImage" jdbcType="VARCHAR" />
+    <result column="goods_info_item_no" property="goodsInfoItemNo" jdbcType="VARCHAR" />
+      <result column="goods_info_settle_price" property="goodsInfoSettlePrice" jdbcType="DECIMAL" />
+    <collection property="goodsProductReleSpecVoList" column="goods_info_id" javaType="ArrayList"
+                ofType="com.ylife.goods.model.GoodsProductReleSpecVo"
+                select="com.ylife.goods.mapper.GoodsProductReleSpecMapper.queryAllByProductId"></collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, backorder_id, np_back_order_goods.goods_info_id, goods_num, goods_price, np_back_order_goods.goods_info_name, np_back_order_goods.goods_info_image,
+    np_back_order_goods.goods_info_item_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from np_back_order_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectBybackOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />,np_goods_info.goods_info_settle_price
+        from np_back_order_goods
+        left join np_goods_info on np_back_order_goods.goods_info_id = np_goods_info.goods_info_id
+        where backorder_id = #{backorderId,jdbcType=BIGINT}
+    </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from np_back_order_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ylife.order.model.BackOrderGoods" >
+    insert into np_back_order_goods (id, backorder_id, goods_info_id, 
+      goods_num, goods_price, goods_info_name, 
+      goods_info_image, goods_info_item_no)
+    values (#{id,jdbcType=BIGINT}, #{backorderId,jdbcType=BIGINT}, #{goodsInfoId,jdbcType=BIGINT}, 
+      #{goodsNum,jdbcType=INTEGER}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsInfoName,jdbcType=VARCHAR}, 
+      #{goodsInfoImage,jdbcType=VARCHAR}, #{goodsInfoItemNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylife.order.model.BackOrderGoods" >
+    insert into np_back_order_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="backorderId != null" >
+        backorder_id,
+      </if>
+      <if test="goodsInfoId != null" >
+        goods_info_id,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsInfoName != null" >
+        goods_info_name,
+      </if>
+      <if test="goodsInfoImage != null" >
+        goods_info_image,
+      </if>
+      <if test="goodsInfoItemNo != null" >
+        goods_info_item_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="backorderId != null" >
+        #{backorderId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsInfoId != null" >
+        #{goodsInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsInfoName != null" >
+        #{goodsInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsInfoImage != null" >
+        #{goodsInfoImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsInfoItemNo != null" >
+        #{goodsInfoItemNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylife.order.model.BackOrderGoods" >
+    update np_back_order_goods
+    <set >
+      <if test="backorderId != null" >
+        backorder_id = #{backorderId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsInfoId != null" >
+        goods_info_id = #{goodsInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsInfoName != null" >
+        goods_info_name = #{goodsInfoName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsInfoImage != null" >
+        goods_info_image = #{goodsInfoImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsInfoItemNo != null" >
+        goods_info_item_no = #{goodsInfoItemNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylife.order.model.BackOrderGoods" >
+    update np_back_order_goods
+    set backorder_id = #{backorderId,jdbcType=BIGINT},
+      goods_info_id = #{goodsInfoId,jdbcType=BIGINT},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_info_name = #{goodsInfoName,jdbcType=VARCHAR},
+      goods_info_image = #{goodsInfoImage,jdbcType=VARCHAR},
+      goods_info_item_no = #{goodsInfoItemNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

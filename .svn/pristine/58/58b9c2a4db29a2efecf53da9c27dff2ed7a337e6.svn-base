@@ -1,0 +1,129 @@
+var basePath = $("#basePath").val();
+$(function(){
+});
+
+/**
+ * 提交添加品牌form
+ */
+var num=0;
+function submitSaveBrandForm() {
+    var brandName=$("#addBrandName").val();
+    if(brandName==''){
+        $("#helpTip").hide();
+    }
+    $("#saveBrandForm input").each(function () {
+        $(this).removeClass("ignore");
+    });
+    $("#saveBrandForm").attr("action","saveBrand.htm");
+    $("#saveBrandForm").attr("target","_self");
+    if(brandName!=null && brandName!=''&&num==0){
+        $.ajax({
+            url:'selectByBrandName.htm?brandName='+brandName+"&CSRFToken="+$("#CSRFToken").val(),
+            success:function(data) {
+                if(data==0) {
+                    num+=1;
+                    //不重复则提交表单
+                    $("#addBrandName").removeClass("error");
+                    $("#helpTip").hide();
+                    $("#saveBrandForm").submit();
+                }else{
+                    //重复错误提示
+                    $("#addBrandName").addClass("error");
+                    $("#helpTip").show();
+                }
+            }
+        });
+    }else{
+        $("#addBrandName").removeClass("error");
+        $("#helpTip").hide();
+        $("#saveBrandForm").submit();
+    }
+}
+
+/**
+ * 提交编辑form
+ */
+function submitUpdateForm() {
+    $("#editBrandForm input").each(function () {
+        $(this).removeClass("ignore");
+    });
+    $("#editBrandForm").attr("action",basePath+"/ThirdPlatformAdmin/saveThirdPlatform");
+    $("#editBrandForm").attr("target","_self");
+
+    if($(".add_title").html() == "添加"){
+        var result = checkThirdUser($("#companyName").val(),$("#storeName").val(),$("#thirdUserName").val());
+        if(result == '200'){
+            $("#editBrandForm").submit();
+        }else{
+            alert(result);
+        }
+    }else{
+        if($("#companyName").val() == companyNameOld){
+            companyNameOld = "";
+        }
+        if($("#storeName").val() == storeNameOld){
+            storeNameOld = "";
+        }
+        if($("#thirdUserName").val() == thirdUserNameOld){
+            thirdUserNameOld = "";
+        }
+        var result = checkThirdUser(companyNameOld,storeNameOld,thirdUserNameOld);
+        if(result == '200'){
+            $("#editBrandForm").submit();
+        }else{
+            alert(result);
+        }
+    }
+
+}
+
+function checkThirdUser(companyName,storeName,thirdUserName){
+    var result = "";
+    $.ajax({
+        url:basePath+'/ThirdPlatformAdmin/checkThirdUser',
+        data:{companyName:companyName,storeName:storeName,thirdUserName: thirdUserName},
+        async: false,
+        success:function(data) {
+            result = data;
+        }
+    });
+    return result;
+}
+
+/**
+ * 弹出显示编辑
+ */
+var companyNameOld;
+var storeNameOld;
+var thirdUserNameOld;
+function updateThirdPlatfrom(thirdId) {
+    if(typeof (thirdId) != 'undefined'){
+        $(".add_title").html("编辑");
+        $.ajax({
+            url:basePath+'/ThirdPlatformAdmin/queryById?id='+thirdId,
+            dataType:'json',
+            success:function(data) {
+                $("#id").val(data.id);
+                $("#companyName").val(data.companyName);
+                $("#storeName").val(data.storeName);
+                $("#thirdUserName").val(data.thirdUserName);
+                $("#thirdUserPwd").val(data.thirdUserPwd);
+                companyNameOld = data.companyName;
+                storeNameOld = data.storeName;
+                thirdUserNameOld = data.thirdUserName;
+                $("input:radio[name='platformType'][value='"+data.platformType+"']").click();
+                $("#editThirdPlatfrom").modal("show");
+            }
+        });
+    }
+    else{
+        $(".add_title").html("添加");
+        $("#editBrandForm").find("input").val("");
+        $("input:radio[name='platformType']").eq(0).click();
+        $("#editThirdPlatfrom").modal("show");
+    }
+}
+
+function importBrand() {
+    $("#importGoodsBrandForm").submit();
+}

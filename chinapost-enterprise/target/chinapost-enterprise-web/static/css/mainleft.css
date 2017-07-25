@@ -1,0 +1,200 @@
+@media screen and ( max-width: 190px){
+    .list ul li i{
+        transform: scale(0.8,0.8);
+        transform-origin: left;
+        -webkit-transform: scale(0.8,0.8);
+        -webkit-transform-origin: left;
+        -ms-transform: scale(0.8,0.8);
+        -ms-transform-origin: left;
+        -moz-transform: scale(0.8,0.8);
+        -moz-transform-origin: left;
+    }
+    .list ul li{
+        height: 36px!important;
+        line-height: 36px!important;
+        font-size: 14px!important;
+        margin-left: 10px!important;
+        /*transform: scale(0.9,0.9);*/
+        /*transform-origin: left top;*/
+        /*-webkit-transform: scale(0.9,0.9);*/
+        /*-webkit-transform-origin: left top;*/
+        /*-ms-transform: scale(0.9,0.9);*/
+        /*-ms-transform-origin: left top;*/
+        /*-moz-transform: scale(0.9,0.9);*/
+        /*-moz-transform-origin: left top;*/
+    }
+    #yuebuzu{
+        top: 10px!important;
+    }
+}
+
+#yuebuzu{
+    width: 18px;
+    height: 18px;
+}
+body{
+    width: 100%;
+}
+.list{
+	width:100%;
+	height:1200px;
+	color:#8b9599;
+	text-align:center;
+    background: #fff;
+}
+.list span{
+	display:inline-block;
+    vertical-align: middle;
+	font-size:24px;
+    padding: 10px;
+    width: 100%;
+    background: #008738;
+}
+.list ul{
+	font-size:16px;
+}
+.list ul li i{
+    display: inline-block;
+    vertical-align: middle;
+	width:18px;
+	height:18px;
+	margin-right:10px;
+}
+.list ul li#ucoinmanager #yuebuzu{
+    display: none;
+    translation:all 1s ;
+}
+.list ul:hover li#ucoinmanager #yuebuzu{
+    display: block;
+}
+.list ul li#account i{
+    background:url(../img/com_btn_account_nor.png) center no-repeat;
+}
+.list ul li#account:hover i{
+    background:url(../img/com_btn_account_hover.png) center no-repeat!important;
+}
+.list ul li#hiemanager i{
+     background:url(../img/com_btn_level_nor.png) center no-repeat;
+ }
+.list ul li#hiemanager:hover i{
+    background:url(../img/com_btn_level_hover.png) center no-repeat!important;
+}
+.list ul li#rolemanager i{
+    background:url(../img/com_btn_role_nor.png) center no-repeat;
+}
+.list ul li#rolemanager:hover i{
+    background:url(../img/com_btn_role_hover.png) center no-repeat!important;
+}
+.list ul li#membermanager i{
+    background:url(../img/com_btn_member_nor.png) center no-repeat;
+}
+.list ul li#membermanager:hover i{
+    background:url(../img/com_btn_member_hover.png) center no-repeat!important;
+}
+.list ul li#itemmanager i{
+     background:url(../img/com_btn_goods_nor.png) center no-repeat;
+ }
+.list ul li#itemmanager:hover i{
+    background:url(../img/com_btn_goods_hover.png) center no-repeat!important;
+}
+.list ul li#ucoinmanager i{
+    background:url(../img/com_btn_wealth_nor.png) center no-repeat;
+}
+.list ul li#ucoinmanager:hover i{
+    background:url(../img/com_btn_wealth_hover.png) center no-repeat!important;
+}
+.list ul li#ubaosend i{
+    background:url(../img/com_btn_youbao_nor.png) center no-repeat;
+}
+.list ul li#ubaosend:hover i{
+    background:url(../img/com_btn_youbao_hover.png) center no-repeat!important;
+}
+.list ul li#itemlist i{
+    background:url(../img/com_btn_user_nor.png) center no-repeat;
+}
+.list ul li#itemlist:hover i{
+    background:url(../img/com_btn_user_hover.png) center no-repeat!important;
+}
+.list ul li#accountmanager i{
+     background:url(../img/com_btn_order_nor.png) center no-repeat;
+ }
+.list ul li#accountmanager:hover i{
+    background:url(../img/com_btn_order_hover.png) center no-repeat!important;
+}
+.list ul li#requisition i{
+    background:url(../img/com_btn_request_nor.png) center no-repeat;
+}
+.list ul li#requisition:hover i{
+    background:url(../img/com_btn_request_hover.png) center no-repeat!important;
+}
+.list ul li#billmanager i{
+    background:url(../img/com_btn_bill_nor.png) center no-repeat;
+}
+.list ul li#billmanager:hover i{
+    background:url(../img/com_btn_bill_hover.png) center no-repeat!important;
+}
+.list ul li#inventorymanager i{
+    background:url(../img/com_btn_stock_nor.png) center no-repeat;
+}
+.list ul li#inventorymanager:hover i{
+    background:url(../img/com_btn_stock_hover.png) center no-repeat!important;
+}
+.list ul li#ucoc i{
+    background:url(../img/com_btn_statistics_nor.png) center no-repeat;
+}
+.list ul li#ucoc:hover i{
+    background:url(../img/com_btn_statistics_hover.png) center no-repeat!important;
+}
+.list ul li#ngt i{
+    background:url(../img/com_btn_outlets-please_nor.png) center no-repeat;
+}
+.list ul li#ngt:hover i{
+    background:url(../img/com_btn_outlets-please_hover.png) center no-repeat!important;
+}
+.list ul li#businesstype i{
+    background:url(../img/com_btn_businessType_nor.png) center no-repeat;
+}
+.list ul li#businesstype:hover i{
+    background:url(../img/com_btn_businessType_hover.png) center no-repeat!important;
+}
+.list ul li#formcenter i{
+    background:url(../img/com_btn_formCenter_nor.png) center no-repeat;
+}
+.list ul li#formcenter:hover i{
+    background:url(../img/com_btn_formCenter_hover_nor.png) center no-repeat!important;
+}
+.list ul li#logmanager i{
+    background:url(../img/com_btn_logManager_nor.png) center no-repeat;
+}
+.list ul li#logmanager:hover i{
+    background:url(../img/com_btn_logManager_hover_nor.png) center no-repeat!important;
+}
+
+.list ul li{
+    white-space: nowrap;
+    margin-top: -1px;
+    height: 50px;
+    line-height: 50px;
+    padding-right: 20px;
+    background: #ffffff;
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+
+
+.list ul li a{
+	color:#8b9599;
+	display:inline-block;
+}
+.list ul li:hover a{
+    color: #54a6de!important;
+}
+.list ul li.clickOn{
+    background:#edf3f8;
+}
+.list ul li.clickOn a{
+    color: #2c97de;
+}

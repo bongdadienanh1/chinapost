@@ -1,0 +1,267 @@
+$(function(){
+
+    /* 订单筛选交互演示用*/
+    $('#order_tabs a').click(function () {
+        $that = $(this);
+        $that.parent().addClass('active');
+        $that.parent().siblings().removeClass('active');
+
+        submitOrder();
+    });
+    /* 下面是表单里面的日期时间选择相关的 */
+    $('.form_datetime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:00',
+        weekStart : 1,
+        autoclose : true,
+        language : 'zh-CN',
+        pickerPosition : 'bottom-left',
+        todayBtn : true,
+        viewSelect : 'hour'
+    });
+    $('.form_date').datetimepicker({
+        format : 'yyyy-mm-dd',
+        weekStart : 1,
+        autoclose : true,
+        language : 'zh-CN',
+        pickerPosition : 'bottom-left',
+        minView : 2,
+        todayBtn : true
+    });
+    /*下面是时间选择器开始时间不能大于结束时间设置  START*/
+    var startTime = $("#startTime").val();
+    var endTime = $("#endTime").val();
+    $('#endpicker').datetimepicker('setStartDate', startTime);
+    $('#startpicker').datetimepicker('setEndDate', endTime);
+    $('#endpicker')
+        .datetimepicker()
+        .on('show', function (ev) {
+            startTime = $("#startTime").val();
+            endTime = $("#endTime").val();
+            $('#endpicker').datetimepicker('setStartDate', startTime);
+            $('#startpicker').datetimepicker('setEndDate', endTime);
+        });
+    $('#startpicker')
+        .datetimepicker()
+        .on('show', function (ev) {
+            endTime = $("#endTime").val();
+            startTime = $("#startTime").val();
+            $('#startpicker').datetimepicker('setEndDate', endTime);
+            $('#endpicker').datetimepicker('setStartDate', startTime);
+        });
+});
+
+function submitOrder(){
+    $("#statusFlag").val($(".flagli .active").find("a").attr("data-type"));
+    $("#thirdOrderForm").submit();
+}
+
+function exportOrderExcel(){
+    $("#thirdOrderForm").attr("action","exportOrderExcel");
+    submitOrder();
+    $("#thirdOrderForm").attr("action","ListPage");
+}
+
+/*查看详细*/
+function fnOpen(oId) {
+    $.ajax({
+        type : "POST",
+        url:"queryById",
+        data : {orderId:oId},
+        dataType:'json',
+        success:function(data){
+            //清空列表
+            $("#ordergoods").html("");
+            $("#pageorder").html("");
+            $("#orderLog").html("");
+            //退款日志
+            $("#ordertk").html("");
+            if(data!="" && data!= null && data != undefined){
+                /*等的详情*/
+                //订单详细信息
+                var order = data;
+                var relations = data.relations;
+                if(order!= null){
+                    var status = addstatusstr('已下单',order.createTime,1,'active');
+                    if(order.payTime != null){
+                        status += addstatusstr('已付款',order.payTime,2,'active');
+                    }else{
+                        status += addstatusstr('已付款',null,2,'');
+                    }
+                    if(order.sendExpressTime != null || order.getGoodsTime != null){
+                        status += addstatusstr('已发货',order.sendExpressTime,3,'active');
+                    }else{
+                        status += addstatusstr('已发货',null,3,'');
+                    }
+                    if(order.getGoodsTime != null){
+                        status += addstatusstr('已完成',order.getGoodsTime,4,'active');
+                    }else{
+                        status += addstatusstr('已完成',null,4,'');
+                    }
+                    $("#detailorderCodeNo").html("订单号："+notNull(order.orderCode));
+                    $("#detailorderCode").html("订单编号："+notNull(order.orderCode));
+                    $("#detailcreateTime").html("下单时间："+timeObject(order.createTime));
+                    if(order.orderCancelTime == null) {
+                        $("#detailorederRetime").html('');
+                    }else{
+                        $("#detailorederRetime").html("订单取消时间："+timeObject(order.orderCancelTime));
+                    }
+                    //判断状态
+                    $("#detailorderStatus").html(orderStatus_handle(order.orderStatus));
+
+                    $("#status").html(status);
+                    $("#detailcouponNo").html("使用优惠券："+notNull(order.couponNo));
+                    $("#detailorderOldPrice").html("订单原始金额："+order.orderOldPrice.toFixed(2)+'邮豆');
+                    $("#detailorderPrePrice").html("订单优惠金额："+order.orderPrePrice.toFixed(2)+'邮豆');
+                    $("#detailorderPrice").html(order.orderPrice.toFixed(2)+'邮豆');
+                    if(order.orderIntegral == null){
+                        $("#detailorderIntegral").html("订单使用积分：0邮豆");
+                    }else{
+                        $("#detailorderIntegral").html("订单使用积分："+order.orderIntegral+'邮豆');
+                    }
+                    if(order.orderCancelRemark == null){
+                        $("#detailorederRemark").html("");
+                    }else{
+                        $("#detailorederRemark").html("取消订单原因："+order.orderCancelRemark);
+                    }
+
+                    //物流信息
+                    var str = ""
+                    var count = 0;
+                    if(relations != undefined){
+                        for(var i=0;i<relations.length;i++){
+                            count++;
+                            str+="<p>包裹["+count+"]</p>";
+                            str+="<div class='col-sm-12'><p>物流公司："+relations[i].expressName+"</p></div>"
+                            str+="<div class='col-sm-12'><p>物流单号："+relations[i].expressNo+"</p></div>"
+                        }
+                    }
+
+                    $("#relations").html(str);
+                    if(order.orderExpress != null){
+                        if(order.orderExpress.expressTypeId==0){
+                            $("#detailorderExpress").html("配送方式：快递配送");
+                        }else if(order.orderExpress.expressTypeId==1){
+                            $("#detailorderExpress").html("配送方式：上门自提");
+                        }
+                    }
+                    if(order.invoiceType =="0"){
+                        var invoicestr = '<div class="col-sm-12">'+
+                            '<p>发票类型：不需要发票</p>'+
+                            '</div>'+
+                            '<div class="col-sm-12">';
+                        if(order.orderLinePay=='1'){
+                            invoicestr+='<p>支付类型：在线支付</p>';
+                        }else if(order.orderLinePay=='0'){
+                            invoicestr+='<p>支付类型：货到付款</p>';
+                        }
+                        invoicestr +='</div>';
+                        $("#invoiceType").html(invoicestr);
+                    }else if(order.invoiceType =="1"){
+                        var invoicestr = '<div class="col-sm-12">'+
+                            '<p>发票类型：普通发票</p>'+
+                            '</div>'+
+                            '<div class="col-sm-12">'+
+                            '<p>发票抬头：'+notNull(order.invoiceTitle)+'</p>'+
+                            '</div>'+
+                            '<div class="col-sm-12">'+
+                            '<p>发票内容：'+notNull(order.invoiceContent)+'</p>'+
+                            '</div>'+
+                            '<div class="col-sm-12">';
+                        if(order.orderLinePay=='1'){
+                            invoicestr+='<p>支付类型：在线支付</p>';
+
+                        }else if(order.orderLinePay=='0'){
+                            invoicestr+='<p>支付类型：货到付款</p>';
+                        }
+
+                        invoicestr +='</div>';
+                        $("#invoiceType").html(invoicestr);
+                    }
+
+                    //$("#detailexpressPrice").html("运费："+order.expressPrice.toFixed(2)+'邮豆');
+
+                    //收货信息
+                    $("#detailshippingaddress").html("收货地址："+notNull(order.shippingProvince)+notNull(order.shippingCity)+notNull(order.shippingCounty));
+                    $("#detailaddress").html("详细地址："+notNull(order.shippingAddress));
+                    $("#detailshippingPerson").html("收货人："+notNull(order.shippingPerson));
+                    $("#detailshippingPhone").html("联系电话："+notNull(order.shippingPhone));
+                    $("#detailshippingMobile").html("手机："+notNull(order.shippingMobile));
+                    $("#detailshippingPostcode").html("邮编："+notNull(order.shippingPostcode));
+                    $("#detailcustomerRemark").html("客户留言："+notNull(order.customerRemark));
+
+                    //卖家备注
+                    $("#detailsellerRemark").html("卖家备注："+notNull(order.sellerRemark));
+                    /*订单商品信息*/
+
+                    var str ="";
+                    $.each(order.orderGoodsList,function(idx,item){
+                        str+='<tr id="goodsnum'+idx+'" class="">';
+                        str +='<td><div class="data_item"><img alt="" src="'+notNull(item.goodsImg)+'" height="50" >';
+                        str += '<p>'+notNull(item.goodsInfoName)+'</p></div>';
+                        str += '</td>';
+                        str+='<td>'+item.goodsInfoOldPrice.toFixed(2)+'邮豆</td>';
+                        str+='<td>'+item.goodsInfoNum+'</td>';
+                        if(item.goodsProductReleSpecVoList!=null) {
+                            str += '<td>';
+                            for(var s = 0;s<item.goodsProductReleSpecVoList.length;s++){
+                                if(item.goodsProductReleSpecVoList[s].spec != undefined){
+                                    str+=item.goodsProductReleSpecVoList[s].spec.specName;
+                                }
+                                str+=':';
+                                if(item.goodsProductReleSpecVoList[s].goodsSpecDetail != undefined){
+                                    str+=item.goodsProductReleSpecVoList[s].goodsSpecDetail.specDetailName;
+                                }
+                            }
+                            str += '</td>';
+                        }
+
+                        str +='<td>'+item.goodsInfoPrice.toFixed(2)+'邮豆';
+                        str +='</td><td>'+item.goodsInfoSumPrice.toFixed(2)+'邮豆';
+                        str =='</td></tr>';
+                    });
+                    $("#ordergoods").html(str);
+                }
+            }
+            $('#orderDetails').modal('show');
+        }
+    });
+}
+//拼接订单状态显示
+function addstatusstr(str,time,num,cla){
+    if(time != null){
+        return '<li class="'+cla+'">'+
+            '<p class="name">'+str+'</p>'+
+            '<p class="bar"><i>'+num+'</i></p>'+
+            '<p class="time">'+timeObject(time)+'</p>'+
+            '</li>';
+    }else{
+        return '<li class="'+cla+'">'+
+            '<p class="name">'+str+'</p>'+
+            '<p class="bar"><i>'+num+'</i></p>'+
+            '<p class="time"></p>'+
+            '</li>';
+    }
+
+}
+
+//转换时间格式
+function timeObject(obj){
+    var date = "/Date(" +notNull(obj)+")/";
+    var time = new Date(parseInt(date.replace("/Date(", "").replace(")/", ""), 10));
+    var result = time.getFullYear() + "-" + (time.getMonth() + 1 < 10 ? "0" + (time.getMonth() + 1) : time.getMonth() + 1) + "-" + (time.getDate() < 10 ? "0" + time.getDate() : time.getDate()) + " " + (time.getHours() < 10 ? "0" + time.getHours() : time.getHours()) + ":" + (time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes())+ ":" + (time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds());
+    return result;
+}
+
+//判断数据是否为空为空返回“”
+function notNull(obj){
+    if(obj != null && obj != undefined){
+        return obj;
+    }else{
+        return "";
+    }
+}
+
+function searchData(pageNumber){
+    $("#page").val(pageNumber);
+    submitOrder();
+}

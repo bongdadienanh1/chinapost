@@ -1,0 +1,2201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.form.mapper.FormFuncMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.form.model.FormFunc">
+        <result column="total_marketPrice" property="totalMarketPrice" jdbcType="DECIMAL"/>
+        <result column="total_salesPrice" property="totalSalePrice" jdbcType="DECIMAL"/>
+        <result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="enterprise_name" property="grandEnterprise" jdbcType="BIGINT"/>
+        <result column="total_refund_price" property="totalRefundPrice" jdbcType="DECIMAL"/>
+        <result column="total_consume_price" property="totalConsumePrice" jdbcType="DECIMAL"/>
+        <result column="expenditure" property="expenditure" jdbcType="BIGINT"/>
+        <result column="new_customer_amount" property="newCustomerAmount" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="FormTimeResultMap" type="com.ylife.form.model.FormTime">
+        <result column="date_day" property="dateDay" jdbcType="TIMESTAMP"/>
+        <result column="new_customer_amount" property="newCustomerAmount" jdbcType="BIGINT"/>
+        <result column="total_marketPrice" property="sumMarketPrice" jdbcType="DECIMAL"/>
+        <result column="total_salePrice" property="sumSalePrice" jdbcType="DECIMAL"/>
+        <result column="total_price" property="sumPrice" jdbcType="DECIMAL"/>
+        <result column="expenditure" property="expenditure" jdbcType="BIGINT"/>
+        <result column="every_day" property="everyDay" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="UcoinGrandResultMap" type="com.ylife.form.model.UcoinGrandForm">
+        <result column="idCard_no" property="idCard" jdbcType="VARCHAR"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="expenditure" property="grandAmount" jdbcType="BIGINT"/>
+        <result column="market_price" property="marketPrice" jdbcType="BIGINT"/>
+        <result column="sales_price" property="salePrice" jdbcType="BIGINT"/>
+        <result column="price" property="price" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="business_time" property="businessTime" jdbcType="TIMESTAMP"/>
+        <result column="enterprise_name" property="grandEnterprise" jdbcType="BIGINT"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="batch_code" property="batchcode" jdbcType="BIGINT"/>
+        <result column="sumfee" property="sumfee" jdbcType="DECIMAL"/>
+        <result column="countbatch" property="countbatch" jdbcType="INTEGER"/>
+        <result column="send_type" property="sendType" jdbcType="VARCHAR"/>
+        <result column="manager_id" property="managerId" jdbcType="BIGINT"/>
+        <result column="manager_name" property="managerName" jdbcType="VARCHAR"/>
+        <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CustomerConsumeResultMap" type="com.ylife.form.model.CustomerConsume">
+        <result column="idCard_no" property="idCard" jdbcType="VARCHAR"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="order_id" property="orderId" jdbcType="BIGINT"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="refund_amount" property="backAmount" jdbcType="BIGINT"/>
+        <result column="consume_amount" property="orderAmount" jdbcType="BIGINT"/>
+        <result column="total_consume_price" property="totalConsumePrice" jdbcType="DECIMAL"/>
+        <result column="total_refund_price" property="totalRefundPrice" jdbcType="DECIMAL"/>
+        <result column="order_price" property="orderPrice" jdbcType="DECIMAL"/>
+        <result column="back_price" property="backPrice" jdbcType="DECIMAL"/>
+        <result column="order_code" property="orderCode" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="total_balance" property="resePrice" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="total_valet_price" property="totalValetPrice" jdbcType="DECIMAL"/>
+        <result column="total_online_price" property="totalOnlinePrice" jdbcType="DECIMAL"/>
+        <result column="total_back_online_price" property="totalBackOnlinePrice" jdbcType="DECIMAL"/>
+        <result column="total_back_valet_price" property="totalBackValetPrice" jdbcType="DECIMAL"/>
+        <result column="valet_amount" property="valetAmount" jdbcType="BIGINT"/>
+        <result column="online_amount" property="onlineAmount" jdbcType="BIGINT"/>
+        <result column="back_online_amount" property="backOnlineAmount" jdbcType="BIGINT"/>
+        <result column="back_valet_amount" property="backValetAmount" jdbcType="BIGINT"/>
+        <result column="typenew" property="typeNew" jdbcType="VARCHAR"/>
+        <result column="price" property="valetOnlinePrice" jdbcType="DECIMAL"/>
+        <result column="code" property="billCode" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="WealthFormResultMap" type="com.ylife.form.model.WealthForm">
+        <result column="id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="end" property="end" jdbcType="TINYINT"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="BIGINT"/>
+        <result column="appropriation" property="appropriation" jdbcType="DECIMAL"/>
+        <result column="grand_udou" property="grandUdou" jdbcType="DECIMAL"/>
+        <result column="decut_udou" property="decutUdou" jdbcType="DECIMAL"/>
+        <result column="subsidy_udou" property="subsidyUdou" jdbcType="DECIMAL"/>
+        <result column="back_subsidy_udou" property="backUdou" jdbcType="DECIMAL"/>
+        <result column="undistributed_price" property="remainUdou" jdbcType="DECIMAL"/>
+        <!--<result column="remain_cash" property="remainCash" jdbcType="DECIMAL"/>-->
+    </resultMap>
+
+    <resultMap id="CustomerFormDetailResultMap" type="com.ylife.form.model.CustomerFormDetail">
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="current_id" property="currentId" jdbcType="BIGINT"/>
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+        <result column="current_name" property="currentName" jdbcType="VARCHAR"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="fullname" property="fullName" jdbcType="VARCHAR"/>
+        <result column="idCard_no" property="idCardNo" jdbcType="VARCHAR"/>
+        <result column="customer_ref" property="customerRef" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_price" property="lastPrice" jdbcType="DECIMAL"/>
+        <result column="current_price" property="currentPrice" jdbcType="DECIMAL"/>
+        <result column="grand_frequency" property="grandFrequency" jdbcType="INTEGER"/>
+        <result column="grand_price" property="grandPrice" jdbcType="DECIMAL"/>
+        <result column="decut_frequency" property="decutFrequency" jdbcType="INTEGER"/>
+        <result column="decut_price" property="decutPrice" jdbcType="DECIMAL"/>
+        <result column="consume_frequency_offline" property="consumeFrequencyOffline" jdbcType="INTEGER"/>
+        <result column="consume_price_offline" property="consumePriceOffline" jdbcType="DECIMAL"/>
+        <result column="consume_subsidy_price_offline" property="consumeSubsidyPriceOffline" jdbcType="DECIMAL"/>
+        <result column="consume_frequency_online" property="consumeFrequencyOnline" jdbcType="INTEGER"/>
+        <result column="consume_price_online" property="consumePriceOnline" jdbcType="DECIMAL"/>
+        <result column="consume_settel_price" property="consumeSettlePrice" jdbcType="DECIMAL"/>
+        <result column="refund_frequency" property="refundFrequency" jdbcType="INTEGER"/>
+        <result column="refund_settel_price" property="refundSettlePrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="CustomerFormStatisticResultMap" type="com.ylife.form.model.CustomerFormStatistic" >
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR" />
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT" />
+        <result column="end" property="end" jdbcType="TINYINT" />
+        <result column="customer_ref" property="customerRef" jdbcType="VARCHAR" />
+        <result column="customer_amount" property="customerAmount" jdbcType="INTEGER" />
+        <result column="grand_customer_amount" property="grandCustomerAmount" jdbcType="INTEGER" />
+        <result column="grand_price" property="grandPrice" jdbcType="DECIMAL" />
+        <result column="decut_customer_amount" property="decutCustomerAmount" jdbcType="INTEGER" />
+        <result column="decut_price" property="decutPrice" jdbcType="DECIMAL" />
+        <result column="consume_customer_amount" property="consumeCustomerAmount" jdbcType="INTEGER" />
+        <result column="consume_price" property="consumePrice" jdbcType="DECIMAL" />
+        <result column="consume_subsidy_customer_amount" property="consumeSubsidyCustomerAmount" jdbcType="INTEGER" />
+        <result column="consume_subsidy_price" property="consumeSubsidyPrice" jdbcType="DECIMAL" />
+        <result column="consume_settle_price" property="consumeSettlePrice" jdbcType="DECIMAL" />
+        <result column="refund_settle_price" property="refundSettlePrice" jdbcType="DECIMAL" />
+        <result column="current_price" property="currentPrice" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <sql id="Base_Column">
+        ysh_custom_ucion_history.id,
+        ysh_custom_ucion_history.customer_id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        ysh_enterprise_info.enterprise_name,
+        ysh_custom_ucion_history.price,
+        ysh_custom_ucion_history.market_price,
+        ysh_custom_ucion_history.sales_price,
+        ysh_custom_ucion_history.create_time
+    </sql>
+
+    <select id="selectCustomerFormStatistic" resultMap="CustomerFormStatisticResultMap">
+        select
+        #{enterpriseId,jdbcType=BIGINT} as enterprise_id,
+        (SELECT enterprise_name from  ysh_enterprise_info where enterprise_id=#{enterpriseId,jdbcType=BIGINT})as enterprise_name,
+        (SELECT end from  ysh_enterprise_func where id=#{enterpriseId,jdbcType=BIGINT}) as end,
+        aa.ref customer_ref,
+        COUNT(DISTINCT(aa.customer_id)) as customer_amount,
+        count(DISTINCT(
+        CASE
+        when aa.grand_frequency>0 then aa.customer_id
+        end)
+        ) as grand_customer_amount,
+        sum(aa.grand_price) as grand_price,
+        count(DISTINCT(
+        CASE
+        when aa.decut_frequency>0 then aa.customer_id
+        end)
+        ) as decut_customer_amount,
+        -sum(aa.decut_price) as decut_price,
+        count(DISTINCT(
+        CASE
+        when aa.consume_frequency>0 then aa.customer_id
+        end)
+        ) as consume_customer_amount,
+        sum(aa.consume_price) as consume_price,
+
+        count(DISTINCT(
+        CASE
+        when aa.consume_subsidy_price_offline is not NULL then aa.customer_id
+        end)
+        ) as consume_subsidy_customer_amount,
+        sum(aa.consume_subsidy_price_offline)as consume_subsidy_price,
+        sum(aa.consume_settel_price) as consume_settle_price,
+        sum(aa.refund_settel_price) as refund_settle_price,
+        sum(aa.current_price) as current_price
+        from
+        (select
+        customer_enterprise.customer_id,
+        CASE
+        WHEN
+        <if test="start!=null">
+            (
+            SELECT
+            create_time
+            FROM
+            ysh_custom_ucion_history
+            WHERE
+            customer_id = customer_enterprise.customer_id
+            AND enterprise_id IN (
+            SELECT
+            id
+            FROM
+            ysh_enterprise_func
+            where
+            <![CDATA[catalog >= #{minCatalog,jdbcType=BIGINT}]]>
+            <![CDATA[and catalog <= #{maxCatalog,jdbcType=BIGINT}]]>
+            )
+            <if test="end!=null">
+                <![CDATA[ AND create_time<#{end,jdbcType=TIMESTAMP} ]]>
+            </if>
+            ORDER BY
+            create_time
+            LIMIT 1
+            )
+            <![CDATA[<#{start,jdbcType=TIMESTAMP} ]]>
+        </if>
+        THEN
+        "old"
+        ELSE
+        "new"
+        END AS ref,
+        ifnull((SELECT balance_price from ysh_custom_ucion_history WHERE
+        customer_id = customer_enterprise.customer_id	AND enterprise_id = customer_enterprise.enterprise_id
+        <if test="end!=null">
+            <![CDATA[
+               AND create_time<#{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        order by create_time desc,id desc limit 1),0.00) AS current_price,
+        count(CASE WHEN ysh_custom_ucion_history.type = 'ENTERPRISE_GRAND'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	ysh_custom_ucion_history.id	END	) AS grand_frequency,
+        sum(CASE WHEN ysh_custom_ucion_history.type = 'ENTERPRISE_GRAND'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	ysh_custom_ucion_history.price END) AS grand_price,
+        count(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_DEDUCT'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	ysh_custom_ucion_history.id	END) AS decut_frequency,
+        sum(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_DEDUCT'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	ysh_custom_ucion_history.price END) AS decut_price,
+        COUNT(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN ysh_custom_ucion_history.id END) AS consume_frequency,
+        sum(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN ysh_custom_ucion_history.price	END) AS consume_price,
+        sum(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'	AND np_order.is_valet = 1 THEN	np_order.subsidy_price END) AS consume_subsidy_price_offline,
+        sum(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN ysh_custom_ucion_history.pay_settle_price	END) AS consume_settel_price,
+        sum(CASE WHEN ysh_custom_ucion_history.type = 'UCOIN_REFUND'
+        <if test="start!=null">
+            <![CDATA[
+            and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	ysh_custom_ucion_history.pay_settle_price	END) AS refund_settel_price
+        from customer_enterprise
+        left join ysh_enterprise_func
+        on customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        left join ysh_custom_ucion_history
+        on customer_enterprise.customer_id = ysh_custom_ucion_history.customer_id and customer_enterprise.enterprise_id = ysh_custom_ucion_history.enterprise_id
+        LEFT JOIN np_order
+        ON np_order.order_id = ysh_custom_ucion_history.order_id
+        <if test="start!=null">
+            <![CDATA[
+            and np_order.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and np_order.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+                and
+                ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+                and
+                ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+                ]]>
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+        </where>
+        group by customer_enterprise.enterprise_id,customer_enterprise.customer_id)as aa
+        group by aa.ref
+    </select>
+
+    <select id="selectCustomerFormDetail" resultMap="CustomerFormDetailResultMap">
+        SELECT
+        info.enterprise_id,
+        info.enterprise_name AS parent_name,
+        ysh_enterprise_info.enterprise_id AS current_id,
+        ysh_enterprise_info.enterprise_name AS current_name,
+        aa.customer_id,
+        fullname,
+        idCard_no,
+        aa.ref customer_ref,
+        aa.create_time,
+        ifnull(
+        (
+        SELECT
+        balance_price
+        FROM
+        ysh_custom_ucion_history
+        WHERE
+        customer_id = aa.customer_id
+        AND enterprise_id = aa.enterprise_id
+        <if test="start!=null">
+            <![CDATA[
+				AND create_time<#{start,jdbcType=TIMESTAMP}
+			]]>
+        </if>
+        ORDER BY
+        create_time DESC,id desc
+        LIMIT 1
+        ),
+        0.00
+        ) AS last_price,
+        ifnull(
+        (
+        SELECT
+        balance_price
+        FROM
+        ysh_custom_ucion_history
+        WHERE
+        customer_id = aa.customer_id
+        AND enterprise_id = aa.enterprise_id
+        <if test="end!=null">
+            <![CDATA[
+           AND create_time<#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        ORDER BY
+        create_time DESC,
+        id desc
+        LIMIT 1
+        ),
+        0.00
+        ) AS current_price,
+        count(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'ENTERPRISE_GRAND'
+        THEN
+        ysh_custom_ucion_history.id
+        END
+        ) AS grand_frequency,
+        sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'ENTERPRISE_GRAND'
+        THEN
+        ysh_custom_ucion_history.price
+        END
+        ) AS grand_price,
+        count(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_DEDUCT'
+        THEN
+        ysh_custom_ucion_history.id
+        END
+        ) AS decut_frequency,
+        -sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_DEDUCT'
+        THEN
+        ysh_custom_ucion_history.price
+        END
+        ) AS decut_price,
+        COUNT(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        AND np_order.is_valet = 1 THEN
+        ysh_custom_ucion_history.id
+        END
+        ) AS consume_frequency_offline,
+        sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        AND np_order.is_valet = 1 THEN
+        ysh_custom_ucion_history.price
+        END
+        ) AS consume_price_offline,
+        sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        AND np_order.is_valet = 1 THEN
+        np_order.subsidy_price
+        END
+        ) AS consume_subsidy_price_offline,
+        COUNT(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        AND np_order.is_valet = 0 THEN
+        ysh_custom_ucion_history.id
+        END
+        ) AS consume_frequency_online,
+        sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        AND np_order.is_valet = 0 THEN
+        ysh_custom_ucion_history.price
+        END
+        ) AS consume_price_online,
+        sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_CONSUME'
+        THEN
+        ysh_custom_ucion_history.pay_settle_price
+        END
+        ) AS consume_settel_price,
+        COUNT(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_REFUND'
+        THEN
+        ysh_custom_ucion_history.id
+        END
+        ) AS refund_frequency,
+        sum(
+        CASE
+        WHEN ysh_custom_ucion_history.type = 'UCOIN_REFUND'
+        THEN
+        ysh_custom_ucion_history.pay_settle_price
+        END
+        ) AS refund_settel_price
+        FROM
+        (
+        SELECT
+        customer_enterprise.customer_id,
+        customer_enterprise.enterprise_id,
+        CASE WHEN
+        <if test="start!=null">
+            <![CDATA[
+            ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and
+           ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	"new"
+        WHEN
+        <if test="start!=null">
+            <![CDATA[
+            ysh_custom_ucion_history.create_time<#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        THEN	"old"	END AS ref,
+        customer_enterprise.create_time
+        FROM
+        customer_enterprise
+        LEFT JOIN ysh_enterprise_func ON customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        LEFT JOIN ysh_custom_ucion_history ON customer_enterprise.customer_id = ysh_custom_ucion_history.customer_id
+        AND customer_enterprise.enterprise_id = ysh_custom_ucion_history.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+                and
+                ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+                and
+                ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+                ]]>
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+        </where>
+        GROUP BY
+        customer_enterprise.enterprise_id,
+        customer_enterprise.customer_id
+        ORDER BY ysh_enterprise_func.parent_id,ysh_enterprise_func.id
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+        ) AS aa
+
+        LEFT JOIN ysh_enterprise_func ON aa.enterprise_id = ysh_enterprise_func.id
+        LEFT JOIN ysh_enterprise_info AS info ON ysh_enterprise_func.parent_id = info.enterprise_id
+        LEFT JOIN chinapost_customer ON aa.customer_id = chinapost_customer.id
+        LEFT JOIN ysh_enterprise_info ON aa.enterprise_id = ysh_enterprise_info.enterprise_id
+        LEFT JOIN ysh_custom_ucion_history ON aa.customer_id = ysh_custom_ucion_history.customer_id
+        AND aa.enterprise_id = ysh_custom_ucion_history.enterprise_id
+        <if test="start!=null">
+            <![CDATA[
+		and ysh_custom_ucion_history.create_time>=#{start,jdbcType=TIMESTAMP}
+	]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+		and ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+		]]>
+        </if>
+        LEFT JOIN np_order ON np_order.order_id = ysh_custom_ucion_history.order_id
+        <if test="start!=null">
+            <![CDATA[
+            and np_order.create_time>=#{start,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="end!=null">
+            <![CDATA[
+        and np_order.create_time<=#{end,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        group by aa.enterprise_id,aa.customer_id
+    </select>
+
+    <select id="countCustomerFormDetail" resultType="java.lang.Integer">
+        select count(*) from
+        (select
+        count(*)
+        from customer_enterprise
+        left join ysh_enterprise_func
+        on customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        left join ysh_custom_ucion_history
+        on customer_enterprise.customer_id = ysh_custom_ucion_history.customer_id and customer_enterprise.enterprise_id = ysh_custom_ucion_history.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+                        and
+                        ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+                        ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+                        and
+                        ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+                        ]]>
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                        and
+                        ysh_custom_ucion_history.create_time<=#{end,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+        </where>
+        group by customer_enterprise.enterprise_id,customer_enterprise.customer_id)aa
+    </select>
+
+    <select id="selectNewcustomerAmount" resultMap="FormTimeResultMap">
+        SELECT
+        DATE_FORMAT(ce.create_time, '%m-%d') as every_day,
+        count(ce.customer_id) AS new_customer_amount
+        FROM customer_enterprise as ce
+        LEFT JOIN ysh_enterprise_func as yef ON yef.id = ce.enterprise_id
+        <where>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ce.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ce.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        group by every_day
+        order by ce.create_time
+    </select>
+
+    <select id="selectNewCustomerByTime" resultType="java.lang.Long">
+        select countResult.new_customer_amount from
+
+        (SELECT
+        count(ce.customer_id) AS new_customer_amount
+        FROM customer_enterprise as ce
+        LEFT JOIN ysh_enterprise_func as yef ON yef.id = ce.enterprise_id
+        <where>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ce.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ce.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ) as countResult
+    </select>
+
+
+    <select id="selectFormByTime" resultMap="FormTimeResultMap">
+        SELECT
+        sum(ycuh.sales_price) AS total_salePrice,
+        sum(ycuh.market_price) AS total_marketPrice,
+        sum(ycuh.price) AS total_price,
+        count(ycuh.enterprise_id) AS expenditure
+        FROM
+        ysh_custom_ucion_history AS ycuh
+        LEFT JOIN chinapost_customer as cu ON cu.id = ycuh.customer_id
+        LEFT JOIN ysh_enterprise_info as yei ON yei.enterprise_id = ycuh.enterprise_id
+        LEFT JOIN ysh_enterprise_func as yef ON yef.id = ycuh.enterprise_id
+        <where>
+            ycuh.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ycuh.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ycuh.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectReportByDay" resultMap="FormTimeResultMap">
+        SELECT
+        DATE_FORMAT(ycuh.create_time, '%m-%d') as every_day,
+        sum(ifnull(ycuh.price,0)) AS total_price,
+        count(ycuh.enterprise_id) AS expenditure
+        FROM
+        ysh_custom_ucion_history AS ycuh
+        LEFT JOIN chinapost_customer as cu ON cu.id = ycuh.customer_id
+        LEFT JOIN ysh_enterprise_info as yei ON yei.enterprise_id = ycuh.enterprise_id
+        LEFT JOIN ysh_enterprise_func as yef ON yef.id = ycuh.enterprise_id
+        <where>
+            ycuh.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ycuh.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ycuh.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        group by every_day
+        order by ycuh.create_time
+    </select>
+
+    <select id="selectUcoinGrand" resultMap="UcoinGrandResultMap">
+        SELECT
+        ysh_custom_ucion_history.customer_id,
+        chinapost_customer.fullname,
+        chinapost_customer.idCard_no,
+        sum(ysh_custom_ucion_history.sales_price) AS sales_price,
+        sum(ysh_custom_ucion_history.market_price) AS market_price,
+        sum(ysh_custom_ucion_history.price) AS price,
+        count(ysh_custom_ucion_history.enterprise_id) AS expenditure
+        FROM
+        ysh_custom_ucion_history
+        LEFT JOIN chinapost_customer ON chinapost_customer.id = ysh_custom_ucion_history.customer_id
+        LEFT JOIN ysh_enterprise_func ON ysh_enterprise_func.id = ysh_custom_ucion_history.enterprise_id
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+        group by ysh_custom_ucion_history.customer_id
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countUcoinGrandForm" resultType="java.lang.Integer">
+        SELECT
+        count(distinct(ysh_custom_ucion_history.customer_id))
+        FROM
+        ysh_custom_ucion_history
+        LEFT JOIN chinapost_customer ON chinapost_customer.id = ysh_custom_ucion_history.customer_id
+        LEFT JOIN ysh_enterprise_func ON ysh_enterprise_func.id = ysh_custom_ucion_history.enterprise_id
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDetailUcoinGrand" resultMap="UcoinGrandResultMap">
+        SELECT
+        ysh_custom_ucion_history.id,
+        ysh_custom_ucion_history.customer_id,
+        ysh_custom_ucion_history.enterprise_id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        ysh_enterprise_info.enterprise_name,
+        ysh_custom_ucion_history.price,
+        ysh_custom_ucion_history.market_price,
+        ysh_custom_ucion_history.sales_price,
+        ysh_custom_ucion_history.create_time
+        FROM
+        ysh_custom_ucion_history
+        LEFT JOIN chinapost_customer ON chinapost_customer.id = ysh_custom_ucion_history.customer_id
+        LEFT JOIN ysh_enterprise_info on ysh_enterprise_info.enterprise_id=ysh_custom_ucion_history.enterprise_id
+        LEFT JOIN ysh_enterprise_func ON ysh_enterprise_func.id = ysh_custom_ucion_history.enterprise_id
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by ysh_custom_ucion_history.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+    <select id="countDetailUcoinGrand" resultType="java.lang.Integer">
+        SELECT
+        count(ysh_custom_ucion_history.id)
+        FROM
+        ysh_custom_ucion_history
+        LEFT JOIN chinapost_customer ON chinapost_customer.id = ysh_custom_ucion_history.customer_id
+        LEFT JOIN ysh_enterprise_info on ysh_enterprise_info.enterprise_id=ysh_custom_ucion_history.enterprise_id
+        LEFT JOIN ysh_enterprise_func ON ysh_enterprise_func.id = ysh_custom_ucion_history.enterprise_id
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCustomerConsume" resultMap="CustomerConsumeResultMap">
+        select m.customer_id,
+        m.idCard_no,
+        m.fullname,
+        m.total_consume_price,
+        m.consume_amount,
+        m.total_refund_price,
+        m.refund_amount,
+        sum(IFNULL((ysh_custom_ucion.rese_price),0)) as total_balance
+        from(
+        SELECT ids.customer_id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        order_ids.total_consume_price,
+        order_ids.consume_amount,
+        refund_ids.total_refund_price,
+        refund_ids.refund_amount
+        FROM
+        (SELECT DISTINCT(customer_id),enterprise_id ,create_time from customer_enterprise) as ids
+        left join
+        (
+        SELECT ysh_custom_ucion_history.customer_id,
+        SUM(ifnull(ysh_custom_ucion_history.price,0)) as total_consume_price,
+        count(ysh_custom_ucion_history.id) as consume_amount
+        from ysh_custom_ucion_history
+        <where>
+            ysh_custom_ucion_history.type="UCOIN_CONSUME"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY ysh_custom_ucion_history.customer_id) as order_ids on order_ids.customer_id=ids.customer_id
+        left join
+        (select ysh_custom_ucion_history.customer_id,
+        SUM(ifnull(ysh_custom_ucion_history.price,0)) as total_refund_price,
+        count(ysh_custom_ucion_history.id) as refund_amount
+        FROM ysh_custom_ucion_history
+        <where>
+            ysh_custom_ucion_history.type="UCOIN_REFUND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY ysh_custom_ucion_history.customer_id) as refund_ids on refund_ids.customer_id =ids.customer_id
+        left join chinapost_customer on chinapost_customer.id=ids.customer_id
+        left join ysh_enterprise_func on ysh_enterprise_func.id=ids.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+        GROUP BY ids.customer_id
+        order By ids.customer_id) as m
+        left join ysh_custom_ucion
+        on m.customer_id=ysh_custom_ucion.customer_id
+        GROUP by m.customer_id
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+    <select id="countCustomerConsume" resultType="java.lang.Integer">
+        SELECT count(DISTINCT (customer_enterprise.customer_id))
+        from customer_enterprise
+        left join ysh_enterprise_func on ysh_enterprise_func.id=customer_enterprise.enterprise_id
+        LEFT join chinapost_customer on customer_enterprise.customer_id=chinapost_customer.id
+        <where>
+            <if test="start != null">
+                <![CDATA[
+            and
+            customer_enterprise.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            customer_enterprise.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectNetData" resultMap="BaseResultMap">
+        SELECT
+        ysh_enterprise_func.id,
+        ysh_enterprise_info.enterprise_name,
+        count(customer_enterprise.customer_id) as new_customer_amount,
+        zj.expenditure,
+        zj.total_price,
+        zj.total_salesPrice,
+        zj.total_marketPrice
+        from ysh_enterprise_func
+        left join
+        (SELECT
+        ysh_custom_ucion_history.enterprise_id,
+        count(DISTINCT (ysh_custom_ucion_history.id)) as expenditure,
+        sum(IFNULL(ysh_custom_ucion_history.price,0)) AS total_price,
+        sum(ifnull(ysh_custom_ucion_history.sales_price,0))as total_salesPrice,
+        sum(ifnull(ysh_custom_ucion_history.market_price,0)) as total_marketPrice
+        FROM
+        ysh_custom_ucion_history
+        <where>
+            ysh_custom_ucion_history.type="ENTERPRISE_GRAND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY
+        ysh_custom_ucion_history.enterprise_id)as zj
+        on zj.enterprise_id=ysh_enterprise_func.id
+        LEFT JOIN customer_enterprise ON ysh_enterprise_func.id = customer_enterprise.enterprise_id
+        LEFT JOIN ysh_enterprise_info ON ysh_enterprise_info.enterprise_id = ysh_enterprise_func.id
+        <where>
+            ysh_enterprise_func.end=1
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            customer_enterprise.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            customer_enterprise.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY ysh_enterprise_func.id
+        ORDER BY ysh_enterprise_func.id
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+    <select id="countNetData" resultType="java.lang.Integer">
+        SELECT
+        count(DISTINCT(ysh_enterprise_func.id))
+        from ysh_enterprise_func
+        LEFT JOIN customer_enterprise ON ysh_enterprise_func.id = customer_enterprise.enterprise_id
+        <where>
+            ysh_enterprise_func.end=1
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            customer_enterprise.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            customer_enterprise.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDetailConsume" resultMap="CustomerConsumeResultMap">
+        SELECT DISTINCT(ids.customer_id),
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        ysh_custom_ucion_history.type,
+        ysh_custom_ucion_history.create_time,
+        ysh_custom_ucion_history.order_id,
+        ysh_custom_ucion_history.code,
+        ysh_custom_ucion_history.price,
+        np_order.order_code,
+        np_order.order_status,
+        np_order.order_price
+        from
+        (SELECT DISTINCT(customer_id),enterprise_id from customer_enterprise
+        left join ysh_enterprise_func on ysh_enterprise_func.id=customer_enterprise.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ) as ids
+        left join ysh_custom_ucion_history on ysh_custom_ucion_history.customer_id=ids.customer_id
+        left join np_order on np_order.order_id=ysh_custom_ucion_history.order_id
+        left join chinapost_customer on chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        <where>
+            (ysh_custom_ucion_history.type="UCOIN_CONSUME"
+            OR
+            ysh_custom_ucion_history.type="UCOIN_REFUND")
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY ysh_custom_ucion_history.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countDetailConsume" resultType="java.lang.Integer">
+        SELECT count(DISTINCT (ysh_custom_ucion_history.id))
+        from
+        (SELECT DISTINCT(customer_id),enterprise_id from customer_enterprise
+        left join ysh_enterprise_func on ysh_enterprise_func.id=customer_enterprise.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ) as ids
+        left join ysh_custom_ucion_history on ysh_custom_ucion_history.customer_id=ids.customer_id
+        left join np_order on np_order.order_id=ysh_custom_ucion_history.order_id
+        left join chinapost_customer on chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        <where>
+            (ysh_custom_ucion_history.type="UCOIN_CONSUME"
+            OR
+            ysh_custom_ucion_history.type="UCOIN_REFUND")
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDetailRefund" resultMap="CustomerConsumeResultMap">
+        SELECT DISTINCT(ids.customer_id),
+        chinapost_customer.idCard_no,
+        chinapost_customer.fullname,
+        ysh_custom_ucion_history.type,
+        ysh_custom_ucion_history.create_time,
+        ysh_custom_ucion_history.order_id,
+        ysh_custom_ucion_history.code,
+        ysh_custom_ucion_history.price,
+        np_back_order.back_order_code as order_code,
+        np_back_order.back_price
+        from
+        (SELECT DISTINCT(customer_id),enterprise_id from customer_enterprise
+        left join ysh_enterprise_func on ysh_enterprise_func.id=customer_enterprise.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ) as ids
+        left join ysh_custom_ucion_history on ysh_custom_ucion_history.customer_id=ids.customer_id
+        left join np_back_order on np_back_order.order_id=ysh_custom_ucion_history.order_id
+        left join chinapost_customer on chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        <where>
+            ysh_custom_ucion_history.type="UCOIN_REFUND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY ysh_custom_ucion_history.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countDetailRefund" resultType="java.lang.Integer">
+        SELECT count(DISTINCT (ysh_custom_ucion_history.id))
+        from
+        (SELECT DISTINCT(customer_id),enterprise_id from customer_enterprise
+        left join ysh_enterprise_func on ysh_enterprise_func.id=customer_enterprise.enterprise_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ) as ids
+        left join ysh_custom_ucion_history on ysh_custom_ucion_history.customer_id=ids.customer_id
+        left join np_order on np_order.order_id=ysh_custom_ucion_history.order_id
+        left join chinapost_customer on chinapost_customer.id=ysh_custom_ucion_history.customer_id
+        <where>
+            ysh_custom_ucion_history.type="UCOIN_REFUND"
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_custom_ucion_history.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCustomerUcoinConsumeByEnterpriseNew" resultMap="CustomerConsumeResultMap">
+        SELECT
+        customer_ids.customer_id,
+        customer_ids.idCard_no,
+        customer_ids.fullname,
+        order_valet_ids.enterprise_id,
+        order_valet_ids.total_valet_price,
+        order_valet_ids.valet_amount,
+        order_online_ids.total_online_price,
+        order_online_ids.online_amount,
+        back_order_online_ids.total_back_online_price,
+        back_order_online_ids.back_online_amount,
+        back_order_valet_ids.total_back_valet_price,
+        back_order_valet_ids.back_valet_amount
+        FROM
+        (
+        SELECT DISTINCT(customer_id),chinapost_customer.idCard_no,chinapost_customer.fullname
+        FROM
+        customer_enterprise
+        left join chinapost_customer on chinapost_customer.id=customer_enterprise.customer_id
+        LEFT JOIN ysh_enterprise_func ON customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        <where>
+            <if test="idCard!=null">
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ) AS customer_ids
+        left join
+        (
+        SELECT
+        np_order_ucoin_history.customer_id,
+        np_order_ucoin_history.enterprise_id,
+        SUM(ifnull(np_order_ucoin_history.price,0)) AS total_valet_price,
+        count(DISTINCT (np_order_ucoin_history.order_id)) AS valet_amount
+        FROM
+        np_order_ucoin_history
+        left join np_order on np_order.order_id=np_order_ucoin_history.order_id
+        <where>
+
+            np_order.is_valet=1
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_order.pay_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_order.pay_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+
+        and np_order_ucoin_history.enterprise_id in
+
+        (
+        SELECT id from ysh_enterprise_func
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        )
+
+        GROUP BY
+        np_order_ucoin_history.customer_id
+
+        ) as order_valet_ids on order_valet_ids.customer_id=customer_ids.customer_id
+
+        left JOIN
+        (
+        SELECT
+        np_order_ucoin_history.customer_id,
+        np_order_ucoin_history.enterprise_id,
+        SUM(ifnull(np_order_ucoin_history.price,0)) AS total_online_price,
+        count(DISTINCT (np_order_ucoin_history.order_id)) AS online_amount
+        FROM
+        np_order_ucoin_history
+        left join np_order on np_order.order_id=np_order_ucoin_history.order_id
+        <where>
+            np_order.is_valet=0
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_order.pay_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_order.pay_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        and np_order_ucoin_history.enterprise_id in
+        (
+        SELECT id from ysh_enterprise_func
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        )
+
+        GROUP BY
+        np_order_ucoin_history.customer_id
+
+        ) as order_online_ids on order_online_ids.customer_id=customer_ids.customer_id
+
+        left join
+        (
+        SELECT
+        np_back_order_ucoin_history.customer_id,
+        np_back_order_ucoin_history.enterprise_id,
+        SUM(ifnull(np_back_order_ucoin_history.price,0)) AS total_back_online_price,
+        count(DISTINCT (np_back_order_ucoin_history.back_order_id)) AS back_online_amount
+        FROM
+        np_back_order_ucoin_history
+
+        left join np_back_order on np_back_order.back_order_id=np_back_order_ucoin_history.back_order_id
+        left join np_order on np_order.order_id=np_back_order.order_id
+        <where>
+            np_order.is_valet=0
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_back_order.back_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_back_order.back_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+
+        and np_back_order_ucoin_history.enterprise_id in
+
+        (
+        SELECT id from ysh_enterprise_func
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        )
+
+        GROUP BY
+        np_back_order_ucoin_history.customer_id
+
+        )as back_order_online_ids on back_order_online_ids.customer_id=customer_ids.customer_id
+        left join
+        (
+        SELECT
+        np_back_order_ucoin_history.customer_id,
+        np_back_order_ucoin_history.enterprise_id,
+        SUM(ifnull(np_back_order_ucoin_history.price,0)) AS total_back_valet_price,
+        count(DISTINCT (np_back_order_ucoin_history.back_order_id)) AS back_valet_amount
+        FROM
+        np_back_order_ucoin_history
+        left join np_back_order on np_back_order.back_order_id=np_back_order_ucoin_history.back_order_id
+        left join np_order on np_order.order_id=np_back_order.order_id
+
+        <where>
+            np_order.is_valet=1
+            <if test="start != null">
+                <![CDATA[
+            and
+             np_back_order.back_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+             np_back_order.back_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        and np_back_order_ucoin_history.enterprise_id in
+        (
+        SELECT id from ysh_enterprise_func
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        )
+        GROUP BY
+        np_back_order_ucoin_history.customer_id
+        )as back_order_valet_ids on back_order_valet_ids.customer_id=customer_ids.customer_id
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+
+    </select>
+
+    <select id="countCustomerUcoinConsumeNew" resultType="java.lang.Integer">
+        SELECT count(DISTINCT(customer_id))
+        FROM
+        customer_enterprise
+        left join chinapost_customer on chinapost_customer.id=customer_enterprise.customer_id
+        LEFT JOIN ysh_enterprise_func ON customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        <where>
+            <if test="idCard!=null">
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+
+    </select>
+
+
+    <select id="selectDetailConsumeNew" resultMap="CustomerConsumeResultMap">
+
+        SELECT
+        chinapost_customer.idCard_no,
+        np_order_ucoin_history.customer_id,
+        chinapost_customer.fullname,
+        IF(np_order.is_valet=1,"线下订单","线上订单") as typenew,
+        np_order.create_time,
+        np_order.order_code as code,
+        sum(np_order_ucoin_history.price) as price,
+        np_order_ucoin_history.order_id
+        from np_order_ucoin_history
+        left join ysh_enterprise_func on ysh_enterprise_func.id=np_order_ucoin_history.enterprise_id
+        left join chinapost_customer on chinapost_customer.id=np_order_ucoin_history.customer_id
+        left join np_order on np_order.order_id=np_order_ucoin_history.order_id
+
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_order.pay_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_order.pay_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+        GROUP BY np_order_ucoin_history.order_id
+        union
+        SELECT
+        chinapost_customer.idCard_no,
+        np_back_order_ucoin_history.customer_id,
+        chinapost_customer.fullname,
+        IF(np_order.is_valet=1,"线下退单","线上退单") as typenew,
+        np_back_order_ucoin_history.create_time,
+        np_back_order.back_order_code as code,
+        -(sum(np_back_order_ucoin_history.price)) as price,
+        np_order.order_id
+
+        from np_back_order_ucoin_history
+
+        left join ysh_enterprise_func on ysh_enterprise_func.id=np_back_order_ucoin_history.enterprise_id
+        left join chinapost_customer on chinapost_customer.id=np_back_order_ucoin_history.customer_id
+        LEFT JOIN np_back_order on np_back_order.back_order_id=np_back_order_ucoin_history.back_order_id
+        left join np_order on np_order.order_id=np_back_order.order_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_back_order.back_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_back_order.back_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+        GROUP BY np_back_order_ucoin_history.back_order_id
+        order BY create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+    <select id="countDetailConsumeNew1" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT (np_order_ucoin_history.order_id))
+
+        from np_order_ucoin_history
+
+        left join ysh_enterprise_func on ysh_enterprise_func.id=np_order_ucoin_history.enterprise_id
+        left join chinapost_customer on chinapost_customer.id=np_order_ucoin_history.customer_id
+        left join np_order on np_order.order_id=np_order_ucoin_history.order_id
+
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_order.pay_time >= #{start,jdbcType=TIMESTAMP}
+           ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_order.pay_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="countDetailConsumeNew2" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT (np_back_order_ucoin_history.back_order_id))
+        from np_back_order_ucoin_history
+
+        left join ysh_enterprise_func on ysh_enterprise_func.id=np_back_order_ucoin_history.enterprise_id
+        left join chinapost_customer on chinapost_customer.id=np_back_order_ucoin_history.customer_id
+        LEFT JOIN np_back_order on np_back_order.back_order_id=np_back_order_ucoin_history.back_order_id
+        left join np_order on np_order.order_id=np_back_order.order_id
+
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            np_back_order.back_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="end != null">
+                <![CDATA[
+            and
+            np_back_order.back_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="idCard!=null">
+                and
+                chinapost_customer.idCard_no=#{idCard,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectUcoinGrandByBatchCode" resultMap="UcoinGrandResultMap">
+        SELECT
+        ysh_enterprise_batchgrand.create_time,
+        ysh_enterprise_batchgrand.send_type,
+        ysh_enterprise_batchgrand.file_name,
+        SUM(ysh_enterprise_batchgrand.fee) as sumfee,
+        ysh_enterprise_batchgrand.batch_code,
+        sum(ysh_enterprise_batchgrand.ucoin_count) as countbatch,
+        ysh_enterprise_info.enterprise_name,
+        ysh_enterprise_batchgrand.manager_name
+        from
+        ysh_enterprise_batchgrand LEFT JOIN ysh_enterprise_info
+        on ysh_enterprise_batchgrand.enterprise_id=ysh_enterprise_info.enterprise_id
+        <where>
+            ysh_enterprise_batchgrand.send_type!="网点单个扣减"
+            <if test="typeId!=null">
+                and
+                ysh_enterprise_batchgrand.type_id=#{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY
+        ysh_enterprise_batchgrand.batch_code
+        order by ysh_enterprise_batchgrand.create_time desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countUcoinGrandByBatchCode" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from
+        (
+        SELECT
+        ysh_enterprise_batchgrand.create_time,
+        ysh_enterprise_batchgrand.send_type,
+        SUM(ysh_enterprise_batchgrand.fee) as sumfee,
+        sum(ysh_enterprise_batchgrand.ucoin_count) as countbatch
+        from
+        ysh_enterprise_batchgrand
+        <where>
+            <if test="typeId!=null">
+                and
+                ysh_enterprise_batchgrand.type_id=#{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        GROUP BY
+        ysh_enterprise_batchgrand.batch_code
+        ) as bat
+    </select>
+
+    <select id="selectDetailstUcoinGrand" resultMap="UcoinGrandResultMap">
+        SELECT
+        chinapost_customer.fullname,
+        chinapost_customer.idCard_no,
+        chinapost_customer.contact_phone,
+        ysh_enterprise_info.account_name,
+        ysh_custom_ucion_history.market_price,
+        ysh_custom_ucion_history.sales_price,
+        ysh_custom_ucion_history.create_time,
+        ysh_custom_ucion_history.business_time,
+        ysh_enterprise_batchgrand.batch_code
+
+        FROM
+        ysh_custom_ucion_history LEFT JOIN ysh_enterprise_batchgrand
+        on ysh_custom_ucion_history.batch_id=ysh_enterprise_batchgrand.id
+        LEFT JOIN ysh_enterprise_info
+        ON ysh_custom_ucion_history.enterprise_id=ysh_enterprise_info.enterprise_id
+        LEFT JOIN chinapost_customer
+        ON ysh_custom_ucion_history.customer_id=chinapost_customer.id
+        <where>
+            <if test="batchcode!=null">
+                ysh_enterprise_batchgrand.batch_code=#{batchcode,jdbcType=BIGINT}
+            </if>
+        </where>
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countDetailstUcoinGrand" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM
+        ysh_custom_ucion_history LEFT JOIN ysh_enterprise_batchgrand
+        on ysh_custom_ucion_history.batch_id=ysh_enterprise_batchgrand.id
+        LEFT JOIN ysh_enterprise_info
+        ON ysh_custom_ucion_history.enterprise_id=ysh_enterprise_info.enterprise_id
+        LEFT JOIN chinapost_customer
+        ON ysh_custom_ucion_history.customer_id=chinapost_customer.id
+        <where>
+            <if test="batchcode!=null">
+                ysh_enterprise_batchgrand.batch_code=#{batchcode,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectWealthFormByEnterpriseId" resultMap="WealthFormResultMap">
+        SELECT id,ysh_enterprise_func.end,
+        enterprise_name,
+        (
+
+        SELECT sum(balance_price)
+        from (
+        SELECT *
+        from
+        (
+        SELECT enterprise_id,balance_price
+        from ysh_enterprise_ucoin_history
+        left join ysh_enterprise_func
+        on ysh_enterprise_ucoin_history.enterprise_id=ysh_enterprise_func.id
+        <where>
+            <if test="end != null">
+                <![CDATA[
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        ORDER BY create_time desc,ysh_enterprise_ucoin_history.id desc) as balance
+        GROUP BY balance.enterprise_id
+        ) as mid
+        ) as undistributed_price,
+        (SELECT sum(fee) from ysh_enterprise_allocation
+        where in_id=#{enterpriseId,jdbcType=BIGINT}
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        ) as appropriation,
+        (
+        SELECT SUM(fee) from ysh_enterprise_batchgrand left join ysh_enterprise_func
+        on ysh_enterprise_batchgrand.enterprise_id=ysh_enterprise_func.id
+        where type_id=-100
+        <if test="minCatalog != null">
+        <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="start != null">
+        <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+         </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        ) as grand_udou,
+        (
+        SELECT SUM(fee) from ysh_enterprise_batchgrand left join ysh_enterprise_func
+        on ysh_enterprise_batchgrand.enterprise_id=ysh_enterprise_func.id
+        where type_id=-200
+        <if test="minCatalog != null">
+        <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        ) as decut_udou,
+        (SELECT sum(subsidy_price) from np_order left join ysh_enterprise_func on
+        np_order.enterprise_id=ysh_enterprise_func.id
+        where is_valet='1'
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        ) as subsidy_udou,
+        (SELECT
+        sum(np_back_order.back_subsidy_price)
+        from np_back_order
+        left join np_order on np_back_order.order_id=np_order.order_id
+        left join ysh_enterprise_func on ysh_enterprise_func.id=np_order.enterprise_id
+        where np_order.is_valet=1
+        and np_back_order.back_check='RETURN_FINISHED'
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            ysh_enterprise_func.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            ysh_enterprise_func.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        ) as back_subsidy_udou
+        from ysh_enterprise_func
+        left join ysh_enterprise_info on ysh_enterprise_func.id=ysh_enterprise_info.enterprise_id
+        where ysh_enterprise_func.id=#{enterpriseId,jdbcType=BIGINT}
+    </select>
+
+    
+
+
+</mapper>

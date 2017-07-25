@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.inventory.mapper.InventoryPurchaseBillItemMapper">
+  <resultMap id="BaseResultMap" type="com.ylife.inventory.model.InventoryPurchaseBillItem">
+    <id column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="purchase_id" jdbcType="BIGINT" property="purchaseId" />
+    <result column="enterprise_id" jdbcType="BIGINT" property="enterpriseId" />
+    <result column="enterprise_name" jdbcType="VARCHAR" property="enterpriseName"/>
+    <result column="goodsInfo_id" jdbcType="BIGINT" property="goodsinfoId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="settle_price" jdbcType="DECIMAL" property="settlePrice" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="receipt_amount" jdbcType="BIGINT" property="receiptAmount"/>
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
+    <result column="linkman" jdbcType="VARCHAR" property="linkman" />
+    <result column="link_mobile" jdbcType="VARCHAR" property="linkMobile" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="code" jdbcType="BIGINT" property="code" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="third_name" jdbcType="VARCHAR" property="thirdName" />
+    <result column="goods_info_name" jdbcType="VARCHAR" property="goodsInfoName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, purchase_id, enterprise_id, goodsInfo_id, amount, settle_price, total_price,receipt_amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cp_inventory_purchase_bill_item
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPurchaseGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cp_inventory_purchase_bill_item
+  where purchase_id = #{purchaseId,jdbcType=BIGINT} and goodsInfo_id = #{goodsInfoId,jdbcType=BIGINT}
+  </select>
+
+  <update id="updatePurchaseGoodsId">
+    update cp_inventory_purchase_bill_item
+    set settle_price=#{settlePrice,jdbcType=DECIMAL},total_price=amount*#{settlePrice,jdbcType=DECIMAL}
+    where purchase_id = #{purchaseId,jdbcType=BIGINT} and goodsInfo_id = #{goodsInfoId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByItemId">
+    update cp_inventory_purchase_bill_item
+    set amount=#{amount,jdbcType=INTEGER},total_price=settle_price*#{amount,jdbcType=INTEGER}
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+
+
+  <update id="updateReceiptAmountByGoodsInfoId">
+    update cp_inventory_purchase_bill_item
+    set receipt_amount=ifnull(receipt_amount,0)+#{receiptAmount,jdbcType=INTEGER}
+    where purchase_id = #{purchaseId,jdbcType=BIGINT} and enterprise_id=#{enterpriseId,jdbcType=BIGINT} and goodsInfo_id=#{goodsInfoId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectSumAmountByKey" resultType="java.lang.Integer">
+    select sum(amount) from cp_inventory_purchase_bill_item where purchase_id = #{purchaseId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cp_inventory_purchase_bill_item
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByGoodsInfoId">
+    delete from cp_inventory_purchase_bill_item
+    <where>
+      purchase_id = #{purchaseId,jdbcType=BIGINT}
+      <if test="goodsInfoIds!=null">
+        and goodsInfo_id in
+        <foreach item="goodsInfoId" index="index" open="(" separator="," close=")" collection="goodsInfoIds">
+          #{goodsInfoId}
+        </foreach>
+      </if>
+      <if test="itemIds != null">
+        and item_id in
+        <foreach item="itemId" index="index" open="(" separator="," close=")" collection="itemIds">
+          #{itemId}
+        </foreach>
+      </if>
+    </where>
+  </delete>
+
+  <insert id="insert" parameterType="com.ylife.inventory.model.InventoryPurchaseBillItem">
+    insert into cp_inventory_purchase_bill_item (item_id, purchase_id, enterprise_id, 
+      goodsInfo_id, amount, settle_price, 
+      total_price)
+    values (#{itemId,jdbcType=BIGINT}, #{purchaseId,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT}, 
+      #{goodsinfoId,jdbcType=BIGINT}, #{amount,jdbcType=INTEGER}, #{settlePrice,jdbcType=DECIMAL}, 
+      #{totalPrice,jdbcType=DECIMAL})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.ylife.inventory.model.InventoryPurchaseBillItem">
+    insert into cp_inventory_purchase_bill_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="purchaseId != null">
+        purchase_id,
+      </if>
+      <if test="enterpriseId != null">
+        enterprise_id,
+      </if>
+      <if test="goodsinfoId != null">
+        goodsInfo_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="settlePrice != null">
+        settle_price,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="receiptAmount != null">
+        receipt_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseId != null">
+        #{purchaseId,jdbcType=BIGINT},
+      </if>
+      <if test="enterpriseId != null">
+        #{enterpriseId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsinfoId != null">
+        #{goodsinfoId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="settlePrice != null">
+        #{settlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="receiptAmount != null">
+        #{receiptAmount,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylife.inventory.model.InventoryPurchaseBillItem">
+    update cp_inventory_purchase_bill_item
+    <set>
+      <if test="purchaseId != null">
+        purchase_id = #{purchaseId,jdbcType=BIGINT},
+      </if>
+      <if test="enterpriseId != null">
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsinfoId != null">
+        goodsInfo_id = #{goodsinfoId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="settlePrice != null">
+        settle_price = #{settlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="receiptAmount != null">
+        receipt_amount = #{receiptAmount,jdbcType=BIGINT},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.ylife.inventory.model.InventoryPurchaseBillItem">
+    update cp_inventory_purchase_bill_item
+    set purchase_id = #{purchaseId,jdbcType=BIGINT},
+      enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+      goodsInfo_id = #{goodsinfoId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=INTEGER},
+      settle_price = #{settlePrice,jdbcType=DECIMAL},
+      total_price = #{totalPrice,jdbcType=DECIMAL}
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+
+    <!--按条件查询采购订单-->
+  <select id="selectPurchaseBillListByCondition" resultMap="BaseResultMap">
+      SELECT
+      yi.account_name,
+      yi.enterprise_name,
+      yip.enterprise_name AS parent_name,
+      yi.linkman,
+      yi.link_mobile,
+      yi.address,
+      pb.code,
+      pb.status,
+      gi.goods_info_name,
+      pbi.settle_price,
+      pbi.amount,
+      pbi.total_price,
+      tsi.store_name AS third_name,
+      pb.create_time
+      FROM
+      cp_inventory_purchase_bill_item AS pbi
+      LEFT JOIN ysh_enterprise_info AS yi ON pbi.enterprise_id = yi.enterprise_id
+      LEFT JOIN cp_inventory_purchase_bill AS pb ON pbi.purchase_id = pb.purchase_id
+      LEFT JOIN np_goods_info AS gi ON pbi.goodsInfo_id = gi.goods_info_id
+      LEFT JOIN ysh_enterprise_func AS yf on yf.id = yi.enterprise_id
+      LEFT JOIN ysh_enterprise_info AS yip on yf.parent_id = yip.enterprise_id
+      LEFT JOIN np_third_store_info AS tsi on tsi.store_id = pb.third_id
+      <where>
+            <if test="status != null">
+                AND pb.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="code != null">
+                AND pb.code = #{code,jdbcType=BIGINT}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                AND
+                  pb.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  AND
+                  pb.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="thirdId != null">
+                AND pb.third_id = #{thirdId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY pb.create_time DESC,
+        pb.purchase_id ASC
+  </select>
+
+
+
+</mapper>

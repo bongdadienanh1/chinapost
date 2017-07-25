@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.thirdplatform.mapper.ThirdPlatformMapper">
+
+	<resultMap type="com.ylife.thirdplatform.entity.ThirdPlatformEntity"
+		id="BaseResultMap">
+		<id property="id" column="id" />
+		<result property="thirdUserName" column="third_user_name" />
+		<result property="thirdUserPwd" column="third_user_pwd" />
+		<result property="platformType" column="platform_type" />
+		<result property="deleteFlag" column="delete_flag" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+		<result property="companyName" column="company_name" />
+		<result property="storeName" column="store_name" />
+	</resultMap>
+
+	<sql id="ThirdPlatformAll_column">
+		thirdplatform.id as id,
+		thirdplatform.third_user_name as thirdUserName,
+		thirdplatform.third_user_pwd as thirdUserPwd,
+		thirdplatform.platform_type as platformType,
+		thirdplatform.delete_flag as deleteFlag,
+		thirdplatform.create_time as createTime,
+		thirdplatform.modify_time as modifyTime,
+		store.store_name as storeName,
+		store.company_name as companyName
+	</sql>
+
+	<sql id="ThirdPlatformAll_where">
+		<where>
+				1=1
+			<if test="id != null and id !=''">
+				AND thirdplatform.id =#{id}
+			</if>
+			<if test="thirdUserName != null and thirdUserName !=''">
+				AND thirdplatform.third_user_name =#{thirdUserName}
+			</if>
+			<if test="thirdUserPwd != null and thirdUserPwd !=''">
+				AND thirdplatform.third_user_pwd =#{thirdUserPwd}
+			</if>
+			<if test="platformType != null and platformType !=''">
+				AND thirdplatform.platform_type =#{platformType}
+			</if>
+			<if test="deleteFlag != null and deleteFlag !=''">
+				AND thirdplatform.delete_flag =#{deleteFlag}
+			</if>
+			<if test="createTime != null and createTime !=''">
+				AND thirdplatform.create_time =#{createTime}
+			</if>
+			<if test="modifyTime != null and modifyTime !=''">
+				AND thirdplatform.modify_time =#{modifyTime}
+			</if>
+			<if test="storeName != null and storeName !=''">
+				AND store.store_name =#{storeName}
+			</if>
+			<if test="companyName != null and companyName !=''">
+				AND store.company_name =#{companyName}
+			</if>
+		</where>
+	</sql>
+	<sql id="ThirdPlatformAll_table">
+		FROM
+		ysh_third_platform thirdplatform
+		LEFT JOIN np_third_store_info store on thirdplatform.id = store.third_platform_id
+	</sql>
+	<!-- 查全部 -->
+	<select id="queryAllThirdPlatform"
+		resultMap="BaseResultMap" parameterType="com.ylife.thirdplatform.entity.ThirdPlatformEntity">
+		SELECT
+		<include refid="ThirdPlatformAll_column" />
+		<include refid="ThirdPlatformAll_table" />
+		<include refid="ThirdPlatformAll_where"/>
+	</select>
+	<!-- 查全部分页 -->
+	<select id="queryListForPageThirdPlatform"
+		resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+		<include refid="ThirdPlatformAll_column" />
+		<include refid="ThirdPlatformAll_table" />
+		<include refid="ThirdPlatformAll_where"/>
+		<if test="index != null">
+			limit #{index}, #{length}
+		</if>
+	</select>
+	<!-- 查数量 -->
+	<select id="queryCountThirdPlatform" resultType="java.lang.Integer" parameterType="com.ylife.thirdplatform.entity.ThirdPlatformEntity">
+		SELECT
+		count(1)
+		<include refid="ThirdPlatformAll_table" />
+		<include refid="ThirdPlatformAll_where"/>
+	</select>
+	<!-- 按主键查询  -->
+	<select id="queryById"	resultMap="BaseResultMap"  parameterType="java.lang.Long">
+		SELECT 
+		<include refid="ThirdPlatformAll_column" />
+		<include refid="ThirdPlatformAll_table" />
+		WHERE thirdplatform.id =#{id}
+	</select>
+    <!-- 根据主键批量查询 -->
+    <select id="queryByIds"	resultMap="BaseResultMap"  parameterType="java.util.List">
+        SELECT
+        <include refid="ThirdPlatformAll_column" />
+        <include refid="ThirdPlatformAll_table" />
+        <where>
+            1=1
+            <if test="ids !=null">
+                and Long id in
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+				#{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+	<!-- 修改  -->
+	<update id="updateThirdPlatform" parameterType="com.ylife.thirdplatform.entity.ThirdPlatformEntity">
+		UPDATE
+		ysh_third_platform thirdplatform
+        <trim prefix="set" suffixOverrides=",">
+            <if test="thirdUserName != null">thirdplatform.third_user_name =#{thirdUserName},</if>
+            <if test="thirdUserPwd != null">thirdplatform.third_user_pwd =#{thirdUserPwd},</if>
+            <if test="platformType != null">thirdplatform.platform_type =#{platformType},</if>
+            <if test="deleteFlag != null">thirdplatform.delete_flag =#{deleteFlag},</if>
+            <if test="createTime != null">thirdplatform.create_time =#{createTime},</if>
+            <if test="modifyTime != null">thirdplatform.modify_time =#{modifyTime},</if>
+        </trim>
+        WHERE thirdplatform.id =#{id}
+	</update>
+	<!-- 新增  -->
+	<insert id="addThirdPlatform" parameterType="com.ylife.thirdplatform.entity.ThirdPlatformEntity">
+		INSERT INTO ysh_third_platform
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				
+				<if test="thirdUserName != null">third_user_name,</if>
+				<if test="thirdUserPwd != null">third_user_pwd,</if>
+				<if test="platformType != null">platform_type,</if>
+				<if test="deleteFlag != null">delete_flag,</if>
+				<if test="createTime != null">create_time,</if>
+				<if test="modifyTime != null">modify_time</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+				
+				<if test="thirdUserName != null">#{thirdUserName},</if>
+				<if test="thirdUserPwd != null">#{thirdUserPwd},</if>
+				<if test="platformType != null">#{platformType},</if>
+				<if test="deleteFlag != null">#{deleteFlag},</if>
+				<if test="createTime != null">#{createTime},</if>
+				<if test="modifyTime != null">#{modifyTime}</if>
+        </trim>
+	</insert>
+
+	<!--批量 新增  -->
+	<insert id="addThirdPlatforms" parameterType="java.util.List">
+		INSERT INTO ysh_third_platform (
+		third_user_name,
+		third_user_pwd,
+		platform_type,
+		delete_flag,
+		create_time,
+		modify_time  
+		)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+		#{item.thirdUserName},
+		#{item.thirdUserPwd},
+		#{item.platformType},
+		#{item.deleteFlag},
+		#{item.createTime},
+		#{item.modifyTime } 
+			)
+		</foreach>
+	</insert>
+	
+</mapper>

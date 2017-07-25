@@ -1,0 +1,103 @@
+package com.ylife.chinapost.third.service.impl;
+
+import com.ylife.chinapost.third.service.OrderManageService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.*;
+import com.ylife.order.service.CreditOrderService;
+import com.ylife.order.service.OrderService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by InThEnd on 2016/5/2.
+ * OrderManageServiceImpl
+ */
+@Service
+public class OrderManageServiceImpl implements OrderManageService {
+
+    @Resource
+    private CreditOrderService creditOrderService;
+    @Resource
+    private OrderService orderService;
+
+    @Override
+    public Page<Order> getOrders(Long orderNo,
+                                 OrderStatus status,
+                                 Boolean selfPick,
+                                 String username,
+                                 String receiver,
+                                 String contactPhone,
+                                 Date createStart,
+                                 Date createEnd,
+                                 Date payStart,
+                                 Date payEnd,
+                                 Long businessId,
+                                 String goodsInfoType,
+                                 Pageable pageable) {
+
+        Order model = new Order();
+        if (status != null) {
+            model.setOrderStatus(status);
+        }
+        model.setSelfPick(selfPick);
+        model.setOrderCode(orderNo);
+        model.setShippingPerson(receiver);
+        model.setShippingMobile(contactPhone);
+        model.setBusinessId(businessId);
+        model.setGoodsInfoType(goodsInfoType);
+        return orderService.getOrder(model, null, null, username, createStart, createEnd, payStart, payEnd, pageable);
+    }
+
+    @Override
+    public Page<CreditOrder> getBackOrder(Long backOrderNo,
+                                          String phoneNo,
+                                          Long orderNo,
+                                          CreditOrderStatus status,
+                                          Date start,
+                                          Date end,
+                                          Long businessId,
+                                          String goodsInfoType,
+                                          Pageable pageable) {
+        return creditOrderService.getBackOrder(backOrderNo, null, null, phoneNo, orderNo, status, start, end,businessId,goodsInfoType,pageable);
+    }
+
+    @Override
+    @Transactional
+    public void reviewCreditOrder(long creditOrderNo, boolean agree, String message) {
+
+    }
+
+    @Override
+    @Transactional
+    public void receiveCreditOrder(long creditOrderNo, boolean receive, String enterpriseMsg, String customerMsg) {
+        //1、非顶级企业退货单收货
+        creditOrderService.receiveCreditOrder(creditOrderNo, receive, enterpriseMsg, customerMsg);
+    }
+
+    @Override
+    @Transactional
+    public void refund(long creditOrderNo, BigDecimal price, String msg,BigDecimal backSubsidyPrice) {
+
+    }
+
+
+    /**
+     * 获取订单商品详情
+     * */
+    @Override
+    public Order getOrderGoods(Long orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+
+    @Override
+    public List<BackOrderGoods> getBackOrderGoodsByOrderId(Long orderId) {
+        return creditOrderService.getBackOrderByOrderId(orderId);
+    }
+}

@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.wealth.mapper.EnterpriseBatchGrandMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.wealth.model.EnterpriseBatchGrand">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+        <result column="fee" property="fee" jdbcType="DECIMAL"/>
+        <result column="send_type" property="sendType" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="ucoin_count" property="ucoinCount" jdbcType="INTEGER"/>
+        <result column="grand_type" property="grandType" jdbcType="VARCHAR"/>
+        <result column="ucoin_price" property="ucoinPrice" jdbcType="DECIMAL"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="batch_code" property="batchCode" jdbcType="BIGINT"/>
+        <result column="manager_id" property="managerId" jdbcType="BIGINT"/>
+        <result column="manager_name" property="managerName" jdbcType="VARCHAR"/>
+        <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, enterprise_id, code, fee, send_type, create_time, remark, ucoin_count, grand_type,
+        ucoin_price,type_id,batch_code,manager_id,manager_name,file_name
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_batchgrand
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByEnterpriseIdAndCreateDate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_batchgrand
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <if test="code!=null">
+            and
+            code=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="typeId!=null">
+            AND
+            type_id=#{typeId,jdbcType=INTEGER}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        order by create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByEnterpriseIdAndCreateDate" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_enterprise_batchgrand
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <if test="code!=null">
+            and code=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="typeId!=null">
+            AND
+            type_id=#{typeId,jdbcType=INTEGER}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_enterprise_batchgrand
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.wealth.model.EnterpriseBatchGrand">
+        insert into ysh_enterprise_batchgrand (id, enterprise_id, code,
+        fee, send_type, create_time,
+        remark, ucoin_count, grand_type,
+        ucoin_price,type_id,batch_code,manager_id,manager_name,file_name)
+        values (#{id,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT}, #{code,jdbcType=BIGINT},
+        #{fee,jdbcType=DECIMAL}, #{sendType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{remark,jdbcType=VARCHAR}, #{ucoinCount,jdbcType=INTEGER}, #{grandType,jdbcType=VARCHAR},
+        #{ucoinPrice,jdbcType=DECIMAL},{typeId,jdbcType=INTEGER},#{batchCode,jdbcType=BIGINT},
+        #{managerId,jdbcType=BIGINT},#{managerName,jdbcType=VARCHAR},#{fileName,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.wealth.model.EnterpriseBatchGrand" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into ysh_enterprise_batchgrand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="sendType != null">
+                send_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="ucoinCount != null">
+                ucoin_count,
+            </if>
+            <if test="grandType != null">
+                grand_type,
+            </if>
+            <if test="ucoinPrice != null">
+                ucoin_price,
+            </if>
+            <if test="typeId!=null">
+                type_id,
+            </if>
+            <if test="batchCode!=null">
+                batch_code,
+            </if>
+            <if test="managerId!=null">
+                manager_id,
+            </if>
+            <if test="managerName!=null">
+                manager_name,
+            </if>
+            <if test="fileName!=null">
+                file_name,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=BIGINT},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="sendType != null">
+                #{sendType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="ucoinCount != null">
+                #{ucoinCount,jdbcType=INTEGER},
+            </if>
+            <if test="grandType != null">
+                #{grandType,jdbcType=VARCHAR},
+            </if>
+            <if test="ucoinPrice != null">
+                #{ucoinPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="batchCode != null">
+                #{batchCode,jdbcType=BIGINT},
+            </if>
+            <if test="managerId != null">
+                #{managerId,jdbcType=BIGINT},
+            </if>
+            <if test="managerName != null">
+                #{managerName,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.wealth.model.EnterpriseBatchGrand">
+        update ysh_enterprise_batchgrand
+        <set>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=BIGINT},
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="sendType != null">
+                send_type = #{sendType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="ucoinCount != null">
+                ucoin_count = #{ucoinCount,jdbcType=INTEGER},
+            </if>
+            <if test="grandType != null">
+                grand_type = #{grandType,jdbcType=VARCHAR},
+            </if>
+            <if test="ucoinPrice != null">
+                ucoin_price = #{ucoinPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="typeId!=null">
+                type_id=#{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="managerId != null">
+                manager_id=#{managerId,jdbcType=BIGINT},
+            </if>
+            <if test="managerName != null">
+                manager_name=#{managerName,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                file_name=#{fileName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateByList" parameterType="List">
+            <foreach collection="list" item="item" separator=";">
+                update ysh_enterprise_batchgrand
+                <set>
+                    <if test="item.enterpriseId != null">
+                        enterprise_id = #{item.enterpriseId,jdbcType=BIGINT},
+                    </if>
+                    <if test="item.code != null">
+                        code = #{item.code,jdbcType=BIGINT},
+                    </if>
+                    <if test="item.fee != null">
+                        fee = #{item.fee,jdbcType=DECIMAL},
+                    </if>
+                    <if test="item.sendType != null">
+                        send_type = #{item.sendType,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.createTime != null">
+                        create_time = #{item.createTime,jdbcType=TIMESTAMP},
+                    </if>
+                    <if test="item.remark != null">
+                        remark = #{item.remark,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.ucoinCount != null">
+                        ucoin_count = #{item.ucoinCount,jdbcType=INTEGER},
+                    </if>
+                    <if test="item.grandType != null">
+                        grand_type = #{item.grandType,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.ucoinPrice != null">
+                        ucoin_price = #{item.ucoinPrice,jdbcType=DECIMAL},
+                    </if>
+                    <if test="item.typeId!=null">
+                        type_id=#{item.typeId,jdbcType=INTEGER},
+                    </if>
+                    <if test="item.managerId != null">
+                        manager_id=#{item.managerId,jdbcType=BIGINT},
+                    </if>
+                    <if test="item.managerName != null">
+                        manager_name=#{item.managerName,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.fileName != null">
+                        file_name=#{item.fileName,jdbcType=VARCHAR},
+                    </if>
+              </set>
+        where id = #{item.id,jdbcType=BIGINT}
+            </foreach>
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.wealth.model.EnterpriseBatchGrand">
+        update ysh_enterprise_batchgrand
+        set enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+        code = #{code,jdbcType=BIGINT},
+        fee = #{fee,jdbcType=DECIMAL},
+        send_type = #{sendType,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        remark = #{remark,jdbcType=VARCHAR},
+        ucoin_count = #{ucoinCount,jdbcType=INTEGER},
+        grand_type = #{grandType,jdbcType=VARCHAR},
+        ucoin_price = #{ucoinPrice,jdbcType=DECIMAL},
+        type_id=#{typeId,jdbcType=INTEGER},
+        manager_id=#{managerId,jdbcType=BIGINT},
+        manager_name=#{managerName,jdbcType=VARCHAR},
+        file_name=#{fileName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    
+    <select id="selectByTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_batchgrand
+        <where>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        </where>
+        order by create_time desc
+
+    </select>
+
+    <delete id="deleteByTime">
+        DELETE
+        from ysh_enterprise_batchgrand
+        <where>
+            <if test="start != null">
+                <![CDATA[
+            and
+            create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+            </if>
+        </where>
+    </delete>
+</mapper>

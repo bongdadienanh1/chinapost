@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.inventory.mapper.InventoryChangeHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.ylife.inventory.model.InventoryChangeHistory">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT" />
+    <result column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT" />
+    <result column="inventory_change_amount" property="inventoryChangeAmount" jdbcType="INTEGER" />
+    <result column="inventory_afterchange" property="inventoryAfterChange" jdbcType="INTEGER" />
+    <result column="inventory_change_type" property="inventoryChangeType" jdbcType="VARCHAR" />
+    <result column="change_time" property="changeTime" jdbcType="TIMESTAMP" />
+    <result column="code" property="code" jdbcType="BIGINT"/>
+    <result column="bill_id" property="billId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="back_order_id" property="backOrderId" jdbcType="BIGINT" />
+  </resultMap>
+    
+    <resultMap id="InventoryChangeFormResultMap" type="com.ylife.form.model.InventoryChangeHistoryForm" extends="BaseResultMap">
+        <result column="goods_info_name" property="goodsInfoName" jdbcType="VARCHAR"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="goods_spec_string" property="goodsSpecString" jdbcType="VARCHAR"/>
+        <result column="goods_info_item_no" property="goodsInfoItemNo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectInventoryChangeByEnterprise" resultMap="InventoryChangeFormResultMap">
+        SELECT
+        ysh_enterprise_inventory_change_history.id,
+        ysh_enterprise_inventory_change_history.enterprise_id,
+        yei.enterprise_name,
+        yei.account_name,
+        ysh_enterprise_inventory_change_history.goods_info_id,
+        ids.goods_spec_string,
+        goods_info_name,
+        goods_info_item_no,
+        ysh_enterprise_inventory_change_history.inventory_change_amount,
+        ysh_enterprise_inventory_change_history.inventory_afterchange,
+        ysh_enterprise_inventory_change_history.inventory_change_type,
+        ysh_enterprise_inventory_change_history.change_time,
+        ysh_enterprise_inventory_change_history.code,
+        ysh_enterprise_inventory_change_history.bill_id,
+        ysh_enterprise_inventory_change_history.order_id,
+        ysh_enterprise_inventory_change_history.back_order_id
+        FROM
+        ysh_enterprise_inventory_change_history
+        LEFT JOIN np_goods_info AS ngi ON ngi.goods_info_id = ysh_enterprise_inventory_change_history.goods_info_id
+        LEFT JOIN ysh_enterprise_info AS yei ON yei.enterprise_id = ysh_enterprise_inventory_change_history.enterprise_id
+        LEFT JOIN ysh_enterprise_func AS yef ON yef.id = ysh_enterprise_inventory_change_history.enterprise_id
+        LEFT JOIN (
+        SELECT
+        ngi.goods_info_id,
+        IFNULL(
+        GROUP_CONCAT(
+        concat(
+        gs.spec_name,
+        ":",
+        IFNULL(gsd.spec_detail_name, "")
+        )
+        ),
+        ""
+        ) AS goods_spec_string
+        FROM
+        np_goods_info AS ngi
+        LEFT JOIN np_goods_info_rele_spec_detail AS girsd ON girsd.goods_info_id = ngi.goods_info_id
+        LEFT JOIN np_goods_spec AS gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail AS gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        GROUP BY
+        ngi.goods_info_id
+        ) AS ids ON ids.goods_info_id = ysh_enterprise_inventory_change_history.goods_info_id
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+              yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_enterprise_inventory_change_history.change_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_enterprise_inventory_change_history.change_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                and
+                ngi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsInfoName!=null">
+                and
+                ngi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+
+        </where>
+        order by
+        ysh_enterprise_inventory_change_history.enterprise_id desc,
+        ysh_enterprise_inventory_change_history.change_time desc
+
+
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+
+    </select>
+
+    <select id="countInventoryChangeByEnterprise" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        ysh_enterprise_inventory_change_history
+        LEFT JOIN np_goods_info AS ngi ON ngi.goods_info_id = ysh_enterprise_inventory_change_history.goods_info_id
+        LEFT JOIN ysh_enterprise_info AS yei ON yei.enterprise_id = ysh_enterprise_inventory_change_history.enterprise_id
+        LEFT JOIN ysh_enterprise_func AS yef ON yef.id = ysh_enterprise_inventory_change_history.enterprise_id
+
+        <where>
+            <if test="minCatalog != null">
+                <![CDATA[
+              yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="start != null">
+                <![CDATA[
+            and
+            ysh_enterprise_inventory_change_history.change_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            ysh_enterprise_inventory_change_history.change_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                and
+                ngi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="goodsInfoName!=null">
+                and
+                ngi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+
+        </where>
+    </select>
+
+
+
+
+
+
+
+  <sql id="Base_Column_List" >
+    id, enterprise_id, goods_info_id, inventory_change_amount,inventory_afterchange, inventory_change_type,
+    change_time,code, bill_id, order_id, back_order_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ysh_enterprise_inventory_change_history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ysh_enterprise_inventory_change_history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ylife.inventory.model.InventoryChangeHistory" >
+    insert into ysh_enterprise_inventory_change_history (id, enterprise_id, goods_info_id, 
+      inventory_change_amount,inventory_afterchange, inventory_change_type,
+      change_time, code,bill_id, order_id,
+      back_order_id)
+    values (#{id,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT}, #{goodsInfoId,jdbcType=BIGINT}, 
+      #{inventoryChangeAmount,jdbcType=BIGINT},  #{inventoryAfterChange,jdbcType=BIGINT}, #{inventoryChangeType,jdbcType=VARCHAR},
+      #{changeTime,jdbcType=TIMESTAMP},#{code,jdbcType=BIGINT}, #{billId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+      #{backOrderId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylife.inventory.model.InventoryChangeHistory">
+    insert into ysh_enterprise_inventory_change_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="goodsInfoId != null" >
+        goods_info_id,
+      </if>
+      <if test="inventoryChangeAmount != null" >
+        inventory_change_amount,
+      </if>
+        <if test="inventoryAfterChange != null" >
+        inventory_afterchange,
+      </if>
+      <if test="inventoryChangeType != null" >
+        inventory_change_type,
+      </if>
+      <if test="changeTime != null" >
+        change_time,
+      </if>
+        <if test="code!=null">
+            code,
+        </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="backOrderId != null" >
+        back_order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsInfoId != null" >
+        #{goodsInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="inventoryChangeAmount != null" >
+        #{inventoryChangeAmount,jdbcType=BIGINT},
+      </if>
+        <if test="inventoryAfterChange != null" >
+        #{inventoryAfterChange,jdbcType=BIGINT},
+      </if>
+      <if test="inventoryChangeType != null" >
+        #{inventoryChangeType,jdbcType=VARCHAR},
+      </if>
+      <if test="changeTime != null" >
+        #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="code != null" >
+        #{code,jdbcType=BIGINT},
+        </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="backOrderId != null" >
+        #{backOrderId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ylife.inventory.model.InventoryChangeHistory">
+    update ysh_enterprise_inventory_change_history
+    <set >
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsInfoId != null" >
+        goods_info_id = #{goodsInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="inventoryChangeAmount != null" >
+        inventory_change_amount = #{inventoryChangeAmount,jdbcType=BIGINT},
+      </if>
+        <if test="inventoryAfterChange != null" >
+        inventory_afterchange = #{inventoryAfterChange,jdbcType=BIGINT},
+      </if>
+      <if test="inventoryChangeType != null" >
+        inventory_change_type = #{inventoryChangeType,jdbcType=VARCHAR},
+      </if>
+      <if test="changeTime != null" >
+        change_time = #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="code != null" >
+        code = #{code,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="backOrderId != null" >
+        back_order_id = #{backOrderId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ylife.inventory.model.InventoryChangeHistory">
+    update ysh_enterprise_inventory_change_history
+    set enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+      goods_info_id = #{goodsInfoId,jdbcType=BIGINT},
+      inventory_change_amount = #{inventoryChangeAmount,jdbcType=BIGINT},
+      inventory_afterchange = #{inventoryAfterChange,jdbcType=BIGINT},
+      inventory_change_type = #{inventoryChangeType,jdbcType=VARCHAR},
+      change_time = #{changeTime,jdbcType=TIMESTAMP},
+      code = #{code,jdbcType=BIGINT},
+      bill_id = #{billId,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      back_order_id = #{backOrderId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

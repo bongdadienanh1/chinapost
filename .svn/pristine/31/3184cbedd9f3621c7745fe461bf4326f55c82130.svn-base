@@ -1,0 +1,73 @@
+package com.ylife.chinapost.boss.service.impl;
+
+import com.ylife.chinapost.boss.controller.utils.Constants;
+import com.ylife.chinapost.boss.service.BackOrderBossService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.CreditOrder;
+import com.ylife.order.model.CreditOrderStatus;
+import com.ylife.order.service.CreditOrderService;
+import com.ylife.utils.DateUtil;
+import com.ylife.utils.StringUtil;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
+
+/**
+ * BackOrderBossServiceImpl.
+ *
+ * @Author henry .
+ * @Create 2017-07-03 9:35.
+ */
+@Service(value = "backOrderBossService")
+public class BackOrderBossServiceImpl implements BackOrderBossService {
+
+    @Resource
+    private CreditOrderService creditOrderService;
+
+    /**
+     * 查询全部 CreditOrder 带分页
+     * @author henry
+     * @date 2017-07-03 9:35.
+     * @param backOrderNo
+     * @param shippingMobile
+     * @param orderCode
+     * @param status
+     * @param start
+     * @param end
+     * @param pageable
+     * @return
+     */
+    public Page<CreditOrder> queryListForPageBackOrder(String backOrderNo, String shippingMobile, String orderCode, CreditOrderStatus status, String start, String end, Pageable pageable) {
+        Date startTime = null;
+        if (!StringUtil.isBlank(start)) {
+            startTime = DateUtil.fromString(start, Constants.DEFAULT_DATE_FORMAT);
+        }
+        Date endTime = null;
+        if (!StringUtil.isBlank(end)) {
+            endTime = DateUtil.fromString(end, Constants.DEFAULT_DATE_FORMAT);
+        }
+        Long backOrderCode = null;
+        if (!StringUtil.isBlank(backOrderNo)) {
+            backOrderCode = Long.parseLong(backOrderNo);
+        }
+        Long orderNo = null;
+        if (!StringUtil.isBlank(orderCode)) {
+            orderNo = Long.parseLong(orderCode);
+        }
+        return creditOrderService.getBackOrder(backOrderCode,null,null,shippingMobile,orderNo,status,startTime,endTime,null,"1",pageable);
+    }
+
+    /**
+     *
+     * @author  henry
+     * @date 2017-07-06 09:14:43
+     * @see BackOrderBossService#queryById(Long id)
+     * @param backOrderCode
+     * @return
+     */
+    public CreditOrder queryById(Long backOrderCode) {
+        return creditOrderService.selectByCreditOrderCode(backOrderCode);
+    }
+}

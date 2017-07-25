@@ -1,0 +1,2225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="f782fb76-d67c-4e90-a620-e2b9471e4b64" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/chinapost-boss/chinapost-boss.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/chinapost-third/chinapost-third.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/AccountServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/AccountServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/AccountServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/AccountServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/BackOrderGoods.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/BackOrderGoods.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/BillStatus.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/BillStatus.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-common/target/classes/com/ylife/cache/interceptor/CacheCreateInterceptor.class" afterPath="$PROJECT_DIR$/ylife-common/target/classes/com/ylife/cache/interceptor/CacheCreateInterceptor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/customer/mapper/ChinapostCustomerMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/customer/mapper/ChinapostCustomerMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/customer/service/ChinapostCustomerService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/customer/service/ChinapostCustomerService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/customer/service/impl/ChinapostCustomerServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/customer/service/impl/ChinapostCustomerServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/utils/Constants.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/utils/Constants.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/utils/Constants.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/utils/Constants.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder$AccountInfo.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder$AccountInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder$Business.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder$Business.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder$OriginalOrder.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder$OriginalOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/CreditOrderService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/CreditOrderService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/impl/CreditOrderServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/impl/CreditOrderServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrderStatus.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/CreditOrderStatus.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/CurrentLoginService.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/CurrentLoginService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/CurrentLoginService.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/CurrentLoginService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/CurrentLoginServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/CurrentLoginServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/CurrentLoginServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/CurrentLoginServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/CustomerController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/CustomerController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/CustomerController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/CustomerController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory$CustomerInfo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory$CustomerInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory$EnterpriseInfo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory$EnterpriseInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory$OrderInfo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory$OrderInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/mapper/CustomerUcoinHistoryMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/mapper/CustomerUcoinHistoryMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/service/CustomerUcoinHistoryService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/service/CustomerUcoinHistoryService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/service/impl/CustomerUcoinHistoryServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/service/impl/CustomerUcoinHistoryServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistoryVo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/ucoin/model/CustomerUcoinHistoryVo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$10.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$10.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$11.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$11.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$11.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$11.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$2.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$2.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$3.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$3.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$4.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$4.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$5.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$5.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$6.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$6.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$7.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$7.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$8.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$8.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$9.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$9.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/ExcelExportController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/ExcelExportController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-common/target/classes/com/ylife/utils/ExcelUtil.class" afterPath="$PROJECT_DIR$/ylife-common/target/classes/com/ylife/utils/ExcelUtil.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/FormApiController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/FormApiController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/FormApiController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/FormApiController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsBrand.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsBrand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsBrandMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsBrandMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsBrandService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsBrandService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsBrandServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsBrandServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsCate.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsCate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsCateMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsCateMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsCateService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsCateService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsCateServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsCateServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsCateVo.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsCateVo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/product/mapper/GoodsInfoMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/product/mapper/GoodsInfoMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/product/service/GoodsInfoService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/product/service/GoodsInfoService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/product/service/impl/GoodsInfoServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/product/service/impl/GoodsInfoServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$2.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$2.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/GoodsManageServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/GoodsManagerAPIController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/GoodsManagerAPIController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/GoodsManagerAPIController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/GoodsManagerAPIController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/pojo/GoodsManagerResult.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/pojo/GoodsManagerResult.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsProduct.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsProduct.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/GoodsProductController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/GoodsProductController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/GoodsProductController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/GoodsProductController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsProductMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsProductMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsProductService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsProductService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsProductServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsProductServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsSpec.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/model/GoodsSpec.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsSpecDetailMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsSpecDetailMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsSpecDetailService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsSpecDetailService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsSpecDetailServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsSpecDetailServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsSpecMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/mapper/GoodsSpecMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsSpecService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/GoodsSpecService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsSpecServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/goods/service/impl/GoodsSpecServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBill$TransferInfo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBill$TransferInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBill.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBill.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBillItem$ItemGoodsInfo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBillItem$ItemGoodsInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBillItem.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBillItem.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBillLog.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryBillLog.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryBillMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryBillMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryBillService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryBillService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryBillServiceImpl$1.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryBillServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryBillServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryBillServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryChangeService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryChangeService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryChangeServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryChangeServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/pojo/InventoryGoodsResult.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/pojo/InventoryGoodsResult.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$10.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$10.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$11.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$11.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$11.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$11.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$12.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$12.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$12.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$12.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$13.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$13.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$13.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$13.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$14.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$14.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$14.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$14.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$2.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$2.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$3.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$3.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$4.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$4.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$5.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$5.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$6.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$6.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$7.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$7.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$8.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$8.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$9.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$9.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$StorageGoodsInfo.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$StorageGoodsInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$StorageGoodsInfo.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController$StorageGoodsInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/api/InventoryManageAPIController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/InventoryManageService.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/InventoryManageService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/InventoryManageService.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/InventoryManageService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$PurchaseGoods.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$PurchaseGoods.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$PurchaseGoods.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl$PurchaseGoods.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/InventoryManageServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryPurchaseBillItem$ItemGoodsInfo.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryPurchaseBillItem$ItemGoodsInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryPurchaseBillItem.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/model/InventoryPurchaseBillItem.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryPurchaseBillItemMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryPurchaseBillItemMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryPurchaseBillMapper.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/mapper/InventoryPurchaseBillMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryPurchaseBillService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryPurchaseBillService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryPurchaseBillServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryPurchaseBillServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryService.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/InventoryService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryServiceImpl.class" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/com/ylife/inventory/service/impl/InventoryServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/LoginController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/LoginController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/LoginController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/LoginController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/MainController$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/MainController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/MainController$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/MainController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/MainController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/controller/MainController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/MainController.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/controller/MainController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/MainController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/MainController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/MainController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/MainController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-common/target/classes/com/ylife/utils/MapUtil.class" afterPath="$PROJECT_DIR$/ylife-common/target/classes/com/ylife/utils/MapUtil.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/MobMainSiteController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/MobMainSiteController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/MobMainSiteController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/MobMainSiteController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1BatchUpdate.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1BatchUpdate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1BatchUpdate.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1BatchUpdate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1CustomerUcoinChange.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1CustomerUcoinChange.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1CustomerUcoinChange.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1CustomerUcoinChange.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1RelationUpdate.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1RelationUpdate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1RelationUpdate.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$1RelationUpdate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$2BatchUpdate.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$2BatchUpdate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$2BatchUpdate.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl$2BatchUpdate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/NewGrandServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order$Business.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order$Business.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order$CustomerInfo.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order$CustomerInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order$OrderPickInfo.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order$OrderPickInfo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/Order.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/OrderController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/OrderController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/OrderController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/OrderController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/com/ylife/chinapost/service/impl/OrderManageServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/mapper/OrderMapper.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/mapper/OrderMapper.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/OrderService.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/OrderService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/impl/OrderServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/service/impl/OrderServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/OrderStatus.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/order/model/OrderStatus.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/PlaceBackOrderService.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/PlaceBackOrderService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/PlaceBackOrderService.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/PlaceBackOrderService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl$1.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/PlaceBackOrderServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/PlaceOrderService.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/PlaceOrderService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/PlaceOrderService.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/PlaceOrderService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/PlaceOrderServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/service/impl/PlaceOrderServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/PlaceOrderServiceImpl.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/service/impl/PlaceOrderServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/RootRedirectController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/classes/com/ylife/chinapost/mobile/controller/RootRedirectController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/RootRedirectController.class" afterPath="$PROJECT_DIR$/chinapost-mobile/target/classes/com/ylife/chinapost/mobile/controller/RootRedirectController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/shoppingcart/service/impl/ShoppingCartServiceImpl.class" afterPath="$PROJECT_DIR$/ylife-core/target/classes/com/ylife/shoppingcart/service/impl/ShoppingCartServiceImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/ylife/inventoryManager/service/TestInventoryManagerService.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/ylife/inventoryManager/service/TestInventoryManagerService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService$1.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService$A.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService$A.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService$B.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService$B.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService.class" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/test-classes/com/math/gson/TestUcoinGrandService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-core-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-core-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-core-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-core-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-platform-client-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-platform-client-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-platform-client-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ucoin-platform-client-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ylife-common-1.0.0.jar" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ylife-common-1.0.0.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ylife-common-1.0.0.jar" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ylife-common-1.0.0.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ylife-core-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/lib/ylife-core-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ylife-core-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/WEB-INF/lib/ylife-core-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/Addgoods.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/Addgoods.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/order/BackOrderGoodsMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/order/BackOrderGoodsMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/ChinapostCustomerMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/ChinapostCustomerMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/order/CreditOrderMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/order/CreditOrderMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/CustomerUcoinHistoryMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/CustomerUcoinHistoryMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/EnterpriseInfoMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/EnterpriseInfoMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsBrandMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsBrandMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsCateMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsCateMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/GoodsInfoMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/GoodsInfoMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsProductMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsProductMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsSpecDetailMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsSpecDetailMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsSpecMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/goods/GoodsSpecMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryBillItemMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryBillItemMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryBillMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryBillMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/InventoryManager.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/InventoryManager.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryPurchaseBillItemMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryPurchaseBillItemMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryPurchaseBillMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/InventoryPurchaseBillMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/order/OrderMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/order/OrderMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/RoleManager.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/RoleManager.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ylife-core/target/classes/mapper/shoppingcart/ShoppingCartMapper.xml" afterPath="$PROJECT_DIR$/ylife-core/target/classes/mapper/shoppingcart/ShoppingCartMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/SupplyFormMapper.xml" afterPath="$PROJECT_DIR$/ucoin-core/target/classes/mapper/SupplyFormMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/accountManager.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/accountManager.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/accountManagerUntop.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/accountManagerUntop.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/accountReturn.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/accountReturn.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/accountReturnUntop.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/accountReturnUntop.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/addgoods.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/addgoods.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/allocation.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/allocation.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/allocation.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/allocation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/billDetail.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/billDetail.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/chinapost-enterprise.iml" afterPath="$PROJECT_DIR$/chinapost-enterprise/chinapost-enterprise.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/chinapost-mobile.iml" afterPath="$PROJECT_DIR$/chinapost-mobile/chinapost-mobile.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/common.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/common.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/dbconfig.properties" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/dbconfig.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/dbconfig.properties" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/dbconfig.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/detailFormThrid.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/detailFormThrid.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/distribution.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/distribution.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/feedbackEmail.properties" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/classes/feedbackEmail.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/classes/feedbackEmail.properties" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/classes/feedbackEmail.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/inStorage.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/inStorage.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/inStorage.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/inStorage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/inventoryInquiry.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/inventoryInquiry.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/inventoryManager.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/inventoryManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/item.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/item.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/itemManager.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/itemManager.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/itemManager.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/itemManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/list.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/list.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/login.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/login.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/megeReplishment.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/megeReplishment.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/member_index.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/member_index.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/myUcoin.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/myUcoin.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/myaccount.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/myaccount.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/main/new_main.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/main/new_main.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/main/new_search.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/main/new_search.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/newsuborder.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/newsuborder.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/orderManager.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/orderManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/order_detail.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/order_detail.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/order_list.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/order_list.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/purchaseOrder.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/purchaseOrder.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/purchaseOrder.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/purchaseOrder.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/register.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/register.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/reimburse.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/reimburse.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/replenishment.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/replenishment.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/replenishment.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/replenishment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/replenishmentMega2.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/replenishmentMega2.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/requisition.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/requisition.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/selfPickItmUpload.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/selfPickItmUpload.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/storage.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/storage.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/supplyDetailForm.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/supplyDetailForm.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-core/ucoin-core.iml" afterPath="$PROJECT_DIR$/ucoin-core/ucoin-core.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ucoin-platform-client/ucoin-platform-client.iml" afterPath="$PROJECT_DIR$/ucoin-platform-client/ucoin-platform-client.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/updateAddress.ftl" afterPath="$PROJECT_DIR$/chinapost-mobile/target/chinapost-enterprise-web/view/updateAddress.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/updateSelfItems.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/updateSelfItems.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/voucherManager.ftl" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/view/voucherManager.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/voucherManager.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/voucherManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/WEB-INF/web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/zrj_ajaxPages.js" afterPath="$PROJECT_DIR$/chinapost-enterprise/target/chinapost-enterprise-web/static/js/zrj_ajaxPages.js" />
+    </list>
+    <ignored path="youzheng.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/chinapost-mobile/target/" />
+    <ignored path="$PROJECT_DIR$/ylife-common/target/" />
+    <ignored path="$PROJECT_DIR$/ucoin-core/target/" />
+    <ignored path="$PROJECT_DIR$/ucoin-platform-client/target/" />
+    <ignored path="$PROJECT_DIR$/chinapost-enterprise/target/" />
+    <ignored path="$PROJECT_DIR$/ylife-core/target/" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <ignored path="$PROJECT_DIR$/chinapost-boss/target/" />
+    <ignored path="$PROJECT_DIR$/chinapost-third/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/youzheng$chinapost.coverage" NAME="chinapost Coverage Results" MODIFIED="1499841681245" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="youzheng" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="goods_detail_pic.ftl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/goods_detail_pic.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.51724136" vertical-offset="30" max-vertical-offset="1938">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="apply_back_goods.ftl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/apply_back_goods.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.3793104" vertical-offset="583" max-vertical-offset="3743">
+              <caret line="41" column="45" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pro_es_list.ftl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/main/pro_es_list.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.74138" vertical-offset="1124" max-vertical-offset="5263">
+              <caret line="95" column="123" selection-start-line="95" selection-start-column="121" selection-end-line="95" selection-end-column="123" />
+              <folding>
+                <marker date="1500855811342" expanded="true" signature="9873:9885" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="item.ftl" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/item.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.2136753" vertical-offset="5731" max-vertical-offset="8360">
+              <caret line="339" column="43" selection-start-line="339" selection-start-column="26" selection-end-line="339" selection-end-column="43" />
+              <folding>
+                <marker date="1499413928079" expanded="true" signature="16239:16256" placeholder="..." />
+                <marker date="1499413928079" expanded="true" signature="17161:17191" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="idangerous.swiper.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/static/js/idangerous.swiper.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="6.9666667" vertical-offset="228" max-vertical-offset="53371">
+              <caret line="1" column="9" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/mob_home_page_list.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/set_mob_home_page.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/set_mob_subject.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/image/imagelist.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/image/chooseImage.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/index/foot.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/index/goenterpage.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/index/index.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/thirdOrderList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/index/indextop.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/index/top.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/newlogin.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/orderBackDetail.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/orderListDetail.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdOrderBackList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdOrderList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdStockOutList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/upthirdgoods.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/thirdPlatformList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/api/InventoryManageAPIController.java" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/megeReplishment.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/common.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/service/impl/InventoryManageServiceImpl.java" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/replenishment.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/allocation.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/supplyDetailForm.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/zrj_ajaxPages.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/voucherManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/purchaseOrder.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/replenishmentMega.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/replenishment.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/voucherManager.js" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/MainController.java" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/replenishmentMega2.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/utils/Constants.java" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/java/com/ylife/chinapost/mobile/controller/CustomerController.java" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/contactAddress.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/myaccount.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/updateAddress.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/static/js/ThirdPlantManage/PlantAccountManagement.js" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/PlantGoodsList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdProductManager.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdProductAdded.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/billDetail.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/newsuborder.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/order_list.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/phoneNumber.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/order_detail.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/myUcoin.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/thirdOrderBackList.ftl" />
+        <option value="$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/item.ftl" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsBuildToolPackageJson" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\maven\repo" />
+        <option name="mavenHome" value="F:\java\apache-maven-3.3.9" />
+        <option name="userSettingsFile" value="F:\java\apache-maven-3.3.9\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="lookForNested" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="ucoin-platform-client" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="youzheng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="youzheng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="youzheng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="youzheng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="youzheng" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chinapost-mobile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="MavenSettings" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="recentsLimit" value="5" />
+    <property name="last_opened_file_path" value="F:/projects/ysh2.1" />
+    <property name="SearchEverywhereHistoryKey" value="InventoryMapper&#9;PSI&#9;JAVA://com.ylife.inventory.mapper.InventoryMapper&#10;Goodsmapper&#9;FILE&#9;file://F:/chinapost/ylife-core/src/main/resources/mapper/goods/GoodsMapper.xml&#10;orderC&#9;FILE&#9;file://F:/chinapost/chinapost-boss/src/main/java/com/ylife/chinapost/boss/controller/OrderController.java&#10;thg&#9;null&#9;null&#10;http&#9;PSI&#9;JAVA://com.ylife.utils.HttpUtil&#10;CheckIdcard &#9;PSI&#9;JAVA://com.ylife.utils.CheckIdcard&#10;supplyFormMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/SupplyFormMapper.xml&#10;enterpriseRequisitionMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/EnterpriseRequisitionMapper.xml&#10;inventoryBillItemMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/InventoryBillItemMapper.xml&#10;inventoryBillMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/InventoryBillMapper.xml&#10;allocation&#9;FILE&#9;file://E:/work/youzheng/chinapost-enterprise/src/main/webapp/WEB-INF/view/allocation.ftl&#10;inventoryMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/InventoryMapper.xml&#10;inventorybill&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/java/com/ylife/inventory/service/impl/InventoryBillServiceImpl.java&#10;goodsProductServiceImpl&#9;PSI&#9;JAVA://com.ylife.goods.service.impl.GoodsProductServiceImpl&#10;form&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/FormFuncMapper.xml&#10;logger&#9;PSI&#9;JAVA://com.ylife.utils.MyLogger&#10;export&#9;FILE&#9;file://E:/work/youzheng/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/ExcelExportController.java&#10;ReentrantLock&#9;PSI&#9;JAVA://java.util.concurrent.locks.ReentrantLock&#10;AtomicI&#9;PSI&#9;JAVA://java.util.concurrent.atomic.AtomicInteger&#10;billstatus&#9;PSI&#9;JAVA://com.ylife.inventory.model.BillStatus&#10;inventorymapper.xml&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/InventoryMapper.xml&#10;assert&#9;PSI&#9;JAVA://com.ylife.utils.Assert&#10;goodsInfoMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/GoodsInfoMapper.xml&#10;formFuncMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/FormFuncMapper.xml&#10;inventoryChangeHistoryMapper&#9;FILE&#9;file://E:/work/youzheng/ucoin-core/src/main/resources/mapper/InventoryChangeHistoryMapper.xml&#10;nirvanaConfiguration&#9;PSI&#9;JAVA://com.ylife.cache.NirvanaCacheConfiguration" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="217" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="241" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="241" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="36" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="127" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth5" value="1028" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder5" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="302" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="302" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="303" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="301" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="302" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth5" value="380" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder5" value="5" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15204678" />
+    <property name="project.structure.side.proportion" value="0.28965518" />
+    <property name="settings.editor.selected.configurable" value="vcs.Subversion" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="js-jscs-nodeInterpreter" value="E:\nodeJs\node.exe" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="FullScreen" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\chinapost\chinapost-boss\src\main\webapp\static\css" />
+      <recent name="F:\chinapost\chinapost-third\src\main\webapp\static\css" />
+      <recent name="F:\chinapost\chinapost-third\src\main\webapp\static\js" />
+      <recent name="F:\chinapost\chinapost-boss\src\main\webapp\static\js" />
+      <recent name="F:\chinapost\chinapost-boss\src\main\webapp\static\js\common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\chinapost\chinapost-boss\src\main\webapp\view\thirdPlatform" />
+      <recent name="E:\projects\chinapost\chinapost-boss\src\main\webapp\view" />
+      <recent name="E:\projects\chinapost\chinapost-boss\src\main\webapp\view\page" />
+      <recent name="E:\projects\chinapost\chinapost-boss\src\main\webapp" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ylife.manager.service.impl" />
+      <recent name="com.ylife.manager.service" />
+      <recent name="com.ylife.manager.model" />
+      <recent name="com.ylife.chinapost.boss.controller" />
+    </key>
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="svn" revision="5911">F:\chinapost\chinapost-boss\src\main\webapp\static\js\ThirdPlantManage\thirdOrderList.js</PATH>
+            <PATH vcs="svn" revision="5911">F:\chinapost\chinapost-third\src\main\webapp\view\thirdStockOutList.ftl</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.chinapost">
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings />
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="chinapost" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.35" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="chinapost-mobile:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/mobile" />
+          </settings>
+        </artifact>
+        <artifact name="chinapost-boss:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/boss" />
+          </settings>
+        </artifact>
+        <artifact name="chinapost-third:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/third" />
+          </settings>
+        </artifact>
+        <artifact name="chinapost-enterprise:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_youzheng_2" />
+        <option name="JNDI_PORT" value="1199" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Cover" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="52293" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method>
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="chinapost-mobile:war exploded" />
+          <artifact name="chinapost-boss:war exploded" />
+          <artifact name="chinapost-third:war exploded" />
+          <artifact name="chinapost-enterprise:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.chinapost" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" myUseAcceleration="nothing" cleanupOnStartRun="true">
+    <configuration useDefault="false">C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost" />
+          <option name="myCopyRoot" value="F:\chinapost" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\chinapost-boss" />
+          <option name="myCopyRoot" value="F:\chinapost\chinapost-boss" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\chinapost-enterprise" />
+          <option name="myCopyRoot" value="F:\chinapost\chinapost-enterprise" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\chinapost-mobile" />
+          <option name="myCopyRoot" value="F:\chinapost\chinapost-mobile" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\chinapost-third" />
+          <option name="myCopyRoot" value="F:\chinapost\chinapost-third" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\ucoin-core" />
+          <option name="myCopyRoot" value="F:\chinapost\ucoin-core" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\ucoin-platform-client" />
+          <option name="myCopyRoot" value="F:\chinapost\ucoin-platform-client" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\ylife-common" />
+          <option name="myCopyRoot" value="F:\chinapost\ylife-common" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost\ylife-core" />
+          <option name="myCopyRoot" value="F:\chinapost\ylife-core" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="F:\chinapost" />
+          <option name="myCopyRoot" value="F:\chinapost" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f782fb76-d67c-4e90-a620-e2b9471e4b64" name="Default" comment="" />
+      <created>1490753510248</created>
+      <option name="number" value="Default" />
+      <updated>1490753510248</updated>
+      <workItem from="1490753513081" duration="699000" />
+      <workItem from="1491377628968" duration="4661000" />
+      <workItem from="1491440684956" duration="5105000" />
+      <workItem from="1491525164866" duration="2182000" />
+      <workItem from="1491553798851" duration="606000" />
+      <workItem from="1491618980957" duration="8832000" />
+      <workItem from="1491788613938" duration="8459000" />
+      <workItem from="1492002433948" duration="13636000" />
+      <workItem from="1492397942686" duration="7578000" />
+      <workItem from="1492603298750" duration="590000" />
+      <workItem from="1492753405986" duration="340000" />
+      <workItem from="1492754841369" duration="29000" />
+      <workItem from="1492755539663" duration="2395000" />
+      <workItem from="1493017042925" duration="18168000" />
+      <workItem from="1493175704086" duration="63000" />
+      <workItem from="1493179517738" duration="22809000" />
+      <workItem from="1493685830069" duration="4552000" />
+      <workItem from="1494397535215" duration="4486000" />
+      <workItem from="1494551359690" duration="4606000" />
+      <workItem from="1494813498098" duration="4177000" />
+      <workItem from="1494925628864" duration="26072000" />
+      <workItem from="1495413312664" duration="15321000" />
+      <workItem from="1495691853303" duration="284000" />
+      <workItem from="1495692156802" duration="12000" />
+      <workItem from="1495692190571" duration="25000" />
+      <workItem from="1495692229480" duration="39000" />
+      <workItem from="1495692285680" duration="13865000" />
+      <workItem from="1496190624380" duration="1221000" />
+      <workItem from="1496231045529" duration="9880000" />
+      <workItem from="1496623583012" duration="1333000" />
+      <workItem from="1496713312459" duration="6011000" />
+      <workItem from="1496800083291" duration="6037000" />
+      <workItem from="1497227168974" duration="7651000" />
+      <workItem from="1497237664595" duration="482000" />
+      <workItem from="1497238173483" duration="1703000" />
+      <workItem from="1497241805215" duration="1132000" />
+      <workItem from="1497243578994" duration="1529000" />
+      <workItem from="1497245569806" duration="242000" />
+      <workItem from="1497246099689" duration="1521000" />
+      <workItem from="1497254027196" duration="5971000" />
+      <workItem from="1497260035119" duration="10000" />
+      <workItem from="1497313695987" duration="4660000" />
+      <workItem from="1497318690588" duration="1254000" />
+      <workItem from="1497320490119" duration="15152000" />
+      <workItem from="1497339886051" duration="7413000" />
+      <workItem from="1497399814053" duration="13260000" />
+      <workItem from="1497417420713" duration="251000" />
+      <workItem from="1497418162899" duration="999000" />
+      <workItem from="1497421886661" duration="5910000" />
+      <workItem from="1497486021302" duration="8936000" />
+      <workItem from="1497501596578" duration="20354000" />
+      <workItem from="1497524480306" duration="1308000" />
+      <workItem from="1497525901676" duration="17000" />
+      <workItem from="1497525956509" duration="849000" />
+      <workItem from="1497572106606" duration="1932000" />
+      <workItem from="1497578412684" duration="809000" />
+      <workItem from="1497590553028" duration="1669000" />
+      <workItem from="1497859484779" duration="2307000" />
+      <workItem from="1497918206578" duration="23073000" />
+      <workItem from="1498004908751" duration="1909000" />
+      <workItem from="1498091273039" duration="3651000" />
+      <workItem from="1498177499252" duration="2014000" />
+      <workItem from="1498724960148" duration="916000" />
+      <workItem from="1498782525891" duration="26186000" />
+      <workItem from="1498813860932" duration="10347000" />
+      <workItem from="1498869420005" duration="15461000" />
+      <workItem from="1498895582963" duration="519000" />
+      <workItem from="1498896396444" duration="21877000" />
+      <workItem from="1499042385309" duration="20067000" />
+      <workItem from="1499068954165" duration="12210000" />
+      <workItem from="1499128310975" duration="9306000" />
+      <workItem from="1499140379242" duration="762000" />
+      <workItem from="1499143802829" duration="11443000" />
+      <workItem from="1499214181996" duration="23034000" />
+      <workItem from="1499246428996" duration="11371000" />
+      <workItem from="1499300546393" duration="13230000" />
+      <workItem from="1499322102878" duration="10143000" />
+      <workItem from="1499386883454" duration="14489000" />
+      <workItem from="1499473495148" duration="26675000" />
+      <workItem from="1499646405918" duration="15143000" />
+      <workItem from="1499670619631" duration="14330000" />
+      <workItem from="1499732672452" duration="13613000" />
+      <workItem from="1499762318607" duration="2661000" />
+      <workItem from="1499819018035" duration="3985000" />
+      <workItem from="1499823287647" duration="11047000" />
+      <workItem from="1499841626066" duration="9562000" />
+      <workItem from="1499904966756" duration="28221000" />
+      <workItem from="1499991704515" duration="23449000" />
+      <workItem from="1500019001414" duration="3703000" />
+      <workItem from="1500078423411" duration="19092000" />
+      <workItem from="1500251200442" duration="3974000" />
+      <workItem from="1500337452496" duration="14638000" />
+      <workItem from="1500424017234" duration="24162000" />
+      <workItem from="1500510209495" duration="17958000" />
+      <workItem from="1500596089282" duration="1447000" />
+      <workItem from="1500682998394" duration="10029000" />
+      <workItem from="1500855660457" duration="6838000" />
+      <workItem from="1500942143425" duration="4006000" />
+    </task>
+    <task id="LOCAL-00278">
+      <created>1500109426034</created>
+      <option name="number" value="00278" />
+      <option name="project" value="LOCAL" />
+      <updated>1500109426034</updated>
+    </task>
+    <task id="LOCAL-00279">
+      <created>1500109749101</created>
+      <option name="number" value="00279" />
+      <option name="project" value="LOCAL" />
+      <updated>1500109749102</updated>
+    </task>
+    <task id="LOCAL-00280">
+      <created>1500111145102</created>
+      <option name="number" value="00280" />
+      <option name="project" value="LOCAL" />
+      <updated>1500111145102</updated>
+    </task>
+    <task id="LOCAL-00281">
+      <created>1500111161101</created>
+      <option name="number" value="00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1500111161102</updated>
+    </task>
+    <task id="LOCAL-00282">
+      <created>1500112953102</created>
+      <option name="number" value="00282" />
+      <option name="project" value="LOCAL" />
+      <updated>1500112953102</updated>
+    </task>
+    <task id="LOCAL-00283">
+      <created>1500346061132</created>
+      <option name="number" value="00283" />
+      <option name="project" value="LOCAL" />
+      <updated>1500346061139</updated>
+    </task>
+    <task id="LOCAL-00284">
+      <created>1500346559102</created>
+      <option name="number" value="00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1500346559102</updated>
+    </task>
+    <task id="LOCAL-00285">
+      <created>1500359734101</created>
+      <option name="number" value="00285" />
+      <option name="project" value="LOCAL" />
+      <updated>1500359734101</updated>
+    </task>
+    <task id="LOCAL-00286">
+      <created>1500359741101</created>
+      <option name="number" value="00286" />
+      <option name="project" value="LOCAL" />
+      <updated>1500359741101</updated>
+    </task>
+    <task id="LOCAL-00287">
+      <created>1500361648101</created>
+      <option name="number" value="00287" />
+      <option name="project" value="LOCAL" />
+      <updated>1500361648101</updated>
+    </task>
+    <task id="LOCAL-00288">
+      <created>1500425206141</created>
+      <option name="number" value="00288" />
+      <option name="project" value="LOCAL" />
+      <updated>1500425206151</updated>
+    </task>
+    <task id="LOCAL-00289">
+      <created>1500431218102</created>
+      <option name="number" value="00289" />
+      <option name="project" value="LOCAL" />
+      <updated>1500431218102</updated>
+    </task>
+    <task id="LOCAL-00290">
+      <created>1500431500101</created>
+      <option name="number" value="00290" />
+      <option name="project" value="LOCAL" />
+      <updated>1500431500101</updated>
+    </task>
+    <task id="LOCAL-00291">
+      <created>1500432866102</created>
+      <option name="number" value="00291" />
+      <option name="project" value="LOCAL" />
+      <updated>1500432866102</updated>
+    </task>
+    <task id="LOCAL-00292">
+      <created>1500446184108</created>
+      <option name="number" value="00292" />
+      <option name="project" value="LOCAL" />
+      <updated>1500446184108</updated>
+    </task>
+    <task id="LOCAL-00293">
+      <created>1500446819102</created>
+      <option name="number" value="00293" />
+      <option name="project" value="LOCAL" />
+      <updated>1500446819102</updated>
+    </task>
+    <task id="LOCAL-00294">
+      <created>1500448533102</created>
+      <option name="number" value="00294" />
+      <option name="project" value="LOCAL" />
+      <updated>1500448533102</updated>
+    </task>
+    <task id="LOCAL-00295">
+      <created>1500448540102</created>
+      <option name="number" value="00295" />
+      <option name="project" value="LOCAL" />
+      <updated>1500448540102</updated>
+    </task>
+    <task id="LOCAL-00296">
+      <created>1500449124101</created>
+      <option name="number" value="00296" />
+      <option name="project" value="LOCAL" />
+      <updated>1500449124101</updated>
+    </task>
+    <task id="LOCAL-00297">
+      <created>1500449130101</created>
+      <option name="number" value="00297" />
+      <option name="project" value="LOCAL" />
+      <updated>1500449130102</updated>
+    </task>
+    <task id="LOCAL-00298">
+      <created>1500449139101</created>
+      <option name="number" value="00298" />
+      <option name="project" value="LOCAL" />
+      <updated>1500449139101</updated>
+    </task>
+    <task id="LOCAL-00299">
+      <created>1500449257102</created>
+      <option name="number" value="00299" />
+      <option name="project" value="LOCAL" />
+      <updated>1500449257102</updated>
+    </task>
+    <task id="LOCAL-00300">
+      <created>1500450804102</created>
+      <option name="number" value="00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1500450804102</updated>
+    </task>
+    <task id="LOCAL-00301">
+      <created>1500455857102</created>
+      <option name="number" value="00301" />
+      <option name="project" value="LOCAL" />
+      <updated>1500455857102</updated>
+    </task>
+    <task id="LOCAL-00302">
+      <created>1500455863101</created>
+      <option name="number" value="00302" />
+      <option name="project" value="LOCAL" />
+      <updated>1500455863101</updated>
+    </task>
+    <task id="LOCAL-00303">
+      <created>1500456268101</created>
+      <option name="number" value="00303" />
+      <option name="project" value="LOCAL" />
+      <updated>1500456268102</updated>
+    </task>
+    <task id="LOCAL-00304">
+      <created>1500456376101</created>
+      <option name="number" value="00304" />
+      <option name="project" value="LOCAL" />
+      <updated>1500456376101</updated>
+    </task>
+    <task id="LOCAL-00305">
+      <created>1500456383102</created>
+      <option name="number" value="00305" />
+      <option name="project" value="LOCAL" />
+      <updated>1500456383102</updated>
+    </task>
+    <task id="LOCAL-00306">
+      <created>1500511126124</created>
+      <option name="number" value="00306" />
+      <option name="project" value="LOCAL" />
+      <updated>1500511126134</updated>
+    </task>
+    <task id="LOCAL-00307">
+      <created>1500511138101</created>
+      <option name="number" value="00307" />
+      <option name="project" value="LOCAL" />
+      <updated>1500511138101</updated>
+    </task>
+    <task id="LOCAL-00308">
+      <created>1500511582101</created>
+      <option name="number" value="00308" />
+      <option name="project" value="LOCAL" />
+      <updated>1500511582101</updated>
+    </task>
+    <task id="LOCAL-00309">
+      <created>1500519491101</created>
+      <option name="number" value="00309" />
+      <option name="project" value="LOCAL" />
+      <updated>1500519491102</updated>
+    </task>
+    <task id="LOCAL-00310">
+      <created>1500520725101</created>
+      <option name="number" value="00310" />
+      <option name="project" value="LOCAL" />
+      <updated>1500520725101</updated>
+    </task>
+    <task id="LOCAL-00311">
+      <created>1500529661102</created>
+      <option name="number" value="00311" />
+      <option name="project" value="LOCAL" />
+      <updated>1500529661102</updated>
+    </task>
+    <task id="LOCAL-00312">
+      <created>1500531468101</created>
+      <option name="number" value="00312" />
+      <option name="project" value="LOCAL" />
+      <updated>1500531468101</updated>
+    </task>
+    <task id="LOCAL-00313">
+      <created>1500537811101</created>
+      <option name="number" value="00313" />
+      <option name="project" value="LOCAL" />
+      <updated>1500537811101</updated>
+    </task>
+    <task id="LOCAL-00314">
+      <created>1500539201101</created>
+      <option name="number" value="00314" />
+      <option name="project" value="LOCAL" />
+      <updated>1500539201101</updated>
+    </task>
+    <task id="LOCAL-00315">
+      <created>1500539207101</created>
+      <option name="number" value="00315" />
+      <option name="project" value="LOCAL" />
+      <updated>1500539207101</updated>
+    </task>
+    <task id="LOCAL-00316">
+      <created>1500539213101</created>
+      <option name="number" value="00316" />
+      <option name="project" value="LOCAL" />
+      <updated>1500539213102</updated>
+    </task>
+    <task id="LOCAL-00317">
+      <created>1500539219101</created>
+      <option name="number" value="00317" />
+      <option name="project" value="LOCAL" />
+      <updated>1500539219102</updated>
+    </task>
+    <task id="LOCAL-00318">
+      <created>1500687931123</created>
+      <option name="number" value="00318" />
+      <option name="project" value="LOCAL" />
+      <updated>1500687931133</updated>
+    </task>
+    <task id="LOCAL-00319">
+      <created>1500687940101</created>
+      <option name="number" value="00319" />
+      <option name="project" value="LOCAL" />
+      <updated>1500687940101</updated>
+    </task>
+    <task id="LOCAL-00320">
+      <created>1500687948101</created>
+      <option name="number" value="00320" />
+      <option name="project" value="LOCAL" />
+      <updated>1500687948101</updated>
+    </task>
+    <task id="LOCAL-00321">
+      <created>1500687954101</created>
+      <option name="number" value="00321" />
+      <option name="project" value="LOCAL" />
+      <updated>1500687954101</updated>
+    </task>
+    <task id="LOCAL-00322">
+      <created>1500687961102</created>
+      <option name="number" value="00322" />
+      <option name="project" value="LOCAL" />
+      <updated>1500687961102</updated>
+    </task>
+    <task id="LOCAL-00323">
+      <created>1500689914101</created>
+      <option name="number" value="00323" />
+      <option name="project" value="LOCAL" />
+      <updated>1500689914102</updated>
+    </task>
+    <task id="LOCAL-00324">
+      <created>1500699394102</created>
+      <option name="number" value="00324" />
+      <option name="project" value="LOCAL" />
+      <updated>1500699394102</updated>
+    </task>
+    <task id="LOCAL-00325">
+      <created>1500865708123</created>
+      <option name="number" value="00325" />
+      <option name="project" value="LOCAL" />
+      <updated>1500865708133</updated>
+    </task>
+    <task id="LOCAL-00326">
+      <created>1500883515102</created>
+      <option name="number" value="00326" />
+      <option name="project" value="LOCAL" />
+      <updated>1500883515102</updated>
+    </task>
+    <option name="localTasksCounter" value="327" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="787935000" />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29113925" sideWeight="0.36927083" order="15" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="5.2083336E-4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29113925" sideWeight="0.63072914" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32805908" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23628692" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32805908" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24427083" sideWeight="0.49548194" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5057143" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23945148" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5045181" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <MESSAGE value="boss" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.8859416" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/MainController.java</url>
+          <line>1548</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="62" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="inventoryManageService.getInventoryGoodsResultBYEnterpriseId(enterpriseId, goodsInfoName, goodsInfoType, goodsNumber, brandId, thirdId, new Pageable(page, size))" language="JAVA" custom="" />
+        <watch expression="inventorySearchProductService.getInventorySearchProductBygoodsName(1L, goodsInfoName, new Pageable(page, size))" language="JAVA" custom="" />
+        <watch expression="new JsonResponseBean(pageBean).toJson()" language="JAVA" custom="" />
+        <watch expression="currentLoginService.isPrimaryEnterprise()" language="JAVA" custom="" />
+        <watch expression="customer.getMale()" language="JAVA" custom="" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/inventoryInquiry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2963" max-vertical-offset="6631">
+          <caret line="173" column="59" selection-start-line="173" selection-start-column="54" selection-end-line="173" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/InventoryManager.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.5172415" vertical-offset="12676" max-vertical-offset="15618">
+          <caret line="684" column="18" selection-start-line="684" selection-start-column="18" selection-end-line="684" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/formCenter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.866667" vertical-offset="30" max-vertical-offset="10241">
+          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/allocation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0" vertical-offset="7124" max-vertical-offset="17632">
+          <caret line="386" column="82" selection-start-line="386" selection-start-column="76" selection-end-line="386" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/allocation.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2359932" vertical-offset="17455" max-vertical-offset="24738">
+          <caret line="926" column="44" selection-start-line="926" selection-start-column="44" selection-end-line="926" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/supplyDetailForm.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.0869565" vertical-offset="4311" max-vertical-offset="12388">
+          <caret line="249" column="18" selection-start-line="229" selection-start-column="8" selection-end-line="249" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/purchaseOrder.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.7931035" vertical-offset="14506" max-vertical-offset="22287">
+          <caret line="772" column="69" selection-start-line="772" selection-start-column="69" selection-end-line="772" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49779087" vertical-offset="15280" max-vertical-offset="26106">
+          <caret line="822" column="21" selection-start-line="822" selection-start-column="21" selection-end-line="822" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/employeeManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2639" max-vertical-offset="4389">
+          <caret line="151" column="40" selection-start-line="151" selection-start-column="16" selection-end-line="151" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="25278" max-vertical-offset="44707">
+          <caret line="1342" column="0" selection-start-line="1342" selection-start-column="0" selection-end-line="1342" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/voucherManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="11638" max-vertical-offset="12255">
+          <caret line="637" column="25" selection-start-line="637" selection-start-column="16" selection-end-line="637" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/voucherManager.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9576" max-vertical-offset="10165">
+          <caret line="515" column="40" selection-start-line="515" selection-start-column="31" selection-end-line="515" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/replenishment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44182622" vertical-offset="251" max-vertical-offset="15656">
+          <caret line="29" column="51" selection-start-line="29" selection-start-column="51" selection-end-line="29" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/replenishment.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38863286" vertical-offset="6948" max-vertical-offset="11552">
+          <caret line="379" column="58" selection-start-line="379" selection-start-column="37" selection-end-line="379" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16200295" vertical-offset="4355" max-vertical-offset="30191">
+          <caret line="277" column="5" selection-start-line="277" selection-start-column="5" selection-end-line="277" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3433#3434#0" expanded="false" />
+            <element signature="e#3480#3481#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/replenishmentMega2.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21536145" vertical-offset="2555" max-vertical-offset="8436">
+          <caret line="142" column="25" selection-start-line="142" selection-start-column="25" selection-end-line="142" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/java/com/ylife/chinapost/controller/utils/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="380" max-vertical-offset="2375">
+          <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/WEB-INF/view/replenishmentMega.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.756024" vertical-offset="2088" max-vertical-offset="7885">
+          <caret line="346" column="36" selection-start-line="346" selection-start-column="36" selection-end-line="346" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-enterprise/src/main/webapp/static/js/zrj_ajaxPages.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.19075145" vertical-offset="32242" max-vertical-offset="33326">
+          <caret line="1690" column="21" selection-start-line="1690" selection-start-column="21" selection-end-line="1690" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/ord_account.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6415663" vertical-offset="49" max-vertical-offset="741">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/apply_back_money.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="222" max-vertical-offset="3610">
+          <caret line="19" column="55" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/static/js/applybackorder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1220" max-vertical-offset="7866">
+          <caret line="75" column="14" selection-start-line="75" selection-start-column="8" selection-end-line="75" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ucoin-core/src/main/java/com/ylife/customer/model/ChinapostCustomer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2345" max-vertical-offset="6156">
+          <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/static/css/myUb.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.8333335" vertical-offset="251" max-vertical-offset="1387">
+          <caret line="24" column="32" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/contactAddress.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7003155" vertical-offset="373" max-vertical-offset="1292">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/static/js/customer/customer_share.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5681818" vertical-offset="670" max-vertical-offset="1330">
+          <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/java/com/ylife/chinapost/mobile/controller/CustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30831975" vertical-offset="13168" max-vertical-offset="15447">
+          <caret line="744" column="0" selection-start-line="744" selection-start-column="0" selection-end-line="744" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/pay_password.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64878047" vertical-offset="0" max-vertical-offset="1273">
+          <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/myaccount.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="81.64286" vertical-offset="4433" max-vertical-offset="7771">
+          <caret line="113" column="20" selection-start-line="113" selection-start-column="20" selection-end-line="113" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/static/css/style.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="18249" max-vertical-offset="37772">
+          <caret line="971" column="11" selection-start-line="971" selection-start-column="0" selection-end-line="971" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/PlantGoodsList.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0699187" vertical-offset="2370" max-vertical-offset="5738">
+          <caret line="127" column="43" selection-start-line="127" selection-start-column="43" selection-end-line="127" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdProductManager.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31707317" vertical-offset="2864" max-vertical-offset="13794">
+          <caret line="161" column="73" selection-start-line="161" selection-start-column="73" selection-end-line="161" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-third/src/main/webapp/view/thirdProductAdded.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28617886" vertical-offset="2731" max-vertical-offset="7581">
+          <caret line="153" column="88" selection-start-line="153" selection-start-column="88" selection-end-line="153" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/static/js/ThirdPlantManage/PlantAccountManagement.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29548988" vertical-offset="2166" max-vertical-offset="3914">
+          <caret line="124" column="73" selection-start-line="124" selection-start-column="73" selection-end-line="124" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/thirdPlatformList.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.6129568" vertical-offset="3551" max-vertical-offset="6460">
+          <caret line="238" column="87" selection-start-line="238" selection-start-column="75" selection-end-line="238" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/newsuborder.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="247" max-vertical-offset="10830">
+          <caret line="13" column="31" selection-start-line="10" selection-start-column="4" selection-end-line="16" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/billDetail.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.502439" vertical-offset="717" max-vertical-offset="1938">
+          <caret line="54" column="66" selection-start-line="54" selection-start-column="66" selection-end-line="54" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/updateAddress.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3156146" vertical-offset="2584" max-vertical-offset="8778">
+          <caret line="146" column="31" selection-start-line="146" selection-start-column="18" selection-end-line="146" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/phoneNumber.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23421927" vertical-offset="448" max-vertical-offset="5776">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/order_list.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3156146" vertical-offset="456" max-vertical-offset="7486">
+          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/order_detail.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69435215" vertical-offset="5016" max-vertical-offset="9538">
+          <caret line="286" column="26" selection-start-line="286" selection-start-column="23" selection-end-line="286" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/myUcoin.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5034965" vertical-offset="434" max-vertical-offset="4788">
+          <caret line="38" column="42" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/static/js/ThirdPlantManage/thirdOrderList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31746033" vertical-offset="2251" max-vertical-offset="4066">
+          <caret line="129" column="43" selection-start-line="129" selection-start-column="33" selection-end-line="129" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/thirdOrderList.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3156146" vertical-offset="6422" max-vertical-offset="8493">
+          <caret line="348" column="55" selection-start-line="348" selection-start-column="41" selection-end-line="348" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/static/js/ThirdPlantManage/thirdOrderBackList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4984127" vertical-offset="1396" max-vertical-offset="3211">
+          <caret line="90" column="76" selection-start-line="90" selection-start-column="68" selection-end-line="90" selection-end-column="76" />
+          <folding>
+            <marker date="1499823935117" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-boss/src/main/webapp/view/thirdPlatform/thirdOrderBackList.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18936877" vertical-offset="2755" max-vertical-offset="7087">
+          <caret line="151" column="35" selection-start-line="151" selection-start-column="35" selection-end-line="151" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/apply_back_goods.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3793104" vertical-offset="583" max-vertical-offset="3743">
+          <caret line="41" column="45" selection-start-line="41" selection-start-column="45" selection-end-line="41" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/goods_detail_pic.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51724136" vertical-offset="30" max-vertical-offset="1938">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/main/pro_es_list.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.74138" vertical-offset="1124" max-vertical-offset="5263">
+          <caret line="95" column="123" selection-start-line="95" selection-start-column="121" selection-end-line="95" selection-end-column="123" />
+          <folding>
+            <marker date="1500855811342" expanded="true" signature="9873:9885" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/static/js/idangerous.swiper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.9666667" vertical-offset="228" max-vertical-offset="53371">
+          <caret line="1" column="9" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chinapost-mobile/src/main/webapp/view/item.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2136753" vertical-offset="5731" max-vertical-offset="8360">
+          <caret line="339" column="43" selection-start-line="339" selection-start-column="26" selection-end-line="339" selection-end-column="43" />
+          <folding>
+            <marker date="1499413928079" expanded="true" signature="16239:16256" placeholder="..." />
+            <marker date="1499413928079" expanded="true" signature="17161:17191" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>chinapost-enterprise:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.28965518" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.28965518" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.28965518" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>chinapost-enterprise</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.28965518" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: org.csource:fastdfs:fastdfs:1.24</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.28965518" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

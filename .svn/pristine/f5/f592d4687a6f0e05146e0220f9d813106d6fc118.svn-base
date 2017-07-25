@@ -1,0 +1,812 @@
+/*
+ * Copyright 2013 NINGPAI, Inc.All rights reserved.
+ * NINGPAI PROPRIETARY / CONFIDENTIAL.USE is subject to licence terms.
+ */
+package com.ylife.goods.service.impl;
+
+import com.ylife.data.page.PageBean;
+import com.ylife.goods.mapper.*;
+import com.ylife.goods.model.*;
+import com.ylife.goods.service.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.*;
+
+/**
+ * 商品Service实现
+ *
+ * @author NINGPAI-YuanKangKang
+ * @version 1.0
+ * @since 2013年12月24日 下午5:19:36
+ */
+@Service
+public class GoodsServiceImpl implements GoodsService {
+
+    private static final String GOODSID = "goodsId";
+    private static final String THIRDID = "thirdId";
+    private static final String SPECID = "specId";
+    private static final String PARAMVALUE = "paramValue";
+    private static final String ABOUTGOODSID = "aboutGoodsId";
+    private static final String MODIFIEDNAME = "modifiedName";
+    private static final String AUDITSTATUS = "auditStatus";
+    private static final String GOODSINFOADDED = "goodsInfoAdded";
+    private static final String GOODSIDS = "goodsIds";
+
+    // 商品DAO
+    @Resource
+    private GoodsMapper goodsMapper;
+    // 商品关联标签Service
+    @Resource
+    private GoodsReleTagService goodsReleTagService;
+    // 商品关联类型扩展属性值Service
+    @Resource
+    private GoodsReleExpandParamService goodsReleExpandParamService;
+    // 商品关联类型详细参数Service
+    @Resource
+    private GoodsReleParamService goodsReleParamService;
+    // 商品关联商品Service
+    @Resource
+    private GoodsRelatedGoodsService goodsRelatedGoodsService;
+
+
+    /**
+     * 查询商品是否下架
+     */
+    @Override
+    public String selectCheckGoods(int goodsId) {
+        return goodsMapper.selectCheckGoodsMapper(goodsId);
+    }
+
+    /**
+     * 根据pagebean查询GoodsListVo
+     *
+     * @param pb
+     * @return 封装好的分页对象
+     */
+    public PageBean queryListVo(PageBean pb, String isThird, ArrayList<String> advMappings) {
+        // 定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 是否是第三方
+        map.put("isThird", isThird);
+        // 设置PageBean的行数参数
+        pb.setRows(this.goodsMapper.queryTotalCount(map));
+        // 定义两个List集合
+        List<Object> voList = null;
+        List<Object> voList2 = new ArrayList<Object>();
+        GoodsListVo listVo = null;
+
+        try {
+            // 封装分页参数
+            map.put("startRowNum", pb.getStartRowNum());
+            map.put("endRowNum", pb.getEndRowNum());
+
+            map.put("AdvMappings", advMappings);
+            // 设置列表
+            voList = this.goodsMapper.queryGoodsListByPageBean(map);
+            // 循环集合列表
+            for (int i = 0; i < voList.size(); i++) {
+                listVo = (GoodsListVo) voList.get(i);
+                // 判断商品库存总和是否为空
+                if (null == this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId())) {
+                    listVo.setStock(0L);
+                } else {
+                    listVo.setStock((long) this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId()));
+                }
+                voList2.add(listVo);
+            }
+            pb.setList(voList2);
+        } finally {
+            // 参数置空
+            map = null;
+            voList = null;
+            voList2 = null;
+            listVo = null;
+        }
+        // 返回pageBean
+        return pb;
+    }
+
+    /**
+     * 根据pagebean查询GoodsListVo
+     *
+     * @param pb
+     * @return 封装好的分页对象
+     */
+    public PageBean queryListVo(PageBean pb, String isThird) {
+        return queryListVo(pb, isThird, null);
+    }
+
+    /**
+     * 根据pagebean查询GoodsListVo
+     *
+     * @param pb
+     * @return 封装好的分页对象
+     */
+    public PageBean queryListVoBrandCate(PageBean pb, String isThird) {
+        ArrayList<String> advMappings = new ArrayList<>();
+        advMappings.add("com.ysh.goods.dao.GoodsBrandMapper.selectByPrimaryKey");
+        advMappings.add("com.ysh.goods.dao.GoodsCateMapper.selectByPrimaryKeyForGoodsList");
+        return queryListVo(pb, isThird, advMappings);
+    }
+
+    /**
+     * 保存商品详细参数
+     *
+     * @param username 操作人名称
+     * @param map      参数
+     * @param newId    商品ID {@link java.lang.Long}
+     */
+    @Transactional
+    private void saveGoodsSaveParam(String username, Map<String, Object> map, Long newId) {
+        // 取出商品关联类型详细参数的参数
+        String[] paramIds = (String[]) map.get("paramIds");
+        String[] paramValue = (String[]) map.get(PARAMVALUE);
+        // 判断商品关联类型详细参数的参数是否为空
+        if (null != paramIds) {
+            // 不为空就循环遍历
+            for (int i = 0; i < paramIds.length; i++) {
+                // 执行保存方法
+                this.goodsReleParamService.saveGoodsReleParam(newId, Long.parseLong(paramIds[i]), paramValue[i], username);
+            }
+        }
+    }
+
+    /**
+     * 保存商品同时保存相关商品
+     *
+     * @param username 操作人名称
+     * @param map      参数
+     * @param newId    添加的商品ID
+     */
+    @Transactional
+    private void saveGoodsSaveAboutGoods(String username, Map<String, String[]> map, Long newId) {
+        // 获取商品id
+        String[] aboutGoodsId = map.get(ABOUTGOODSID);
+        // 判断商品id数组是否为空
+        if (null != aboutGoodsId) {
+            // 不为空就循环列表
+            for (int i = 0; i < aboutGoodsId.length; i++) {
+                // 执行保存相关商品方法
+                this.goodsRelatedGoodsService.save(newId, Long.parseLong(aboutGoodsId[i]), username);
+            }
+        }
+    }
+
+    /**
+     * 根据分类ID查询相关商品
+     *
+     * @param catId 商品分类ID {@link java.lang.Long }
+     * @return 查询到的商品列表 {@link java.util.List}
+     */
+    public List<Object> queryGoodsListByCatId(Long catId) {
+        // 根据分类id查询相关商品并赋值给list集合
+        List<Object> list = this.goodsMapper.queryGoodsListByCatId(catId);
+        // 定义一个ArrayList集合
+        List<Object> list2 = new ArrayList<Object>();
+        GoodsListVo listVo = null;
+        try {
+            // 循环list集合
+            for (int i = 0; i < list.size(); i++) {
+                listVo = (GoodsListVo) list.get(i);
+                // 判断商品库存总和是否为空
+                if (null == this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId())) {
+                    listVo.setStock(0L);
+                } else {
+                    // 查询商品库存总和
+                    listVo.setStock((long) this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId()));
+                }
+                list2.add(listVo);
+            }
+            return list2;
+        } finally {
+            // 参数置空
+            list = null;
+            list2 = null;
+            listVo = null;
+        }
+    }
+
+    /**
+     * 更新商品时更新商品关联商品的记录
+     *
+     * @param goods
+     * @param username     操作人名称
+     * @param aboutGoodsId 关联的商品ID的数组
+     */
+    @Transactional
+    private void updateRelaGoodsWhenUpdateGoods(Goods goods, String username, String[] aboutGoodsId) {
+        // 删除未被选中的记录
+        this.goodsRelatedGoodsService.delRelaGoodsByGoodsIdAndRelaGoodsIds(goods.getGoodsId(), aboutGoodsId, username);
+        if (null != aboutGoodsId && aboutGoodsId.length > 0) {
+            GoodsRelatedGoods relaGoods = null;
+            for (int i = 0; i < aboutGoodsId.length; i++) {
+                relaGoods = this.goodsRelatedGoodsService.queryByGoodsIdAndRelaGoodsIdIncludeDel(goods.getGoodsId(), Long.parseLong(aboutGoodsId[i]));
+                if (relaGoods == null) {
+                    // 如果查询到的为空，就新增记录
+                    this.goodsRelatedGoodsService.save(goods.getGoodsId(), Long.parseLong(aboutGoodsId[i]), username);
+                } else {
+                    // 如果记录已经存在就设置删除标记为0并更新
+                    relaGoods.setRelaDelflag(ValueUtil.DEFAULTDELFLAG);
+                    this.goodsRelatedGoodsService.updateRelaGoods(relaGoods, username);
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新商品的时候更新商品的详细参数信息
+     *
+     * @param goods
+     * @param username   操作人名称
+     * @param paramId    详细参数ID
+     * @param paramValue 详细参数值
+     */
+    @Transactional
+    private void updateParamWhenUpdateGoods(Goods goods, String username, String[] paramId, String[] paramValue) {
+        // 更新详细参数
+        GoodsReleParam releParam = null;
+        if (null != paramId) {
+            for (int i = 0; i < paramId.length; i++) {
+                // 根据商品ID和详细参数ID查询
+                releParam = this.goodsReleParamService.queryReleParamByGoodsIdAndParamId(goods.getGoodsId(), Long.parseLong(paramId[i]));
+                if (null == releParam) {
+                    // 保存商品关联类型详细参数
+                    this.goodsReleParamService.saveGoodsReleParam(goods.getGoodsId(), Long.parseLong(paramId[i]), paramValue[i], username);
+                } else {
+                    releParam.setParamValue(paramValue[i]);
+                    // 更新商品关联类型详细参数信息
+                    this.goodsReleParamService.updateReleParam(releParam, username);
+                }
+            }
+        }
+    }
+
+    /**
+     * 更新商品的时候 更新商品的扩展参数信息
+     *
+     * @param goods
+     * @param username         操作人名称
+     * @param expandParamId    扩展参数ID
+     * @param expandparamValue 扩展参数值ID
+     */
+    @Transactional
+    private void updateExpandParamWhenUpdateGoods(Goods goods, String username, String[] expandParamId, String[] expandparamValue) {
+        GoodsReleExpandParam expandParam = null;
+        // 更新扩展参数
+        if (null != expandParamId) {
+            for (int i = 0; i < expandParamId.length; i++) {
+                // 根据商品ID和扩展属性ID查询商品关联扩展属性的记录
+                expandParam = this.goodsReleExpandParamService.queryByGoodsIdAndExpandParamId(goods.getGoodsId(), Long.parseLong(expandParamId[i]));
+                // 如果记录不存在 则添加
+                if (null == expandParam) {
+                    // 保存商品关联类型扩展参数
+                    this.goodsReleExpandParamService.saveExpandParam(username, goods.getGoodsId(), Long.parseLong(expandParamId[i]), Long.parseLong(expandparamValue[i]));
+                } else {
+                    if (expandparamValue != null) {
+                        expandParam.setExpangparamValueId(Long.parseLong(expandparamValue[i]));
+                    }
+
+                    // 更新商品关联扩展属性信息
+                    this.goodsReleExpandParamService.updateGoodsReleExpandParam(expandParam, username);
+                }
+            }
+        }
+    }
+
+    /**
+     * 改变商品分类的时候保存商品关联商品信息
+     *
+     * @param goods
+     * @param username     操作人名称
+     * @param aboutGoodsId 关联的商品的数组
+     */
+    @Transactional
+    private void saveRelaGoodsWhenChangeCate(Goods goods, String username, String[] aboutGoodsId) {
+        if (null != aboutGoodsId) {
+            for (int i = 0; i < aboutGoodsId.length; i++) {
+                // 添加商品关联商品记录
+                this.goodsRelatedGoodsService.save(goods.getGoodsId(), Long.parseLong(aboutGoodsId[i]), username);
+            }
+        }
+    }
+
+    /**
+     * 当改变商品分类的时候 保存新的属性
+     *
+     * @param goods
+     * @param username         操作人名称
+     * @param expandParamId    扩展属性ID
+     * @param expandparamValue 扩展属性值
+     * @param paramId          详细参数ID
+     * @param paramValue       详细参数值
+     */
+    @Transactional
+    private void saveNewParamByGoodsIdWhenChangeCate(Goods goods, String username, String[] expandParamId, String[] expandparamValue, String[] paramId, String[] paramValue) {
+        // 保存商品关联类型扩展属性的参数
+        if (null != expandParamId) {
+            for (int i = 0; i < expandParamId.length; i++) {
+                // 保存商品关联类型扩展参数
+                this.goodsReleExpandParamService.saveExpandParam(username, goods.getGoodsId(), Long.parseLong(expandParamId[i]), Long.parseLong(expandparamValue[i]));
+            }
+        }
+        // 保存商品关联类型详细参数的参数
+        if (null != paramId) {
+            for (int i = 0; i < paramId.length; i++) {
+                // 保存商品关联类型详细参数
+                this.goodsReleParamService.saveGoodsReleParam(goods.getGoodsId(), Long.parseLong(paramId[i]), paramValue[i], username);
+            }
+        }
+    }
+
+    /**
+     * 根据商品ID删除所有的属性关联
+     *
+     * @param goods
+     * @param username 操作人名称
+     */
+    @Transactional
+    private void delAllParamByGoodsId(Goods goods, String username) {
+        // 删除所有的扩展属性
+        this.goodsReleExpandParamService.delAllExpandParamByGoodsId(goods.getGoodsId(), username);
+        // 删除所有的详细参数
+        this.goodsReleParamService.delAllReleParamByGoodsId(goods.getGoodsId(), username);
+        // 删除所有的关联商品
+        this.goodsRelatedGoodsService.delAllRelaGoodsByGoodsId(goods.getGoodsId(), username);
+    }
+
+    /**
+     * 更新或保存商品关联标签信息
+     *
+     * @param goods
+     * @param username 操作人名称
+     * @param tags     标签ID集合
+     */
+    @Transactional
+    private void updateOrSaveReleTag(Goods goods, String username, String[] tags) {
+        GoodsReleTag releTag;
+        if (null != tags) {
+            for (int i = 0; i < tags.length; i++) {
+                // 根据商品ID和标签ID查询实体
+                releTag = this.goodsReleTagService.queryByGoodsIdAndTagId(goods.getGoodsId(), Long.parseLong(tags[i]));
+                if (null == releTag) {
+                    // 保存关联标签
+                    this.goodsReleTagService.saveReleTag(Long.parseLong(tags[i]), goods.getGoodsId(), ValueUtil.DEFAULTDELFLAG);
+                } else if ("1".equals(releTag.getRelaTagDelflag())) {
+                    releTag.setRelaTagDelflag(ValueUtil.DEFAULTDELFLAG);
+                    // 更新商品关联标签记录
+                    this.goodsReleTagService.update(releTag, username);
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据pageBean和SearchBean高级查询
+     *
+     * @param pb
+     * @param searchBean
+     * @return PageBean
+     */
+    public PageBean searchBySearchBeanAndPageBean(PageBean pb, GoodsSearchBean searchBean) {
+
+        if (searchBean.getQueryStatus() == null) {
+            searchBean.setQueryStatus("1");
+        }
+        if (null != searchBean) {
+            if ("1".equals(searchBean.getShowFlag())) {
+                // 设置基本查询为不可用
+                searchBean.setCondition("-1");
+                searchBean.setSearchText("");
+            } else {
+                searchBean.setGoodsBrandId("-1");
+                searchBean.setGoodsCateId("-1");
+                searchBean.setGoodsKeyword("");
+                searchBean.setGoodsName("");
+                searchBean.setGoodsNo("");
+                searchBean.setShowFlag("0");
+                searchBean.setStatus("-1");
+                searchBean.setThirdName("");
+            }
+            // 如果是否第三方标记为0,设置第三方名称为空
+            if (null != searchBean.getIsThird()) {
+                if ("0".equals(searchBean.getIsThird())) {
+                    searchBean.setThirdName("");
+                }
+            }
+        }
+
+        if ("3".equals(searchBean.getQueryStatus())) {
+            // 根据查询参数查询所有的缺货商品的行数
+            pb.setRows(this.goodsMapper.queryStockTotalCountBySearchBean(searchBean));
+        } else if ("4".equals(searchBean.getQueryStatus())) {
+            // 根据查询参数查询所有的预警商品的行数
+            pb.setRows(this.goodsMapper.queryElaryTotalCountBySearchBean(searchBean));
+        } else if ("1".equals(searchBean.getQueryStatus()) || "2".equals(searchBean.getQueryStatus())) {
+            // 根据查询参数查询所有的行数
+            pb.setRows(this.goodsMapper.queryTotalCountBySearchBean(searchBean));
+        }
+        // 定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Object> voList = null;
+        GoodsListVo listVo = null;
+        List<Object> voList2 = new ArrayList<Object>();
+        try {
+            // 封装分页参数
+            map.put(ValueUtil.STARTROWNUM, pb.getStartRowNum());
+            map.put(ValueUtil.ENDROWNUM, pb.getEndRowNum());
+            map.put(ValueUtil.SEARCHBEAN, searchBean);
+
+            if ("3".equals(searchBean.getQueryStatus())) {
+                // 根据查询参数查询所有的缺货商品
+                voList = this.goodsMapper.queryStockByPageBeanAndSearchBean(map);
+            } else if ("4".equals(searchBean.getQueryStatus())) {
+                // 根据查询参数查询所有的预警商品
+                voList = this.goodsMapper.queryElaryByPageBeanAndSearchBean(map);
+            } else if ("1".equals(searchBean.getQueryStatus()) || "2".equals(searchBean.getQueryStatus())) {
+                // 根据查询参数查询所有
+                voList = this.goodsMapper.queryByPageBeanAndSearchBean(map);
+            }
+
+            // 非空判断
+            if (voList != null) {
+                for (int i = 0; i < voList.size(); i++) {
+                    // 查询分仓库存
+                    listVo = (GoodsListVo) voList.get(i);
+                    // 库存为空
+                    if (null == this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId())) {
+                        listVo.setStock(0L);
+                    } else {
+                        // 设置库存
+                        listVo.setStock((long) this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId()));
+                    }
+                    voList2.add(listVo);
+                }
+            }
+            pb.setList(voList2);
+            // 返回结果
+            return pb;
+        } finally {
+            // 参数置空
+            map = null;
+            voList = null;
+            listVo = null;
+            voList2 = null;
+        }
+    }
+
+    /**
+     * 第三方上传商品时查询关联商品
+     *
+     * @param pb
+     * @param searchBean
+     * @return
+     */
+    public PageBean searchThirdBySearchBeanAndPageBean(PageBean pb, GoodsSearchBean searchBean) {
+        if (null != searchBean) {
+            if ("1".equals(searchBean.getShowFlag())) {
+                // 设置基本查询为不可用
+                searchBean.setCondition("-1");
+                searchBean.setSearchText("");
+            } else {
+                searchBean.setGoodsBrandId("-1");
+                searchBean.setGoodsCateId("-1");
+                searchBean.setGoodsKeyword("");
+                searchBean.setGoodsName("");
+                searchBean.setGoodsNo("");
+                searchBean.setShowFlag("0");
+                searchBean.setStatus("-1");
+                searchBean.setThirdName("");
+            }
+            // 如果是否第三方标记为0,设置第三方名称为空
+            if (null != searchBean.getIsThird()) {
+                if ("0".equals(searchBean.getIsThird())) {
+                    searchBean.setThirdName("");
+                }
+            }
+        }
+        // 第三方查询行数
+        pb.setRows(this.goodsMapper.queryThirdTotalCountBySearchBean(searchBean));
+        // 定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Object> voList = null;
+        GoodsListVo listVo = null;
+        List<Object> voList2 = new ArrayList<Object>();
+        try {
+            // 封装分页参数
+            map.put(ValueUtil.STARTROWNUM, pb.getStartRowNum());
+            map.put(ValueUtil.ENDROWNUM, pb.getEndRowNum());
+            map.put(ValueUtil.SEARCHBEAN, searchBean);
+            voList = this.goodsMapper.queryThirdByPageBeanAndSearchBean(map);
+            // 非空判断
+            if (voList != null) {
+                for (int i = 0; i < voList.size(); i++) {
+                    // 查询分仓库存
+                    listVo = (GoodsListVo) voList.get(i);
+                    // 库存为空
+                    if (null == this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId())) {
+                        listVo.setStock(0L);
+                    } else {
+                        // 设置库存
+                        listVo.setStock((long) this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId()));
+                    }
+                    voList2.add(listVo);
+                }
+            }
+            // 设置pagebean的集合数据
+            pb.setList(voList2);
+            // 返回结果
+            return pb;
+        } finally {
+            // 参数置空
+            map = null;
+            voList = null;
+            listVo = null;
+            voList2 = null;
+        }
+    }
+
+    /**
+     * 根据商品编号查询商品是否可用
+     *
+     * @param goodsNo
+     * @return 可用 返回true 不可用返回false
+     */
+    public boolean queryCountByGoodsNo(String goodsNo) {
+        // 根据商品编号查询商品是否已经存在
+        return this.goodsMapper.queryCountByGoodsNo(goodsNo.trim()) == 0 ? true : false;
+    }
+
+    /**
+     * 查询所有的商品列表进行导出
+     *
+     * @return 查询到的商品列表
+     */
+    public List<Object> queryAllGoodsForExport(GoodsSearchBean searchBean) {
+        if (null != searchBean) {
+            if (null != searchBean.getGoodsName() && !"".equals(searchBean.getGoodsName())) {
+                // 设置基本查询为不可用
+                searchBean.setCondition("-1");
+                searchBean.setSearchText("");
+            }
+        }
+        // d定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 设置map集合的参数
+        map.put(ValueUtil.STARTROWNUM, 0);
+        map.put(ValueUtil.ENDROWNUM, 10000000);
+        map.put(ValueUtil.SEARCHBEAN, searchBean);
+        // 高级查询商品列表
+        List<Object> voList = this.goodsMapper.queryByPageBeanAndSearchBean(map);
+        // 定义一个List集合
+        List<Object> list = new ArrayList<Object>();
+        GoodsListVo listVo;
+        try {
+            for (int i = 0; i < voList.size(); i++) {
+                listVo = (GoodsListVo) voList.get(i);
+                // 根据商品ID查询所属货品的库存总和
+                if (null == this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId())) {
+                    listVo.setStock(0L);
+                } else {
+                    // 根据商品ID查询所属货品的库存总和
+                    listVo.setStock((long) this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId()));
+                }
+                list.add(listVo);
+            }
+            // 返回结果
+            return list;
+        } finally {
+            map = null;
+            voList = null;
+            list = null;
+            listVo = null;
+        }
+    }
+
+    /**
+     * 根据商品ID数组查询商品列表
+     *
+     * @param goodsIds 商品ID数组
+     * @return 查询到的集合
+     */
+    public List<Object> queryGoodsListVoListForExportByGoodsIds(Long[] goodsIds) {
+        // 定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 设置参数
+        map.put(GOODSIDS, goodsIds);
+        // 根据商品ID数组查询商品列表FOR EXPORT
+        List<Object> voList = this.goodsMapper.queryGoodsListVoListForExportByGoodsIds(map);
+        // 定义一个List集合
+        List<Object> list = new ArrayList<Object>();
+        GoodsListVo listVo;
+        try {
+            for (int i = 0; i < voList.size(); i++) {
+                listVo = (GoodsListVo) voList.get(i);
+                // 根据商品ID查询所属货品的库存总和
+                if (null == this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId())) {
+                    listVo.setStock(0L);
+                } else {
+                    // 根据商品ID查询所属货品的库存总和
+                    listVo.setStock((long) this.goodsMapper.queryStockByGoodsId(listVo.getGoodsId()));
+                }
+                list.add(listVo);
+            }
+            // 返回结果
+            return list;
+        } finally {
+            map = null;
+        }
+    }
+
+    /**
+     * 查询所有的商品信息用于导出
+     *
+     * @return 查询到的集合
+     */
+    public List<Object> queryAllGoodsForExport(String isThird) {
+        return this.goodsMapper.queryAllGoodsToExport(isThird);
+    }
+
+    /**
+     * 获取商品审核开关标记
+     *
+     * @return
+     */
+    @Override
+    public String selectAuditAction() {
+        // 返回结果
+        return goodsMapper.selectAuditAction();
+    }
+
+    /**
+     * 根据条件查询商品信息
+     *
+     * @param pb
+     * @param thirdId
+     * @param productNo
+     * @return
+     */
+    @Override
+    public PageBean queryGoodsForCoupon(PageBean pb, Long thirdId, String productNo) {
+        // 定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 如果第三方id不为空
+        // 把第三方id放进map集合中
+        if (null != thirdId) {
+            map.put(THIRDID, thirdId.toString());
+        }
+        // 如果货品编号不为空
+        // 就把货品编号放进map集合中
+        if (null != productNo && !"".equals(productNo)) {
+            map.put("productNo", productNo);
+        }
+        // 设置PageBean的总行数
+        pb.setRows(this.goodsMapper.queryCountForCoupon(map));
+        // 把当前行放进map集合中
+        map.put("pageNo", pb.getPageNo());
+        // 把开始行数放进map集合中
+        map.put("startRowNum", pb.getStartRowNum());
+        // 把结束行数放进map集合中
+        map.put("endRowNum", pb.getEndRowNum());
+        // 设置PageBean的集合数据
+        pb.setList(this.goodsMapper.queryGoodsForCoupon(map));
+        return pb;
+    }
+
+    /**
+     * 根据ID获取商品信息
+     *
+     * @param goodsId
+     * @return
+     */
+    @Override
+    public Goods queryGoodsByGoodsId(Long goodsId) {
+        // 根据id查询信息
+        return goodsMapper.queryGoodsByGoodsId(goodsId);
+    }
+
+    /**
+     * 批量下架商品
+     *
+     * @param goodsIds 需要下架的商品的ID的集合
+     * @return 操作结果
+     */
+    @Override
+    public int batchDown(Long[] goodsIds, String username) {
+        // 定义一个map集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 把商品id放进map集合中
+        map.put(GOODSIDS, goodsIds);
+        // 把用户名称放进map集合中
+        map.put(MODIFIEDNAME, username);
+        // 批量下架
+        goodsMapper.batchDown(map);
+        // 批量下架商品
+        return goodsMapper.batchDownGoods(map);
+    }
+
+    /**
+     * 批量上架商品
+     *
+     * @param goodsIds
+     * @param username
+     * @return
+     */
+    @Override
+    public int batchUp(Long[] goodsIds, String username) {
+        // 定义一个HashMap集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 把商品id放进map集合中
+        map.put(GOODSIDS, goodsIds);
+        // 把用户名称放map集合中
+        map.put(MODIFIEDNAME, username);
+        // 批量上架
+        goodsMapper.batchUp(map);
+        // 批量上架商品
+        return goodsMapper.batchUpGoods(map);
+    }
+
+    /**
+     * 批量修改库存 用于后台批量修改库存
+     *
+     * @param goodsId
+     * @auhor houyichang 2015/8/24
+     */
+    @Transactional
+    @Override
+    public int batchUpdateStock(Long[] goodsId, String stock) {
+        // 定义一个Map集合
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("stock", stock);
+        try {
+            // 判读传入的商品id数组是否为空
+            if (goodsId != null && goodsId.length > 0) {
+                // 循环商品id数组
+                for (int i = 0; i < goodsId.length; i++) {
+                    map.put(GOODSID, goodsId[i]);
+                    // 查询商品下是否有货品
+                    int productNum = this.goodsMapper.queryProductByGoodsId(goodsId[i]);
+                    // 如果商品下有货品就执行修改库存操作
+                    if (productNum > 0) {
+                        this.goodsMapper.batchUpdateStock(map);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            return 0;
+        } finally {
+            map = null;
+        }
+        return 1;
+    }
+
+    /**
+     * 保存商品
+     *
+     * @param goods 待保存的商品实体
+     * @return 最新的ID {@link Long}
+     */
+    @Override
+    public Long saveGoods(Goods goods) {
+        goodsMapper.insertSelective(goods);
+        return goods.getGoodsId();
+    }
+
+    /**
+     * 修改商品
+     *
+     * @param goods 待保存的商品实体
+     * @return 最新的ID {@link Long}
+     */
+    @Override
+    public void updateGoods(Goods goods) {
+        goodsMapper.updateByPrimaryKeySelective(goods);
+    }
+
+
+	@Override
+	public int countGoodsByBrandId(Long brandId) {
+		return goodsMapper.countGoodsByBrandId(brandId);
+	}
+}

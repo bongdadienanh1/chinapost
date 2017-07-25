@@ -1,0 +1,116 @@
+<#assign bath = request.contextPath>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>平台列表</title>
+
+    <!-- Bootstrap -->
+    <link href="${bath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${bath}/static/iconfont/iconfont.css" rel="stylesheet">
+    <link href="${bath}/static/css/style.css?v=20170630" rel="stylesheet">
+</head>
+<body>
+
+<!-- 引用头 -->
+<#include "page/header.ftl"/>
+
+<div class="page_body container-fluid">
+    <div class="row">
+    <#include "page/left.ftl"/>
+
+        <div class="col-lg-20 col-md-19 col-sm-18 main">
+            <div class="main_cont">
+            <#include "page/breadcrumbs.ftl"/>
+
+                <div class="common_data p20">
+                    <div class="filter_area">
+                        <form  id="search_form" method="post" action="${bath}/ThirdPlatformAdmin/ListPage?flag=1" role="form" class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">平台登录账号</span>
+                                    <input type="text" class="form-control"name="thirdUserName" value="${thirdPlatformEntity.thirdUserName }"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" id="search-button">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="data_ctrl_area mb20">
+                        <div class="data_ctrl_search pull-right"></div>
+                        <div class="data_ctrl_brns pull-left">
+                            <button type="button" class="btn btn-info" onclick="$('#addArticleProperty').modal('show')">
+                                <i class="glyphicon glyphicon-plus"></i> 添加
+                            </button>
+                            <button type="button" class="btn btn-info">
+                                <i class="glyphicon glyphicon-trash"></i> 删除
+                            </button>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" name="infoUdId" onclick="allunchecked(this,'id');"></th>
+                            <th>用户账号</th>
+                            <th>平台类型</th>
+                            <th>是否启用</th>
+                            <th width="150">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list pageBean.content as cs>
+                            <tr>
+                                <td><input type="checkbox" name="id" value="${cs.id }"></td>
+                                <td>${cs.thirdUserName }</td>
+                                <td>
+                                    <#if cs.platformType == 1>
+                                        <a href="javascript:;" class="label label-default" >抛单</a>
+                                    <#else>
+                                        <a href="javascript:;" class="label label-success">C店</a>
+                                    </#if>
+                                </td>
+                                <td>
+                                    <#if cs.deleteFlag == 1>
+                                        <a href="javascript:;" class="label label-default" >否</a>
+                                    <#else>
+                                        <a href="javascript:;" class="label label-success">是</a>
+                                    </#if>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default" onclick="updateThirdPlatfrom(${cs.id})">编辑</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#" onclick="deleteThirdPlatfrom(${cs.id  })">删除</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                    <div class="table_foot">
+                        <#include "page/searchPag.ftl"/>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${bath}/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="${bath}/static/js/common.js"></script>
+<script src="${bath}/static/js/common/common_alert.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+package com.ylife.chinapost.third.service.impl;
+
+import com.ylife.chinapost.third.service.CurrentLoginService;
+import com.ylife.exception.UserNotLoginException;
+import com.ylife.utils.WebUtil;
+import org.springframework.stereotype.Service;
+
+/**
+ * third端 当前登录用户
+ */
+@Service
+public class CurrentLoginServiceImpl implements CurrentLoginService {
+
+    /**
+     * 获取当前登录用户的ID
+     *
+     * @return
+     */
+    @Override
+    public Long getCurrentLoginThirdId() {
+        Long customerId = (Long) WebUtil.getCurrentSession().getAttribute("loginUserId");
+        if (customerId == null) {
+            throw new UserNotLoginException("用户未登录。");
+        }
+        return customerId;
+    }
+}

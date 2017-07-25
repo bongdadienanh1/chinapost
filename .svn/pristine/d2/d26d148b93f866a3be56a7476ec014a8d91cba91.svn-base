@@ -1,0 +1,61 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+
+import com.alibaba.fastjson.JSON;
+import com.ylife.chinapost.boss.service.OrderBossService;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.Order;
+import com.ylife.order.service.OrderService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value = "/OrderAdmin")
+public class OrderController  {
+
+	@Resource
+	private OrderBossService orderBossService;
+
+	/**
+	* OrderEntity List页面
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView orderListPage(Order order,String flag,String status,
+									  String createStart,String createEnd, String payStart,String payEnd,
+									  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+									  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		return new ModelAndView(returnPath("thirdOrderList")).addObject("flag",flag)
+				.addObject("order",order).addObject("status",status).addObject("createStart",createStart).addObject("createEnd",createEnd)
+				.addObject("payStart",payStart).addObject("payEnd",payEnd)
+				.addObject("pageBean",orderBossService.queryListForPageOrder(order,new Pageable(page,size),status,createStart,createEnd,payStart,payEnd));
+	}
+
+	/**
+	* 查询OrderEntity
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	* */
+	@RequestMapping(value = "/queryById", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String findOrderData(String orderId) {
+		return JSON.toJSONString(orderBossService.queryById(Long.parseLong(orderId)));
+	}
+
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

@@ -1,0 +1,151 @@
+$(function(){
+
+    /* 订单筛选交互演示用*/
+    $('#order_tabs a').click(function () {
+        $that = $(this);
+        $that.parent().addClass('active');
+        $that.parent().siblings().removeClass('active');
+        //var _cla = $that.attr("data-type")
+        //
+        //$("#statusflag").val($(".flagli .active").find("a").attr("data-type"));
+        //submitOrder();
+    });
+    /* 下面是表单里面的日期时间选择相关的 */
+    $('.form_datetime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:00',
+        weekStart : 1,
+        autoclose : true,
+        language : 'zh-CN',
+        pickerPosition : 'bottom-left',
+        todayBtn : true,
+        viewSelect : 'hour'
+    });
+    $('.form_date').datetimepicker({
+        format : 'yyyy-mm-dd',
+        weekStart : 1,
+        autoclose : true,
+        language : 'zh-CN',
+        pickerPosition : 'bottom-left',
+        minView : 2,
+        todayBtn : true
+    });
+    /*下面是时间选择器开始时间不能大于结束时间设置  START*/
+    var startTime = $("#startTime").val();
+    var endTime = $("#endTime").val();
+    $('#endpicker').datetimepicker('setStartDate', startTime);
+    $('#startpicker').datetimepicker('setEndDate', endTime);
+    $('#endpicker')
+        .datetimepicker()
+        .on('show', function (ev) {
+            startTime = $("#startTime").val();
+            endTime = $("#endTime").val();
+            $('#endpicker').datetimepicker('setStartDate', startTime);
+            $('#startpicker').datetimepicker('setEndDate', endTime);
+        });
+    $('#startpicker')
+        .datetimepicker()
+        .on('show', function (ev) {
+            endTime = $("#endTime").val();
+            startTime = $("#startTime").val();
+            $('#startpicker').datetimepicker('setEndDate', endTime);
+            $('#endpicker').datetimepicker('setStartDate', startTime);
+        });
+});
+/*查看详细*/
+//function fnOpen(backOrderCode) {
+//    $.ajax({
+//        type : "POST",
+//        url:"queryById",
+//        data : {backOrderCode:backOrderCode},
+//        dataType:'json',
+//        success:function(data){
+//            console.log(data)
+//        }
+//    });
+//}
+function fnOpen(backOrderCode) {
+    $('#goodsInfoAlert').html('');
+    $.ajax({
+        type : "POST",
+        url:"queryById",
+        data : {backOrderCode:backOrderCode},
+        success:function(data){
+            console.log(data)
+            //清空列表
+            //$("#ordergoods").html("");
+            $("#pageorder").html("");
+            $("#orderLog").html("");
+            //退款日志
+            $("#ordertk").html("");
+            $('#detailorderCodeNo').html('退单号：'+ data.backOrderCode);
+            $('#backGoodsReason').html(backReson_handle(data.backReason))//退货原因
+            $('#requestReason').html()//申请原因
+            $('#backPrice').html(data.backPrice+'.00邮豆');//退款金额
+            $('#problemExplain').html();//问题说明
+            $('#uploadReason').html()//上传凭证
+            $('#goodsBackWay').html()//商品返回方式
+            for(var i = 0; i < data.backOrderGoods.length; i++){
+                var html = '';
+                html += '<tr>'
+                +'<td class="text-center"><img style="width:30px;height:30px;" src="'+ data.backOrderGoods[i].goodsInfoImage +'"/></td>'
+                +'<td class="text-center">'+ data.backOrderGoods[i].goodsInfoItemNo +'</td>'
+                +'<td class="text-center">'+ data.backOrderGoods[i].goodsPrice+'.00邮豆</td>'
+                +'<td class="text-center">'+ data.backOrderGoods[i].goodsNum +'</td>'
+                +'<td class="text-center">'+ data.backOrderGoods[i].goodsPrice * data.backOrderGoods[i].goodsNum +'.00邮豆</td>'
+                +'</tr>'
+                $('#goodsInfoAlert').append(html);
+            }
+            $('#orderDetails').modal('show');
+
+        }
+    });
+}
+
+//拼接订单状态显示
+function addstatusstr(str,time,num,cla){
+    if(time != null){
+        return '<li class="'+cla+'">'+
+            '<p class="name">'+str+'</p>'+
+            '<p class="bar"><i>'+num+'</i></p>'+
+            '<p class="time">'+timeObject(time)+'</p>'+
+            '</li>';
+    }else{
+        return '<li class="'+cla+'">'+
+            '<p class="name">'+str+'</p>'+
+            '<p class="bar"><i>'+num+'</i></p>'+
+            '<p class="time"></p>'+
+            '</li>';
+    }
+}
+
+
+//转换时间格式
+function timeObject(obj){
+    var date = "/Date(" +notNull(obj)+")/";
+    var time = new Date(parseInt(date.replace("/Date(", "").replace(")/", ""), 10));
+    var result = time.getFullYear() + "-" + (time.getMonth() + 1 < 10 ? "0" + (time.getMonth() + 1) : time.getMonth() + 1) + "-" + (time.getDate() < 10 ? "0" + time.getDate() : time.getDate()) + " " + (time.getHours() < 10 ? "0" + time.getHours() : time.getHours()) + ":" + (time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes())+ ":" + (time.getSeconds() < 10 ? "0" + time.getSeconds() : time.getSeconds());
+    return result;
+}
+
+//判断数据是否为空为空返回“”
+function notNull(obj){
+    if(obj != null && obj != undefined){
+        return obj;
+    }else{
+        return "";
+    }
+}
+
+
+function submitBcakOrder(){
+    $("#thirdBackOrderForm").submit();
+}
+
+function searchData(pageNumber){
+    $("#page").val(pageNumber);
+    $("#thirdBackOrderForm").submit();
+}
+
+function closeDetail(){
+    $('#orderDetails').modal('hide');
+}

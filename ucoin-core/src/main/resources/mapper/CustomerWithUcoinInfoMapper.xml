@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.customer.mapper.CustomerWithUcoinInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.customer.model.ChinapostCustomer">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="idCard_no" property="idcardNo" jdbcType="VARCHAR"/>
+        <result column="phone_no" property="phoneNo" jdbcType="VARCHAR"/>
+        <result column="mobile_checked" property="mobileChecked" jdbcType="TINYINT"/>
+        <result column="fullname" property="fullname" jdbcType="VARCHAR"/>
+        <result column="male" property="male" jdbcType="TINYINT"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
+        <result column="contact_addr" property="contactAddr" jdbcType="VARCHAR"/>
+        <result column="is_active" property="isActive" jdbcType="TINYINT"/>
+        <result column="non_disabled" property="nonDisabled" jdbcType="TINYINT"/>
+        <result column="manager_no" property="managerNo" jdbcType="VARCHAR"/>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="district_id" property="districtId" jdbcType="BIGINT"/>
+        <result column="street_id" property="streetId" jdbcType="BIGINT"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="total_ucoin" property="totalUcoin" jdbcType="DECIMAL"/>
+        <result column="enterprise_ucoin" property="enterpriseUcoin" jdbcType="DECIMAL"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="userName" property="username" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <collection property="tags" column="id" javaType="ArrayList" ofType="com.ylife.customer.model.ChinapostTag"
+                    select="com.ylife.customer.mapper.ChinapostTagMapper.selectByCustomerId"/>
+        <collection property="deliverInfos" ofType="com.ylife.customer.model.ChinapostCustomer$DeliverInfo"
+                    resultMap="DeliverInfoResultMap"/>
+    </resultMap>
+
+    <resultMap id="DeliverInfoResultMap" type="com.ylife.customer.model.ChinapostCustomer$DeliverInfo">
+        <id column="address_id" property="addressId" jdbcType="BIGINT"/>
+        <result column="address_name" property="deliverName" jdbcType="BIGINT"/>
+        <result column="address_province" property="provinceId" jdbcType="BIGINT"/>
+        <result column="address_city" property="cityId" jdbcType="BIGINT"/>
+        <result column="address_county" property="districtId" jdbcType="BIGINT"/>
+        <result column="address_detail" property="addressDetail" jdbcType="BIGINT"/>
+        <result column="address_moblie" property="addressMobile" jdbcType="VARCHAR"/>
+        <result column="address_phone" property="addressPhone" jdbcType="VARCHAR"/>
+        <result column="deliver_address" property="deliverAddress" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="district_name" property="districtName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        chinapost_customer.id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.phone_no,
+        chinapost_customer.mobile_checked,
+        chinapost_customer.fullname,
+        chinapost_customer.male,
+        chinapost_customer.img_url,
+        chinapost_customer.contact_phone,
+        chinapost_customer.contact_addr,
+        chinapost_customer.is_active,
+        chinapost_customer.non_disabled,
+        chinapost_customer.manager_no,
+        chinapost_customer.creator_id,
+        chinapost_customer.remark,
+        chinapost_customer.province_id,
+        chinapost_customer.city_id,
+        chinapost_customer.district_id,
+        chinapost_customer.street_id,
+        chinapost_customer.addr,
+        chinapost_customer.last_login_time,
+        chinapost_customer.create_time,
+        ifNull(sum(ysh_custom_ucion.rese_price), 0) as total_ucoin
+    </sql>
+
+    <sql id="Enterprise_Column_List">
+        enterprise_name,username
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer left join ysh_custom_ucion on
+        chinapost_customer.id = ysh_custom_ucion.customer_id
+        where chinapost_customer.id = #{id,jdbcType=BIGINT}
+        group by chinapost_customer.id
+    </select>
+
+    <select id="selectByIdCard" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_customer left join ysh_custom_ucion on
+        chinapost_customer.id = ysh_custom_ucion.customer_id
+        where chinapost_customer.idCard_no = #{idcardNo,jdbcType=BIGINT}
+        group by chinapost_customer.id
+    </select>
+
+    <select id="selectByIdCardAndEnterpriseId" resultMap="BaseResultMap">
+        SELECT
+        chinapost_customer.id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.phone_no,
+        chinapost_customer.mobile_checked,
+        chinapost_customer.fullname,
+        chinapost_customer.male,
+        chinapost_customer.img_url,
+        chinapost_customer.contact_phone,
+        chinapost_customer.contact_addr,
+        chinapost_customer.is_active,
+        chinapost_customer.non_disabled,
+        chinapost_customer.manager_no,
+        chinapost_customer.creator_id,
+        chinapost_customer.remark,
+        chinapost_customer.province_id,
+        chinapost_customer.city_id,
+        chinapost_customer.district_id,
+        chinapost_customer.street_id,
+        chinapost_customer.addr,
+        chinapost_customer.last_login_time,
+        chinapost_customer.create_time,
+        chinapost_customer.total_ucoin,
+        ifNull(
+        sum(
+        ysh_custom_ucion.rese_price
+        ),
+        0
+        ) AS enterprise_ucoin
+        FROM
+        (
+        SELECT
+        chinapost_customer.id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.phone_no,
+        chinapost_customer.mobile_checked,
+        chinapost_customer.fullname,
+        chinapost_customer.male,
+        chinapost_customer.img_url,
+        chinapost_customer.contact_phone,
+        chinapost_customer.contact_addr,
+        chinapost_customer.is_active,
+        chinapost_customer.non_disabled,
+        chinapost_customer.manager_no,
+        chinapost_customer.creator_id,
+        chinapost_customer.remark,
+        chinapost_customer.province_id,
+        chinapost_customer.city_id,
+        chinapost_customer.district_id,
+        chinapost_customer.street_id,
+        chinapost_customer.addr,
+        chinapost_customer.last_login_time,
+        chinapost_customer.create_time,
+        ifNull(
+        sum(
+        ysh_custom_ucion.rese_price
+        ),
+        0
+        ) AS total_ucoin
+        FROM
+        chinapost_customer
+        LEFT JOIN ysh_custom_ucion ON chinapost_customer.id = ysh_custom_ucion.customer_id
+        WHERE
+        chinapost_customer.idCard_no = #{idcardNo,jdbcType=BIGINT}
+        GROUP BY
+        chinapost_customer.id
+        ) AS chinapost_customer
+        LEFT JOIN ysh_custom_ucion ON chinapost_customer.id = ysh_custom_ucion.customer_id
+        AND ysh_custom_ucion.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModelSelective" resultMap="BaseResultMap">
+        SELECT
+        chinapost_customer.id,
+        chinapost_customer.idCard_no,
+        chinapost_customer.phone_no,
+        chinapost_customer.mobile_checked,
+        chinapost_customer.fullname,
+        chinapost_customer.male,
+        chinapost_customer.img_url,
+        chinapost_customer.contact_phone,
+        chinapost_customer.contact_addr,
+        chinapost_customer.is_active,
+        chinapost_customer.non_disabled,
+        chinapost_customer.manager_no,
+        chinapost_customer.creator_id,
+        chinapost_customer.remark,
+        chinapost_customer.province_id,
+        chinapost_customer.city_id,
+        chinapost_customer.district_id,
+        chinapost_customer.street_id,
+        chinapost_customer.addr,
+        chinapost_customer.last_login_time,
+        chinapost_customer.create_time,
+        customer_info2.total_ucoin,
+        customer_info2.enterprise_ucoin,
+        ysh_enterprise_info.enterprise_name,
+        ysh_enterprise_manager.username,
+        np_customer_address.*, np_sys_province.*, np_sys_city.*, np_sys_district.*
+        FROM
+        (
+        SELECT
+        custom_ucoin_info.id,
+        custom_ucoin_info.total_ucoin,
+        ifNull(
+        sum(
+        ysh_custom_ucion.rese_price
+        ),
+        0
+        ) AS enterprise_ucoin
+        FROM
+        (
+        SELECT
+        custom_ucoin_info.id,
+        ifNull(
+        sum(
+        ysh_custom_ucion.rese_price
+        ),
+        0
+        ) AS total_ucoin
+        FROM
+        (
+        SELECT DISTINCT
+        chinapost_customer.id
+        FROM
+        chinapost_customer
+        LEFT JOIN chinapost_customer_tag ON chinapost_customer.id = chinapost_customer_tag.customer_id
+        LEFT JOIN chinapost_tag ON chinapost_tag.tag_id = chinapost_customer_tag.tag_id
+        LEFT JOIN customer_enterprise ON chinapost_customer.id = customer_enterprise.customer_id
+        LEFT JOIN ysh_enterprise_func ON customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        <trim prefix="where" suffixOverrides="and">
+            <if test="tagName != null">
+                chinapost_tag.tag_name = #{tagName,jdbcType=VARCHAR} and
+            </if>
+            <if test="minIndex != null">
+                <![CDATA[ysh_enterprise_func.catalog >= #{minIndex,jdbcType=BIGINT}]]> and
+            </if>
+            <if test="maxIndex != null">
+                <![CDATA[ysh_enterprise_func.catalog <= #{maxIndex,jdbcType=BIGINT}]]> and
+            </if>
+            <if test="model.id != null">
+                chinapost_customer.id = #{model.id,jdbcType=BIGINT} and
+            </if>
+            <if test="model.idcardNo != null">
+                chinapost_customer.idCard_no = #{model.idcardNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.phoneNo != null">
+                chinapost_customer.phone_no = #{model.phoneNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.mobileChecked != null">
+                chinapost_customer.mobile_checked = #{model.mobileChecked,jdbcType=TINYINT} and
+            </if>
+            <if test="model.fullname != null">
+                chinapost_customer.fullname LIKE CONCAT(CONCAT('%',#{model.fullname,jdbcType=VARCHAR}), '%') and
+            </if>
+            <if test="model.male != null">
+                chinapost_customer.male = #{model.male,jdbcType=TINYINT} and
+            </if>
+            <if test="model.imgUrl != null">
+                chinapost_customer.img_url = #{model.imgUrl,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactPhone != null">
+                chinapost_customer.contact_phone = #{model.contactPhone,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactAddr != null">
+                chinapost_customer.contact_addr = #{model.contactAddr,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.isActive != null">
+                chinapost_customer.is_active = #{model.isActive,jdbcType=TINYINT} and
+            </if>
+            <if test="model.nonDisabled != null">
+                chinapost_customer.non_disabled = #{model.nonDisabled,jdbcType=TINYINT} and
+            </if>
+            <if test="model.managerNo != null">
+                chinapost_customer.manager_no = #{model.managerNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.creatorId != null">
+                chinapost_customer.creator_id = #{model.creatorId,jdbcType=BIGINT} and
+            </if>
+        </trim>
+        ORDER BY
+        chinapost_customer.create_time DESC
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+        ) AS custom_ucoin_info
+        LEFT JOIN ysh_custom_ucion ON custom_ucoin_info.id = ysh_custom_ucion.customer_id
+        GROUP BY
+        custom_ucoin_info.id
+        ) AS custom_ucoin_info
+        LEFT JOIN ysh_custom_ucion ON custom_ucoin_info.id = ysh_custom_ucion.customer_id
+        AND ysh_custom_ucion.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        GROUP BY
+        custom_ucoin_info.id
+        ) AS customer_info2
+        LEFT JOIN chinapost_customer ON customer_info2.id = chinapost_customer.id
+        LEFT JOIN ysh_enterprise_info ON chinapost_customer.enterprise_id = ysh_enterprise_info.enterprise_id
+        LEFT JOIN ysh_enterprise_manager ON chinapost_customer.creator_id = ysh_enterprise_manager.id
+        LEFT JOIN np_customer_address ON np_customer_address.customer_id = customer_info2.id
+        AND np_customer_address.del_flag = "0"
+        LEFT JOIN np_sys_province ON np_customer_address.address_province = np_sys_province.province_id
+        LEFT JOIN np_sys_city ON np_customer_address.address_city = np_sys_city.city_id
+        LEFT JOIN np_sys_district ON np_customer_address.address_county = np_sys_district.district_id
+        order by chinapost_customer.create_time DESC
+    </select>
+
+    <select id="countByModelSelective" resultType="java.lang.Integer">
+        select
+        count(*) from(
+        SELECT
+        chinapost_customer.id,
+        chinapost_customer_tag.tag_id,
+        chinapost_tag.tag_name
+        FROM
+        chinapost_customer
+        LEFT JOIN chinapost_customer_tag ON chinapost_customer_tag.customer_id = chinapost_customer.id
+        LEFT JOIN chinapost_tag ON chinapost_tag.tag_id = chinapost_customer_tag.tag_id
+        INNER JOIN customer_enterprise on chinapost_customer.id = customer_enterprise.customer_id
+        INNER JOIN ysh_enterprise_func on customer_enterprise.enterprise_id = ysh_enterprise_func.id
+        <trim prefix="where" suffixOverrides="and">
+            <if test="tagName!=null">
+                chinapost_tag.tag_name=#{tagName,jdbcType=VARCHAR} and
+            </if>
+            <if test="minIndex!=null">
+                <![CDATA[ysh_enterprise_func.catalog >= #{minIndex,jdbcType=BIGINT}]]> and
+            </if>
+            <if test="maxIndex!=null">
+                <![CDATA[ysh_enterprise_func.catalog <= #{maxIndex,jdbcType=BIGINT}]]> and
+            </if>
+            <if test="model.id != null">
+                id = #{model.id,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.idcardNo != null">
+                idCard_no = #{model.idcardNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.phoneNo != null">
+                phone_no = #{model.phoneNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.mobileChecked != null">
+                mobile_checked = #{model.mobileChecked,jdbcType=TINYINT} and
+            </if>
+            <if test="model.fullname != null">
+                fullname LIKE CONCAT(CONCAT('%',#{model.fullname,jdbcType=VARCHAR}), '%') and
+            </if>
+            <if test="model.male != null">
+                male = #{model.male,jdbcType=TINYINT} and
+            </if>
+            <if test="model.imgUrl != null">
+                img_url = #{model.imgUrl,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactPhone != null">
+                contact_phone = #{model.contactPhone,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.contactAddr != null">
+                contact_addr = #{model.contactAddr,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.isActive != null">
+                is_active = #{model.isActive,jdbcType=TINYINT} and
+            </if>
+            <if test="model.nonDisabled != null">
+                non_disabled = #{model.nonDisabled,jdbcType=TINYINT} and
+            </if>
+            <if test="model.managerNo != null">
+                manager_no = #{model.managerNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="model.creatorId != null">
+                creator_id = #{model.creatorId,jdbcType=BIGINT} and
+            </if>
+        </trim>
+        GROUP BY
+        chinapost_customer.id
+        ) AS findResult
+
+    </select>
+
+</mapper>

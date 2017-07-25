@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.customer.mapper.CustomerEnterpriseMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.customer.model.CustomerEnterpriseKey">
+        <id column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <id column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.ylife.customer.model.CustomerEnterpriseKey">
+        delete from customer_enterprise
+        where customer_id = #{customerId,jdbcType=BIGINT}
+        and enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.customer.model.CustomerEnterpriseKey">
+        insert into customer_enterprise (customer_id, enterprise_id)
+        values (#{customerId,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.customer.model.CustomerEnterpriseKey">
+        insert into customer_enterprise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>

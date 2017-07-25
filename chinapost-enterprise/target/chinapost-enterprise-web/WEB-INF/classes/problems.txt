@@ -1,0 +1,10 @@
+1,优化lastInsertId。(√)
+2,插入时数据完整性约束。
+3,数据粒度级别权限控制。
+4,CurrentLoginService Session优化。
+5,ORDER NO 生成。(√)
+6,图片上传。(√)
+7,EXCEL操作。(√)
+8,验证码。修改controller位置(√)，验证码超时策略。(√)
+9,提货码生成。(√)
+10,短信验证码。

@@ -1,0 +1,85 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+
+import com.alibaba.fastjson.JSON;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsSpec;
+import com.ylife.goods.service.GoodsSpecService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+@Controller
+@RequestMapping(value = "/GoodsSpecAdmin")
+public class GoodsSpecController  {
+
+	@Resource
+	private GoodsSpecService goodsSpecService;
+
+	/**
+	* GoodsSpecEntity List页面
+	* @author henry
+	* @date 2017-06-30 18:46:32
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView goodsSpecListPage(GoodsSpec goodsSpec,String flag,
+										  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+										  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		return new ModelAndView(returnPath("goods_spec")).addObject("flag",flag)
+				.addObject("pageBean",goodsSpecService.queryListForPageGoodsSpec(goodsSpec, new Pageable(page,size)))
+				.addObject("goodsSpec",goodsSpec);
+	}
+
+	/**
+	* 查询GoodsSpecEntity
+	* @author henry
+	* @date 2017-06-30 18:46:32
+	* */
+	@RequestMapping(value = "/queryById", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String findGoodsSpecData(String specId) {
+		return JSON.toJSONString(goodsSpecService.queryBySpecPrimaryKey(Long.parseLong(specId)));
+	}
+
+	/**
+	* 保存或更新GoodsSpec
+	* @author henry
+	* @date 2017-06-30 18:46:32
+	*
+	* */
+	@RequestMapping(value = "/saveGoodsSpec", produces = "application/text;charset=utf-8")
+	public ModelAndView saveGoodsSpecData(GoodsSpec goodsSpec) {
+		if(goodsSpec!=null){
+			if(goodsSpec.getSpecId()!=null || (goodsSpec.getSpecIds() !=null && goodsSpec.getSpecIds().length > 0)){
+				goodsSpecService.updateGoodsSpec(goodsSpec,"qmbbc");
+			}else{
+				goodsSpecService.saveGoodsSpec(goodsSpec,"qmbbc");
+			}
+		}
+		return new ModelAndView("redirect:ListPage?flag=1");
+	}
+
+	/**
+	* 导出GoodsSpecEntity
+	* @author henry
+	* @date 2017-06-30 18:46:32
+	* @return
+	*/
+	/*@RequestMapping(value = "/exportGoodsSpecExcel")
+	public void exportGoodsSpecExcel(GoodsSpec goodsSpec,String ids,HttpServletResponse response) {
+		goodsSpecService.exportGoodsSpec(goodsSpecEntity, ids, response);
+	}*/
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

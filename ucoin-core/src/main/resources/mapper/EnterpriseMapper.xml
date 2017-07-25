@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.enterprise.mapper.EnterpriseMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.enterprise.model.Enterprise">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="store_id" property="storeId" jdbcType="BIGINT"/>
+        <result column="paykey" property="paykey" jdbcType="VARCHAR"/>
+        <result column="account_name" property="accountName" jdbcType="VARCHAR"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="profile" property="profile" jdbcType="VARCHAR"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="business_license_no" property="businessLicenseNo" jdbcType="VARCHAR"/>
+        <result column="legal_person" property="legalPerson" jdbcType="VARCHAR"/>
+        <result column="register_address" property="registerAddress" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="linkman" property="linkman" jdbcType="VARCHAR"/>
+        <result column="link_mobile" property="linkMobile" jdbcType="VARCHAR"/>
+        <result column="business_start_time" property="businessStartTime" jdbcType="TIMESTAMP"/>
+        <result column="business_end_time" property="businessEndTime" jdbcType="TIMESTAMP"/>
+        <result column="undistributed_price" property="undistributedPrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="ucoin_price" property="ucoinPrice" jdbcType="DECIMAL"/>
+        <result column="ucoincode_price" property="ucoincodePrice" jdbcType="DECIMAL"/>
+        <result column="account_time" property="accountTime" jdbcType="TIMESTAMP"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="discount_pct" property="discountPct" jdbcType="DECIMAL"/>
+        <result column="end" property="end" jdbcType="TINYINT"/>
+    </resultMap>
+
+
+
+    <sql id="Base_Column_List">
+        id, parent_id, store_id, paykey, account_name, enterprise_name, profile, img_url,
+        business_license_no, legal_person, register_address, address, mobile, linkman, link_mobile,
+        business_start_time, business_end_time, undistributed_price, price, ucoin_price,
+        ucoincode_price, account_time, is_delete
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_func
+        left join ysh_enterprise_info on
+        ysh_enterprise_func.id = ysh_enterprise_info.enterprise_id
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByParentIdIsNull" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_func
+        left join ysh_enterprise_info on
+        ysh_enterprise_func.id = ysh_enterprise_info.enterprise_id
+        where parent_id is null
+    </select>
+
+
+    <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>,
+        ysh_enterprise_func.discount_pct,
+        ysh_enterprise_func.end
+        from ysh_enterprise_func
+        left join ysh_enterprise_info on
+        ysh_enterprise_func.id = ysh_enterprise_info.enterprise_id
+        where
+        parent_id = #{id,jdbcType=BIGINT}
+        and
+        is_delete = false
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        update
+        ysh_enterprise_func
+        set
+        is_delete = true
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="checkPaykey" resultType="java.lang.Boolean">
+        select
+        count(*)
+        from
+        ysh_enterprise_func
+        where
+        id = #{id,jdbcType=BIGINT}
+        and
+        paykey = md5(#{paykey,jdbcType=VARCHAR})
+    </select>
+
+    <update id="updateUcoinPriceByPrimaryKey">
+        update
+        ysh_enterprise_func
+        set
+        undistributed_price = undistributed_price + #{amount,jdbcType=DECIMAL}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectUcoinPriceByPrimaryKey" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+        select
+        undistributed_price
+        from
+        ysh_enterprise_func
+        where
+        id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateUndistributedPriceByPrimaryKey">
+        update
+        ysh_enterprise_func
+        set
+        undistributed_price = undistributed_price + #{amount,jdbcType=DECIMAL}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectUndistributedPriceByPrimaryKey" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+        select
+        undistributed_price
+        from
+        ysh_enterprise_func
+        where
+        id = #{id,jdbcType=BIGINT}
+    </select>
+</mapper>

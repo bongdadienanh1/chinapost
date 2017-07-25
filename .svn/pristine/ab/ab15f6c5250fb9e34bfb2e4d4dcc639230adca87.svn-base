@@ -1,0 +1,1502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.form.mapper.SupplyFormMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.form.model.SupplyForm">
+        <id column="bill_id" property="billId" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
+        <result column="stock_time" property="stockTime" jdbcType="TIMESTAMP"/>
+        <result column="recipient_time" property="recipientTime" jdbcType="TIMESTAMP"/>
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP"/>
+        <result column="bill_type" property="billType" jdbcType="VARCHAR"/>
+        <result column="bill_status" property="billStatus" jdbcType="VARCHAR"/>
+        <result column="goods_info_name" property="goodsInfoName" jdbcType="VARCHAR"/>
+        <result column="goods_info_item_no" property="goodsInfoItemNo" jdbcType="VARCHAR"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="goods_info_type" property="goodsInfoType" jdbcType="INTEGER"/>
+        <result column="amount" property="deliveryAmount" jdbcType="INTEGER"/>
+        <result column="receipt_amount" property="receiptAmount" jdbcType="INTEGER"/>
+        <result column="goods_info_settle_price" property="settlePrice" jdbcType="DECIMAL"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="link_man" property="linkMan" jdbcType="VARCHAR"/>
+        <result column="link_mobile" property="linkMobile" jdbcType="VARCHAR"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="third_name" property="thirdName" jdbcType="VARCHAR"/>
+        <result column="third_id" property="thirdId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap  id="sumResultMap" type="com.ylife.form.model.SupplyForm">
+        <id column="enterprise_id" property="enterpriseId"  jdbcType="BIGINT"/>
+        <result column="total_price" property="totalPrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap  id="accountResultMap" type="com.ylife.form.model.SupplyAccount">
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="purchase_date" property="purchaseDate" jdbcType="VARCHAR"/>
+        <result column="boss_fee" property="bossFee" jdbcType="DECIMAL"/>
+        <result column="ny_fee" property="nyFee" jdbcType="DECIMAL"/>
+        <result column="flm_fee" property="flmFee" jdbcType="DECIMAL"/>
+        <result column="jly_fee" property="jlyFee" jdbcType="DECIMAL"/>
+        <result column="th_fee" property="thFee" jdbcType="DECIMAL"/>
+        <result column="lw_fee" property="lwFee" jdbcType="DECIMAL"/>
+        <result column="yh_fee" property="yhFee" jdbcType="DECIMAL"/>
+        <result column="ysh_fee" property="yshFee" jdbcType="DECIMAL"/>
+        <result column="total_fee" property="totalFee" jdbcType="DECIMAL"/>
+    </resultMap>
+
+
+    <select id="countSupplyByThirdAndEnterprise" resultType="java.lang.Integer" >
+        SELECT  count(*) from (
+        SELECT
+        COUNT(*)
+        FROM
+        chinapost_inventory_bill_item AS bi
+        LEFT JOIN chinapost_inventory_bill AS b ON b.bill_id = bi.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = b.in_id
+        LEFT JOIN np_goods_info AS ngi ON bi.goods_info_id = ngi.goods_info_id
+        WHERE
+        ngi.goods_info_id IS NOT NULL
+        and b.bill_status!="TERMINATED"
+        and
+        <if test="thirdId!=null">
+            b.bill_type = "INVENTORY_TRANSFER"
+            AND b.out_id = 1
+            AND ngi.goods_info_type = 0
+            AND ngi.third_id =#{thirdId,jdbcType=BIGINT}
+        </if>
+
+        <if test="thirdEnterpriseId!=null">
+            b.bill_type = "INVENTORY_INSTOCK"
+            AND b.creator_id != 1
+            AND ngi.goods_info_type = 1
+
+            AND  #{thirdEnterpriseId,jdbcType=BIGINT}= (
+            SELECT
+            enterprise_id
+            FROM
+            np_goods_info_enterprise
+            WHERE
+            goods_info_id = bi.goods_info_id
+            )
+        </if>
+
+        <if test="billStatuss != null">
+            and b.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+                and
+                b.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+                and
+                b.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+                and
+                b.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+                and
+                b.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+                and
+                b.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+                and
+                b.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+        ]]>
+        </if>
+        GROUP BY
+        b.in_id,
+        bi.goods_info_id) as mid
+
+    </select>
+
+
+    <select id="selectSupplyByThirdAndEnterprise" resultMap="BaseResultMap">
+            SELECT
+            b.in_id as enterprise_id,
+            yei2.enterprise_name AS enterprise_name,
+            yei2.addr_detail as address,
+            yei2.linkman link_man,
+            yei2.link_mobile,
+            bi.bill_id,
+            bi.goods_info_id,
+            ngi.goods_info_name,
+            ngi.goods_info_type,
+            ngi.goods_info_item_no,
+            ngi.goods_info_settle_price,
+            sum(bi.amount) AS amount,
+            sum(bi.amount)*ngi.goods_info_settle_price as price,
+            ngi.third_id,
+            (
+                SELECT
+                    enterprise_id
+                FROM
+                    np_goods_info_enterprise
+                WHERE
+                    goods_info_id = bi.goods_info_id
+            ) AS enterprise_third_id,
+            ifnull(
+                ngi.third_name,
+                (
+                    SELECT
+                        enterprise_name
+                    FROM
+                        ysh_enterprise_info
+                    WHERE
+                        enterprise_id = (
+                            SELECT
+                                enterprise_id
+                            FROM
+                                np_goods_info_enterprise
+                            WHERE
+                                goods_info_id = bi.goods_info_id
+                        )
+                )
+            ) AS third_name,
+            b.creator_id,
+            b.bill_type,
+            b.bill_status,
+            b.apply_time,
+            b.recipient_time,
+            b.stock_time
+        FROM
+            chinapost_inventory_bill_item AS bi
+        LEFT JOIN chinapost_inventory_bill AS b ON b.bill_id = bi.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = b.in_id
+        LEFT JOIN np_goods_info AS ngi ON bi.goods_info_id = ngi.goods_info_id
+        WHERE
+            ngi.goods_info_id IS NOT NULL
+        and b.bill_status!="TERMINATED"
+        and
+        <if test="thirdId!=null">
+            b.bill_type = "INVENTORY_TRANSFER"
+            AND b.out_id = 1
+            AND ngi.goods_info_type = 0
+            AND ngi.third_id =#{thirdId,jdbcType=BIGINT}
+        </if>
+
+        <if test="thirdEnterpriseId!=null">
+            b.bill_type = "INVENTORY_INSTOCK"
+            AND b.creator_id != 1
+            AND ngi.goods_info_type = 1
+
+            AND  #{thirdEnterpriseId,jdbcType=BIGINT}= (
+            SELECT
+            enterprise_id
+            FROM
+            np_goods_info_enterprise
+            WHERE
+            goods_info_id = bi.goods_info_id
+            )
+        </if>
+
+        <if test="billStatuss != null">
+                and b.bill_status in
+                <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="orderStartTime != null">
+                <![CDATA[
+                and
+                b.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+
+            <if test="orderEndTime != null">
+                <![CDATA[
+                and
+                b.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+            <if test="readyStartTime != null">
+                <![CDATA[
+                and
+                b.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+
+            <if test="readyEndTime != null">
+                <![CDATA[
+                and
+                b.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+            <if test="warehouseStartTime != null">
+                <![CDATA[
+                and
+                b.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+
+            <if test="warehouseEndTime != null">
+                <![CDATA[
+                and
+                b.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+                ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+                ]]>
+            </if>
+
+        GROUP BY
+            b.in_id,
+            bi.goods_info_id
+        order by b.in_id,ngi.goods_info_type asc,b.apply_time,b.stock_time,b.recipient_time desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+
+
+    <select id="selectSupplyByThirdAndGoods" resultMap="BaseResultMap">
+        SELECT
+        b.in_id as enterprise_id,
+        yei2.enterprise_name AS enterprise_name,
+        yei2.addr_detail as address,
+        bi.bill_id,
+        bi.goods_info_id,
+        ngi.goods_info_name,
+        ngi.goods_info_type,
+        ngi.goods_info_item_no,
+        ngi.goods_info_settle_price,
+        sum(bi.amount) AS amount,
+        sum(bi.amount)*ngi.goods_info_settle_price as price,
+        ngi.third_id,
+        (
+        SELECT
+        enterprise_id
+        FROM
+        np_goods_info_enterprise
+        WHERE
+        goods_info_id = bi.goods_info_id
+        ) AS enterprise_third_id,
+        ifnull(
+        ngi.third_name,
+        (
+        SELECT
+        enterprise_name
+        FROM
+        ysh_enterprise_info
+        WHERE
+        enterprise_id = (
+        SELECT
+        enterprise_id
+        FROM
+        np_goods_info_enterprise
+        WHERE
+        goods_info_id = bi.goods_info_id
+        )
+        )
+        ) AS third_name,
+        b.creator_id,
+        b.bill_type,
+        b.bill_status,
+        b.apply_time,
+        b.recipient_time,
+        b.stock_time
+        FROM
+        chinapost_inventory_bill_item AS bi
+        LEFT JOIN chinapost_inventory_bill AS b ON b.bill_id = bi.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = b.in_id
+        LEFT JOIN np_goods_info AS ngi ON bi.goods_info_id = ngi.goods_info_id
+        WHERE
+        ngi.goods_info_id IS NOT NULL
+        and b.bill_status!="TERMINATED"
+        and
+        <if test="thirdId!=null">
+            b.bill_type = "INVENTORY_TRANSFER"
+            AND b.out_id = 1
+            AND ngi.goods_info_type = 0
+            AND ngi.third_id =#{thirdId,jdbcType=BIGINT}
+        </if>
+        <if test="thirdEnterpriseId!=null">
+            b.bill_type = "INVENTORY_INSTOCK"
+            AND b.creator_id != 1
+            AND ngi.goods_info_type = 1
+
+            AND  #{thirdEnterpriseId,jdbcType=BIGINT}= (
+            SELECT
+            enterprise_id
+            FROM
+            np_goods_info_enterprise
+            WHERE
+            goods_info_id = bi.goods_info_id
+            )
+        </if>
+
+        <if test="billStatuss != null">
+            and b.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+                and
+                b.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+                and
+                b.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+                and
+                b.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+                and
+                b.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+                and
+                b.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+                and
+                b.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+        ]]>
+        </if>
+        GROUP BY
+        bi.goods_info_id
+        order by b.in_id,ngi.goods_info_type asc,b.apply_time,b.stock_time,b.recipient_time desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countSupplyByThirdAndGoods" resultType="java.lang.Integer">
+        SELECT
+         COUNT(DISTINCT(bi.goods_info_id))
+        FROM
+        chinapost_inventory_bill_item AS bi
+        LEFT JOIN chinapost_inventory_bill AS b ON b.bill_id = bi.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = b.in_id
+        LEFT JOIN np_goods_info AS ngi ON bi.goods_info_id = ngi.goods_info_id
+        WHERE
+        ngi.goods_info_id IS NOT NULL
+        and b.bill_status!="TERMINATED"
+        and
+        <if test="thirdId!=null">
+            b.bill_type = "INVENTORY_TRANSFER"
+            AND b.out_id = 1
+            AND ngi.goods_info_type = 0
+            AND ngi.third_id =#{thirdId,jdbcType=BIGINT}
+        </if>
+        <if test="thirdEnterpriseId!=null">
+            b.bill_type = "INVENTORY_INSTOCK"
+            AND b.creator_id != 1
+            AND ngi.goods_info_type = 1
+
+            AND  #{thirdEnterpriseId,jdbcType=BIGINT}= (
+            SELECT
+            enterprise_id
+            FROM
+            np_goods_info_enterprise
+            WHERE
+            goods_info_id = bi.goods_info_id
+            )
+        </if>
+
+        <if test="billStatuss != null">
+            and b.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+                and
+                b.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+                and
+                b.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+                and
+                b.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+                and
+                b.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+                and
+                b.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+                and
+                b.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+        ]]>
+        </if>
+    </select>
+
+
+
+
+
+    <select id="sumSupplyByThirdAndEnterprise" resultMap="sumResultMap">
+        SELECT
+        enterprise_id,
+        sum(price) as total_price
+        from
+        (
+        SELECT
+        b.in_id as enterprise_id,
+        sum(bi.amount) as amount,
+        ngi.goods_info_settle_price,
+        sum(bi.amount)*ngi.goods_info_settle_price as price
+        FROM
+        chinapost_inventory_bill_item AS bi
+        LEFT JOIN chinapost_inventory_bill AS b ON b.bill_id = bi.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = b.in_id
+        LEFT JOIN np_goods_info AS ngi ON bi.goods_info_id = ngi.goods_info_id
+        WHERE
+        ngi.goods_info_id IS NOT NULL
+        AND b.bill_status != "TERMINATED"
+        and
+        <if test="thirdId!=null">
+
+        b.bill_type = "INVENTORY_TRANSFER"
+        AND b.out_id = 1
+        AND ngi.goods_info_type = 0
+        AND ngi.third_id =#{thirdId,jdbcType=BIGINT}
+        </if>
+        <if test="thirdEnterpriseId!=null">
+
+        b.bill_type = "INVENTORY_INSTOCK"
+        AND b.creator_id != 1
+        AND ngi.goods_info_type = 1
+
+            AND  #{thirdEnterpriseId,jdbcType=BIGINT}= (
+            SELECT
+            enterprise_id
+            FROM
+            np_goods_info_enterprise
+            WHERE
+            goods_info_id = bi.goods_info_id
+            )
+        </if>
+
+
+        <if test="billStatuss != null">
+            and b.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+                and
+                b.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+                and
+                b.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+                and
+                b.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+                and
+                b.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+                and
+                b.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+                and
+                b.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+                ]]>
+        </if>
+
+        GROUP BY
+        b.in_id,
+        bi.goods_info_id
+
+        )
+        as mid
+        GROUP BY enterprise_id
+
+    </select>
+
+
+
+    <select id="sumSupplyByThirdAndGoods" resultType="java.math.BigDecimal">
+        SELECT
+        sum(bi.amount*ngi.goods_info_settle_price) as total_price
+        FROM
+        chinapost_inventory_bill_item AS bi
+        LEFT JOIN chinapost_inventory_bill AS b ON b.bill_id = bi.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = b.in_id
+        LEFT JOIN np_goods_info AS ngi ON bi.goods_info_id = ngi.goods_info_id
+        WHERE
+        ngi.goods_info_id IS NOT NULL
+        AND b.bill_status != "TERMINATED"
+        and
+            <if test="thirdId!=null">
+            b.bill_type = "INVENTORY_TRANSFER"
+            AND b.out_id = 1
+            AND ngi.goods_info_type = 0
+            AND ngi.third_id =#{thirdId,jdbcType=BIGINT}
+        </if>
+        <if test="thirdEnterpriseId!=null">
+
+            b.bill_type = "INVENTORY_INSTOCK"
+            AND b.creator_id != 1
+            AND ngi.goods_info_type = 1
+
+            AND  #{thirdEnterpriseId,jdbcType=BIGINT}= (
+            SELECT
+            enterprise_id
+            FROM
+            np_goods_info_enterprise
+            WHERE
+            goods_info_id = bi.goods_info_id
+            )
+        </if>
+
+        <if test="billStatuss != null">
+            and b.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+                and
+                b.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+                and
+                b.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+                and
+                b.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+                and
+                b.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+                and
+                b.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+        ]]>
+        </if>
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+                and
+                b.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+                ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) >= #{minCatalog,jdbcType=BIGINT}
+                ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+                and
+                (select catalog from ysh_enterprise_func where id = b.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+        ]]>
+        </if>
+    </select>
+
+    <!-- 网点供货明细 -->
+    <select id="selectSupplyDetails" resultMap="BaseResultMap">
+        SELECT
+        bill.in_id enterprise_id,
+        (
+        SELECT
+        enterprise_name
+        FROM
+        ysh_enterprise_info
+        WHERE
+        enterprise_id = bill.in_id
+        ) enterprise_name,
+        (
+        SELECT
+        address
+        FROM
+        ysh_enterprise_info
+        WHERE
+        enterprise_id = bill.in_id
+        ) address,
+        (
+        SELECT
+        linkman
+        FROM
+        ysh_enterprise_info
+        WHERE
+        enterprise_id = bill.in_id
+        ) link_man,
+        (
+        SELECT
+        link_mobile
+        FROM
+        ysh_enterprise_info
+        WHERE
+        enterprise_id = bill.in_id
+        ) link_mobile,
+        ifnull(
+        goods.third_name,
+        (
+        SELECT
+        enterprise_name
+        FROM
+        ysh_enterprise_info
+        WHERE
+        enterprise_id = (
+        SELECT
+        enterprise_id
+        FROM
+        np_goods_info_enterprise
+        WHERE
+        goods_info_id = bgoods.goods_info_id
+        )
+        )
+        ) third_name,
+        bill. CODE,
+        bill.create_time,
+        goods.goods_info_name,
+        goods.goods_info_item_no,
+        goods.goods_info_type,
+        IF (
+        goods.goods_info_type = '1',
+        bgoods.amount,
+        bgoods.receipt_amount
+        ) AS receipt_amount,
+        bgoods.amount,
+        goods.third_id,
+
+        IF (
+        bill.bill_type = 'PURCHASE_INVENTORY_INSTOCK',
+        bgoods.purchase_price,
+        goods.goods_info_settle_price
+        ) AS goods_info_settle_price,
+        bill.bill_status,
+        bill.bill_type,
+        IF (
+        goods.goods_info_type = '1',
+        bgoods.amount,
+        bgoods.receipt_amount
+        ) *IF (
+        bill.bill_type = 'PURCHASE_INVENTORY_INSTOCK',
+        bgoods.purchase_price,
+        goods.goods_info_settle_price
+        ) as price
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        left join np_goods_info_enterprise on np_goods_info_enterprise.goods_info_id = bgoods.goods_info_id
+        WHERE
+        goods.goods_info_id IS NOT NULL
+        AND bill.bill_status != 'TERMINATED'
+        and (
+        bill.bill_type = 'INVENTORY_INSTOCK'
+        or bill.bill_type = 'PURCHASE_INVENTORY_INSTOCK'
+        )
+
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="createStartTime != null">
+            <![CDATA[
+            and
+            bill.create_time >= #{createStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="createEndTime != null">
+            <![CDATA[
+            and
+            bill.create_time <= #{createEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="thirdId!=null">
+            and goods.third_id = #{thirdId,jdbcType=BIGINT}
+        </if>
+        <if test="thirdEnterpriseId!=null">
+            and #{thirdEnterpriseId,jdbcType=BIGINT}=(SELECT enterprise_id from np_goods_info_enterprise where goods_info_id=bgoods.goods_info_id)
+        </if>
+
+        order by bill.in_id,goods.goods_info_type,bill.create_time desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 网点供货明细总行数 -->
+    <select id="selectSupplyDetailsCount" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        WHERE
+        goods.goods_info_id IS NOT NULL
+        AND bill.bill_status != 'TERMINATED'
+        and (
+        bill.bill_type = 'INVENTORY_INSTOCK'
+        or bill.bill_type = 'PURCHASE_INVENTORY_INSTOCK'
+        )
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="createStartTime != null">
+            <![CDATA[
+            and
+            bill.create_time >= #{createStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="createEndTime != null">
+            <![CDATA[
+            and
+            bill.create_time <= #{createEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="thirdId!=null">
+            and goods.third_id = #{thirdId,jdbcType=BIGINT}
+        </if>
+        <if test="thirdEnterpriseId!=null">
+            and #{thirdEnterpriseId,jdbcType=BIGINT}=(SELECT enterprise_id from np_goods_info_enterprise where goods_info_id=bgoods.goods_info_id)
+        </if>
+
+        order by bill.in_id,goods.goods_info_type,bill.create_time desc
+    </select>
+
+    <!-- 网点供货明细 -->
+    <select id="selectSupplyDetailsForm" resultMap="BaseResultMap">
+        SELECT
+        bill.in_id enterprise_id,
+        (select enterprise_name from ysh_enterprise_info where enterprise_id = bill.in_id)enterprise_name,
+        (select address from ysh_enterprise_info where enterprise_id = bill.in_id)address,
+        (select linkman from ysh_enterprise_info where enterprise_id = bill.in_id)link_man,
+        (select link_mobile from ysh_enterprise_info where enterprise_id = bill.in_id)link_mobile,
+        ifnull(goods.third_name,(select enterprise_name from ysh_enterprise_info where enterprise_id = (select enterprise_id from np_goods_info_enterprise where goods_info_id = bgoods.goods_info_id))) third_name,
+        bill.code,
+        bill.apply_time,
+        bill.stock_time,
+        bill.recipient_time,
+        goods.goods_info_name,
+        goods.goods_info_item_no,
+        goods.goods_info_type,
+        bgoods.amount,
+        goods.goods_info_settle_price,
+        bgoods.amount*goods.goods_info_settle_price price,
+        bill.bill_status
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        where goods.goods_info_id is not null
+        and bill.bill_status !='TERMINATED'
+        and ((bill.bill_type = 'INVENTORY_TRANSFER' and bill.out_id=1)
+        OR (bill.bill_type = 'INVENTORY_INSTOCK' and bill.creator_id!=1))
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+            and
+            bill.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+            and
+            bill.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+            and
+            bill.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+            and
+            bill.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        order by bill.in_id,goods.goods_info_type,bill.apply_time desc, bill.stock_time desc, bill.recipient_time desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 网点供货明细总行数 -->
+    <select id="selectSupplyDetailsFormCount" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        where goods.goods_info_id is not null
+        and bill.bill_status !='TERMINATED'
+        and ((bill.bill_type = 'INVENTORY_TRANSFER' and bill.out_id=1)
+        OR (bill.bill_type = 'INVENTORY_INSTOCK' and bill.creator_id!=1))
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+            and
+            bill.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+            and
+            bill.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+            and
+            bill.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+            and
+            bill.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+    </select>
+
+
+    <!-- 网点供货统计（按供货商分类合并） -->
+    <select id="selectSupplyStatistical" resultMap="BaseResultMap">
+        SELECT
+        in_id as enterprise_id,
+        (select enterprise_name from ysh_enterprise_info where enterprise_id = bill.in_id)enterprise_name,
+        ifnull(goods.third_name,(select enterprise_name from ysh_enterprise_info where enterprise_id = (select enterprise_id from np_goods_info_enterprise where goods_info_id = bgoods.goods_info_id))) third_name,
+        sum(bgoods.amount*goods.goods_info_settle_price) price
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        where goods.goods_info_id is not null
+        and bill.bill_status !='TERMINATED'
+        and ((bill.bill_type = 'INVENTORY_TRANSFER' and bill.out_id=1)
+        OR (bill.bill_type = 'INVENTORY_INSTOCK' and bill.creator_id!=1))
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+            and
+            bill.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+            and
+            bill.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+            and
+            bill.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+            and
+            bill.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        group by bill.in_id,third_id,(select enterprise_id from np_goods_info_enterprise where goods_info_id = bgoods.goods_info_id)
+        order by bill.in_id,goods.goods_info_type,bill.apply_time desc, bill.stock_time desc, bill.recipient_time desc
+        <if test="pageable!=null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 网点供货统计总行数（按供货商分类合并） -->
+    <select id="selectSupplyStatisticalCount" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        (SELECT
+        count(*)
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        where goods.goods_info_id is not null
+        and bill.bill_status !='TERMINATED'
+        and ((bill.bill_type = 'INVENTORY_TRANSFER' and bill.out_id=1)
+        OR (bill.bill_type = 'INVENTORY_INSTOCK' and bill.creator_id!=1))
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+            and
+            bill.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+            and
+            bill.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+            and
+            bill.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+            and
+            bill.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        group by bill.in_id,third_id,(select enterprise_id from np_goods_info_enterprise where goods_info_id =
+        bgoods.goods_info_id)
+        )as aa
+    </select>
+
+    <!-- 各网点供货统计 （每个网点的合计）-->
+    <select id="selectEachEnterpriseSum" resultMap="sumResultMap">
+        select
+        in_id enterprise_id,
+        sum(bgoods.amount*goods.goods_info_settle_price) total_price
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        where goods.goods_info_id is not null
+        and bill.bill_status !='TERMINATED'
+        and ((bill.bill_type = 'INVENTORY_TRANSFER' and bill.out_id=1)
+        OR (bill.bill_type = 'INVENTORY_INSTOCK' and bill.creator_id!=1))
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+            and
+            bill.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+            and
+            bill.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+            and
+            bill.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+            and
+            bill.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        group by in_id
+    </select>
+
+    <!-- 所有网点供货统计 （总合计）-->
+    <select id="selectAllEnterpriseSum" resultType="java.math.BigDecimal">
+        select
+        sum(bgoods.amount*goods.goods_info_settle_price) price
+        FROM
+        chinapost_inventory_bill_item AS bgoods
+        LEFT JOIN chinapost_inventory_bill AS bill ON bgoods.bill_id = bill.bill_id
+        LEFT JOIN np_goods_info AS goods ON bgoods.goods_info_id = goods.goods_info_id
+        where goods.goods_info_id is not null
+        and bill.bill_status !='TERMINATED'
+        and ((bill.bill_type = 'INVENTORY_TRANSFER' and bill.out_id=1)
+        OR (bill.bill_type = 'INVENTORY_INSTOCK' and bill.creator_id!=1))
+        <if test="billStatuss != null">
+            and bill.bill_status in
+            <foreach item="item" index="index" collection="billStatuss" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="goodsInfoType != null">
+            and
+            goods.goods_info_type = #{goodsInfoType,jdbcType=INTEGER}
+
+        </if>
+        <if test="orderStartTime != null">
+            <![CDATA[
+            and
+            bill.apply_time >= #{orderStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="orderEndTime != null">
+            <![CDATA[
+            and
+            bill.apply_time <= #{orderEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="readyStartTime != null">
+            <![CDATA[
+            and
+            bill.stock_time >= #{readyStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="readyEndTime != null">
+            <![CDATA[
+            and
+            bill.stock_time <= #{readyEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="warehouseStartTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time >= #{warehouseStartTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+
+        <if test="warehouseEndTime != null">
+            <![CDATA[
+            and
+            bill.recipient_time <= #{warehouseEndTime,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="minCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+        <if test="maxCatalog != null">
+            <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = bill.in_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+        </if>
+    </select>
+
+    <!-- 区域对账汇总表 -->
+    <select id="selectSupplyAccountStatistical" resultMap="accountResultMap">
+        select (select enterprise_name from ysh_enterprise_info where enterprise_id = #{enterpriseId}) enterprise_name,
+        DATE_FORMAT((select create_time from cp_inventory_purchase_bill_log where purchase_id = cp_inventory_purchase_bill.purchase_id and log_action = '[确认]'),'%c月%e日') purchase_date,
+        sum(CASE third_id WHEN 0 THEN settle_price*receipt_amount END ) boss_fee,
+        sum(CASE third_id WHEN 171 THEN settle_price*receipt_amount END ) ny_fee,
+        sum(CASE third_id WHEN 179 THEN settle_price*receipt_amount END ) flm_fee,
+        sum(CASE third_id WHEN 180 THEN settle_price*receipt_amount END ) jly_fee,
+        sum(CASE third_id WHEN 181 THEN settle_price*receipt_amount END ) th_fee,
+        sum(CASE third_id WHEN 182 THEN settle_price*receipt_amount END ) lw_fee,
+        sum(CASE third_id WHEN 183 THEN settle_price*receipt_amount END ) yh_fee,
+        sum(CASE third_id WHEN 184 THEN settle_price*receipt_amount END ) ysh_fee,
+        sum(settle_price*receipt_amount) total_fee
+        from cp_inventory_purchase_bill
+        left join cp_inventory_purchase_bill_item
+        on cp_inventory_purchase_bill.purchase_id = cp_inventory_purchase_bill_item.purchase_id
+        <where>
+            DATE_FORMAT((select create_time from cp_inventory_purchase_bill_log where purchase_id = cp_inventory_purchase_bill.purchase_id and log_action = '[确认]'),'%c月%e日') is not null
+            <if test="statuss != null">
+                and status in
+                <foreach item="item" index="index" collection="statuss" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="startTime != null">
+                <![CDATA[
+            and
+            (select create_time from cp_inventory_purchase_bill_log where purchase_id = cp_inventory_purchase_bill.purchase_id and log_action = '[确认]') >= #{startTime,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+
+            <if test="endTime != null">
+                <![CDATA[
+            and
+            (select create_time from cp_inventory_purchase_bill_log where purchase_id = cp_inventory_purchase_bill.purchase_id and log_action = '[确认]') <= #{endTime,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = enterprise_id) >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            (select catalog from ysh_enterprise_func where id = enterprise_id) <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+        </where>
+        group by DATE_FORMAT((select create_time from cp_inventory_purchase_bill_log where purchase_id = cp_inventory_purchase_bill.purchase_id and log_action = '[确认]'),'%c月%e日')
+        order by (select create_time from cp_inventory_purchase_bill_log where purchase_id = cp_inventory_purchase_bill.purchase_id and log_action = '[确认]') desc;
+    </select>
+
+</mapper>

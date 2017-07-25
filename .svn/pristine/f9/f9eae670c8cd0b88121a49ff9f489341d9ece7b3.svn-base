@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.ucoin.mapper.CustomerUcoinMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.ucoin.model.CustomerUcoin">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="customer_id" property="customerId" jdbcType="BIGINT"/>
+        <result column="rese_price" property="resePrice" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, enterprise_id, customer_id, rese_price, create_time, start_time, end_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectEarliestUcoinByCustomerIdForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion
+        where customer_id = #{customerId,jdbcType=BIGINT}
+        order by
+        start_time asc
+        limit 1
+        for update
+    </select>
+
+    <select id="selectEarliestMoreZeroUcoinByCustomerIdForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion
+        where customer_id = #{customerId,jdbcType=BIGINT}
+        and rese_price > 0
+        order by
+        start_time asc
+        limit 1
+        for update
+    </select>
+
+    <select id="selectEarliestUcoinByCustomerIdAndEnterpriseIdForUpdate" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion
+        where customer_id = #{customerId,jdbcType=BIGINT} and enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        order by
+        start_time asc
+        limit 1
+        for update
+    </select>
+
+
+    <select id="selectByCustomerId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion
+        where customer_id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="sumResePriceByCustomerId" resultType="java.math.BigDecimal" parameterType="java.lang.Long">
+        select
+        sum(rese_price)
+        from ysh_custom_ucion
+        where customer_id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="sumResePriceByCustomerIdAndEnterpriseId" resultType="java.math.BigDecimal">
+        select
+        ifnull(sum(rese_price),0)
+        from ysh_custom_ucion
+        where customer_id = #{customerId,jdbcType=BIGINT}
+        and enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_custom_ucion
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByTime">
+        delete from ysh_custom_ucion
+        <where>
+            <if test="start != null">
+                <![CDATA[
+            and
+            create_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+            </if>
+            <if test="end != null">
+                <![CDATA[
+            and
+            create_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+            </if>
+        </where>
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.ucoin.model.CustomerUcoin">
+        insert into ysh_custom_ucion (id, enterprise_id, customer_id,
+        rese_price, create_time, start_time,
+        end_time)
+        values (#{id,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT},
+        #{resePrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP}
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.ucoin.model.CustomerUcoin">
+        insert into ysh_custom_ucion
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="resePrice != null">
+                rese_price,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="resePrice != null">
+                #{resePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.ucoin.model.CustomerUcoin">
+        update ysh_custom_ucion
+        <set>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="resePrice != null">
+                rese_price = #{resePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.ucoin.model.CustomerUcoin">
+        update ysh_custom_ucion
+        set enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+        customer_id = #{customerId,jdbcType=BIGINT},
+        rese_price = #{resePrice,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+        end_time = #{endTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updatePriceByPrimaryKey">
+        update ysh_custom_ucion
+        set
+        rese_price = #{resePrice,jdbcType=DECIMAL}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectEarliestUcoinByCustomerIdForUpdateList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_custom_ucion
+        where customer_id = #{customerId,jdbcType=BIGINT} and enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        order by
+        create_time asc
+        for update
+    </select>
+
+</mapper>

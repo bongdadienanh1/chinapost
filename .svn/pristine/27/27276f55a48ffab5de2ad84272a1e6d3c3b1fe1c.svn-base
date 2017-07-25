@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.enterprise.mapper.EnterpriseManagerMapper">
+    <resultMap id="BaseResultMap" type="com.ylife.enterprise.model.EnterpriseManager">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="is_primary" property="isPrimary" jdbcType="TINYINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="cellphone" property="cellphone" jdbcType="VARCHAR"/>
+        <result column="staffname" property="staffname" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="mod_time" property="modTime" jdbcType="TIMESTAMP"/>
+        <result column="login_time" property="loginTime" jdbcType="TIMESTAMP"/>
+        <result column="non_disabled" property="nonDisabled" jdbcType="TINYINT"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="photo_img" property="photoImg" jdbcType="VARCHAR"/>
+        <result column="manager_id" property="managerId" jdbcType="BIGINT"/>
+        <result column="discount_pct" property="discountPct" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="ManagerWithAuthNameResultMap" type="com.ylife.enterprise.mapper.pojo.ManagerWithAuthNameResult">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="staffname" property="staffname" jdbcType="VARCHAR"/>
+        <result column="cellphone" property="cellphone" jdbcType="VARCHAR"/>
+        <result column="non_disabled" property="nonDisabled" jdbcType="VARCHAR"/>
+        <result column="designation" property="authorityname" jdbcType="VARCHAR"/>
+        <result column="authority_id" property="authorityId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, enterprise_id, is_primary, username, password, cellphone, staffname, create_time,
+        mod_time, login_time, non_disabled, is_delete, photo_img, manager_id
+    </sql>
+
+    <select id="selcetManagerResultByEnterpriseId" resultMap="ManagerWithAuthNameResultMap"
+            parameterType="java.lang.Long">
+        select
+        ysh_enterprise_manager.non_disabled,
+        ysh_enterprise_manager.id,
+        ysh_enterprise_manager.username,
+        ysh_enterprise_manager.cellphone,
+        ysh_enterprise_manager.staffname,
+        ysh_enterprise_authority.designation,
+        ysh_enterprise_manager_authority.authority_id
+        from
+        ysh_enterprise_manager
+        left join ysh_enterprise_manager_authority on
+        ysh_enterprise_manager.id = ysh_enterprise_manager_authority.manager_id
+        left join ysh_enterprise_authority on
+        ysh_enterprise_manager_authority.authority_id = ysh_enterprise_authority.id
+        where
+        ysh_enterprise_manager.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <![CDATA[
+        and
+        ysh_enterprise_manager.is_primary!=TRUE
+         ]]>
+        order by ysh_enterprise_manager.id desc
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_manager
+        where
+        id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_manager
+        where
+        username = #{username,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByEnterpriseIdAndIsPrimary" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_manager
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        and
+        is_primary = #{isPrimary,jdbcType=TINYINT}
+    </select>
+
+    <select id="selectByAuthorityId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_manager
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        and
+        is_primary = #{isPrimary,jdbcType=BIGINT}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from
+        ysh_enterprise_manager
+        where
+        id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByEnterpriseId" parameterType="java.lang.Long">
+        delete from
+        ysh_enterprise_manager
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.enterprise.model.EnterpriseManager">
+        insert into
+        ysh_enterprise_manager (id, enterprise_id, is_primary,
+        username, password, cellphone,
+        staffname, create_time, mod_time,
+        login_time, non_disabled, is_delete, photo_img,
+        manager_id)
+        values
+        (#{id,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT}, #{isPrimary,jdbcType=TINYINT},
+        #{username,jdbcType=VARCHAR}, md5(#{password,jdbcType=VARCHAR}), #{cellphone,jdbcType=VARCHAR},
+        #{staffname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modTime,jdbcType=TIMESTAMP},
+        #{loginTime,jdbcType=TIMESTAMP}, #{nonDisabled,jdbcType=TINYINT}, #{isDelete,jdbcType=TINYINT},
+        #{photoImg,jdbcType=VARCHAR}, #{managerId,jdbcType=BIGINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.enterprise.model.EnterpriseManager" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into ysh_enterprise_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="isPrimary != null">
+                is_primary,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="cellphone != null">
+                cellphone,
+            </if>
+            <if test="staffname != null">
+                staffname,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modTime != null">
+                mod_time,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+            <if test="nonDisabled != null">
+                non_disabled,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="photoImg != null">
+                photo_img,
+            </if>
+            <if test="managerId != null">
+                manager_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="isPrimary != null">
+                #{isPrimary,jdbcType=TINYINT},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                md5(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="cellphone != null">
+                #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="staffname != null">
+                #{staffname,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modTime != null">
+                #{modTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nonDisabled != null">
+                #{nonDisabled,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="photoImg != null">
+                #{photoImg,jdbcType=VARCHAR},
+            </if>
+            <if test="managerId != null">
+                #{managerId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.enterprise.model.EnterpriseManager">
+        update ysh_enterprise_manager
+        <set>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="isPrimary != null">
+                is_primary = #{isPrimary,jdbcType=TINYINT},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = md5(#{password,jdbcType=VARCHAR}),
+            </if>
+            <if test="cellphone != null">
+                cellphone = #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="staffname != null">
+                staffname = #{staffname,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modTime != null">
+                mod_time = #{modTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginTime != null">
+                login_time = #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nonDisabled != null">
+                non_disabled = #{nonDisabled,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+            <if test="photoImg != null">
+                photo_img = #{photoImg,jdbcType=VARCHAR},
+            </if>
+            <if test="managerId != null">
+                manager_id = #{managerId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.enterprise.model.EnterpriseManager">
+        update
+        ysh_enterprise_manager
+        set
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+        is_primary = #{isPrimary,jdbcType=TINYINT},
+        username = #{username,jdbcType=VARCHAR},
+        password = md5(#{password,jdbcType=VARCHAR}),
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+        staffname = #{staffname,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+        non_disabled = #{nonDisabled,jdbcType=TINYINT},
+        is_delete = #{isDelete,jdbcType=TINYINT},
+        photo_img = #{photoImg,jdbcType=VARCHAR},
+        manager_id = #{managerId,jdbcType=BIGINT}
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="checkPassword" resultType="java.lang.Boolean">
+        select
+        count(*)
+        from ysh_enterprise_manager
+        where id = #{managerId,jdbcType=BIGINT} and
+        password = md5(#{password,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectByEnterpriseId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_manager
+        where enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updatePasswordByManagerId">
+        update ysh_enterprise_manager
+        set
+        password = md5(#{password,jdbcType=VARCHAR})
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateManagerBuff">
+        update ysh_enterprise_manager
+        <set>
+            <if test="cellphone != null">
+                cellphone = #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="staffname != null">
+                staffname = #{staffname,jdbcType=VARCHAR},
+            </if>
+            <if test="nonDisabled!=null">
+                non_disabled = #{nonDisabled,jdbcType=TINYINT}
+            </if>
+        </set>
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectAllManager" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_manager
+        where
+        is_delete = '0'
+    </select>
+</mapper>

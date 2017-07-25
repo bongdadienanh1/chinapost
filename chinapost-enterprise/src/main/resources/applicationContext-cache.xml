@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.nirvana.com/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.nirvana.com/schema/cache http://www.nirvana.com/schema/cache.xsd">
+
+    <cache:annotation-driven cache-manager="cacheManager" order="2">
+        <cache:interceptors>
+            <cache:create-interceptor class="com.ylife.cache.interceptor.CacheCreateInterceptor"/>
+            <cache:delete-interceptor class="com.ylife.cache.interceptor.CacheDeleteInterceptor"/>
+            <cache:update-interceptor class="com.ylife.cache.interceptor.CacheUpdateInterceptor"/>
+            <cache:read-interceptor class="com.ylife.cache.interceptor.CacheReadInterceptor"/>
+        </cache:interceptors>
+    </cache:annotation-driven>
+
+    <bean id="cacheManager" class="com.ylife.cache.TairCacheManager">
+        <property name="confServers">
+            <list>
+                <value>192.168.2.9:5198</value>
+            </list>
+        </property>
+        <property name="groupName" value="group_1"/>
+        <property name="namespace" value="1"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,1668 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.product.mapper.GoodsInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.product.model.GoodsInfo">
+        <id column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="goods_info_item_no" property="goodsInfoItemNo" jdbcType="VARCHAR"/>
+        <result column="goods_detail_desc" property="goodsDetailDesc" jdbcType="CLOB"/>
+        <result column="goods_info_name" property="goodsInfoName" jdbcType="VARCHAR"/>
+        <result column="goods_info_subtitle" property="goodsInfoSubtitle" jdbcType="VARCHAR"/>
+        <result column="goods_info_added" property="goodsInfoAdded" jdbcType="CHAR"/>
+        <result column="goods_info_added_time" property="goodsInfoAddedTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_info_unadded_time" property="goodsInfoUnaddedTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_info_stock" property="goodsInfoStock" jdbcType="BIGINT"/>
+        <result column="goods_info_settle_price" property="goodsInfoSettlePrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_prefer_price" property="goodsInfoPreferPrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_cost_price" property="goodsInfoCostPrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_market_price" property="goodsInfoMarketPrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_weight" property="goodsInfoWeight" jdbcType="DECIMAL"/>
+        <result column="goods_info_img_id" property="goodsInfoImgId" jdbcType="VARCHAR"/>
+        <result column="goods_info_create_name" property="goodsInfoCreateName" jdbcType="VARCHAR"/>
+        <result column="goods_info_create_time" property="goodsInfoCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_info_modified_name" property="goodsInfoModifiedName" jdbcType="VARCHAR"/>
+        <result column="goods_info_modified_time" property="goodsInfoModifiedTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_info_del_name" property="goodsInfoDelName" jdbcType="VARCHAR"/>
+        <result column="goods_info_del_time" property="goodsInfoDelTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_info_delflag" property="goodsInfoDelflag" jdbcType="CHAR"/>
+        <result column="third_id" property="thirdId" jdbcType="BIGINT"/>
+        <result column="third_name" property="thirdName" jdbcType="VARCHAR"/>
+        <result column="is_third" property="isThird" jdbcType="CHAR"/>
+        <result column="goods_info_isbn" property="goodsInfoIsbn" jdbcType="VARCHAR"/>
+        <result column="show_list" property="showList" jdbcType="CHAR"/>
+        <result column="show_mobile" property="showMobile" jdbcType="CHAR"/>
+        <result column="is_customer_discount" property="isCustomerDiscount" jdbcType="CHAR"/>
+        <result column="audit_status" property="auditStatus" jdbcType="CHAR"/>
+        <result column="isMailBay" property="ismailbay" jdbcType="CHAR"/>
+        <result column="refuse_reason" property="refuseReason" jdbcType="VARCHAR"/>
+        <result column="evaluation_count" property="evaluationCount" jdbcType="BIGINT"/>
+        <result column="goods_salenum" property="goodsSalenum" jdbcType="BIGINT"/>
+        <result column="goods_collect" property="goodsCollect" jdbcType="BIGINT"/>
+        <result column="online_show" property="onlineShow" jdbcType="TINYINT"/>
+        <result column="valet_show" property="valetShow" jdbcType="TINYINT"/>
+        <result column="available" property="available" jdbcType="BIGINT"/>
+        <result column="goods_info_type" property="goodsInfoType" jdbcType="INTEGER"/>
+        <result column="cat_id" property="catId" jdbcType="BIGINT"/>
+        <result column="cat_parent_id" property="catParentId" jdbcType="BIGINT"/>
+        <result column="cat_grandpa_id" property="catGrandpaId" jdbcType="BIGINT"/>
+        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+        <result column="goods_info_unit" property="goodsInfoUnit" jdbcType="VARCHAR" />
+        <result column="goods_info_pack" property="goodsInfoPack" jdbcType="DECIMAL" />
+
+        <collection property="images" ofType="com.ylife.product.model.GoodsImage" resultMap="ImageBaseResultMap"/>
+        <collection property="specs" ofType="com.ylife.product.model.GoodsInfo$Spec" resultMap="SpecResultMap"/>
+        <collection property="extSpecs" ofType="com.ylife.product.model.GoodsInfo$ExtSpec"
+                    resultMap="ExtSpecResultMap"/>
+        <collection property="exParams" ofType="com.ylife.product.model.GoodsInfo$ExParam"
+                    resultMap="ExParamResultMap"/>
+    </resultMap>
+
+    <resultMap id="ImageBaseResultMap" type="com.ylife.product.model.GoodsImage">
+        <id column="goods_img_id" property="goodsImgId" jdbcType="BIGINT"/>
+        <result column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT"/>
+        <result column="image_in_name" property="imageInName" jdbcType="VARCHAR"/>
+        <result column="image_thum_name" property="imageThumName" jdbcType="VARCHAR"/>
+        <result column="image_big_name" property="imageBigName" jdbcType="VARCHAR"/>
+        <result column="image_artwork_name" property="imageArtworkName" jdbcType="VARCHAR"/>
+        <result column="goods_img_sort" property="goodsImgSort" jdbcType="INTEGER"/>
+        <result column="goods_img_delflag" property="goodsImgDelflag" jdbcType="CHAR"/>
+        <result column="goods_img_create_name" property="goodsImgCreateName" jdbcType="VARCHAR"/>
+        <result column="goods_img_create_time" property="goodsImgCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_img_modified_name" property="goodsImgModifiedName" jdbcType="VARCHAR"/>
+        <result column="goods_img_modified_time" property="goodsImgModifiedTime" jdbcType="TIMESTAMP"/>
+        <result column="goods_img_del_name" property="goodsImgDelName" jdbcType="VARCHAR"/>
+        <result column="goods_img_del_time" property="goodsImgDelTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="SpecResultMap" type="com.ylife.product.model.GoodsInfo$Spec">
+        <id column="spec_id" property="specId" jdbcType="BIGINT"/>
+        <result column="spec_name" property="name" jdbcType="BIGINT"/>
+        <collection property="details" ofType="com.ylife.product.model.GoodsInfo$Spec$SpecDetail"
+                    resultMap="SpecDetailResultMap"/>
+    </resultMap>
+
+    <resultMap id="SpecDetailResultMap" type="com.ylife.product.model.GoodsInfo$Spec$SpecDetail">
+        <id column="spec_detail_id" property="detailId" jdbcType="BIGINT"/>
+        <result column="spec_detail_name" property="value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ExtSpecResultMap" type="com.ylife.product.model.GoodsInfo$ExtSpec">
+        <id column="expandparam_id" property="extId" jdbcType="BIGINT"/>
+        <result column="expandparam_name" property="name" jdbcType="VARCHAR"/>
+        <result column="expandparam_value_name" property="value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ExParamResultMap" type="com.ylife.product.model.GoodsInfo$ExParam">
+        <id column="param_id" property="exParamId" jdbcType="BIGINT"/>
+        <result column="param_name" property="name" jdbcType="VARCHAR"/>
+        <result column="param_value" property="value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="GoodsManagerResult" type="com.ylife.inventory.mapper.pojo.GoodsManagerResult">
+        <id column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT"/>
+        <result column="goods_info_img_id" jdbcType="VARCHAR" property="goodsInfoImgId"/>
+        <result column="goods_info_name" jdbcType="VARCHAR" property="goodsInfoName"/>
+        <result column="spec_name" jdbcType="VARCHAR" property="goodsSpecification"/>
+        <result column="spec_detail_name" jdbcType="VARCHAR" property="goodsSpecValue"/>
+        <result column="goods_info_item_no" jdbcType="VARCHAR" property="goodsInfoItemNo"/>
+        <result column="third_name" jdbcType="VARCHAR" property="thirdName"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="goodsBrand"/>
+        <result column="goods_info_settle_price" property="goodsInfoSettlePrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_prefer_price" property="goodsInfoPreferPrice" jdbcType="DECIMAL"/>
+        <result column="goods_info_added" property="goodsInfoAdded" jdbcType="VARCHAR"/>
+        <result column="type_name" property="goodsInfoTypeName" jdbcType="VARCHAR"/>
+        <result column="type_id" property="typeId" jdbcType="BIGINT"/>
+        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+        <result column="third_id" property="thirdId" jdbcType="BIGINT"/>
+        <result column="store_id" property="thirdId" jdbcType="BIGINT"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="spec_string" property="specString" jdbcType="VARCHAR"/>
+        <result column="expandparam_name" property="expandparam" jdbcType="VARCHAR"/>
+        <result column="expandparam_value_name" property="expandParamValue" jdbcType="VARCHAR"/>
+        <result column="param_name" property="paramName" jdbcType="VARCHAR"/>
+        <result column="param_value" property="paramValue" jdbcType="VARCHAR"/>
+        <result column="online_show" property="onlineShow" jdbcType="TINYINT"/>
+        <result column="valet_show" property="valetShow" jdbcType="TINYINT"/>
+        <result column="inventory" property="inventory" jdbcType="INTEGER"/>
+        <result column="available" property="available" jdbcType="INTEGER"/>
+        <result column="goods_info_type" property="goodsInfoType" jdbcType="INTEGER"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="audit_status" property="auditStatus" jdbcType="VARCHAR"/>
+        <collection property="images" ofType="com.ylife.product.model.GoodsImage" resultMap="ImageBaseResultMap"/>
+        <!--<collection property="images" column="goods_info_id" javaType="ArrayList"
+                    ofType="com.ylife.product.model.GoodsImage"
+                    select="com.ylife.product.mapper.GoodsImagesMapper.selectByPrimaryKey">
+        </collection>
+        -->
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        np_goods_info.goods_info_id,
+        np_goods_info.goods_id,
+        np_goods_info.goods_info_item_no,
+        np_goods_info.goods_info_name,
+        np_goods_info.goods_info_subtitle,
+        np_goods_info.goods_info_added,
+        np_goods_info.goods_info_added_time,
+        np_goods_info.goods_info_unadded_time,
+        np_goods_info.goods_info_stock,
+        np_goods_info.goods_info_prefer_price,
+        np_goods_info.goods_info_settle_price,
+        np_goods_info.goods_info_cost_price,
+        np_goods_info.goods_info_market_price,
+        np_goods_info.goods_info_weight,
+        np_goods_info.goods_info_img_id,
+        np_goods_info.goods_info_create_name,
+        np_goods_info.goods_info_create_time,
+        np_goods_info.goods_info_modified_name,
+        np_goods_info.goods_info_modified_time,
+        np_goods_info.goods_info_del_name,
+        np_goods_info.goods_info_del_time,
+        np_goods_info.goods_info_delflag,
+        np_goods_info.third_id,
+        np_goods_info.third_name,
+        np_goods_info.is_third,
+        np_goods_info.goods_info_isbn,
+        np_goods_info.show_list,
+        np_goods_info.show_mobile,
+        np_goods_info.is_customer_discount,
+        np_goods_info.audit_status,
+        np_goods_info.isMailBay,
+        np_goods_info.refuse_reason,
+        np_goods_info.evaluation_count,
+        np_goods_info.goods_salenum,
+        np_goods_info.goods_collect,
+        np_goods_info.online_show,
+        np_goods_info.goods_info_type,
+        np_goods_info.goods_info_unit,
+        np_goods_info.goods_info_pack
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        goods_detail_desc,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gs.spec_id,
+        gs.spec_name,
+        gsd.spec_detail_id,
+        gsd.spec_detail_name,
+        gte.expandparam_id,
+        gte.expandparam_name,
+        gtev.expandparam_value_name,
+        gtp.param_id,
+        gtp.param_name,
+        grp.param_value,
+        ngi.goods_img_id,
+        ngi.image_in_name,
+        ngi.image_big_name,
+        ngi.image_artwork_name,
+        ngi.image_thum_name,
+        yei.available,
+        yei.inventory
+        FROM
+        np_goods_info
+        left join np_goods as g ON g.goods_id = np_goods_info.goods_id
+        left join np_goods_type as gt ON gt.type_id = g.type_id
+        left join np_goods_brand as gb ON gb.brand_id = g.brand_id
+        left join np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = np_goods_info.goods_info_id
+        left join np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        left join np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        left join np_goods_rele_expandparam as gre on gre.goods_id=g.goods_id
+        left join np_goods_type_expandparam as gte on gte.expandparam_id=gre.expandparam_id
+        left join np_goods_type_expandparam_value as gtev on gtev.expandparam_value_id=gre.expangparam_value_id
+        left join np_goods_rele_param as grp on grp.goods_id=g.goods_id and (grp.param_value is null or grp.param_delflag='0')
+        left join np_goods_type_param as gtp on gtp.param_id=grp.param_id
+        left join np_goods_image as ngi on ngi.goods_info_id=np_goods_info.goods_info_id and ngi.goods_img_delflag = '0'
+        left JOIN ysh_enterprise_inventory as yei on np_goods_info.goods_info_id=yei.goods_info_id
+        where np_goods_info.goods_info_id = #{goodsInfoId,jdbcType=BIGINT}
+
+    </select>
+
+    <select id="selectByGoodsInfoId" resultMap="GoodsManagerResult">
+        select
+        gi.goods_info_id,
+        gi.goods_info_img_id,
+        gi.goods_info_name,
+        IFNULL(GROUP_CONCAT(concat(gs.spec_name,":", IFNULL(gsd.spec_detail_name, ""))), "") as spec_string,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_settle_price,
+        gi.goods_info_added,
+        gi.goods_info_type,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.online_show,
+        gi.valet_show,
+        yei.enterprise_name
+        FROM
+        np_goods_info as gi
+        left join np_goods_info_enterprise as ngie on ngie.goods_info_id=gi.goods_info_id
+        left join ysh_enterprise_info as yei on yei.enterprise_id=ngie.enterprise_id
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        where gi.goods_Info_Id=#{goodsInfoId,jdbcType=BIGINT}
+        group by goods_info_id
+    </select>
+
+    <select id="selectGoodsInfoByGoodsNumber" resultMap="GoodsManagerResult">
+        select
+        gi.goods_info_id,
+        gi.goods_info_img_id,
+        gi.goods_info_name,
+        IFNULL(GROUP_CONCAT(concat(gs.spec_name,":", IFNULL(gsd.spec_detail_name, ""))), "") as spec_string,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_settle_price,
+        gi.goods_info_added,
+        gi.goods_info_type,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.online_show,
+        gi.valet_show,
+        yei.enterprise_name
+        FROM
+        np_goods_info as gi
+        left join np_goods_info_enterprise as ngie on ngie.goods_info_id=gi.goods_info_id
+        left join ysh_enterprise_info as yei on yei.enterprise_id=ngie.enterprise_id
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        where gi.goods_Info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+        group by goods_info_id
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from np_goods_info
+        where goods_info_id = #{goodsInfoId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.product.model.GoodsInfo">
+        insert into np_goods_info (goods_info_id, goods_id, goods_info_item_no,
+        goods_info_name, goods_info_subtitle, goods_info_added,
+        goods_info_added_time, goods_info_unadded_time,
+        goods_info_stock, goods_info_prefer_price,goods_info_settle_price, goods_info_cost_price,
+        goods_info_market_price, goods_info_weight,
+        goods_info_img_id, goods_info_create_name, goods_info_create_time,
+        goods_info_modified_name, goods_info_modified_time,
+        goods_info_del_name, goods_info_del_time, goods_info_delflag,
+        third_id, third_name, is_third,
+        goods_info_isbn, show_list, show_mobile,
+        is_customer_discount, audit_status, isMailBay,
+        refuse_reason, evaluation_count, goods_salenum,
+        goods_collect,online_show,valet_show,goods_info_type)
+        values (#{goodsInfoId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsInfoItemNo,jdbcType=VARCHAR},
+        #{goodsInfoName,jdbcType=VARCHAR}, #{goodsInfoSubtitle,jdbcType=VARCHAR}, #{goodsInfoAdded,jdbcType=CHAR},
+        #{goodsInfoAddedTime,jdbcType=TIMESTAMP}, #{goodsInfoUnaddedTime,jdbcType=TIMESTAMP},
+        #{goodsInfoStock,jdbcType=BIGINT}, #{goodsInfoPreferPrice,jdbcType=DECIMAL}, #{goodsInfoSettlePrice,jdbcType=DECIMAL},
+        #{goodsInfoCostPrice,jdbcType=DECIMAL},
+        #{goodsInfoMarketPrice,jdbcType=DECIMAL}, #{goodsInfoWeight,jdbcType=DECIMAL},
+        #{goodsInfoImgId,jdbcType=VARCHAR}, #{goodsInfoCreateName,jdbcType=VARCHAR},
+        #{goodsInfoCreateTime,jdbcType=TIMESTAMP},
+        #{goodsInfoModifiedName,jdbcType=VARCHAR}, #{goodsInfoModifiedTime,jdbcType=TIMESTAMP},
+        #{goodsInfoDelName,jdbcType=VARCHAR}, #{goodsInfoDelTime,jdbcType=TIMESTAMP}, #{goodsInfoDelflag,jdbcType=CHAR},
+        #{thirdId,jdbcType=BIGINT}, #{thirdName,jdbcType=VARCHAR}, #{isThird,jdbcType=CHAR},
+        #{goodsInfoIsbn,jdbcType=VARCHAR}, #{showList,jdbcType=CHAR}, #{showMobile,jdbcType=CHAR},
+        #{isCustomerDiscount,jdbcType=CHAR}, #{auditStatus,jdbcType=CHAR}, #{ismailbay,jdbcType=CHAR},
+        #{refuseReason,jdbcType=VARCHAR}, #{evaluationCount,jdbcType=BIGINT}, #{goodsSalenum,jdbcType=BIGINT},
+        #{goodsCollect,jdbcType=BIGINT},#{onlineShow,jdbcType=TINYINT},#{valetShow,jdbcType=TINYINT},#{goodsInfoType,jdbcType=INTEGER})
+    </insert>
+    
+    <insert id="insertSelective" parameterType="com.ylife.product.model.GoodsInfo">
+        insert into np_goods_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsInfoId != null">
+                goods_info_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsInfoItemNo != null">
+                goods_info_item_no,
+            </if>
+            <if test="goodsInfoName != null">
+                goods_info_name,
+            </if>
+            <if test="goodsInfoSubtitle != null">
+                goods_info_subtitle,
+            </if>
+            <if test="goodsInfoAdded != null">
+                goods_info_added,
+            </if>
+            <if test="goodsInfoAddedTime != null">
+                goods_info_added_time,
+            </if>
+            <if test="goodsInfoUnaddedTime != null">
+                goods_info_unadded_time,
+            </if>
+            <if test="goodsInfoStock != null">
+                goods_info_stock,
+            </if>
+            <if test="goodsInfoPreferPrice != null">
+                goods_info_prefer_price,
+            </if> <if test="goodsInfoSettlePrice != null">
+                goods_info_settle_price,
+            </if>
+            <if test="goodsInfoCostPrice != null">
+                goods_info_cost_price,
+            </if>
+            <if test="goodsInfoMarketPrice != null">
+                goods_info_market_price,
+            </if>
+            <if test="goodsInfoWeight != null">
+                goods_info_weight,
+            </if>
+            <if test="goodsInfoImgId != null">
+                goods_info_img_id,
+            </if>
+            <if test="goodsInfoCreateName != null">
+                goods_info_create_name,
+            </if>
+            <if test="goodsInfoCreateTime != null">
+                goods_info_create_time,
+            </if>
+            <if test="goodsInfoModifiedName != null">
+                goods_info_modified_name,
+            </if>
+            <if test="goodsInfoModifiedTime != null">
+                goods_info_modified_time,
+            </if>
+            <if test="goodsInfoDelName != null">
+                goods_info_del_name,
+            </if>
+            <if test="goodsInfoDelTime != null">
+                goods_info_del_time,
+            </if>
+            <if test="goodsInfoDelflag != null">
+                goods_info_delflag,
+            </if>
+            <if test="thirdId != null">
+                third_id,
+            </if>
+            <if test="thirdName != null">
+                third_name,
+            </if>
+            <if test="isThird != null">
+                is_third,
+            </if>
+            <if test="goodsInfoIsbn != null">
+                goods_info_isbn,
+            </if>
+            <if test="showList != null">
+                show_list,
+            </if>
+            <if test="showMobile != null">
+                show_mobile,
+            </if>
+            <if test="isCustomerDiscount != null">
+                is_customer_discount,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="ismailbay != null">
+                isMailBay,
+            </if>
+            <if test="refuseReason != null">
+                refuse_reason,
+            </if>
+            <if test="evaluationCount != null">
+                evaluation_count,
+            </if>
+            <if test="goodsSalenum != null">
+                goods_salenum,
+            </if>
+            <if test="goodsCollect != null">
+                goods_collect,
+            </if>
+            <if test="onlineShow!=null">
+                online_show,
+            </if>
+            <if test="valetShow!=null">
+                valet_show,
+            </if>
+            <if test="goodsInfoType!=null">
+                goods_info_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsInfoId != null">
+                #{goodsInfoId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsInfoItemNo != null">
+                #{goodsInfoItemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoName != null">
+                #{goodsInfoName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoSubtitle != null">
+                #{goodsInfoSubtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoAdded != null">
+                #{goodsInfoAdded,jdbcType=CHAR},
+            </if>
+            <if test="goodsInfoAddedTime != null">
+                #{goodsInfoAddedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoUnaddedTime != null">
+                #{goodsInfoUnaddedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoStock != null">
+                #{goodsInfoStock,jdbcType=BIGINT},
+            </if>
+            <if test="goodsInfoPreferPrice != null">
+                #{goodsInfoPreferPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoSettlePrice != null">
+                #{goodsInfoSettlePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoCostPrice != null">
+                #{goodsInfoCostPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoMarketPrice != null">
+                #{goodsInfoMarketPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoWeight != null">
+                #{goodsInfoWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoImgId != null">
+                #{goodsInfoImgId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoCreateName != null">
+                #{goodsInfoCreateName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoCreateTime != null">
+                #{goodsInfoCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoModifiedName != null">
+                #{goodsInfoModifiedName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoModifiedTime != null">
+                #{goodsInfoModifiedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoDelName != null">
+                #{goodsInfoDelName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoDelTime != null">
+                #{goodsInfoDelTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoDelflag != null">
+                #{goodsInfoDelflag,jdbcType=CHAR},
+            </if>
+            <if test="thirdId != null">
+                #{thirdId,jdbcType=BIGINT},
+            </if>
+            <if test="thirdName != null">
+                #{thirdName,jdbcType=VARCHAR},
+            </if>
+            <if test="isThird != null">
+                #{isThird,jdbcType=CHAR},
+            </if>
+            <if test="goodsInfoIsbn != null">
+                #{goodsInfoIsbn,jdbcType=VARCHAR},
+            </if>
+            <if test="showList != null">
+                #{showList,jdbcType=CHAR},
+            </if>
+            <if test="showMobile != null">
+                #{showMobile,jdbcType=CHAR},
+            </if>
+            <if test="isCustomerDiscount != null">
+                #{isCustomerDiscount,jdbcType=CHAR},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=CHAR},
+            </if>
+            <if test="ismailbay != null">
+                #{ismailbay,jdbcType=CHAR},
+            </if>
+            <if test="refuseReason != null">
+                #{refuseReason,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluationCount != null">
+                #{evaluationCount,jdbcType=BIGINT},
+            </if>
+            <if test="goodsSalenum != null">
+                #{goodsSalenum,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCollect != null">
+                #{goodsCollect,jdbcType=BIGINT},
+            </if>
+            <if test="onlineShow!=null">
+                #{onlineShow,jdbcType=TINYINT}
+            </if>
+            <if test="valetShow!=null">
+                #{valetShow,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.product.model.GoodsInfo">
+        update np_goods_info
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsInfoItemNo != null">
+                goods_info_item_no = #{goodsInfoItemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoName != null">
+                goods_info_name = #{goodsInfoName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoSubtitle != null">
+                goods_info_subtitle = #{goodsInfoSubtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoAdded != null">
+                goods_info_added = #{goodsInfoAdded,jdbcType=CHAR},
+            </if>
+            <if test="goodsInfoAddedTime != null">
+                goods_info_added_time = #{goodsInfoAddedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoUnaddedTime != null">
+                goods_info_unadded_time = #{goodsInfoUnaddedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoStock != null">
+                goods_info_stock = #{goodsInfoStock,jdbcType=BIGINT},
+            </if>
+            <if test="goodsInfoPreferPrice != null">
+                goods_info_prefer_price = #{goodsInfoPreferPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoSettlePrice != null">
+                goods_info_settle_price = #{goodsInfoSettlePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoCostPrice != null">
+                goods_info_cost_price = #{goodsInfoCostPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoMarketPrice != null">
+                goods_info_market_price = #{goodsInfoMarketPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoWeight != null">
+                goods_info_weight = #{goodsInfoWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsInfoImgId != null">
+                goods_info_img_id = #{goodsInfoImgId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoCreateName != null">
+                goods_info_create_name = #{goodsInfoCreateName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoCreateTime != null">
+                goods_info_create_time = #{goodsInfoCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoModifiedName != null">
+                goods_info_modified_name = #{goodsInfoModifiedName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoModifiedTime != null">
+                goods_info_modified_time = #{goodsInfoModifiedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoDelName != null">
+                goods_info_del_name = #{goodsInfoDelName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoDelTime != null">
+                goods_info_del_time = #{goodsInfoDelTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInfoDelflag != null">
+                goods_info_delflag = #{goodsInfoDelflag,jdbcType=CHAR},
+            </if>
+            <if test="thirdId != null">
+                third_id = #{thirdId,jdbcType=BIGINT},
+            </if>
+            <if test="thirdName != null">
+                third_name = #{thirdName,jdbcType=VARCHAR},
+            </if>
+            <if test="isThird != null">
+                is_third = #{isThird,jdbcType=CHAR},
+            </if>
+            <if test="goodsInfoIsbn != null">
+                goods_info_isbn = #{goodsInfoIsbn,jdbcType=VARCHAR},
+            </if>
+            <if test="showList != null">
+                show_list = #{showList,jdbcType=CHAR},
+            </if>
+            <if test="showMobile != null">
+                show_mobile = #{showMobile,jdbcType=CHAR},
+            </if>
+            <if test="isCustomerDiscount != null">
+                is_customer_discount = #{isCustomerDiscount,jdbcType=CHAR},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=CHAR},
+            </if>
+            <if test="ismailbay != null">
+                isMailBay = #{ismailbay,jdbcType=CHAR},
+            </if>
+            <if test="refuseReason != null">
+                refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluationCount != null">
+                evaluation_count = #{evaluationCount,jdbcType=BIGINT},
+            </if>
+            <if test="goodsSalenum != null">
+                goods_salenum = #{goodsSalenum,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCollect != null">
+                goods_collect = #{goodsCollect,jdbcType=BIGINT},
+            </if>
+            <if test="onlineShow!=null">
+                online_show=#{onlineShow,jdbcType=TINYINT}
+            </if>
+            <if test="valetShow!=null">
+                valet_show=#{valetShow,jdbcType=TINYINT}
+            </if>
+            <if test="goodsInfoType!=null">
+                goods_info_type=#{goodsInfoType,jdbcType=INTEGER}
+            </if>
+        </set>
+        where goods_info_id = #{goodsInfoId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.product.model.GoodsInfo">
+        update np_goods_info
+        set goods_id = #{goodsId,jdbcType=BIGINT},
+        goods_info_item_no = #{goodsInfoItemNo,jdbcType=VARCHAR},
+        goods_info_name = #{goodsInfoName,jdbcType=VARCHAR},
+        goods_info_subtitle = #{goodsInfoSubtitle,jdbcType=VARCHAR},
+        goods_info_added = #{goodsInfoAdded,jdbcType=CHAR},
+        goods_info_added_time = #{goodsInfoAddedTime,jdbcType=TIMESTAMP},
+        goods_info_unadded_time = #{goodsInfoUnaddedTime,jdbcType=TIMESTAMP},
+        goods_info_stock = #{goodsInfoStock,jdbcType=BIGINT},
+        goods_info_prefer_price = #{goodsInfoPreferPrice,jdbcType=DECIMAL},
+        goods_info_settle_price = #{goodsInfoSettlePrice,jdbcType=DECIMAL},
+        goods_info_cost_price = #{goodsInfoCostPrice,jdbcType=DECIMAL},
+        goods_info_market_price = #{goodsInfoMarketPrice,jdbcType=DECIMAL},
+        goods_info_weight = #{goodsInfoWeight,jdbcType=DECIMAL},
+        goods_info_img_id = #{goodsInfoImgId,jdbcType=VARCHAR},
+        goods_info_create_name = #{goodsInfoCreateName,jdbcType=VARCHAR},
+        goods_info_create_time = #{goodsInfoCreateTime,jdbcType=TIMESTAMP},
+        goods_info_modified_name = #{goodsInfoModifiedName,jdbcType=VARCHAR},
+        goods_info_modified_time = #{goodsInfoModifiedTime,jdbcType=TIMESTAMP},
+        goods_info_del_name = #{goodsInfoDelName,jdbcType=VARCHAR},
+        goods_info_del_time = #{goodsInfoDelTime,jdbcType=TIMESTAMP},
+        goods_info_delflag = #{goodsInfoDelflag,jdbcType=CHAR},
+        third_id = #{thirdId,jdbcType=BIGINT},
+        third_name = #{thirdName,jdbcType=VARCHAR},
+        is_third = #{isThird,jdbcType=CHAR},
+        goods_info_isbn = #{goodsInfoIsbn,jdbcType=VARCHAR},
+        show_list = #{showList,jdbcType=CHAR},
+        show_mobile = #{showMobile,jdbcType=CHAR},
+        is_customer_discount = #{isCustomerDiscount,jdbcType=CHAR},
+        audit_status = #{auditStatus,jdbcType=CHAR},
+        isMailBay = #{ismailbay,jdbcType=CHAR},
+        refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+        evaluation_count = #{evaluationCount,jdbcType=BIGINT},
+        goods_salenum = #{goodsSalenum,jdbcType=BIGINT},
+        goods_collect = #{goodsCollect,jdbcType=BIGINT},
+        online_show = #{onlineShow,jdbcType=TINYINT},
+        valet_show = #{valetShow,jdbcType=TINYINT},
+        goods_info_type=#{goodsInfoType,jdbcType=INTEGER}
+        where goods_info_id = #{goodsInfoId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectGoods" resultMap="GoodsManagerResult">
+        select
+        gi.goods_info_id,
+        gi.goods_info_img_id,
+        gi.goods_info_name,
+        IFNULL(GROUP_CONCAT(concat(gs.spec_name,":", IFNULL(gsd.spec_detail_name, ""))), "") as spec_string,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_settle_price,
+        gi.goods_info_added,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.online_show,
+        gi.valet_show,
+        gi.goods_info_type,
+        gi.audit_status
+        FROM
+        np_goods_info as gi
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        <where>
+            gi.goods_info_delflag="0"
+            and g.goods_delflag="0"
+            <if test="goodsInfoName!=null and goodsInfoName!= ''">
+                and gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="goodsInfoItemNo!=null and goodsInfoItemNo!= ''">
+                and
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="brandId!=null">
+                and
+                gb.brand_id=#{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoAdded!=null">
+                and
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId!=null">
+                and
+                gt.type_id=#{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdId!=null">
+                and
+                gi.third_id=#{thirdId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoType!=null">
+                and
+                gi.goods_info_type=#{goodsInfoType,jdbcType=INTEGER}
+            </if>
+            <if test="auditStatus!=null">
+                and
+                gi.audit_status=#{auditStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="onlineShow!=null">
+                and
+                gi.online_show=#{onlineShow,jdbcType=TINYINT}
+            </if>
+            <if test="valetShow!=null">
+                and
+                gi.valet_show=#{valetShow,jdbcType=TINYINT}
+            </if>
+          <!--  <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+            ]]>
+            </if>-->
+        </where>
+        group by goods_info_id
+        ORDER BY gb.brand_id
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countGoodsResult" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        np_goods_info AS gi
+        LEFT JOIN np_goods AS g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type AS gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand AS gb ON gb.brand_id = g.brand_id
+        <where>
+            gi.goods_info_delflag="0"
+            and g.goods_delflag="0"
+            <if test="goodsInfoName!=null and goodsInfoName != ''">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="goodsInfoItemNo!=null and goodsInfoItemNo != ''">
+                and
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="brandId!=null">
+                and
+                gb.brand_id=#{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoAdded!=null">
+                and
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId!=null">
+                and
+                gt.type_id=#{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdId!=null">
+                and
+                gi.third_id=#{thirdId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoType!=null">
+                and
+                gi.goods_info_type=#{goodsInfoType,jdbcType=INTEGER}
+            </if>
+            <if test="onlineShow!=null">
+                and
+                gi.online_show=#{onlineShow,jdbcType=TINYINT}
+            </if>
+            <if test="valetShow!=null">
+                and
+                gi.valet_show=#{valetShow,jdbcType=TINYINT}
+            </if>
+         <!--   <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>-->
+        </where>
+    </select>
+
+
+
+
+        <select id="selectSettleGoods" resultMap="GoodsManagerResult">
+        select
+        gi.goods_info_id,
+        gi.goods_info_img_id,
+        gi.goods_info_name,
+        IFNULL(GROUP_CONCAT(concat(gs.spec_name,":", IFNULL(gsd.spec_detail_name, ""))), "") as spec_string,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_settle_price,
+        gi.goods_info_added,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.online_show,
+        ngie.enterprise_id,
+        yei.enterprise_name
+        FROM
+        np_goods_info_enterprise as ngie
+        left join ysh_enterprise_info as yei on yei.enterprise_id=ngie.enterprise_id
+        left join np_goods_info as gi on ngie.goods_info_id=gi.goods_info_id
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        <where>
+            gi.goods_info_delflag="0"
+            and gi.goods_info_type=1
+            and g.goods_delflag="0"
+            and
+            <foreach collection="enterpriseIds" separator="or" item="item" open="(" close=")">
+                <if test="item!=null">
+                    ngie.enterprise_id=#{item,jdbcType=BIGINT}
+                </if>
+            </foreach>
+            <if test="onlineShow!=null">
+                and
+                gi.online_show=#{onlineShow,jdbcType=TINYINT}
+            </if>
+            <if test="valetShow!=null">
+                and
+                gi.valet_show=#{valetShow,jdbcType=TINYINT}
+            </if>
+
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                and
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="brandId!=null">
+                and
+                gb.brand_id=#{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoAdded!=null">
+                and
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId!=null">
+                and
+                gt.type_id=#{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdId!=null">
+                and
+                gi.third_id=#{thirdId,jdbcType=BIGINT}
+            </if>
+        </where>
+        group by gi.goods_info_id
+        ORDER BY ngie.enterprise_id,
+        gi.goods_info_create_time DESC
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countSettleGoods" resultType="java.lang.Integer">
+        select
+           COUNT(DISTINCT(gi.goods_info_id))
+        FROM
+        np_goods_info_enterprise as ngie
+        left join np_goods_info as gi on ngie.goods_info_id=gi.goods_info_id
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        <where>
+            gi.goods_info_delflag="0"
+            and gi.goods_info_type=1
+            and g.goods_delflag="0"
+            and
+            <foreach collection="enterpriseIds" separator="or" item="item" open="(" close=")">
+                <if test="item!=null">
+                    ngie.enterprise_id=#{item,jdbcType=BIGINT}
+                </if>
+            </foreach>
+            <if test="onlineShow!=null">
+                and
+                gi.online_show=#{onlineShow,jdbcType=TINYINT}
+            </if>
+            <if test="valetShow!=null">
+                and
+                gi.valet_show=#{valetShow,jdbcType=TINYINT}
+            </if>
+
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                and
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="brandId!=null">
+                and
+                gb.brand_id=#{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoAdded!=null">
+                and
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId!=null">
+                and
+                gt.type_id=#{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdId!=null">
+                and
+                gi.third_id=#{thirdId,jdbcType=BIGINT}
+            </if>
+        </where>
+
+    </select>
+
+
+    <select id="selectSettleGoodsByEnterpriseId" resultMap="GoodsManagerResult">
+        select
+        gi.goods_info_id,
+        gi.goods_info_img_id,
+        gi.goods_info_name,
+        IFNULL(GROUP_CONCAT(concat(gs.spec_name,":", IFNULL(gsd.spec_detail_name, ""))), "") as spec_string,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_settle_price,
+        gi.goods_info_added,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.online_show,
+        yei.enterprise_name
+        FROM
+        np_goods_info_enterprise as ngie
+        left join ysh_enterprise_info as yei on yei.enterprise_id=ngie.enterprise_id
+        left join ysh_enterprise_func as yef on yef.id=ngie.enterprise_id
+        left join np_goods_info as gi on ngie.goods_info_id=gi.goods_info_id
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        <where>
+            gi.goods_info_delflag="0"
+            and gi.goods_info_type=1
+            and g.goods_delflag="0"
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                and
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="brandId!=null">
+                and
+                gb.brand_id=#{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoAdded!=null">
+                and
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId!=null">
+                and
+                gt.type_id=#{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdId!=null">
+                and
+                gi.third_id=#{thirdId,jdbcType=BIGINT}
+            </if>
+        </where>
+        group by gi.goods_info_id
+        ORDER BY ngie.enterprise_id,
+        gi.goods_info_create_time DESC
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+
+    <select id="countSettleGoodsByEnterpriseId" resultType="java.lang.Integer">
+        select
+          count(DISTINCT(ngie.goods_info_id))
+        FROM
+        np_goods_info_enterprise as ngie
+        left join ysh_enterprise_func as yef on yef.id=ngie.enterprise_id
+        left join np_goods_info as gi on ngie.goods_info_id=gi.goods_info_id
+        LEFT JOIN np_goods as g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type as gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand as gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        <where>
+            gi.goods_info_delflag="0"
+            and gi.goods_info_type=1
+            and g.goods_delflag="0"
+            <if test="minCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog >= #{minCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="maxCatalog != null">
+                <![CDATA[
+            and
+            yef.catalog <= #{maxCatalog,jdbcType=BIGINT}
+            ]]>
+            </if>
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                and
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR}
+            </if>
+            <if test="brandId!=null">
+                and
+                gb.brand_id=#{brandId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoAdded!=null">
+                and
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId!=null">
+                and
+                gt.type_id=#{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="thirdId!=null">
+                and
+                gi.third_id=#{thirdId,jdbcType=BIGINT}
+            </if>
+        </where>
+        ORDER BY gb.brand_id,gi.goods_info_added_time
+    </select>
+
+
+
+
+    <select id="selectValetGoods" resultMap="GoodsManagerResult">
+        SELECT
+        gi.goods_info_id,
+        gi.goods_info_name,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_added,
+        gi.online_show,
+        gi.valet_show,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.goods_info_img_id,
+        gi.goods_info_create_time,
+        IFNULL(
+        GROUP_CONCAT(
+        concat(
+        gs.spec_name,
+        ":",
+        IFNULL(gsd.spec_detail_name, "")
+        )
+        ),
+        ""
+        ) AS spec_string,
+        ngi.goods_img_id,
+        ngi.image_in_name,
+        ngi.image_big_name,
+        ngi.image_artwork_name,
+        ngi.image_thum_name,
+        ysh_enterprise_inventory.available,
+        ysh_enterprise_inventory.inventory
+        FROM
+        np_goods_info AS gi
+        LEFT JOIN np_goods AS g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_type AS gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_image AS ngi ON ngi.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_brand AS gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail AS girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec AS gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail AS gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        LEFT JOIN ysh_enterprise_inventory ON ysh_enterprise_inventory.goods_info_id = gi.goods_info_id
+        and ysh_enterprise_inventory.enterprise_id=#{enterpriseId}
+        <where>
+        g.goods_delflag="0"
+            and gi.goods_info_delflag="0"
+            AND gi.goods_info_type = 0
+            and gi.goods_info_added="1"
+            and gi.valet_show=1
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+        </where>
+            group by gi.goods_info_id
+
+        UNION
+
+        SELECT
+        gi.goods_info_id,
+        gi.goods_info_name,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_added,
+        gi.online_show,
+        gi.valet_show,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.goods_info_img_id,
+        gi.goods_info_create_time,
+        IFNULL(
+        GROUP_CONCAT(
+        concat(
+        gs.spec_name,
+        ":",
+        IFNULL(gsd.spec_detail_name, "")
+        )
+        ),
+        ""
+        ) AS spec_string,
+        ngi.goods_img_id,
+        ngi.image_in_name,
+        ngi.image_big_name,
+        ngi.image_artwork_name,
+        ngi.image_thum_name,
+        ysh_enterprise_inventory.available,
+        ysh_enterprise_inventory.inventory
+        FROM
+        np_goods_info_enterprise AS ngie
+        LEFT JOIN ysh_enterprise_info AS yei ON yei.enterprise_id = ngie.enterprise_id
+        LEFT JOIN np_goods_info AS gi ON ngie.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods AS g ON g.goods_id = gi.goods_id
+        LEFT JOIN np_goods_image AS ngi ON ngi.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_type AS gt ON gt.type_id = g.type_id
+        LEFT JOIN np_goods_brand AS gb ON gb.brand_id = g.brand_id
+        LEFT JOIN np_goods_info_rele_spec_detail AS girsd ON girsd.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods_spec AS gs ON gs.spec_id = girsd.spec_id
+        LEFT JOIN np_goods_spec_detail AS gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        LEFT JOIN ysh_enterprise_inventory ON ysh_enterprise_inventory.goods_info_id = ngie.enterprise_id
+        and ysh_enterprise_inventory.enterprise_id=#{enterpriseId}
+
+        <where>
+        gi.goods_info_delflag="0"
+        and gi.goods_info_type=1
+        and gi.goods_info_added="1"
+        and g.goods_delflag="0"
+            and gi.valet_show=1
+            and
+        <foreach collection="enterpriseIds" separator="or" item="item" open="(" close=")">
+            <if test="item!=null">
+                ngie.enterprise_id=#{item,jdbcType=BIGINT}
+            </if>
+        </foreach>
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+            ]]>
+            </if>
+        </where>
+        group by gi.goods_info_id
+        order by goods_info_create_time
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countValeGoodsResult" resultType="java.lang.Integer">
+
+        select sum(count) as totalElements from (
+        SELECT
+        COUNT(gi.goods_info_id) as count
+        FROM
+        np_goods_info AS gi
+        LEFT JOIN np_goods AS g ON g.goods_id = gi.goods_id
+        <where>
+            g.goods_delflag="0"
+            and gi.goods_info_delflag="0"
+            AND gi.goods_info_type = 0
+            and gi.goods_info_added="1"
+            and gi.valet_show=1
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+        </where>
+
+        UNION
+
+        SELECT
+        COUNT(gi.goods_info_id) as count
+        FROM
+        np_goods_info_enterprise AS ngie
+        LEFT JOIN np_goods_info AS gi ON ngie.goods_info_id = gi.goods_info_id
+        LEFT JOIN np_goods AS g ON g.goods_id = gi.goods_id
+        <where>
+            gi.goods_info_delflag="0"
+            and gi.goods_info_type=1
+            and gi.goods_info_added="1"
+            and g.goods_delflag="0"
+            and gi.valet_show=1
+            and
+            <foreach collection="enterpriseIds" separator="or" item="item" open="(" close=")">
+                <if test="item!=null">
+                    ngie.enterprise_id=#{item,jdbcType=BIGINT}
+                </if>
+            </foreach>
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+        </where>
+        ) as middle
+
+    </select>
+
+
+    <select id="selectNetWorkGoods" resultMap="GoodsManagerResult">
+        select
+        gi.goods_info_id,
+        gi.goods_info_name,
+        gi.goods_info_item_no,
+        gi.goods_info_prefer_price,
+        gi.goods_info_added,
+        gi.online_show,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        gi.third_id,
+        gi.third_name,
+        gi.goods_info_img_id,
+        ngi.goods_img_id,
+        ngi.image_in_name,
+        ngi.image_big_name,
+        ngi.image_artwork_name,
+        ngi.image_thum_name,
+        yei.available,
+        yei.inventory
+        from
+        ysh_enterprise_inventory  as yei
+        left join np_goods_info as gi on yei.goods_info_id=gi.goods_info_id
+        left join np_goods as g ON g.goods_id = gi.goods_id
+        left join np_goods_type as gt ON gt.type_id = g.type_id
+        left join np_goods_brand as gb ON gb.brand_id = g.brand_id
+        left join np_goods_image as ngi on ngi.goods_info_id=gi.goods_info_id
+        <where>
+             g.goods_delflag="0"
+            and gi.goods_info_delflag="0"
+            and gi.goods_info_added="1"
+            and yei.available>"0"
+            and gi.valet_show=1
+            <if test="goodsInfoId!=null">
+                AND
+                gi.goods_info_id=#{goodsInfoId,jdbcType=BIGINT}
+            </if>
+            <if test="enterpriseId!=null">
+                AND
+                yei.enterprise_id =#{enterpriseId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+        </where>
+        group by gi.goods_info_id
+        order by gi.goods_info_prefer_price asc,gi.goods_info_added_time asc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countNetWorkGoods" resultType="java.lang.Integer">
+        SELECT
+        count(gi.goods_info_id)
+        from
+        ysh_enterprise_inventory  as yei
+        left join np_goods_info as gi on yei.goods_info_id=gi.goods_info_id
+        left join np_goods as g ON g.goods_id = gi.goods_id
+        <where>
+            g.goods_delflag="0"
+            and gi.goods_info_delflag="0"
+            and gi.goods_info_added="1"
+            and yei.available>"0"
+            and gi.valet_show=1=1
+            <if test="enterpriseId!=null">
+                AND
+                yei.enterprise_id =#{enterpriseId,jdbcType=BIGINT}
+            </if>
+            <if test="goodsInfoId!=null">
+                AND
+                gi.goods_info_id=#{goodsInfoId,jdbcType=BIGINT}
+            </if>
+
+            <if test="goodsInfoName!=null">
+                and
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="highPrice!=null">
+                <![CDATA[
+                and
+                  gi.goods_info_prefer_price<= #{highPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+            <if test="lowPrice!=null">
+                <![CDATA[
+                  and
+                  gi.goods_info_prefer_price>=#{lowPrice,jdbcType=DECIMAL}
+                  ]]>
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="selectBrand" resultMap="GoodsManagerResult">
+        select brand_name,brand_id
+        from np_goods_brand
+        limit 0,10
+    </select>
+
+    <select id="selectType" resultMap="GoodsManagerResult">
+        select type_name,type_Id
+        from np_goods_type
+        limit 0,10
+    </select>
+
+    <select id="selectThirdName" resultMap="GoodsManagerResult">
+      SELECT DISTINCT(third_id),third_name
+      FROM
+	    np_goods_info AS ngi
+     <where>
+         ngi.goods_info_delflag="0"
+         and
+         ngi.goods_info_type = 0
+        <if test="thirdName!=null">
+            and
+            ngi.third_name like concat(concat('%', #{thirdName,jdbcType=VARCHAR}),'%')
+        </if>
+     </where>
+      order by third_id
+    </select>
+
+  <select id="selectThirdEnterpriseName" resultMap="GoodsManagerResult">
+      SELECT DISTINCT(ngie.enterprise_id),yei.enterprise_name
+      from
+        np_goods_info_enterprise as ngie
+      left join np_goods_info as ngi  on ngie.goods_info_id=ngi.goods_info_id
+      left join ysh_enterprise_info as yei on yei.enterprise_id=ngie.enterprise_id
+      <where>
+          ngi.goods_info_delflag="0"
+          and
+          ngi.goods_info_type = 1
+          <if test="thirdName!=null">
+              and
+              yei.enterprise_name like concat(concat('%', #{thirdName,jdbcType=VARCHAR}),'%')
+          </if>
+      </where>
+    </select>
+
+    <select id="selectBrandTypeThird" resultMap="GoodsManagerResult">
+        select
+        gb.brand_id,brand_name,gt.type_id,type_name,third_id,third_name
+        from np_goods_info as gi
+        LEFT JOIN np_goods as g on g.goods_id=gi.goods_id
+        left join np_goods_brand as gb on gb.brand_id=g.brand_id
+        left join np_goods_type as gt on gt.type_id=g.type_id
+        limit 0,10
+    </select>
+
+
+        <!--
+        <trim prefix="where" suffixOverrides="and">
+
+            <if test="goodsInfoName!=null">
+                gi.goods_info_name like concat(concat('%', #{goodsInfoName,jdbcType=VARCHAR}),'%') and
+            </if>
+            <if test="goodsInfoItemNo!=null">
+                gi.goods_info_item_no=#{goodsInfoItemNo,jdbcType=VARCHAR} and
+            </if>
+            <if test="brandId!=null">
+                gb.brand_id=#{brandId,jdbcType=BIGINT} and
+            </if>
+            <if test="goodsInfoAdded!=null">
+                gi.goods_info_added=#{goodsInfoAdded,jdbcType=VARCHAR} and
+            </if>
+            <if test="typeId!=null">
+                gt.type_id=#{typeId,jdbcType=BIGINT} and
+            </if>
+            <if test="thirdId!=null">
+                gi.third_id=#{thirdId,jdbcType=BIGINT} and
+            </if>
+        </trim>-->
+
+    <update id="unshelves" parameterType="com.ylife.product.model.GoodsInfo">
+        update np_goods_info
+        set goods_info_added='0'
+        where goods_info_id=#{goodsInfoId,jdbcType=BIGINT}
+    </update>
+
+    <update id="shelves" parameterType="com.ylife.inventory.mapper.pojo.GoodsManagerResult">
+        update np_goods_info
+        set goods_info_added='1'
+        where goods_info_id=#{goodsInfoId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateShow" parameterType="com.ylife.inventory.mapper.pojo.GoodsManagerResult">
+        UPDATE np_goods_info
+        SET online_show=#{valteOrSupply,jdbcType=VARCHAR}
+
+        WHERE goods_info_id=#{goodsInfoId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByGoodsINfoIdAndEnterpriseId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        goods_detail_desc,
+        gt.type_id,
+        gt.type_name,
+        gb.brand_id,
+        gb.brand_name,
+        <if test="enterpriseId ==null ">
+        g.cat_id,
+        gc.cat_parent_id,
+        pgc.cat_parent_id cat_grandpa_id,
+        </if>
+        gs.spec_id,
+        gs.spec_name,
+        gsd.spec_detail_id,
+        gsd.spec_detail_name,
+        <if test="enterpriseId !=null ">
+        gte.expandparam_id,
+        gte.expandparam_name,
+        gtev.expandparam_value_name,
+        </if>
+        gtp.param_id,
+        gtp.param_name,
+        grp.param_value,
+        ngi.goods_img_id,
+        ngi.image_in_name,
+        ngi.image_big_name,
+        ngi.image_artwork_name,
+        ngi.image_thum_name
+        <if test="enterpriseId !=null ">
+            ,yei.available,
+            yei.inventory
+        </if>
+        FROM
+        np_goods_info
+        left join np_goods as g ON g.goods_id = np_goods_info.goods_id
+        left join np_goods_type as gt ON gt.type_id = g.type_id
+        left join np_goods_brand as gb ON gb.brand_id = g.brand_id
+        <if test="enterpriseId ==null ">
+            left join np_goods_category as gc ON gc.cat_id = g.cat_id
+            left join np_goods_category as pgc ON pgc.cat_id = gc.cat_parent_id
+        </if>
+        left join np_goods_info_rele_spec_detail as girsd ON girsd.goods_info_id = np_goods_info.goods_info_id
+        left join np_goods_spec as gs ON gs.spec_id = girsd.spec_id
+        left join np_goods_spec_detail as gsd ON gsd.spec_detail_id = girsd.spec_detail_id
+        <if test="enterpriseId !=null ">
+            left join np_goods_rele_expandparam as gre on gre.goods_id=g.goods_id
+            left join np_goods_type_expandparam as gte on gte.expandparam_id=gre.expandparam_id
+            left join np_goods_type_expandparam_value as gtev on gtev.expandparam_value_id=gre.expangparam_value_id
+        </if>
+        left join np_goods_rele_param as grp on grp.goods_id=g.goods_id
+        left join np_goods_type_param as gtp on gtp.param_id=grp.param_id
+        left join np_goods_image as ngi on ngi.goods_info_id=np_goods_info.goods_info_id
+        <if test="enterpriseId !=null ">
+          left JOIN ysh_enterprise_inventory as yei on np_goods_info.goods_info_id=yei.goods_info_id and  yei.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+        </if>
+        <where>
+            <if test="goodsInfoId !=null ">
+                AND
+                np_goods_info.goods_info_id = #{goodsInfoId,jdbcType=BIGINT}
+
+                and (grp.param_value is null or grp.param_delflag='0') and ngi.goods_img_delflag = '0'
+            </if>
+
+        </where>
+    </select>
+</mapper>

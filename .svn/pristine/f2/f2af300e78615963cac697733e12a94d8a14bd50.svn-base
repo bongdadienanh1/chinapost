@@ -1,0 +1,397 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>商城第三方后台-商品管理</title>
+<#assign basePath=request.contextPath />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/third.css?v=201707011506"/>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/css/bootstrap.min.css?v=20151016234"/>
+    <link href="http://cdn.bootcss.com/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.min.css?v=20151016234" rel="stylesheet">
+    <link href="${basePath}/static/css/material.css?v=20151016234" rel="stylesheet">
+    <link href="${basePath}/static/css/ripples.css?v=20151016234" rel="stylesheet">
+    <link rel="stylesheet" href="${basePath}/static/css/style.css?v=20170630"/>
+    <link rel="stylesheet" href="${basePath}/static/css/select2.min.css"/>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.min.js?v=20151016234"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/js/bootstrap.min.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/ripples.min.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/material.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/third.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/goods_vali.js?v=20151016234"></script>
+<#--<script type="text/javascript" src="${basePath}/static/js/goods/thirdgoods.js?v=20170702"></script>-->
+    <script type="text/javascript" src="${basePath}/static/js/goods/thirdOrderList.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/newupload.js?v=201707021754"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/artDialog4.1.7/artDialog.source.js?skin=default"></script>
+    <script type="text/javascript" src="${basePath}/static/js/artDialog4.1.7/plugins/iframeTools.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.slimscroll.min.js?v=20151016234"></script>
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/summernote.css?v=20151016234">
+    <script type="text/javascript" src="${basePath}/static/js/summernote.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/summernote-zh-CN.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.validate.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common/common_alert.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common/common_date.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/app.js?v=20151016234"></script>
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/goodsAdd.css?v=20151016234"/>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css?v=20151016234"/>
+    <link rel="stylesheet" href="${basePath}/static/css/bootstrap-chosen.css?v=20151016234"/>
+    <script src="${basePath}/static/js/chosen.jquery.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/angular.min.js?v=20151016234"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/kindeditor.js"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/plugins/code/prettify.js"></script>
+    <script src="${basePath}/static/js/select2.min.js"></script>
+</head>
+<body>
+<#--引入头部-->
+<#include "index/indextop.ftl">
+
+<!-- 保存商品的表单 -->
+<form class="save_goods_info" action="sathirdgoods.htm" method="post" target="hidden_frame"
+      enctype="multipart/form-data">
+</form>
+
+<!-- 模拟无刷新上传图片用到的 -->
+<iframe name="hidden_frame" style="display:none"></iframe>
+
+<!-- 保存商品详情的表单 -->
+<form class="save_goods_desc" action="tNewUploadSaveGoodsDesc.htm" method="post" target="hidden_frame"
+      enctype="multipart/form-data">
+    <input type="hidden" class="new_goods_id" name="goodsId" value="">
+    <input type="hidden" class="goods_desc" name="goodsDetailDesc" value="">
+    <input type="hidden" class="goods_mobile_desc" name="goodsMobileDesc" value="">
+</form>
+
+
+<div class="wp">
+    <input type="hidden" value="${isThirdAuditUsed!''}" id="isThirdAuditUsed"/>
+    <div class="ui-sidebar">
+        <div class="sidebar-nav">
+        <#import "index/indexleft.ftl" as leftmenu>
+        <@leftmenu.leftmenu '${basePath}' />
+        </div>
+    </div>
+
+    <div class="app show_text" style="display: none;"">
+    <div class="app-container">
+        <ol class="breadcrumb">
+            <li>您所在的位置</li>
+            <li>订单管理</li>
+            <li class="active" style="color: #07d;">订单列表</li>
+        </ol>
+    </div>
+    <div class="search-block">
+        <form action="" class="searchThirdOrderList" method="post">
+            <input type="hidden" value="" name="expressName" class="outexcellist">
+            <input type="hidden" value="<#if map.order.orderStatus??>${map.order.orderStatus}</#if>" name="orderStatus" class="tabStatus">
+            <div class="filter-groups">
+                <div class="control-group">
+                    <label class="control-label">订单编号：</label>
+                    <div class="controls">
+                        <input class="form-control" name="orderCode" id="orderCode"
+                        <#--onkeyup="value=value.replace(/[^\d]/g,'') "-->
+                               onkeyup="value=value.replace(/[^\w\/]/ig,'')"
+                        <#--onbeforepaste="clipboardData.setData('text',-->
+                        <#--clipboardData.getData('text').replace(/[^\d]/g,''))"-->
+                        <#if map.order.orderCode??>
+                               value="${map.order.orderCode}"
+                        <#else>
+                               value=""
+                        </#if> type="text"/>
+                    </div>
+                </div>
+                <div class="control-group lg-group">
+                    <label class="control-label">下单时间：</label>
+                    <div class="controls">
+                        <input type="text" name="payTimeStart" id="startTime" value="<#if map.order.payTimeStart??>${map.order.payTimeStart}</#if>" class="form-control sm-input datepicker"/>
+                        ~
+                        <input type="text" name="payTimeEnd" id="endTime" value="<#if map.order.payTimeEnd??>${map.order.payTimeEnd}</#if>" class="form-control sm-input datepicker"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">手机号码：</label>
+                    <div class="controls">
+                        <input class="form-control" name="shippingMobile" id="shippingMobile" value="<#if map.order.shippingMobile??>${map.order.shippingMobile}</#if>" type="text"/>
+                    </div>
+                </div>
+
+                <div class="control-group lg-group">
+                    <label class="control-label">付款时间：</label>
+                    <div class="controls">
+                        <input type="text" name="payTimeStart" id="startTime" value="<#if map.order.payTimeStart??>${map.order.payTimeStart}</#if>" class="form-control sm-input datepicker"/>
+                        ~
+                        <input type="text" name="payTimeEnd" id="endTime" value="<#if map.order.payTimeEnd??>${map.order.payTimeEnd}</#if>" class="form-control sm-input datepicker"/>
+                    </div>
+                </div>
+            </div>
+            <div class="search-operation">
+                <button class="btn btn-primary btn-sm"  onclick="queryOrderList()" type="button">查询<i class="glyphicon glyphicon-search"></i></button>
+                <button class="btn btn-default btn-sm"  onclick="resetThirdOrder()"  type="button">重置<i class="glyphicon glyphicon-refresh"></i></button>
+            </div>
+        </form>
+    </div>
+    <button class="btn btn-primary btn-sm"  onclick="exportThirdOrder()" type="button">导出订单</button>
+    <ul class="nav nav-tabs">
+        <li class="tb_barterOrder " onclick="changTbl('')"><a href="javascript:;">全部订单</a></li>
+        <li class="tb_backOrderSH" onclick="changTbl(0)"><a href="javascript:;">待付款</a></li>
+        <li class="tb_backOrderTg" onclick="changTbl(1)"><a href="javascript:;">待发货</a></li>
+        <li class="tb_backOrderJj" onclick="changTbl(2)"><a href="javascript:;">已发货</a></li>
+        <li class="tb_backOrderYt" onclick="changTbl(3)"><a href="javascript:;">已收货</a></li>
+        <li class="tb_backOrderover " onclick="changTbl(4)"><a href="javascript:;">已取消</a></li>
+    </ul>
+    <div class="cfg-content">
+        <form class="simple_search" action="<#if map.pb.url??&&map.pb??>${map.pb.url}<#else> </#if>" method="post">
+        </form>
+        <form class="high_search" action="<#if map.pb.url??&&map.pb??>${map.pb.url}<#else> </#if>" method="post">
+            <div class="ops-bar"></div>
+            <table class="table table-bordered orders-table">
+                <thead>
+                <tr>
+                    <th width="30%">商品</th>
+                    <th>商品种类</th>
+                    <th>买家</th>
+                    <th width="10%">下单时间</th>
+                    <th>订单状态</th>
+                    <th>实付金额</th>
+                    <th>所属商城</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+            <#--<#if map.pb??&&map.pb.list??&&map.pb.list?size!=0&&map.pb.list[0]??>-->
+            <#--<#list map.pb.list as order>-->
+            <#--<tbody>-->
+            <#--<tr class="separation-row">-->
+            <#--<td colspan="8"></td>-->
+            <#--</tr>-->
+            <#--<tr class="header-row">-->
+            <#--<td colspan="6">-->
+            <#--<p>订单号：111111111</p>-->
+            <#--</td>-->
+            <#--<td class="row-ops" colspan="2">-->
+            <#--&lt;#&ndash;<a href="tothirdorderdetail.html?orderId=<#if order.orderId??>${order.orderId}</#if>">查看详情</a><b> - </b>&ndash;&gt;-->
+            <#--&lt;#&ndash;<a href="javascript:;" onclick="addNotes(<#if order.orderId??>${order.orderId}</#if>)">卖家备注</a>&ndash;&gt;-->
+            <#--</td>-->
+            <#--</tr>-->
+            <#--<tr class="content-row">-->
+            <#--<td class="order-pros">-->
+            <#--&lt;#&ndash;遍历该订单下面的所有商品的信息&ndash;&gt;-->
+            <#--<#if order.orderGoodsList??>-->
+            <#--<#list order.orderGoodsList as map>-->
+            <#--<#if map.goodsProductVo??>-->
+            <#--<a href="javascript:;" title="${map.goodsProductVo.goodsInfoName!'' }"><img src="${map.goodsProductVo.goodsInfoImgId!'' }" alt="商品1" width="60" height="60"/></a>-->
+            <#--</#if>-->
+            <#--</#list>-->
+            <#--</#if>-->
+            <#--</td>-->
+            <#--<td>-->
+            <#--（<#if order.orderGoodsList??>${order.orderGoodsList?size}<#else></#if>件）-->
+            <#--</td>-->
+            <#--<td style="line-height: 20px;">${order.shippingPerson!''}<br/>${order.shippingMobile!''}</td>-->
+            <#--<td><#if order.createTime??>${order.createTime?string("yyyy-MM-dd HH:mm:ss") }</#if></td>-->
+            <#--<td>-->
+            <#--<#if order.orderStatus??>-->
+            <#--<#if order.orderStatus=="0">-->
+            <#--待付款-->
+            <#--<#elseif (order.orderStatus=="1" || order.orderStatus=="5" || order.orderStatus=="6") >-->
+            <#--待发货-->
+            <#--<#elseif order.orderStatus=="2">-->
+            <#--待收货-->
+            <#--<#elseif order.orderStatus=="3">-->
+            <#--已完成-->
+            <#--<#elseif order.orderStatus=="4">-->
+            <#--已取消-->
+            <#--<#elseif order.orderStatus=="15">-->
+            <#--退款审核-->
+            <#--<#elseif order.orderStatus=="19">-->
+            <#--退款待退款-->
+            <#--<#elseif order.orderStatus=="13">-->
+            <#--拒绝退款-->
+            <#--<#elseif order.orderStatus=="18">-->
+            <#--退款成功-->
+            <#--<#elseif order.orderStatus=="14">-->
+            <#--退货审核-->
+            <#--<#elseif order.orderStatus=="8">-->
+            <#--待客户填写物流信息-->
+            <#--<#elseif order.orderStatus=="9">-->
+            <#--拒绝退货-->
+            <#--<#elseif order.orderStatus=="10">-->
+            <#--待商家收货-->
+            <#--<#elseif order.orderStatus=="20">-->
+            <#--退货待退款-->
+            <#--<#elseif order.orderStatus=="16">-->
+            <#--收货失败-->
+            <#--<#elseif order.orderStatus=="11">-->
+            <#--退单结束-->
+            <#--<#elseif order.orderStatus=="7">-->
+            <#--申请退货-->
+            <#--<#elseif order.orderStatus=="12">-->
+            <#--同意退款-->
+            <#--<#elseif order.orderStatus=="17">-->
+            <#--已退款-->
+            <#--</#if>-->
+            <#--</#if>-->
+            <#--</td>-->
+            <#--&lt;#&ndash;判断是店铺入驻商城还是供货商入驻商城的订单&ndash;&gt;-->
+            <#--<#if order.mallId==0>-->
+            <#--<td>¥${(order.orderPrice)?string("0.00")}</td>-->
+            <#--<td>${order.mallName}</td>-->
+            <#--<td>-->
+            <#--<div class="btn-group" style="width: 112px;">-->
+            <#--<button href="">查看详情</button>-->
+            <#--</div>-->
+            <#--</td>-->
+            <#--<#else >-->
+            <#--<td></td>-->
+            <#--<td>${order.mallName}</td>-->
+            <#--<td>-->
+            <#--<div class="btn-group">-->
+            <#--<#if order.orderStatus=="1"&&order.orderLinePay=="1">-->
+            <#--<button type="button" class="btn btn-primary btn-sm" style="width: 112px;" onclick="javascript:window.location.href='querythirdoutstock.html?n=9&l=59'">去拣货</button>-->
+            <#--<#else>-->
+            <#--<button  class="btn btn-primary btn-sm btn_css"  style="width: 112px;">暂无操作</button>-->
+            <#--</#if>-->
+            <#--</div>-->
+            <#--</td>-->
+            <#--</#if>-->
+            <#--</tr>-->
+            <#--</tbody>-->
+            <#--</#list>-->
+                <tbody>
+                <tr class="separation-row">
+                    <td colspan="8"></td>
+                </tr>
+                <tr class="header-row">
+                    <td colspan="6">
+                        <p>订单号：111111111</p>
+                    </td>
+                    <td class="row-ops" colspan="2">
+
+                    </td>
+                </tr>
+                <tr class="content-row">
+                    <td class="order-pros">
+                    <#--遍历该订单下面的所有商品的信息-->
+                        <a href="javascript:;" title=""><img src="" alt="商品1" width="60" height="60"/></a>
+                    </td>
+                    <td>
+                        （1111件）
+                    </td>
+                    <td style="line-height: 20px;">买家1<br/>18146686909</td>
+                    <td>2017-05-0110:44:12:11</td>
+                    <td>
+                        已付款
+                    </td>
+                <#--判断是店铺入驻商城还是供货商入驻商城的订单-->
+                    <td>¥100</td>
+                    <td>所属商城1</td>
+                    <td>
+                        <div class="btn-group" style="width: 112px;">
+                            <button  class="btn btn-primary btn-sm btn_css"  style="width: 112px;"> <a href="orderListDetail.ftl" style="color: #ffffff">查看详情</a></button>
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <div class="footer-operation">
+                <div class="ops-left">
+
+                </div>
+                <div class="ops-right">
+                    <nav>
+                        <ul class="pagination">
+                            <li>
+                                <a href="javascript:;" aria-label="Previous" onclick="changePageNo(this);" data-role="${map.pb.prePageNo}">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <#if (map.pb.startNo?number>1)>
+                            <li><a href="javascript:;" onclick="changePageNo(this);" data-role="1">1</a></li>
+                        </#if>
+                        <#list map.pb.startNo?number .. map.pb.endNo as item>
+                            <li <#if item == map.pb.pageNo>class="active"</#if>><a href="javascript:;" onclick="changePageNo(this);" data-role="${item}">${item}</a></li>
+                        </#list>
+                        <#if (map.pb.totalPages?number>map.pb.endNo)>
+                            <li><a href="javascript:;" onclick="changePageNo(this);" data-role="${map.pb.totalPages}">${pageBean.totalPages}</a></li>
+                        </#if>
+                            <li>
+                                <a href="javascript:;" aria-label="Next" onclick="changePageNo(this);" data-role="${map.pb.nextPageNo}">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        <#--<#else>-->
+        <#--<tfoot>-->
+        <#--<tr>-->
+        <#--<td colspan="12">暂无信息</td>-->
+        <#--</tr>-->
+        <#--</tfoot>-->
+        <#--</#if>-->
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+<#--</form>-->
+<#include "common/leftfooter.ftl">
+
+
+<script type="text/javascript" src="${basePath}/static/js/navmenu.js?v=20151016234"></script>
+<script>
+    $(function(){
+        $.material.init();
+        $(".chosen-select").chosen();
+        $(".brandsChosen").chosen();
+        /* /!* 富文本编辑框 *!/
+         $('.summernotedesc').summernote({
+             height: 300,
+             tabsize: 2,
+             lang: 'zh-CN',
+             onImageUpload: function(files, editor, $editable) {
+                 sendFile(files,editor,$editable);
+             }
+         });
+
+
+         /!* 富文本编辑框 *!/
+         $('.summernotemobile').summernote({
+             height: 300,
+             tabsize: 2,
+             lang: 'zh-CN',
+             onImageUpload: function(files, editor, $editable) {
+                 sendFile(files,editor,$editable);
+             }
+         });*/
+    });
+
+    /*用于控制显示div层  先显示头部和左边 稍后在显示里面的内容*/
+    function show(){
+        $(".show_text").fadeOut(1000).fadeIn(1000);
+    }
+    setTimeout("show()",1000);
+
+    function getInputVal(obj){
+        $("#basic-proPack").html($(obj).val()+"/箱");
+    }
+</script>
+<#import "common/selectindex.ftl" as selectindex>
+<@selectindex.selectindex "${n!''}" "${l!''}" />
+
+</body>
+</html>

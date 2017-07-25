@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ip_cont>
+    
+    
+    
+<goodsmod class="gd-02" id="1">
+<li>
+<goods_a href="item/4762.html" name="优驰多功能冰垫(颜色随机30cm*40cm)" price="￥2000">
+<img src="http://img01.ylife.cn/1461812206712.jpg!160"/>
+</goods_a>
+</li>
+<li>
+<goods_a href="item/4815.html" name="加加 盘中餐花生食用油5L" price="￥61250">
+<img src="http://img01.ylife.cn/1462869262298.jpg!160"/>
+</goods_a>
+</li>
+<li>
+<goods_a href="item/4817.html" name="小汤勺(1个)" price="￥10000">
+<img src="http://img01.ylife.cn/1462870876368.jpg!160"/>
+</goods_a>
+</li>
+<li>
+<goods_a href="item/4819.html" name="单柄明珠锅(18cm)" price="￥29375">
+<img src="http://img01.ylife.cn/1462872126286.jpg!160"/>
+</goods_a>
+</li>
+</goodsmod>
+<app_cont id="1">
+<a href="">
+<img class="imgapp" height="160.0" heightB="50.0%" id="img1_1_2_2" src="http://112.22.26.30:10000/M00/00/0C/wKgCCVlAxuWAd_Q6AABayJxzdj0680.jpg" style="position:absolute;left:-1px;top:0px;" styleB="position:absolute;left:0.0%;top:0.0%;" width="160.0" widthB="50.0%"/>
+</a>
+</app_cont>
+<blankbox height="30px;" id="1"/>
+</ip_cont>

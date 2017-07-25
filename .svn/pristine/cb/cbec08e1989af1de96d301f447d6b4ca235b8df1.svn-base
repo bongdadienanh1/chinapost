@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.wealth.mapper.EnterpriseRequisitionMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.wealth.model.EnterpriseRequisition">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+        <result column="enterprise_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="fee" property="fee" jdbcType="DECIMAL"/>
+        <result column="pay_fee" property="payFee" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, enterprise_id, parent_id, status, fee, pay_fee, create_time, remark, pay_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_requisition
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_requisition
+        where id = #{id,jdbcType=BIGINT}
+        for update
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        req.id, req.code, req.enterprise_id, req.parent_id, req.status, req.fee, req.pay_fee, req.create_time,
+        req.remark,
+        req.pay_time, ent.enterprise_name
+        from ysh_enterprise_requisition as req
+        left join ysh_enterprise_info as ent ON
+        req.enterprise_id = ent.enterprise_id
+        where code = #{code,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByStatusAndEnterpriseId" resultMap="BaseResultMap">
+        select
+        req.id, req.code, req.enterprise_id, req.parent_id, req.status, req.fee, req.pay_fee, req.create_time,
+        req.remark, req.pay_time, ent.enterprise_name
+        from ysh_enterprise_requisition as req
+        left join ysh_enterprise_info as ent on
+        req.enterprise_id = ent.enterprise_id
+        where
+        req.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <trim prefix="and (" suffix=")" suffixOverrides="or">
+            <foreach collection="statuses" item="status">
+                <if test="status != null">
+                    req.status = #{status,jdbcType=VARCHAR}
+                    or
+                </if>
+            </foreach>
+        </trim>
+        <if test="start != null">
+            <![CDATA[
+            and
+            req.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            req.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        order by req.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByStatusAndEnterpriseId" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_enterprise_requisition
+        where
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        <trim prefix="and (" suffix=")" suffixOverrides="or">
+            <foreach collection="statuses" item="status">
+                <if test="status != null">
+                    status = #{status,jdbcType=VARCHAR}
+                    or
+                </if>
+            </foreach>
+        </trim>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </select>
+
+    <select id="selectByStatusAndParentId" resultMap="BaseResultMap">
+        select
+        req.id, req.code, req.enterprise_id, req.parent_id, req.status, req.fee, req.pay_fee, req.create_time,
+        req.remark, req.pay_time, ent.enterprise_name
+        from ysh_enterprise_requisition as req
+        left join ysh_enterprise_info as ent on
+        req.enterprise_id = ent.enterprise_id
+        where
+        req.parent_id = #{parentId,jdbcType=BIGINT}
+        <trim prefix="and (" suffix=")" suffixOverrides="or">
+            <foreach collection="statuses" item="status">
+                <if test="status != null">
+                    req.status = #{status,jdbcType=VARCHAR}
+                    or
+                </if>
+            </foreach>
+        </trim>
+        <if test="start != null">
+            <![CDATA[
+            and
+            req.create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            req.create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        order by req.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByStatusAndParentId" resultType="java.lang.Integer">
+        select
+        count(*)
+        from ysh_enterprise_requisition
+        where
+        parent_id = #{parentId,jdbcType=BIGINT}
+        <trim prefix="and (" suffix=")" suffixOverrides="or">
+            <foreach collection="statuses" item="status">
+                <if test="status != null">
+                    status = #{status,jdbcType=VARCHAR}
+                    or
+                </if>
+            </foreach>
+        </trim>
+        <if test="start != null">
+            <![CDATA[
+            and
+            create_time >= #{start,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            create_time <= #{end,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_enterprise_requisition
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.wealth.model.EnterpriseRequisition" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into
+        ysh_enterprise_requisition
+        (code, enterprise_id, parent_id, status, fee, pay_fee, create_time, remark, pay_time)
+        values
+        (#{code,jdbcType=BIGINT}, #{enterpriseId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT},
+        #{status,jdbcType=VARCHAR}, #{fee,jdbcType=DECIMAL}, #{payFee,jdbcType=DECIMAL},
+        #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.wealth.model.EnterpriseRequisition" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into ysh_enterprise_requisition
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                code,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="fee != null">
+                fee,
+            </if>
+            <if test="payFee != null">
+                pay_fee,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">
+                #{code,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="fee != null">
+                #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="payFee != null">
+                #{payFee,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.wealth.model.EnterpriseRequisition">
+        update ysh_enterprise_requisition
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=BIGINT},
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=DECIMAL},
+            </if>
+            <if test="payFee != null">
+                pay_fee = #{payFee,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.wealth.model.EnterpriseRequisition">
+        update
+        ysh_enterprise_requisition
+        set
+        code = #{code,jdbcType=BIGINT},
+        enterprise_id = #{enterpriseId,jdbcType=BIGINT},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        status = #{status,jdbcType=VARCHAR},
+        fee = #{fee,jdbcType=DECIMAL},
+        pay_fee = #{payFee,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        remark = #{remark,jdbcType=VARCHAR},
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateStatusByPrimaryKey">
+        update
+        ysh_enterprise_requisition
+        set
+        status = #{status,jdbcType=VARCHAR}
+        where
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

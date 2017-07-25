@@ -1,0 +1,43 @@
+package com.ylife.chinapost.boss.controller;
+
+import com.ylife.chinapost.boss.service.ManagerOuterService;
+import com.ylife.utils.MyLogger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * Created by suibian on 2017-06-12.
+ */
+@Controller
+public class ManagerController {
+    /**
+     * 日志记录 *
+     */
+    private static final MyLogger LOGGER = new MyLogger(ManagerController.class);
+
+    @Resource
+    private ManagerOuterService managerOuterService;
+
+    /**
+     * 管理员登陆
+     *
+     * @return 获取权限跳转地址
+     */
+    @RequestMapping("/iflogin")
+    @ResponseBody
+    public int ifLogin(HttpServletRequest request, String name, String password, String code) {
+        //验证码匹配
+        if (null == code || !code.equals(request.getSession().getAttribute("k_captcha_text_key"))) {
+            return -1;
+        }
+        // 非空验证 用户名
+        if (null != name) {
+            LOGGER.info("管理员【" + name + "】登陆");
+        }
+        return managerOuterService.ifManager(request, name, password);
+    }
+}

@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.thirdstoreinfo.mapper.ThirdStoreInfoMapper">
+
+	<resultMap type="com.ylife.thirdstoreinfo.entity.ThirdStoreInfoEntity"
+		id="BaseResultMap">
+            <id property="storeId" column="store_id" />
+
+			<result property="thirdPlatformId" column="third_platform_id" />
+			<result property="storeName" column="store_name" />
+			<result property="storeStatus" column="store_status" />
+			<result property="companyCreTime" column="company_cre_time" />
+			<result property="companyName" column="company_name" />
+			<result property="companyAddr" column="company_addr" />
+			<result property="companyAddrId" column="company_addr_id" />
+			<result property="companyAddrDel" column="company_addr_del" />
+			<result property="companyTel" column="company_tel" />
+			<result property="companyEmpNum" column="company_emp_num" />
+			<result property="companyCapital" column="company_capital" />
+			<result property="companyEmail" column="company_email" />
+			<result property="companyType" column="company_type" />
+			<result property="companyContactName" column="company_contact_name" />
+			<result property="cardUrl" column="card_url" />
+			<result property="bankUrl" column="bank_url" />
+			<result property="companyContactTel" column="company_contact_tel" />
+			<result property="companyResearchUrl" column="company_research_url" />
+			<result property="companySku" column="company_sku" />
+			<result property="companyAvg" column="company_avg" />
+			<result property="returnAddr" column="return_addr" />
+			<result property="returnMail" column="return_mail" />
+			<result property="returnContactName" column="return_contact_name" />
+			<result property="returnContactTel" column="return_contact_tel" />
+			<result property="bussId" column="buss_id" />
+			<result property="bussAddr" column="buss_addr" />
+			<result property="bussAddrId" column="buss_addr_id" />
+			<result property="bussDate" column="BUSS_DATE" />
+			<result property="bussDeptNo" column="buss_dept_no" />
+			<result property="bussTaxRegistId" column="buss_tax_regist_id" />
+			<result property="bussTaxRegistUrl" column="buss_tax_regist_url" />
+			<result property="bussTaxPayerId" column="buss_tax_payer_id" />
+			<result property="bussTaxCredUrl" column="buss_tax_cred_url" />
+			<result property="bussTaxType" column="buss_tax_type" />
+			<result property="bussTaxTypeId" column="buss_tax_type_id" />
+			<result property="bussLegalName" column="buss_legal_name" />
+			<result property="bussLegalCardId" column="buss_legal_card_id" />
+			<result property="bussUrl" column="buss_url" />
+			<result property="bussRange" column="buss_range" />
+			<result property="bankUsername" column="bank_username" />
+			<result property="bankCardId" column="bank_card_id" />
+			<result property="bankAddr" column="bank_addr" />
+			<result property="bankAddrId" column="bank_addr_id" />
+			<result property="bankName" column="bank_name" />
+			<result property="backStatus" column="back_status" />
+			<result property="bankId" column="bank_id" />
+			<result property="checkStatus" column="check_status" />
+			<result property="contractUrl" column="contract_url" />
+			<result property="createTime" column="create_time" />
+			<result property="modTime" column="mod_time" />
+			<result property="delFlag" column="del_flag" />
+			<result property="shopTransFee" column="shop_trans_fee" />
+			<result property="isSubmit" column="is_submit" />
+			<result property="isStoreIndex" column="is_store_index" />
+			<result property="refuseContent" column="refuse_content" />
+			<result property="billingCycle" column="billing_cycle" />
+			<result property="storePromise" column="store_promise" />
+			<result property="storeQi" column="store_qi" />
+			<result property="swValue" column="sw_value" />
+			<result property="storePoint" column="store_point" />
+			<result property="storeBalance" column="store_balance" />
+			<result property="serviceQq" column="service_qq" />
+			<result property="expiryTime" column="expiry_time" />
+			<result property="isSupplier" column="is_supplier" />
+			<result property="storeStreetSort" column="store_street_sort" />
+			<result property="storeStreetIsShow" column="store_street_is_show" />
+			<result property="storeProvince" column="store_province" />
+			<result property="storeCity" column="store_city" />
+			<result property="storeCounty" column="store_county" />
+	</resultMap>
+
+	<sql id="ThirdStoreInfoAll_column">
+		thirdstoreinfo.store_id as storeId,
+		thirdstoreinfo.third_platform_id as thirdPlatformId,
+		thirdstoreinfo.store_name as storeName,
+		thirdstoreinfo.store_status as storeStatus,
+		thirdstoreinfo.company_cre_time as companyCreTime,
+		thirdstoreinfo.company_name as companyName,
+		thirdstoreinfo.company_addr as companyAddr,
+		thirdstoreinfo.company_addr_id as companyAddrId,
+		thirdstoreinfo.company_addr_del as companyAddrDel,
+		thirdstoreinfo.company_tel as companyTel,
+		thirdstoreinfo.company_emp_num as companyEmpNum,
+		thirdstoreinfo.company_capital as companyCapital,
+		thirdstoreinfo.company_email as companyEmail,
+		thirdstoreinfo.company_type as companyType,
+		thirdstoreinfo.company_contact_name as companyContactName,
+		thirdstoreinfo.card_url as cardUrl,
+		thirdstoreinfo.bank_url as bankUrl,
+		thirdstoreinfo.company_contact_tel as companyContactTel,
+		thirdstoreinfo.company_research_url as companyResearchUrl,
+		thirdstoreinfo.company_sku as companySku,
+		thirdstoreinfo.company_avg as companyAvg,
+		thirdstoreinfo.return_addr as returnAddr,
+		thirdstoreinfo.return_mail as returnMail,
+		thirdstoreinfo.return_contact_name as returnContactName,
+		thirdstoreinfo.return_contact_tel as returnContactTel,
+		thirdstoreinfo.buss_id as bussId,
+		thirdstoreinfo.buss_addr as bussAddr,
+		thirdstoreinfo.buss_addr_id as bussAddrId,
+		thirdstoreinfo.BUSS_DATE as bussDate,
+		thirdstoreinfo.buss_dept_no as bussDeptNo,
+		thirdstoreinfo.buss_tax_regist_id as bussTaxRegistId,
+		thirdstoreinfo.buss_tax_regist_url as bussTaxRegistUrl,
+		thirdstoreinfo.buss_tax_payer_id as bussTaxPayerId,
+		thirdstoreinfo.buss_tax_cred_url as bussTaxCredUrl,
+		thirdstoreinfo.buss_tax_type as bussTaxType,
+		thirdstoreinfo.buss_tax_type_id as bussTaxTypeId,
+		thirdstoreinfo.buss_legal_name as bussLegalName,
+		thirdstoreinfo.buss_legal_card_id as bussLegalCardId,
+		thirdstoreinfo.buss_url as bussUrl,
+		thirdstoreinfo.buss_range as bussRange,
+		thirdstoreinfo.bank_username as bankUsername,
+		thirdstoreinfo.bank_card_id as bankCardId,
+		thirdstoreinfo.bank_addr as bankAddr,
+		thirdstoreinfo.bank_addr_id as bankAddrId,
+		thirdstoreinfo.bank_name as bankName,
+		thirdstoreinfo.back_status as backStatus,
+		thirdstoreinfo.bank_id as bankId,
+		thirdstoreinfo.check_status as checkStatus,
+		thirdstoreinfo.contract_url as contractUrl,
+		thirdstoreinfo.create_time as createTime,
+		thirdstoreinfo.mod_time as modTime,
+		thirdstoreinfo.del_flag as delFlag,
+		thirdstoreinfo.shop_trans_fee as shopTransFee,
+		thirdstoreinfo.is_submit as isSubmit,
+		thirdstoreinfo.is_store_index as isStoreIndex,
+		thirdstoreinfo.refuse_content as refuseContent,
+		thirdstoreinfo.billing_cycle as billingCycle,
+		thirdstoreinfo.store_promise as storePromise,
+		thirdstoreinfo.store_qi as storeQi,
+		thirdstoreinfo.sw_value as swValue,
+		thirdstoreinfo.store_point as storePoint,
+		thirdstoreinfo.store_balance as storeBalance,
+		thirdstoreinfo.service_qq as serviceQq,
+		thirdstoreinfo.expiry_time as expiryTime,
+		thirdstoreinfo.is_supplier as isSupplier,
+		thirdstoreinfo.store_street_sort as storeStreetSort,
+		thirdstoreinfo.store_street_is_show as storeStreetIsShow,
+		thirdstoreinfo.store_province as storeProvince,
+		thirdstoreinfo.store_city as storeCity,
+		thirdstoreinfo.store_county as storeCounty 
+	</sql>
+
+	<sql id="ThirdStoreInfoAll_where">
+		<where>
+				1=1
+			<if test="storeId != null and storeId !=''">
+				AND thirdstoreinfo.store_id =#{storeId}
+			</if>
+			<if test="thirdPlatformId != null and thirdPlatformId !=''">
+				AND thirdstoreinfo.third_platform_id =#{thirdPlatformId}
+			</if>
+			<if test="storeName != null and storeName !=''">
+				AND thirdstoreinfo.store_name =#{storeName}
+			</if>
+			<if test="storeStatus != null and storeStatus !=''">
+				AND thirdstoreinfo.store_status =#{storeStatus}
+			</if>
+			<if test="companyCreTime != null and companyCreTime !=''">
+				AND thirdstoreinfo.company_cre_time =#{companyCreTime}
+			</if>
+			<if test="companyName != null and companyName !=''">
+				AND thirdstoreinfo.company_name =#{companyName}
+			</if>
+			<if test="companyAddr != null and companyAddr !=''">
+				AND thirdstoreinfo.company_addr =#{companyAddr}
+			</if>
+			<if test="companyAddrId != null and companyAddrId !=''">
+				AND thirdstoreinfo.company_addr_id =#{companyAddrId}
+			</if>
+			<if test="companyAddrDel != null and companyAddrDel !=''">
+				AND thirdstoreinfo.company_addr_del =#{companyAddrDel}
+			</if>
+			<if test="companyTel != null and companyTel !=''">
+				AND thirdstoreinfo.company_tel =#{companyTel}
+			</if>
+			<if test="companyEmpNum != null and companyEmpNum !=''">
+				AND thirdstoreinfo.company_emp_num =#{companyEmpNum}
+			</if>
+			<if test="companyCapital != null and companyCapital !=''">
+				AND thirdstoreinfo.company_capital =#{companyCapital}
+			</if>
+			<if test="companyEmail != null and companyEmail !=''">
+				AND thirdstoreinfo.company_email =#{companyEmail}
+			</if>
+			<if test="companyType != null and companyType !=''">
+				AND thirdstoreinfo.company_type =#{companyType}
+			</if>
+			<if test="companyContactName != null and companyContactName !=''">
+				AND thirdstoreinfo.company_contact_name =#{companyContactName}
+			</if>
+			<if test="cardUrl != null and cardUrl !=''">
+				AND thirdstoreinfo.card_url =#{cardUrl}
+			</if>
+			<if test="bankUrl != null and bankUrl !=''">
+				AND thirdstoreinfo.bank_url =#{bankUrl}
+			</if>
+			<if test="companyContactTel != null and companyContactTel !=''">
+				AND thirdstoreinfo.company_contact_tel =#{companyContactTel}
+			</if>
+			<if test="companyResearchUrl != null and companyResearchUrl !=''">
+				AND thirdstoreinfo.company_research_url =#{companyResearchUrl}
+			</if>
+			<if test="companySku != null and companySku !=''">
+				AND thirdstoreinfo.company_sku =#{companySku}
+			</if>
+			<if test="companyAvg != null and companyAvg !=''">
+				AND thirdstoreinfo.company_avg =#{companyAvg}
+			</if>
+			<if test="returnAddr != null and returnAddr !=''">
+				AND thirdstoreinfo.return_addr =#{returnAddr}
+			</if>
+			<if test="returnMail != null and returnMail !=''">
+				AND thirdstoreinfo.return_mail =#{returnMail}
+			</if>
+			<if test="returnContactName != null and returnContactName !=''">
+				AND thirdstoreinfo.return_contact_name =#{returnContactName}
+			</if>
+			<if test="returnContactTel != null and returnContactTel !=''">
+				AND thirdstoreinfo.return_contact_tel =#{returnContactTel}
+			</if>
+			<if test="bussId != null and bussId !=''">
+				AND thirdstoreinfo.buss_id =#{bussId}
+			</if>
+			<if test="bussAddr != null and bussAddr !=''">
+				AND thirdstoreinfo.buss_addr =#{bussAddr}
+			</if>
+			<if test="bussAddrId != null and bussAddrId !=''">
+				AND thirdstoreinfo.buss_addr_id =#{bussAddrId}
+			</if>
+			<if test="bussDate != null and bussDate !=''">
+				AND thirdstoreinfo.BUSS_DATE =#{bussDate}
+			</if>
+			<if test="bussDeptNo != null and bussDeptNo !=''">
+				AND thirdstoreinfo.buss_dept_no =#{bussDeptNo}
+			</if>
+			<if test="bussTaxRegistId != null and bussTaxRegistId !=''">
+				AND thirdstoreinfo.buss_tax_regist_id =#{bussTaxRegistId}
+			</if>
+			<if test="bussTaxRegistUrl != null and bussTaxRegistUrl !=''">
+				AND thirdstoreinfo.buss_tax_regist_url =#{bussTaxRegistUrl}
+			</if>
+			<if test="bussTaxPayerId != null and bussTaxPayerId !=''">
+				AND thirdstoreinfo.buss_tax_payer_id =#{bussTaxPayerId}
+			</if>
+			<if test="bussTaxCredUrl != null and bussTaxCredUrl !=''">
+				AND thirdstoreinfo.buss_tax_cred_url =#{bussTaxCredUrl}
+			</if>
+			<if test="bussTaxType != null and bussTaxType !=''">
+				AND thirdstoreinfo.buss_tax_type =#{bussTaxType}
+			</if>
+			<if test="bussTaxTypeId != null and bussTaxTypeId !=''">
+				AND thirdstoreinfo.buss_tax_type_id =#{bussTaxTypeId}
+			</if>
+			<if test="bussLegalName != null and bussLegalName !=''">
+				AND thirdstoreinfo.buss_legal_name =#{bussLegalName}
+			</if>
+			<if test="bussLegalCardId != null and bussLegalCardId !=''">
+				AND thirdstoreinfo.buss_legal_card_id =#{bussLegalCardId}
+			</if>
+			<if test="bussUrl != null and bussUrl !=''">
+				AND thirdstoreinfo.buss_url =#{bussUrl}
+			</if>
+			<if test="bussRange != null and bussRange !=''">
+				AND thirdstoreinfo.buss_range =#{bussRange}
+			</if>
+			<if test="bankUsername != null and bankUsername !=''">
+				AND thirdstoreinfo.bank_username =#{bankUsername}
+			</if>
+			<if test="bankCardId != null and bankCardId !=''">
+				AND thirdstoreinfo.bank_card_id =#{bankCardId}
+			</if>
+			<if test="bankAddr != null and bankAddr !=''">
+				AND thirdstoreinfo.bank_addr =#{bankAddr}
+			</if>
+			<if test="bankAddrId != null and bankAddrId !=''">
+				AND thirdstoreinfo.bank_addr_id =#{bankAddrId}
+			</if>
+			<if test="bankName != null and bankName !=''">
+				AND thirdstoreinfo.bank_name =#{bankName}
+			</if>
+			<if test="backStatus != null and backStatus !=''">
+				AND thirdstoreinfo.back_status =#{backStatus}
+			</if>
+			<if test="bankId != null and bankId !=''">
+				AND thirdstoreinfo.bank_id =#{bankId}
+			</if>
+			<if test="checkStatus != null and checkStatus !=''">
+				AND thirdstoreinfo.check_status =#{checkStatus}
+			</if>
+			<if test="contractUrl != null and contractUrl !=''">
+				AND thirdstoreinfo.contract_url =#{contractUrl}
+			</if>
+			<if test="createTime != null and createTime !=''">
+				AND thirdstoreinfo.create_time =#{createTime}
+			</if>
+			<if test="modTime != null and modTime !=''">
+				AND thirdstoreinfo.mod_time =#{modTime}
+			</if>
+			<if test="delFlag != null and delFlag !=''">
+				AND thirdstoreinfo.del_flag =#{delFlag}
+			</if>
+			<if test="shopTransFee != null and shopTransFee !=''">
+				AND thirdstoreinfo.shop_trans_fee =#{shopTransFee}
+			</if>
+			<if test="isSubmit != null and isSubmit !=''">
+				AND thirdstoreinfo.is_submit =#{isSubmit}
+			</if>
+			<if test="isStoreIndex != null and isStoreIndex !=''">
+				AND thirdstoreinfo.is_store_index =#{isStoreIndex}
+			</if>
+			<if test="refuseContent != null and refuseContent !=''">
+				AND thirdstoreinfo.refuse_content =#{refuseContent}
+			</if>
+			<if test="billingCycle != null and billingCycle !=''">
+				AND thirdstoreinfo.billing_cycle =#{billingCycle}
+			</if>
+			<if test="storePromise != null and storePromise !=''">
+				AND thirdstoreinfo.store_promise =#{storePromise}
+			</if>
+			<if test="storeQi != null and storeQi !=''">
+				AND thirdstoreinfo.store_qi =#{storeQi}
+			</if>
+			<if test="swValue != null and swValue !=''">
+				AND thirdstoreinfo.sw_value =#{swValue}
+			</if>
+			<if test="storePoint != null and storePoint !=''">
+				AND thirdstoreinfo.store_point =#{storePoint}
+			</if>
+			<if test="storeBalance != null and storeBalance !=''">
+				AND thirdstoreinfo.store_balance =#{storeBalance}
+			</if>
+			<if test="serviceQq != null and serviceQq !=''">
+				AND thirdstoreinfo.service_qq =#{serviceQq}
+			</if>
+			<if test="expiryTime != null and expiryTime !=''">
+				AND thirdstoreinfo.expiry_time =#{expiryTime}
+			</if>
+			<if test="isSupplier != null and isSupplier !=''">
+				AND thirdstoreinfo.is_supplier =#{isSupplier}
+			</if>
+			<if test="storeStreetSort != null and storeStreetSort !=''">
+				AND thirdstoreinfo.store_street_sort =#{storeStreetSort}
+			</if>
+			<if test="storeStreetIsShow != null and storeStreetIsShow !=''">
+				AND thirdstoreinfo.store_street_is_show =#{storeStreetIsShow}
+			</if>
+			<if test="storeProvince != null and storeProvince !=''">
+				AND thirdstoreinfo.store_province =#{storeProvince}
+			</if>
+			<if test="storeCity != null and storeCity !=''">
+				AND thirdstoreinfo.store_city =#{storeCity}
+			</if>
+			<if test="storeCounty != null and storeCounty !=''">
+				AND thirdstoreinfo.store_county =#{storeCounty}
+			</if>
+		</where>
+	</sql>
+	<sql id="ThirdStoreInfoAll_table">
+		FROM
+		np_third_store_info thirdstoreinfo
+	</sql>
+	<!-- 查全部 -->
+	<select id="queryAllThirdStoreInfo"
+		resultMap="BaseResultMap" parameterType="com.ylife.thirdstoreinfo.entity.ThirdStoreInfoEntity">
+		SELECT
+		<include refid="ThirdStoreInfoAll_column" />
+		<include refid="ThirdStoreInfoAll_table" />
+		<include refid="ThirdStoreInfoAll_where"/>
+	</select>
+	<!-- 查全部分页 -->
+	<select id="queryListForPageThirdStoreInfo"
+		resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+		<include refid="ThirdStoreInfoAll_column" />
+		<include refid="ThirdStoreInfoAll_table" />
+		<include refid="ThirdStoreInfoAll_where"/>
+		<if test="startRowNum != null">
+			Limit #{startRowNum},#{pageSize}
+		</if>
+	</select>
+	<!-- 查数量 -->
+	<select id="queryCountThirdStoreInfo" resultType="java.lang.Integer" parameterType="com.ylife.thirdstoreinfo.entity.ThirdStoreInfoEntity">
+		SELECT
+		count(1)
+		<include refid="ThirdStoreInfoAll_table" />
+		<include refid="ThirdStoreInfoAll_where"/>
+	</select>
+	<!-- 按主键查询  -->
+	<select id="queryById"	resultMap="BaseResultMap"  parameterType="java.lang.Long">
+		SELECT 
+		<include refid="ThirdStoreInfoAll_column" />
+		<include refid="ThirdStoreInfoAll_table" />
+		WHERE thirdstoreinfo.store_id =#{storeId}
+	</select>
+    <!-- 根据主键批量查询 -->
+    <select id="queryByIds"	resultMap="BaseResultMap"  parameterType="java.util.List">
+        SELECT
+        <include refid="ThirdStoreInfoAll_column" />
+        <include refid="ThirdStoreInfoAll_table" />
+        <where>
+            1=1
+            <if test="ids !=null">
+                and Long store_id in
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+				#{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+	<!-- 修改  -->
+	<update id="updateThirdStoreInfo" parameterType="com.ylife.thirdstoreinfo.entity.ThirdStoreInfoEntity">
+		UPDATE
+		np_third_store_info thirdstoreinfo
+        <trim prefix="set" suffixOverrides=",">
+            <!--<if test="thirdPlatformId != null">thirdstoreinfo.third_platform_id =#{thirdPlatformId},</if>-->
+            <if test="storeName != null">thirdstoreinfo.store_name =#{storeName},</if>
+            <if test="storeStatus != null">thirdstoreinfo.store_status =#{storeStatus},</if>
+            <if test="companyCreTime != null">thirdstoreinfo.company_cre_time =#{companyCreTime},</if>
+            <if test="companyName != null">thirdstoreinfo.company_name =#{companyName},</if>
+            <if test="companyAddr != null">thirdstoreinfo.company_addr =#{companyAddr},</if>
+            <if test="companyAddrId != null">thirdstoreinfo.company_addr_id =#{companyAddrId},</if>
+            <if test="companyAddrDel != null">thirdstoreinfo.company_addr_del =#{companyAddrDel},</if>
+            <if test="companyTel != null">thirdstoreinfo.company_tel =#{companyTel},</if>
+            <if test="companyEmpNum != null">thirdstoreinfo.company_emp_num =#{companyEmpNum},</if>
+            <if test="companyCapital != null">thirdstoreinfo.company_capital =#{companyCapital},</if>
+            <if test="companyEmail != null">thirdstoreinfo.company_email =#{companyEmail},</if>
+            <if test="companyType != null">thirdstoreinfo.company_type =#{companyType},</if>
+            <if test="companyContactName != null">thirdstoreinfo.company_contact_name =#{companyContactName},</if>
+            <if test="cardUrl != null">thirdstoreinfo.card_url =#{cardUrl},</if>
+            <if test="bankUrl != null">thirdstoreinfo.bank_url =#{bankUrl},</if>
+            <if test="companyContactTel != null">thirdstoreinfo.company_contact_tel =#{companyContactTel},</if>
+            <if test="companyResearchUrl != null">thirdstoreinfo.company_research_url =#{companyResearchUrl},</if>
+            <if test="companySku != null">thirdstoreinfo.company_sku =#{companySku},</if>
+            <if test="companyAvg != null">thirdstoreinfo.company_avg =#{companyAvg},</if>
+            <if test="returnAddr != null">thirdstoreinfo.return_addr =#{returnAddr},</if>
+            <if test="returnMail != null">thirdstoreinfo.return_mail =#{returnMail},</if>
+            <if test="returnContactName != null">thirdstoreinfo.return_contact_name =#{returnContactName},</if>
+            <if test="returnContactTel != null">thirdstoreinfo.return_contact_tel =#{returnContactTel},</if>
+            <if test="bussId != null">thirdstoreinfo.buss_id =#{bussId},</if>
+            <if test="bussAddr != null">thirdstoreinfo.buss_addr =#{bussAddr},</if>
+            <if test="bussAddrId != null">thirdstoreinfo.buss_addr_id =#{bussAddrId},</if>
+            <if test="bussDate != null">thirdstoreinfo.BUSS_DATE =#{bussDate},</if>
+            <if test="bussDeptNo != null">thirdstoreinfo.buss_dept_no =#{bussDeptNo},</if>
+            <if test="bussTaxRegistId != null">thirdstoreinfo.buss_tax_regist_id =#{bussTaxRegistId},</if>
+            <if test="bussTaxRegistUrl != null">thirdstoreinfo.buss_tax_regist_url =#{bussTaxRegistUrl},</if>
+            <if test="bussTaxPayerId != null">thirdstoreinfo.buss_tax_payer_id =#{bussTaxPayerId},</if>
+            <if test="bussTaxCredUrl != null">thirdstoreinfo.buss_tax_cred_url =#{bussTaxCredUrl},</if>
+            <if test="bussTaxType != null">thirdstoreinfo.buss_tax_type =#{bussTaxType},</if>
+            <if test="bussTaxTypeId != null">thirdstoreinfo.buss_tax_type_id =#{bussTaxTypeId},</if>
+            <if test="bussLegalName != null">thirdstoreinfo.buss_legal_name =#{bussLegalName},</if>
+            <if test="bussLegalCardId != null">thirdstoreinfo.buss_legal_card_id =#{bussLegalCardId},</if>
+            <if test="bussUrl != null">thirdstoreinfo.buss_url =#{bussUrl},</if>
+            <if test="bussRange != null">thirdstoreinfo.buss_range =#{bussRange},</if>
+            <if test="bankUsername != null">thirdstoreinfo.bank_username =#{bankUsername},</if>
+            <if test="bankCardId != null">thirdstoreinfo.bank_card_id =#{bankCardId},</if>
+            <if test="bankAddr != null">thirdstoreinfo.bank_addr =#{bankAddr},</if>
+            <if test="bankAddrId != null">thirdstoreinfo.bank_addr_id =#{bankAddrId},</if>
+            <if test="bankName != null">thirdstoreinfo.bank_name =#{bankName},</if>
+            <if test="backStatus != null">thirdstoreinfo.back_status =#{backStatus},</if>
+            <if test="bankId != null">thirdstoreinfo.bank_id =#{bankId},</if>
+            <if test="checkStatus != null">thirdstoreinfo.check_status =#{checkStatus},</if>
+            <if test="contractUrl != null">thirdstoreinfo.contract_url =#{contractUrl},</if>
+            <if test="createTime != null">thirdstoreinfo.create_time =#{createTime},</if>
+            <if test="modTime != null">thirdstoreinfo.mod_time =#{modTime},</if>
+            <if test="delFlag != null">thirdstoreinfo.del_flag =#{delFlag},</if>
+            <if test="shopTransFee != null">thirdstoreinfo.shop_trans_fee =#{shopTransFee},</if>
+            <if test="isSubmit != null">thirdstoreinfo.is_submit =#{isSubmit},</if>
+            <if test="isStoreIndex != null">thirdstoreinfo.is_store_index =#{isStoreIndex},</if>
+            <if test="refuseContent != null">thirdstoreinfo.refuse_content =#{refuseContent},</if>
+            <if test="billingCycle != null">thirdstoreinfo.billing_cycle =#{billingCycle},</if>
+            <if test="storePromise != null">thirdstoreinfo.store_promise =#{storePromise},</if>
+            <if test="storeQi != null">thirdstoreinfo.store_qi =#{storeQi},</if>
+            <if test="swValue != null">thirdstoreinfo.sw_value =#{swValue},</if>
+            <if test="storePoint != null">thirdstoreinfo.store_point =#{storePoint},</if>
+            <if test="storeBalance != null">thirdstoreinfo.store_balance =#{storeBalance},</if>
+            <if test="serviceQq != null">thirdstoreinfo.service_qq =#{serviceQq},</if>
+            <if test="expiryTime != null">thirdstoreinfo.expiry_time =#{expiryTime},</if>
+            <if test="isSupplier != null">thirdstoreinfo.is_supplier =#{isSupplier},</if>
+            <if test="storeStreetSort != null">thirdstoreinfo.store_street_sort =#{storeStreetSort},</if>
+            <if test="storeStreetIsShow != null">thirdstoreinfo.store_street_is_show =#{storeStreetIsShow},</if>
+            <if test="storeProvince != null">thirdstoreinfo.store_province =#{storeProvince},</if>
+            <if test="storeCity != null">thirdstoreinfo.store_city =#{storeCity},</if>
+            <if test="storeCounty != null">thirdstoreinfo.store_county =#{storeCounty},</if>
+        </trim>
+        WHERE thirdstoreinfo.third_platform_id =#{thirdPlatformId}
+	</update>
+	<!-- 新增  -->
+	<insert id="addThirdStoreInfo" parameterType="com.ylife.thirdstoreinfo.entity.ThirdStoreInfoEntity">
+		INSERT INTO np_third_store_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="thirdPlatformId != null">third_platform_id,</if>
+			<if test="storeName != null">store_name,</if>
+			<if test="storeStatus != null">store_status,</if>
+			<if test="companyCreTime != null">company_cre_time,</if>
+			<if test="companyName != null">company_name,</if>
+			<if test="companyAddr != null">company_addr,</if>
+			<if test="companyAddrId != null">company_addr_id,</if>
+			<if test="companyAddrDel != null">company_addr_del,</if>
+			<if test="companyTel != null">company_tel,</if>
+			<if test="companyEmpNum != null">company_emp_num,</if>
+			<if test="companyCapital != null">company_capital,</if>
+			<if test="companyEmail != null">company_email,</if>
+			<if test="companyType != null">company_type,</if>
+			<if test="companyContactName != null">company_contact_name,</if>
+			<if test="cardUrl != null">card_url,</if>
+			<if test="bankUrl != null">bank_url,</if>
+			<if test="companyContactTel != null">company_contact_tel,</if>
+			<if test="companyResearchUrl != null">company_research_url,</if>
+			<if test="companySku != null">company_sku,</if>
+			<if test="companyAvg != null">company_avg,</if>
+			<if test="returnAddr != null">return_addr,</if>
+			<if test="returnMail != null">return_mail,</if>
+			<if test="returnContactName != null">return_contact_name,</if>
+			<if test="returnContactTel != null">return_contact_tel,</if>
+			<if test="bussId != null">buss_id,</if>
+			<if test="bussAddr != null">buss_addr,</if>
+			<if test="bussAddrId != null">buss_addr_id,</if>
+			<if test="bussDate != null">BUSS_DATE,</if>
+			<if test="bussDeptNo != null">buss_dept_no,</if>
+			<if test="bussTaxRegistId != null">buss_tax_regist_id,</if>
+			<if test="bussTaxRegistUrl != null">buss_tax_regist_url,</if>
+			<if test="bussTaxPayerId != null">buss_tax_payer_id,</if>
+			<if test="bussTaxCredUrl != null">buss_tax_cred_url,</if>
+			<if test="bussTaxType != null">buss_tax_type,</if>
+			<if test="bussTaxTypeId != null">buss_tax_type_id,</if>
+			<if test="bussLegalName != null">buss_legal_name,</if>
+			<if test="bussLegalCardId != null">buss_legal_card_id,</if>
+			<if test="bussUrl != null">buss_url,</if>
+			<if test="bussRange != null">buss_range,</if>
+			<if test="bankUsername != null">bank_username,</if>
+			<if test="bankCardId != null">bank_card_id,</if>
+			<if test="bankAddr != null">bank_addr,</if>
+			<if test="bankAddrId != null">bank_addr_id,</if>
+			<if test="bankName != null">bank_name,</if>
+			<if test="backStatus != null">back_status,</if>
+			<if test="bankId != null">bank_id,</if>
+			<if test="checkStatus != null">check_status,</if>
+			<if test="contractUrl != null">contract_url,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="modTime != null">mod_time,</if>
+			<if test="delFlag != null">del_flag,</if>
+			<if test="shopTransFee != null">shop_trans_fee,</if>
+			<if test="isSubmit != null">is_submit,</if>
+			<if test="isStoreIndex != null">is_store_index,</if>
+			<if test="refuseContent != null">refuse_content,</if>
+			<if test="billingCycle != null">billing_cycle,</if>
+			<if test="storePromise != null">store_promise,</if>
+			<if test="storeQi != null">store_qi,</if>
+			<if test="swValue != null">sw_value,</if>
+			<if test="storePoint != null">store_point,</if>
+			<if test="storeBalance != null">store_balance,</if>
+			<if test="serviceQq != null">service_qq,</if>
+			<if test="expiryTime != null">expiry_time,</if>
+			<if test="isSupplier != null">is_supplier,</if>
+			<if test="storeStreetSort != null">store_street_sort,</if>
+			<if test="storeStreetIsShow != null">store_street_is_show,</if>
+			<if test="storeProvince != null">store_province,</if>
+			<if test="storeCity != null">store_city,</if>
+			<if test="storeCounty != null">store_county</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="thirdPlatformId != null">#{thirdPlatformId},</if>
+			<if test="storeName != null">#{storeName},</if>
+			<if test="storeStatus != null">#{storeStatus},</if>
+			<if test="companyCreTime != null">#{companyCreTime},</if>
+			<if test="companyName != null">#{companyName},</if>
+			<if test="companyAddr != null">#{companyAddr},</if>
+			<if test="companyAddrId != null">#{companyAddrId},</if>
+			<if test="companyAddrDel != null">#{companyAddrDel},</if>
+			<if test="companyTel != null">#{companyTel},</if>
+			<if test="companyEmpNum != null">#{companyEmpNum},</if>
+			<if test="companyCapital != null">#{companyCapital},</if>
+			<if test="companyEmail != null">#{companyEmail},</if>
+			<if test="companyType != null">#{companyType},</if>
+			<if test="companyContactName != null">#{companyContactName},</if>
+			<if test="cardUrl != null">#{cardUrl},</if>
+			<if test="bankUrl != null">#{bankUrl},</if>
+			<if test="companyContactTel != null">#{companyContactTel},</if>
+			<if test="companyResearchUrl != null">#{companyResearchUrl},</if>
+			<if test="companySku != null">#{companySku},</if>
+			<if test="companyAvg != null">#{companyAvg},</if>
+			<if test="returnAddr != null">#{returnAddr},</if>
+			<if test="returnMail != null">#{returnMail},</if>
+			<if test="returnContactName != null">#{returnContactName},</if>
+			<if test="returnContactTel != null">#{returnContactTel},</if>
+			<if test="bussId != null">#{bussId},</if>
+			<if test="bussAddr != null">#{bussAddr},</if>
+			<if test="bussAddrId != null">#{bussAddrId},</if>
+			<if test="bussDate != null">#{bussDate},</if>
+			<if test="bussDeptNo != null">#{bussDeptNo},</if>
+			<if test="bussTaxRegistId != null">#{bussTaxRegistId},</if>
+			<if test="bussTaxRegistUrl != null">#{bussTaxRegistUrl},</if>
+			<if test="bussTaxPayerId != null">#{bussTaxPayerId},</if>
+			<if test="bussTaxCredUrl != null">#{bussTaxCredUrl},</if>
+			<if test="bussTaxType != null">#{bussTaxType},</if>
+			<if test="bussTaxTypeId != null">#{bussTaxTypeId},</if>
+			<if test="bussLegalName != null">#{bussLegalName},</if>
+			<if test="bussLegalCardId != null">#{bussLegalCardId},</if>
+			<if test="bussUrl != null">#{bussUrl},</if>
+			<if test="bussRange != null">#{bussRange},</if>
+			<if test="bankUsername != null">#{bankUsername},</if>
+			<if test="bankCardId != null">#{bankCardId},</if>
+			<if test="bankAddr != null">#{bankAddr},</if>
+			<if test="bankAddrId != null">#{bankAddrId},</if>
+			<if test="bankName != null">#{bankName},</if>
+			<if test="backStatus != null">#{backStatus},</if>
+			<if test="bankId != null">#{bankId},</if>
+			<if test="checkStatus != null">#{checkStatus},</if>
+			<if test="contractUrl != null">#{contractUrl},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="modTime != null">#{modTime},</if>
+			<if test="delFlag != null">#{delFlag},</if>
+			<if test="shopTransFee != null">#{shopTransFee},</if>
+			<if test="isSubmit != null">#{isSubmit},</if>
+			<if test="isStoreIndex != null">#{isStoreIndex},</if>
+			<if test="refuseContent != null">#{refuseContent},</if>
+			<if test="billingCycle != null">#{billingCycle},</if>
+			<if test="storePromise != null">#{storePromise},</if>
+			<if test="storeQi != null">#{storeQi},</if>
+			<if test="swValue != null">#{swValue},</if>
+			<if test="storePoint != null">#{storePoint},</if>
+			<if test="storeBalance != null">#{storeBalance},</if>
+			<if test="serviceQq != null">#{serviceQq},</if>
+			<if test="expiryTime != null">#{expiryTime},</if>
+			<if test="isSupplier != null">#{isSupplier},</if>
+			<if test="storeStreetSort != null">#{storeStreetSort},</if>
+			<if test="storeStreetIsShow != null">#{storeStreetIsShow},</if>
+			<if test="storeProvince != null">#{storeProvince},</if>
+			<if test="storeCity != null">#{storeCity},</if>
+			<if test="storeCounty != null">#{storeCounty}</if>
+        </trim>
+	</insert>
+
+	<!--批量 新增  -->
+	<insert id="addThirdStoreInfos" parameterType="java.util.List">
+		INSERT INTO np_third_store_info (
+		store_id,
+		third_platform_id,
+		store_name,
+		store_status,
+		company_cre_time,
+		company_name,
+		company_addr,
+		company_addr_id,
+		company_addr_del,
+		company_tel,
+		company_emp_num,
+		company_capital,
+		company_email,
+		company_type,
+		company_contact_name,
+		card_url,
+		bank_url,
+		company_contact_tel,
+		company_research_url,
+		company_sku,
+		company_avg,
+		return_addr,
+		return_mail,
+		return_contact_name,
+		return_contact_tel,
+		buss_id,
+		buss_addr,
+		buss_addr_id,
+		BUSS_DATE,
+		buss_dept_no,
+		buss_tax_regist_id,
+		buss_tax_regist_url,
+		buss_tax_payer_id,
+		buss_tax_cred_url,
+		buss_tax_type,
+		buss_tax_type_id,
+		buss_legal_name,
+		buss_legal_card_id,
+		buss_url,
+		buss_range,
+		bank_username,
+		bank_card_id,
+		bank_addr,
+		bank_addr_id,
+		bank_name,
+		back_status,
+		bank_id,
+		check_status,
+		contract_url,
+		create_time,
+		mod_time,
+		del_flag,
+		shop_trans_fee,
+		is_submit,
+		is_store_index,
+		refuse_content,
+		billing_cycle,
+		store_promise,
+		store_qi,
+		sw_value,
+		store_point,
+		store_balance,
+		service_qq,
+		expiry_time,
+		is_supplier,
+		store_street_sort,
+		store_street_is_show,
+		store_province,
+		store_city,
+		store_county  
+		)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+		#{item.storeId},
+		#{item.thirdPlatformId},
+		#{item.storeName},
+		#{item.storeStatus},
+		#{item.companyCreTime},
+		#{item.companyName},
+		#{item.companyAddr},
+		#{item.companyAddrId},
+		#{item.companyAddrDel},
+		#{item.companyTel},
+		#{item.companyEmpNum},
+		#{item.companyCapital},
+		#{item.companyEmail},
+		#{item.companyType},
+		#{item.companyContactName},
+		#{item.cardUrl},
+		#{item.bankUrl},
+		#{item.companyContactTel},
+		#{item.companyResearchUrl},
+		#{item.companySku},
+		#{item.companyAvg},
+		#{item.returnAddr},
+		#{item.returnMail},
+		#{item.returnContactName},
+		#{item.returnContactTel},
+		#{item.bussId},
+		#{item.bussAddr},
+		#{item.bussAddrId},
+		#{item.bussDate},
+		#{item.bussDeptNo},
+		#{item.bussTaxRegistId},
+		#{item.bussTaxRegistUrl},
+		#{item.bussTaxPayerId},
+		#{item.bussTaxCredUrl},
+		#{item.bussTaxType},
+		#{item.bussTaxTypeId},
+		#{item.bussLegalName},
+		#{item.bussLegalCardId},
+		#{item.bussUrl},
+		#{item.bussRange},
+		#{item.bankUsername},
+		#{item.bankCardId},
+		#{item.bankAddr},
+		#{item.bankAddrId},
+		#{item.bankName},
+		#{item.backStatus},
+		#{item.bankId},
+		#{item.checkStatus},
+		#{item.contractUrl},
+		#{item.createTime},
+		#{item.modTime},
+		#{item.delFlag},
+		#{item.shopTransFee},
+		#{item.isSubmit},
+		#{item.isStoreIndex},
+		#{item.refuseContent},
+		#{item.billingCycle},
+		#{item.storePromise},
+		#{item.storeQi},
+		#{item.swValue},
+		#{item.storePoint},
+		#{item.storeBalance},
+		#{item.serviceQq},
+		#{item.expiryTime},
+		#{item.isSupplier},
+		#{item.storeStreetSort},
+		#{item.storeStreetIsShow},
+		#{item.storeProvince},
+		#{item.storeCity},
+		#{item.storeCounty } 
+			)
+		</foreach>
+	</insert>
+	
+</mapper>

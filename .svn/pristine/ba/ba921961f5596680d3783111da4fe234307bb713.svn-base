@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.authority.mapper.ManagerAuthorityMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.authority.model.ManagerAuthorityKey">
+        <id column="manager_id" property="managerId" jdbcType="BIGINT"/>
+        <id column="authority_id" property="authorityId" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.ylife.authority.model.ManagerAuthorityKey">
+        delete from ysh_enterprise_manager_authority
+        where manager_id = #{managerId,jdbcType=BIGINT}
+        and authority_id = #{authorityId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByManagerId" parameterType="com.ylife.authority.model.ManagerAuthorityKey">
+        delete from ysh_enterprise_manager_authority
+        where manager_id = #{managerId,jdbcType=BIGINT}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.ylife.authority.model.ManagerAuthorityKey">
+        insert into ysh_enterprise_manager_authority (manager_id, authority_id)
+        values (#{managerId,jdbcType=BIGINT}, #{authorityId,jdbcType=BIGINT})
+    </insert>
+
+    <select id="exist" parameterType="com.ylife.authority.model.ManagerAuthorityKey" resultType="java.lang.Boolean">
+        select count(*)
+        from ysh_enterprise_manager_authority
+        where authority_id = #{authorityId,jdbcType=BIGINT}
+        and manager_id = #{managerId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByManagerId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select authority_id,manager_id
+        from ysh_enterprise_manager_authority
+        where
+        manager_id = #{managerId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByAuthorityId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select authority_id,manager_id
+        from ysh_enterprise_manager_authority
+        where
+        authority_id = #{authorityId,jdbcType=BIGINT}
+    </select>
+
+
+
+    <select id="selectByManagerIdForUpdate" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select authority_id,manager_id
+        from ysh_enterprise_manager_authority
+        where
+        manager_id = #{managerId,jdbcType=BIGINT}
+        for update
+    </select>
+
+    <update id="updateAuthorityIdByManagerId">
+        update
+        ysh_enterprise_manager_authority
+        set
+        authority_id = #{authorityId,jdbcType=BIGINT}
+        where
+        manager_id = #{managerId,jdbcType=BIGINT}
+    </update>
+
+    <select id="countByEnterpriseId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT authority_id,designation,characterization,
+        count(*) as amount
+        FROM ysh_enterprise_manager_authority
+        LEFT JOIN ysh_enterprise_authority
+        ON ysh_enterprise_manager_authority.authority_id = ysh_enterprise_authority.id
+        WHERE authority_id IN (
+        SELECT id
+        FROM ysh_enterprise_authority
+        WHERE enterprise_id =(#{enterpriseId,jdbcType=BIGINT}))
+        GROUP BY authority_id
+    </select>
+
+
+
+
+
+
+
+
+</mapper>

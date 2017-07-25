@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.system.mapper.BusinessTypeMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.system.model.BusinessType">
+        <id column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+        <result column="expression" property="expression" jdbcType="VARCHAR"/>
+        <result column="serial_no" property="serialNo" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="enabled" property="enabled" jdbcType="TINYINT"/>
+        <result column="deletable" property="deletable" jdbcType="TINYINT"/>
+        <collection property="params" resultMap="ParamBaseResultMap"/>
+    </resultMap>
+
+    <resultMap id="ParamBaseResultMap" type="com.ylife.system.model.Param">
+        <id column="param_id" property="paramId" jdbcType="INTEGER"/>
+        <result column="param_type" property="paramType" jdbcType="VARCHAR"/>
+        <result column="param_name" property="paramName" jdbcType="VARCHAR"/>
+        <result column="param_serial_no" property="serialNo" jdbcType="INTEGER"/>
+        <result column="required" property="required" jdbcType="TINYINT"/>
+        <result column="param_enabled" property="enabled" jdbcType="TINYINT"/>
+        <result column="param_deletable" property="deletable" jdbcType="TINYINT"/>
+        <collection property="paramValues" resultMap="ParamValueBaseResultMap"/>
+    </resultMap>
+
+    <resultMap id="ParamValueBaseResultMap" type="com.ylife.system.model.ParamValue">
+        <id column="param_value_id" property="paramValueId" jdbcType="INTEGER"/>
+        <result column="param_value_name" property="paramValueName" jdbcType="VARCHAR"/>
+        <result column="param_value" property="paramValue" jdbcType="DECIMAL"/>
+        <result column="value_serial_no" property="serialNo" jdbcType="INTEGER"/>
+        <result column="value_enabled" property="enabled" jdbcType="TINYINT"/>
+        <result column="value_deletable" property="deletable" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        system_business_type.type_id,
+        system_business_type.type_name,
+        system_business_type.expression,
+        system_business_type.serial_no,
+        system_business_type.create_time,
+        system_business_type.modify_time,
+        system_business_type.enabled,
+        system_business_type.deletable
+    </sql>
+
+    <sql id="Base_Param_Column_List">
+        system_param.param_id,
+        system_param.param_type,
+        system_param.param_name,
+        system_param.serial_no as param_serial_no,
+        system_param.required,
+        system_param.enabled as param_enabled,
+        system_param.deletable as param_deletable
+    </sql>
+
+    <sql id="Base_Param_Value_Column_List">
+        system_param_value.param_value_id,
+        system_param_value.param_value_name,
+        system_param_value.param_value,
+        system_param_value.serial_no as value_serial_no,
+        system_param_value.enabled as value_enabled,
+        system_param_value.deletable as value_deletable
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from system_business_type
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from system_business_type
+        where type_id = #{typeId,jdbcType=INTEGER}
+        for update
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_Param_Column_List"/>,
+        <include refid="Base_Param_Value_Column_List"/>
+        from system_business_type
+        left join system_param on
+        system_business_type.type_id = system_param.type_id
+        left join system_param_value on
+        system_param.param_id = system_param_value.param_id
+        order by serial_no,param_serial_no,value_serial_no
+    </select>
+
+    <select id="selectEnabledDetailsByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_Param_Column_List"/>,
+        <include refid="Base_Param_Value_Column_List"/>
+        from system_business_type
+        left join system_param on
+        system_business_type.type_id = system_param.type_id
+        and system_param.enabled = true
+        left join system_param_value on
+        system_param.param_id = system_param_value.param_id
+        and system_param_value.enabled = true
+        where
+        system_business_type.type_id = #{typeId,jdbcType=INTEGER}
+        and system_business_type.enabled = true
+        order by param_serial_no, value_serial_no
+    </select>
+
+    <select id="selectDetailsByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_Param_Column_List"/>,
+        <include refid="Base_Param_Value_Column_List"/>
+        from system_business_type
+        left join system_param on
+        system_business_type.type_id = system_param.type_id
+        left join system_param_value on
+        system_param.param_id = system_param_value.param_id
+        where
+        system_business_type.type_id = #{typeId,jdbcType=INTEGER}
+        order by param_serial_no, value_serial_no
+    </select>
+
+    <select id="selectAllByExpressionNotNull" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from system_business_type
+        where
+        enabled = true
+        and expression is not null
+        order by serial_no
+    </select>
+
+    <select id="selectByNameForUpdate" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from system_business_type
+        where
+        type_name = #{name,jdbcType=VARCHAR}
+        for update
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from system_business_type
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.system.model.BusinessType">
+        insert into system_business_type
+        (type_id, type_name, expression, serial_no, create_time, modify_time, enabled, deletable)
+        values (#{typeId,jdbcType=INTEGER}, #{typeName,jdbcType=VARCHAR},
+        #{expression,jdbcType=VARCHAR}, #{serial_no,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+        #{enabled,jdbcType=TINYINT}, #{deletable,jdbcType=TINYINT})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.system.model.BusinessType" keyProperty="typeId"
+            useGeneratedKeys="true">
+        insert into system_business_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="typeName != null">
+                type_name,
+            </if>
+            <if test="expression != null">
+                expression,
+            </if>
+            <if test="serialNo != null">
+                serial_no,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="deletable != null">
+                deletable,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="expression != null">
+                #{expression,jdbcType=VARCHAR},
+            </if>
+            <if test="serialNo != null">
+                #{serialNo,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="deletable != null">
+                #{deletable,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.system.model.BusinessType">
+        update system_business_type
+        <set>
+            <if test="typeName != null">
+                type_name = #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="expression != null">
+                expression = #{expression,jdbcType=VARCHAR},
+            </if>
+            <if test="serialNo != null">
+                serial_no = #{serialNo,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=TINYINT},
+            </if>
+            <if test="deletable != null">
+                deletable = #{deletable,jdbcType=TINYINT},
+            </if>
+        </set>
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.system.model.BusinessType">
+        update system_business_type
+        set
+        type_name = #{typeName,jdbcType=VARCHAR},
+        expression = #{expression,jdbcType=VARCHAR},
+        serial_no = #{serialNo,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        enabled = #{enabled,jdbcType=TINYINT},
+        deletable = #{deletable,jdbcType=TINYINT}
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </update>
+
+
+</mapper>

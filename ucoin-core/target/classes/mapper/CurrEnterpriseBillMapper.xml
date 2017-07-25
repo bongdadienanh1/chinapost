@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.wealth.mapper.CurrEnterpriseBillMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.wealth.model.CurrEnterpriseBill">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="fee" property="fee" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="send_type" property="sendType" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">id, code, count, fee, create_time, type</sql>
+
+    <select id="selectByEnterpriseId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+       (
+        SELECT
+        id,
+        code,
+        1 AS count,
+        fee,
+        create_time,
+        "上级财富分配" AS type,
+        null as send_type
+        FROM
+        ysh_enterprise_allocation
+        WHERE
+        in_id = #{enterpriseId,jdbcType=INTEGER}
+        ORDER BY
+        create_time DESC
+        LIMIT 0, 15
+        )
+        UNION
+        (
+        SELECT
+        id,
+        code,
+        ucoin_count AS count,
+        fee,
+        create_time,
+        "邮豆发放" AS type,
+        send_type
+        FROM
+        ysh_enterprise_batchgrand
+        WHERE
+        type_id = '${@com.ylife.system.model.BusinessType@TYPE_ID_GRAND}'
+        AND enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        ORDER BY
+        create_time DESC
+        LIMIT 0, 15
+        )
+        UNION
+        (
+        SELECT
+        id,
+        code,
+        ucoin_count AS count,
+        fee,
+        create_time,
+        "邮豆扣减" AS type,
+        send_type
+        FROM
+        ysh_enterprise_batchgrand
+        WHERE
+        type_id = '${@com.ylife.system.model.BusinessType@TYPE_ID_DECUT}'
+        AND enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        ORDER BY
+        create_time DESC
+        LIMIT 0, 15
+        )
+        UNION
+       (
+        select
+        order_id,order_code,
+        1 as count,
+        subsidy_price as fee,
+        pay_time,
+        "网点订单补贴" as type,
+        ""as send_type
+        from np_order
+        where
+        np_order.order_status not in("SUBMITED","CANCELED")
+        and np_order.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+				 <![CDATA[and np_order.subsidy_price > 0 ]]>
+        ORDER BY
+        pay_time DESC
+        LIMIT 0, 15)
+				UNION
+       (
+        select
+        np_back_order.back_order_id,
+				np_back_order.back_order_code,
+        1 as count,
+        np_back_order.back_subsidy_price as fee,
+        np_back_order.back_time,
+        "订单退款返还" as type,
+        ""as send_type
+        from np_back_order
+				left join np_order on np_back_order.order_id = np_order.order_id
+        where
+        <![CDATA[np_back_order.back_subsidy_price >0 ]]>
+        and  np_order.enterprise_id=#{enterpriseId,jdbcType=BIGINT}
+        ORDER BY
+        np_back_order.back_time DESC
+        LIMIT 0, 15)
+        ORDER BY
+        create_time DESC
+        LIMIT 0, 15
+    </select>
+
+  <select id="selectByEnterpriseIdOrderSubsidy" resultMap="BaseResultMap">
+   SELECT
+      order_id as id,
+      order_code as code,
+      1 AS count,
+      subsidy_price AS fee,
+      pay_time as createTime,
+      "网点订单补贴" AS type,
+      "" AS send_type
+   FROM
+       np_order
+   WHERE
+       order_status not in("SUBMITED","CANCELED")
+   AND enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+    <![CDATA[AND subsidy_price > 0]]>
+   <if test="code!=null">
+    and
+      order_code=#{code,jdbcType=BIGINT}
+   </if>
+   <if test="start != null">
+    <![CDATA[
+            and
+            pay_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+   </if>
+   <if test="end != null">
+    <![CDATA[
+            and
+            pay_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+   </if>
+   ORDER BY
+       pay_time DESC
+   <if test="pageable != null">
+    limit
+    #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+   </if>
+  </select>
+
+    <select id="countByEnterpriseIdOrderSubsidy" resultType="java.lang.Integer">
+        select
+        count(*)
+        from np_order
+        where enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+              and  order_status = "RECIEVED"
+              <![CDATA[AND subsidy_price > 0]]>
+        <if test="code!=null">
+            and order_code=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            pay_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            pay_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+    </select>
+
+    <select id="selectByEnterpriseIdBackOrderSubsidy" resultMap="BaseResultMap">
+        SELECT
+        np_back_order.back_order_id as id,
+        np_back_order.back_order_code as code,
+        1 AS count,
+        np_back_order.back_subsidy_price AS fee,
+        np_back_order.back_time as createTime,
+        "订单退款返还" AS type,
+        "" AS send_type
+        FROM
+        np_back_order
+        left join np_order on np_back_order.order_id = np_order.order_id
+        WHERE
+        np_order.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        AND np_back_order.back_subsidy_price > 0
+        <if test="code!=null">
+            and
+            np_back_order.back_order_code=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            np_back_order.back_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            np_back_order.back_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        ORDER BY
+        np_back_order.back_time DESC
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+    <select id="countByEnterpriseIdBackOrderSubsidy" resultType="java.lang.Integer">
+        select
+        count(*)
+        from np_back_order
+        left join np_order on np_back_order.order_id = np_order.order_id
+        where np_order.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+        AND np_back_order.back_subsidy_price > 0
+        <if test="code!=null">
+            and
+            np_back_order.back_order_code=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="start != null">
+            <![CDATA[
+            and
+            np_back_order.back_time >= #{start,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[
+            and
+            np_back_order.back_time <= #{end,jdbcType=VARCHAR}
+            ]]>
+        </if>
+    </select>
+</mapper>

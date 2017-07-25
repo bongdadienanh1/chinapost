@@ -1,0 +1,63 @@
+package com.ylife.chinapost.boss.service;
+
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsBrand;
+
+import java.util.List;
+
+/**
+ * Created by Administrator on 2017/6/30.
+ */
+public interface GoodsBrandBossService {
+	/**
+	 * 商品品牌列表分页
+	 * @param brandName
+	 * @param brandNickname
+	 * @param pageable
+	 * @return
+	 */
+	Page<GoodsBrand> queryBrandByNameOrBrandNickname(String brandName, String brandNickname, Pageable pageable);
+
+	/**
+	 * 添加商品品牌
+	 * @param brandName
+	 * @param brandNickname
+	 * @param brandUrl
+	 * @param brandSort
+	 * @param userName
+	 * @return
+	 */
+	int insertGoodsBrand(String brandName, String brandNickname, String brandUrl , Integer brandSort, String userName);
+
+	/**
+	 * 删除商品品牌
+	 * @param brandId
+	 * @param deleteName
+	 */
+	int deleteGoodsBrand(Long brandId, String deleteName);
+
+	/**
+	 * 修改商品品牌
+	 * @param brandName
+	 * @param brandNickname
+	 * @param brandUrl
+	 * @param brandSort
+	 * @param userName
+	 */
+	int updateGoodsBrad(Long brandId, String brandName, String brandNickname, String brandUrl ,Integer brandSort, String userName);
+
+	/**
+	 * 查询所有商品品牌
+	 * @return
+	 */
+	List<GoodsBrand> queryAllBrand();
+
+	/**
+	 * 查询商品品牌是否可以使用
+	 * @return
+	 */
+	Boolean checkGoodsBrandName(String brandName);
+
+	GoodsBrand queryBrandById(long brandId);
+}

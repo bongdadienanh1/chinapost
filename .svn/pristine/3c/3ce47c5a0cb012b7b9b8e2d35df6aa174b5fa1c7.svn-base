@@ -1,0 +1,86 @@
+$(function(){
+});
+
+/**
+ * 提交添加品牌form
+ */
+var num=0;
+function submitSaveBrandForm() {
+    var brandName=$("#addBrandName").val();
+    if(brandName==''){
+        $("#helpTip").hide();
+    }
+    $("#saveBrandForm input").each(function () {
+        $(this).removeClass("ignore");
+    });
+    $("#saveBrandForm").attr("action","saveBrand.htm");
+    $("#saveBrandForm").attr("target","_self");
+    if(brandName!=null && brandName!=''&&num==0){
+        $.ajax({
+            url:'selectByBrandName.htm?brandName='+brandName+"&CSRFToken="+$("#CSRFToken").val(),
+            success:function(data) {
+                if(data==0) {
+                    num+=1;
+                    //不重复则提交表单
+                    $("#addBrandName").removeClass("error");
+                    $("#helpTip").hide();
+                    $("#saveBrandForm").submit();
+                }else{
+                    //重复错误提示
+                    $("#addBrandName").addClass("error");
+                    $("#helpTip").show();
+                }
+            }
+        });
+    }else{
+        $("#addBrandName").removeClass("error");
+        $("#helpTip").hide();
+        $("#saveBrandForm").submit();
+    }
+}
+
+/**
+ * 提交编辑品牌form
+ */
+function submitUpdateBrandForm() {
+    $("#editBrandForm input").each(function () {
+        $(this).removeClass("ignore");
+    });
+    $("#editBrandForm").attr("action","updateBrand.htm");
+    $("#editBrandForm").attr("target","_self");
+    $("#editBrandForm").submit();
+}
+
+/**
+ * 弹出显示编辑品牌
+ * @param brandId
+ */
+function updateThirdPlatfrom(thirdId) {
+    if(typeof (thirdId) != 'undefined'){
+        $(".add_title").html("编辑平台名称");
+        $.ajax({
+            url:'',
+            success:function(data) {
+                $("#brandName").val(data.brandName);//平台名称
+                $("#brandNickname").val(data.brandNickname);//账号
+                $("#brandUrl").val(data.brandUrl);//密码
+                $("#promIndex"+data.promIndex).click();
+                $("#editBrand").modal("show");
+            }
+        });
+    }
+    else{
+        $(".add_title").html("添加平台");
+        $("#editBrandForm").find("input").val("");
+        $("#editBrand").modal("show");
+    }
+
+}
+
+function showImport() {
+    $("#importBrand").modal("show");
+}
+
+function importBrand() {
+    $("#importGoodsBrandForm").submit();
+}

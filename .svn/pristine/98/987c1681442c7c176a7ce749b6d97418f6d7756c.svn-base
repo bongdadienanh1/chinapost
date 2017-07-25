@@ -1,0 +1,97 @@
+package com.ylife.chinapost.boss.service.impl;
+
+
+import com.ylife.chinapost.boss.service.GoodsBrandBossService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsBrand;
+import com.ylife.goods.service.GoodsBrandService;
+import com.ylife.product.service.GoodsInfoService;
+import com.ylife.utils.Assert;
+import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by Administrator on 2017/6/30.
+ */
+@Service
+public class GoodsBrandBossServiceImpl implements GoodsBrandBossService {
+
+	//注入Service
+	@Resource
+	GoodsBrandService goodsBrandService;
+
+	@Resource
+	GoodsInfoService goodsInfoService;
+
+	//查询商品列表并分页
+	@Override
+	public Page<GoodsBrand> queryBrandByNameOrBrandNickname(String brandName, String brandNickname, Pageable pageable) {
+		return goodsBrandService.queryBrandByNameOrBrandNickname(brandName, brandNickname, pageable);
+	}
+
+	//添加商品品牌信息
+	@Override
+	public int insertGoodsBrand(String brandName, String brandNickname, String brandLogo ,Integer brandSort, String userName) {
+		GoodsBrand goodsBrand = new GoodsBrand();
+		goodsBrand.setBrandName(brandName);
+		if(brandNickname != null) {
+			goodsBrand.setBrandNickname(brandNickname);
+		}
+		if(brandLogo != null) {
+			goodsBrand.setBrandLogo(brandLogo);
+		}
+		goodsBrand.setBrandSort(brandSort);
+		goodsBrand.setBrandCreateName(userName);
+		goodsBrand.setBrandDelflag("0");
+		goodsBrand.setBrandCreateTime(new Date());
+		goodsBrand.setGoodsInfoType("1");
+		return goodsBrandService.insertGoodsBrand(goodsBrand);
+	}
+
+	//删除商品品牌信息
+	@Override
+	public int deleteGoodsBrand(Long brandId, String deleteName) {
+		if(goodsInfoService.countGoodsByBrandId(brandId) != 0) {
+			return 0;
+		}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("brandId", brandId.toString());
+		map.put("del_name", deleteName);
+		return goodsBrandService.deleteGoodsBrand(map);
+	}
+
+	//修改商品品牌信息
+	@Override
+	public int updateGoodsBrand(Long brandId, String brandName, String brandNickname, String brandLogo ,Integer brandSort, String editName) {
+		GoodsBrand goodsBrand = goodsBrandService.queryBrandById(brandId);
+		Assert.notNull(goodsBrand);
+		goodsBrand.setBrandName(brandName);
+		if(brandNickname != null) {
+			goodsBrand.setBrandNickname(brandNickname);
+		}
+		if(brandLogo != null) {
+			goodsBrand.setBrandLogo(brandLogo);
+		}
+		goodsBrand.setBrandSort(brandSort);
+		goodsBrand.setBrandModifiedName(editName);
+		goodsBrand.setBrandModifiedTime(new Date());
+		return goodsBrandService.updateGoodsBrad(goodsBrand);
+
+	}
+
+	//检查商品名是否重复
+	@Override
+	public int selectByBrandName(String brandName) {
+		return goodsBrandService.selectByBrandName(brandName);
+	}
+
+	//根据brandId查询商品
+	@Override
+	public GoodsBrand queryBrandById(long brandId) {
+		return goodsBrandService.queryBrandById(brandId);
+	}
+}

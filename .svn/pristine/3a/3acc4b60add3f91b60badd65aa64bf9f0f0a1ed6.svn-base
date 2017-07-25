@@ -1,0 +1,176 @@
+
+
+
+<#assign bath = request.contextPath>
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link href="${bath}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${bath}/static/css/font-awesome.min.css">
+    <link href="${bath}/static/iconfont/iconfont.css" rel="stylesheet">
+    <link href="${bath}/static/css/summernote.css" rel="stylesheet">
+    <link href="${bath}/static/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="${bath}/static/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 引用头 -->
+<#--<jsp:include page="../page/header.jsp"></jsp:include>-->
+
+<!-- 引用头 -->
+<#include "page/header.ftl"/>
+
+<div class="page_body container-fluid">
+    <div class="row">
+    <#include "page/left.ftl"/>
+
+        <#--<div class="col-lg-20 col-md-19 col-sm-18 main">-->
+            <#--<div class="main_cont">-->
+            <#--<#include "page/breadcrumbs.ftl"/>-->
+
+                <#--<div class="common_data" style="padding-left:20px;">-->
+
+                <#--</div>-->
+
+            <#--</div>-->
+        <#--</div>-->
+    </div>
+</div>
+
+
+<div class="page_body container-fluid">
+    <div class="row">
+    <#--<jsp:include page="../page/left.jsp"></jsp:include>-->
+        <div class="col-lg-20 col-md-19 col-sm-18 main">
+            <div class="main_cont">
+            <#--<jsp:include page="../page/breadcrumbs.jsp"></jsp:include>-->
+
+                <h2 class="main_title">商品分类</h2>
+
+                <div class="cate_set container-fluid mt20">
+
+                    <div class="row">
+                        <input type="hidden" id="CSRFToken" value="${token}"/>
+                        <div class="col-xs-8 cate_set_column">
+                            <div class="cate_set_item">
+                            <#--<%--<div class="cate_set_ctrl">-->
+                            <#--<div class="row">-->
+                            <#--<div class="col-sm-12">-->
+                            <#--<button type="button" class="btn btn-info btn-block round5" onClick="showAddCate()"><span class="glyphicon glyphicon-plus-sign"></span> 新增同级分类</button>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1"></div>-->
+                            <#--<div class="col-sm-11">-->
+                            <#--<button type="button" class="btn btn-info btn-block round5" onClick="showEditCate(1)"><span class="glyphicon glyphicon-edit"></span> 修改当前分类</button>-->
+                            <#--</div>-->
+                            <#--</div>-->
+                            <#--</div>--%>-->
+                                <div class="cate_set_cont">
+                                    <div class="cate_search">
+                                        <input type="hidden" id="parentId0" value="0"/>
+                                        <input type="hidden" id="parentId1"/>
+                                        <input type="text" id="search_name1" class="cate_search_box" placeholder="输入名称查找">
+                                        <a href="javascript:;" onclick="findFirstGoodsCate()"><span class="glyphicon glyphicon-search"></span></a>
+                                    </div>
+                                    <div class="cate_set_list" id="cate_list1">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-8 cate_set_column">
+                            <div class="cate_set_item">
+                            <#--<%--<div class="cate_set_ctrl">-->
+                            <#--<div class="row">-->
+                            <#--<div class="col-sm-12">-->
+                            <#--<button type="button" class="btn btn-info btn-block round5" onClick="showAddCate(0)"><span class="glyphicon glyphicon-plus-sign"></span> 新增同级分类</button>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1"></div>-->
+                            <#--<div class="col-sm-11">-->
+                            <#--<button type="button" class="btn btn-info btn-block round5" onClick="showEditCate(2)"><span class="glyphicon glyphicon-edit"></span> 修改当前分类</button>-->
+                            <#--</div>-->
+                            <#--</div>-->
+                            <#--</div>--%>-->
+                                <div class="cate_set_cont">
+                                    <div class="cate_search">
+                                        <input type="hidden" id="parentId2"/>
+                                        <input type="text" id="search_name2" class="cate_search_box" placeholder="输入名称查找">
+                                        <a href="javascript:;" onclick="findSecondGoodsCate()"><span class="glyphicon glyphicon-search"></span></a>
+                                    </div>
+                                    <div class="cate_set_list" id="cate_list2">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-8 cate_set_column">
+                            <div class="cate_set_item">
+                            <#--<%--  <div class="cate_set_ctrl">-->
+                            <#--<div class="row">-->
+                            <#--<div class="col-sm-12">-->
+                            <#--<button type="button" class="btn btn-info btn-block round5" onClick="showAddCate(1)"><span class="glyphicon glyphicon-plus-sign"></span> 新增同级分类</button>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1"></div>-->
+                            <#--<div class="col-sm-11">-->
+                            <#--<button type="button" class="btn btn-info btn-block round5" onClick="showEditCate(3)"><span class="glyphicon glyphicon-edit"></span> 修改当前分类</button>-->
+                            <#--</div>-->
+                            <#--</div>-->
+                            <#--</div>--%>-->
+                                <div class="cate_set_cont">
+                                    <div class="cate_search">
+                                        <input type="hidden" id="parentId3"/>
+                                        <input type="text" id="search_name3" class="cate_search_box" placeholder="输入名称查找">
+                                        <a href="javascript:;" onclick="findThirdGoodsCate()"><span class="glyphicon glyphicon-search"></span></a>
+                                    </div>
+                                    <div class="cate_set_list" id="cate_list3">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script src="${bath}/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="${bath}/static/js/summernote.min.js"></script>
+<script src="${bath}/static/js/language/summernote-zh-CN.js"></script>
+<script src="${bath}/static/bootstrap/js/bootstrap-select.min.js"></script>
+<script src="${bath}/static/js/common.js"></script>
+<script src="${bath}/static/js/common/common_alert.js"></script>
+<script src="${bath}/static/js/common/common_checked.js"></script>
+<script src="${bath}/static/js/ThirdPlantManage/GoodsCate.js"></script>
+<#--<script src="${bath}/static/js/ThirdPlantManage/PlantGoodsList.js"></script>-->
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,117 @@
+package com.ylife.chinapost.third.controller;
+
+
+import com.ylife.chinapost.third.controller.utils.Constants;
+import com.ylife.chinapost.third.service.GoodsManageService;
+import com.ylife.data.json.message.JsonResponseBean;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.goods.model.GoodsCateVo;
+import com.ylife.goods.service.GoodsBrandService;
+import com.ylife.goods.service.GoodsCateService;
+import com.ylife.inventory.mapper.pojo.GoodsManagerResult;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * Created by XuKai on 2016/4/27.
+ * 商品管理控制器
+ */
+@Controller
+@RequestMapping(value = "/goodsManager", produces = "application/json;charset=utf-8")
+public class GoodsManagerAPIController {
+
+    @Resource
+    private GoodsManageService goodsManageService;
+    @Resource
+    private GoodsCateService goodsCateService;
+    @Resource
+    private GoodsBrandService goodsBrandService;
+
+    @RequestMapping("/getGoodsInfo")
+    @ResponseBody
+    public String getGoodsInfo(@RequestParam(value = "goodsInfoName", required = false) String goodsInfoName,
+                               @RequestParam(value = "goodsInfoItemNo", required = false) String goodsInfoItemNo,
+                               @RequestParam(value = "goodsInfoAdded", required = false) String goodsInfoAdded,
+                               @RequestParam(value = "brandId", required = false) Long brandId,
+                               @RequestParam(value = "typeId", required = false) Long typeId,
+                               @RequestParam(value = "thirdId", required = false) Long thirdId,
+                               @RequestParam(value = "onlineShow", required = false) Boolean onlineShow,
+                               @RequestParam(value = "valetShow",required = false)Boolean valetShow,
+                               @RequestParam(value = "goodsInfoType",required = false)Integer goodsInfoType,
+                               @RequestParam(value = "auditStatus",required = false)String auditStatus,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        goodsInfoName = Constants.nullOrNotBlank(goodsInfoName);
+        goodsInfoItemNo = Constants.nullOrNotBlank(goodsInfoItemNo);
+        goodsInfoAdded = Constants.nullOrNotBlank(goodsInfoAdded);
+        Page<GoodsManagerResult> goodsManagerResultPage = goodsManageService.getGoods(goodsInfoName, goodsInfoItemNo, goodsInfoAdded,brandId, typeId, thirdId,goodsInfoType, onlineShow,valetShow,auditStatus,new Pageable(page, size));
+        return new JsonResponseBean(goodsManagerResultPage).toJson();
+    }
+
+    /**
+     * 根据父分类ID查询子分类集合
+     *
+     * @param catId
+     *            父分类ID {@link Long}
+     * @param cateName
+     *            分类名称
+     * @return 子分类集合{@link List}
+     */
+    @RequestMapping("/queryCateByCatIdAndName")
+    @ResponseBody
+    public String querySonCateByParentIdAndName(Long catId, String cateName) {
+        List<GoodsCateVo> cateVoList = goodsCateService.querySonCateVoByParentIdAndName(catId, cateName);
+        return new JsonResponseBean(cateVoList).toJson();
+    }
+
+
+    @RequestMapping("/queryAllBrands")
+    @ResponseBody
+    public String getAllBrands(){
+        return new JsonResponseBean(goodsBrandService.queryAllBrand()).toJson();
+    }
+
+    @RequestMapping("/queryBrandsByName")
+    @ResponseBody
+    public String getBrandsByName(String brandName){
+        return new JsonResponseBean(goodsBrandService.queryallbrandbyName(brandName)).toJson();
+    }
+
+    /**
+     * 新流程添加商品
+     *
+     */
+    @RequestMapping("/newUploadGood")
+    @ResponseBody
+    public String newUploadGood(String goodsJson,String goodsDetailDesc){
+        this.goodsManageService.saveGoods(goodsJson,goodsDetailDesc);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 修改货品
+     *
+     */
+    @RequestMapping("/updateGoodInfo")
+    @ResponseBody
+    public String updateGoodInfo(String goodsJson,String goodsDetailDesc){
+        this.goodsManageService.updateGoods(goodsJson,goodsDetailDesc);
+        return JsonResponseBean.getSuccessResponse().toJson();
+    }
+
+    /**
+     * 根据货品ID获取货品信息
+     */
+    @RequestMapping("/getGoodsInfoById")
+    @ResponseBody
+    public String getGoodsInfoById(@RequestParam(value = "id", required = true) Long id) {
+        return new JsonResponseBean(goodsManageService.getGoodsInfoById(id)).toJson();
+    }
+
+}

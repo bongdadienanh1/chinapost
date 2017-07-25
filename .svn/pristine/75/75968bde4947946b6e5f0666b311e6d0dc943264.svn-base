@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.client.mapper.SyncMapper" >
+  <resultMap id="BaseResultMap" type="com.ylife.client.bean.Sync" >
+    <result column="sync_function_name" property="syncFunctionName" jdbcType="VARCHAR" />
+    <result column="sync_function_time" property="syncFunctionTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ylife.client.bean.Sync" >
+    insert into ysh_sync (sync_function_name, sync_function_time
+      )
+    values (#{syncFunctionName,jdbcType=VARCHAR}, #{syncFunctionTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ylife.client.bean.Sync" >
+    insert into ysh_sync
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syncFunctionName != null" >
+        sync_function_name,
+      </if>
+      <if test="syncFunctionTime != null" >
+        sync_function_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syncFunctionName != null" >
+        #{syncFunctionName,jdbcType=VARCHAR},
+      </if>
+      <if test="syncFunctionTime != null" >
+        #{syncFunctionTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.client.bean.Sync" >
+        update ysh_sync
+        <set >
+            <if test="syncFunctionTime != null" >
+                sync_function_time = #{syncFunctionTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where sync_function_name = #{syncFunctionName,jdbcType=VARCHAR}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+          *
+        from ysh_sync
+        where sync_function_name = #{syncFunctionName,jdbcType=VARCHAR}
+    </select>
+</mapper>

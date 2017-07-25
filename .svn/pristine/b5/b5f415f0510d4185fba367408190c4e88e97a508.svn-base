@@ -1,0 +1,124 @@
+package com.ylife.chinapost.boss.service.impl;
+
+
+import com.ylife.chinapost.boss.service.ThirdPlatformBossService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.PageImpl;
+import com.ylife.data.page.Pageable;
+import com.ylife.inventory.mapper.pojo.InventoryGoodsResult;
+import com.ylife.utils.ExcelUtil;
+import com.ylife.utils.MyLogger;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.ArrayList;
+
+import com.ylife.thirdplatform.service.ThirdPlatformService;
+import com.ylife.thirdplatform.entity.ThirdPlatformEntity;
+
+@Service(value="thirdPlatformBossService")
+public class ThirdPlatformBossServiceImpl implements ThirdPlatformBossService {
+	/**
+	* 日志
+	* */
+	public static final MyLogger LOGGER = new MyLogger(ThirdPlatformBossServiceImpl.class);
+
+	@Resource(name="thirdPlatformService")
+	private ThirdPlatformService thirdPlatformService;
+
+	/**
+	*
+	* @author  henry
+	* @date 2017-06-30 09:14:43
+	* @see ThirdPlatformBossService#addThirdPlatform(ThirdPlatformEntity thirdPlatformEntity)
+	* @param thirdPlatformEntity
+	* @return int
+	*/
+	public boolean addThirdPlatform(ThirdPlatformEntity thirdPlatformEntity) {
+		return thirdPlatformService.addThirdPlatform(thirdPlatformEntity) > 0?true:false;
+	}
+
+	/**
+	*
+	* @author henry
+	* @date 2017-06-30 09:14:43
+	* @see ThirdPlatformBossService#updateThirdPlatform(ThirdPlatformEntity thirdPlatformEntity)
+	* @param thirdPlatformEntity
+	* @return ResponseEntity
+	*/
+	public boolean updateThirdPlatform(ThirdPlatformEntity thirdPlatformEntity) {
+		return thirdPlatformService.updateThirdPlatform(thirdPlatformEntity) > 0?true:false;
+	}
+	/**
+	*
+	* @author  henry
+	* @date 2017-06-30 09:14:43
+	* @see ThirdPlatformBossService#queryAllThirdPlatform(ThirdPlatformEntity thirdPlatformEntity)
+	* @param thirdPlatformEntity
+	* @return List
+	*/
+	public List<ThirdPlatformEntity> queryAllThirdPlatform(ThirdPlatformEntity thirdPlatformEntity) {
+		return thirdPlatformService.queryAllThirdPlatform(thirdPlatformEntity);
+	}
+	/**
+	*
+	* @author  henry
+	* @date 2017-06-30 09:14:43
+	* @see ThirdPlatformBossService#queryListForPageThirdPlatform(ThirdPlatformEntity thirdPlatformEntity,Pageable pb)
+	* @param thirdPlatformEntity
+	* @param pb
+	* @return Page
+	*/
+	public Page<ThirdPlatformEntity> queryListForPageThirdPlatform(ThirdPlatformEntity thirdPlatformEntity, Pageable pb) {
+		List<ThirdPlatformEntity> list = thirdPlatformService.queryListForPageThirdPlatform(thirdPlatformEntity,pb);
+		int totalElements = thirdPlatformService.queryCountThirdPlatform(thirdPlatformEntity);
+		return new PageImpl<ThirdPlatformEntity>(pb, totalElements, list);
+	}
+	/**
+	*
+	* @author  henry
+	* @date 2017-06-30 09:14:43
+	* @see ThirdPlatformBossService#queryById(Long id)
+	* @param id
+	* @return
+	*/
+	public ThirdPlatformEntity queryById(Long id) {
+		return thirdPlatformService.queryById(id);
+	}
+
+    /**
+    *
+    * @author  henry
+    * @date 2017-06-30 09:14:43
+    * @see ThirdPlatformBossService#exportThirdPlatform(ThirdPlatformEntity thirdPlatformEntity,String ids, HttpServletResponse response)
+    * @param thirdPlatformEntity
+    * @param ids
+    * @param response
+    */
+	public void exportThirdPlatform(ThirdPlatformEntity thirdPlatformEntity,String ids, HttpServletResponse response) {
+		List<ThirdPlatformEntity> exportList = null;
+        List<Object> list = new ArrayList<Object>();
+		if (StringUtils.isEmpty(ids)) {
+			exportList =thirdPlatformService.queryAllThirdPlatform(thirdPlatformEntity);
+		} else {
+			String[] idArray = ids.split(",");
+			List<String> idList = new ArrayList<String>();
+			for(String id : idArray) {
+				idList.add(id);
+			}
+			exportList = thirdPlatformService.queryByIds(idList);
+		}
+		list.addAll(exportList);
+        String[] titleTag = {"平台登录账号","密码","平台类型，0为C店，1为抛单","删除标识（0未删除，1删除）","创建时间","修改时间"};
+        String[] fieldsArr = {"thirdUserName","thirdUserPwd","platformType","deleteFlag","createTime","modifyTime"};
+        try{
+        	ExcelUtil.createReport(list,"ThirdPlatformEntity信息列表",titleTag,fieldsArr,"ThirdPlatformEntity信息列表",response);
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+        }
+	}
+}
+

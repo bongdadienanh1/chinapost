@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="chinapost-boss:war">
+    <output-path>$PROJECT_DIR$/chinapost-boss/target</output-path>
+    <root id="archive" name="chinapost-boss.war">
+      <element id="artifact" artifact-name="chinapost-boss:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,62 @@
+
+<style>
+    .menu_item .menu_body ul li{
+        padding-left:15px;
+    }
+    .sidebar{min-height:427px;}
+    .menu_item .menu_title h4 a{background:#fff;}
+    .menu_item .menu_title h4 a.active{background:#DCE6F0;}
+</style>
+<div class="col-lg-4 col-md-5 col-sm-6 sidebar">
+
+    <div class="menu">
+        <#if flag ==0>
+            <div class="menu_item">
+                <div class="menu_title">
+                    <h4><a href="javascript:;" <#if flag == '0'>class="active"</#if>><span class="glyphicon glyphicon-th"></span> 模板设置</a></h4>
+                </div>
+                <div class="menu_body">
+                    <ul>
+                        <li><a href="queryMobHomePage?flag=0">首页模板</a></li>
+                        <li><a href="queryMobSubject?flag=0">专题模板</a></li>
+                    </ul>
+                </div>
+            </div>
+            <#else >
+                <div class="menu_item">
+                    <div class="menu_title">
+                        <h4><a href="javascript:;" <#if flag == '0'>class="active"</#if>><span class="glyphicon glyphicon-th"></span> 平台管理</a></h4>
+                    </div>
+                    <div class="menu_body">
+                        <ul>
+                            <li><a href="${bath}/ThirdPlatformAdmin/ListPage?flag=1">平台账号管理</a></li>
+                            <li><a href="${bath}/GoodsInfoAdmin/ListPage?flag=1">平台商品管理</a></li>
+                            <li><a href="${bath}/OrderAdmin/ListPage?flag=1">平台订单管理</a></li>
+                            <li><a href="${bath}/BackOrderAdmin/ListPage?flag=1">平台退单管理</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="menu_item">
+                    <div class="menu_title">
+                        <h4><a href="javascript:;" <#if flag == '0'>class="active"</#if>><span class="glyphicon glyphicon-th"></span> 商品管理</a></h4>
+                    </div>
+                    <div class="menu_body">
+                        <ul>
+                            <li><a href="">商品分类</a></li>
+                            <li><a href="${bath}/GoodsSpecAdmin/ListPage?flag=1">商品规格</a></li>
+                            <li><a href="${bath}/GoodsBrand/getGoodsBrand">商品品牌</a></li>
+                        </ul>
+                    </div>
+                </div>
+        </#if>
+    </div>
+        <#--<div class="menu_item">-->
+            <#--<div class="menu_body">-->
+            <#--<ul>-->
+                <#--<li class="active"><a href="queryMobHomePage.htm">首页模板</a></li>-->
+                <#--<li><a href="">专题页模板</a></li>-->
+            <#--</ul>-->
+        <#--</div>-->
+    <#--</div>-->
+
+</div>

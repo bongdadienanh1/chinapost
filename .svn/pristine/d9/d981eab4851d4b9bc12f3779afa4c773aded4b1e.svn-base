@@ -1,0 +1,73 @@
+package com.ylife.payorder.service;
+
+import java.util.List;
+import com.ylife.payorder.entity.PayOrderEntity;
+
+public interface PayOrderService {
+
+    /**
+    * 查询全部PayOrderEntity 不带分页
+    * @author henry
+    * @date 2017-07-05 16:59:50
+    * @param payOrderEntity
+    * @return List<PayOrderEntity>
+	*/
+	List<PayOrderEntity> queryAllPayOrder(PayOrderEntity payOrderEntity);
+
+	/**
+	* 查询全部PayOrderEntity 带分页
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @param payOrderEntity
+	* @param pb
+	* @return List<PayOrderEntity>
+	*/
+	//List<Object> queryListForPagePayOrder(PayOrderEntity payOrderEntity, PageBean pb);
+
+	/**
+	* 查询总数PayOrderEntity
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @param payOrderEntity
+	* @return
+	*/
+	int queryCountPayOrder(PayOrderEntity payOrderEntity);
+
+	/**
+	* 按主键查询PayOrderEntity
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @param id
+	* @return  PayOrderEntity
+	*/
+	PayOrderEntity queryById(Long id);
+
+	/**
+	* @Title: queryByIds
+	* @Description: 根据主键id批量查询数据
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @param ids
+	* @return
+	*/
+	List<PayOrderEntity> queryByIds(List<String> ids);
+
+	/**
+	* 插入PayOrderEntity
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @param payOrderEntity
+	* @return int
+	*/
+	int addPayOrder(PayOrderEntity payOrderEntity);
+
+	/**
+	* 更新PayOrderEntity
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @param payOrderEntity
+	* @return int
+	*/
+	int updatePayOrder(PayOrderEntity payOrderEntity);
+}
+

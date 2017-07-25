@@ -1,0 +1,1310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.inventory.mapper.InventoryBillMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.inventory.model.InventoryBill">
+        <id column="bill_id" property="billId" jdbcType="BIGINT"/>
+        <result column="code" property="code" jdbcType="BIGINT"/>
+        <result column="creator_id" property="creatorId" jdbcType="BIGINT"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="recipient_time" property="recipientTime" jdbcType="TIMESTAMP"/>
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP"/>
+        <result column="stock_time" property="stockTime" jdbcType="TIMESTAMP"/>
+        <result column="current_id" property="currentId" jdbcType="BIGINT"/>
+        <result column="bill_type" property="billType" jdbcType="VARCHAR"/>
+        <result column="bill_status" property="billStatus" jdbcType="VARCHAR"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+        <result column="out_id" property="outId" jdbcType="BIGINT"/>
+        <result column="in_id" property="inId" jdbcType="BIGINT"/>
+        <result column="read_flag" property="readFlag" jdbcType="BOOLEAN"/>
+        <result column="purchase_id" property="purchaseId" jdbcType="BIGINT"/>
+        <association property="tansferInfo" resultMap="TransferInfoResultMap"/>
+        <collection property="items" resultMap="BillItemResultMap"/>
+        <collection property="logs" resultMap="BillLogResultMap"/>
+    </resultMap>
+
+    <resultMap id="MergeResult" type="com.ylife.inventory.mapper.pojo.InventoryMergeGoods">
+        <result column="creator_id" property="enterpriseId" jdbcType="BIGINT"/>
+        <result column="creator_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <association property="items" resultMap="BillItemResultMap"/>
+
+    </resultMap>
+    <resultMap id="warnDay" type="com.ylife.inventory.model.WarnDay">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code"   property="code" jdbcType="BIGINT"/>
+        <result column="goods_info_img_id" property="goodInfoImgId" jdbcType="VARCHAR"/>
+        <result column="goods_info_name" property="goodINfoName" jdbcType="VARCHAR"/>
+        <result column="spec_string" property="remark" jdbcType="VARCHAR"/>
+        <result column="goods_info_item_no" property="goodInfoItemNo" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="DATE"/>
+        <result column="end_warn_day" property="endWarnDay" jdbcType="INTEGER"/>
+        <result column="product_time" property="productTime" jdbcType="DATE"/>
+        <result column="currentAmount" property="currentAmount" jdbcType="INTEGER"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+        <result column="third_name" property="thirdName" jdbcType="VARCHAR"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="catalog" property="catalogs" jdbcType="BIGINT"/>
+        <result column="bill_id" property="billId" jdbcType="BIGINT"/>
+        <result column="bill_type" property="billType" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BillItemResultMap" type="com.ylife.inventory.model.InventoryBillItem">
+        <id column="item_id" property="itemId" jdbcType="BIGINT"/>
+        <result column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="checked_amount" property="checkedAmount" jdbcType="INTEGER"/>
+        <result column="receipt_amount" property="receiptAmount" jdbcType="INTEGER"/>
+        <result column="goods_info_unit" property="goodsInfoUnit" jdbcType="VARCHAR" />
+        <result column="goods_info_pack" property="goodsInfoPack" jdbcType="INTEGER" />
+        <result column="goods_info_settle_price" property="settlePrice" jdbcType="DECIMAL"/>
+        <result column="purchase_price" property="purchasePrice" jdbcType="DECIMAL"/>
+        <result column="product_time" property="productTime" jdbcType="DATE"/>
+        <result column="end_time" property="endTime" jdbcType="DATE"/>
+        <result column="end_warn_day" property="endWarnDay" jdbcType="INTEGER"/>
+        <collection property="info" ofType="com.ylife.inventory.model.InventoryBillItem$ItemGoodsInfo"
+                    resultMap="GoodsInfoResultMap"/>
+        <collection property="warnDay" ofType="com.ylife.inventory.model.WarnDay"
+                    resultMap="warnDay"/>
+    </resultMap>
+
+    <resultMap id="GoodsInfoResultMap" type="com.ylife.inventory.model.InventoryBillItem$ItemGoodsInfo">
+        <id column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT"/>
+        <result column="goods_info_name" property="goodsInfoName" jdbcType="VARCHAR"/>
+        <result column="spec_string" property="specString" jdbcType="VARCHAR"/>
+        <result column="goods_info_item_no" property="goodsInfoItemNo" jdbcType="VARCHAR"/>
+        <result column="goods_info_type" property="goodsInfoType" jdbcType="INTEGER"/>
+        <result column="inventory" property="inventory" jdbcType="INTEGER"/>
+        <result column="available" property="available" jdbcType="INTEGER"/>
+        <result column="third_id" property="thirdId" jdbcType="BIGINT"/>
+        <result column="third_name" property="thirdName" jdbcType="VARCHAR"/>
+        <result column="goods_info_settle_price" property="settlePrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="TransferInfoResultMap" type="com.ylife.inventory.model.InventoryBill$TransferInfo">
+        <result column="in_name" property="inName" jdbcType="VARCHAR"/>
+        <result column="linkman" property="consignMan" jdbcType="VARCHAR"/>
+        <result column="link_mobile" property="consignMobile" jdbcType="VARCHAR"/>
+        <result column="address" property="consignAddress" jdbcType="VARCHAR"/>
+        <result column="out_name" property="outName" jdbcType="VARCHAR"/>
+        <result column="creator_name" property="creatorName" jdbcType="VARCHAR"/>
+        <result column="current_name" property="currentName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BillLogResultMap" type="com.ylife.inventory.model.InventoryBillLog">
+        <id column="log_id" property="logId" jdbcType="BIGINT"/>
+        <result column="log_msg" property="logMsg" jdbcType="VARCHAR"/>
+        <result column="log_action" property="logAction" jdbcType="VARCHAR"/>
+        <result column="log_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="operator_name" property="operatorName" jdbcType="VARCHAR"/>
+        <result column="operator_id" property="operatorId" jdbcType="BIGINT"/>
+        <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        chinapost_inventory_bill.bill_id,
+        chinapost_inventory_bill.parent_id,
+        chinapost_inventory_bill.code,
+        chinapost_inventory_bill.creator_id,
+        chinapost_inventory_bill.create_time,
+        chinapost_inventory_bill.recipient_time,
+        chinapost_inventory_bill.apply_time,
+        chinapost_inventory_bill.current_id,
+        chinapost_inventory_bill.bill_type,
+        chinapost_inventory_bill.bill_status,
+        chinapost_inventory_bill.reason,
+        chinapost_inventory_bill.out_id,
+        chinapost_inventory_bill.in_id,
+        chinapost_inventory_bill.read_flag,
+        chinapost_inventory_bill.purchase_id
+    </sql>
+
+    <sql id="Base_billItem_Column_List">
+        chinapost_inventory_bill_item.item_id,
+        chinapost_inventory_bill_item.goods_info_id,
+        chinapost_inventory_bill_item.amount,
+        chinapost_inventory_bill_item.checked_amount,
+        chinapost_inventory_bill_item.receipt_amount,
+        chinapost_inventory_bill_item.goods_info_pack,
+        chinapost_inventory_bill_item.goods_info_unit,
+        chinapost_inventory_bill_item.purchase_price
+    </sql>
+
+    <sql id="Base_billLog_Column_List">
+        chinapost_inventory_bill_log.log_id,
+        chinapost_inventory_bill_log.log_msg,
+        chinapost_inventory_bill_log.log_action,
+        chinapost_inventory_bill_log.create_time as log_create_time
+    </sql>
+    <select id="selectBillLog" resultMap="BillLogResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_billLog_Column_List"/>,
+        ysh_enterprise_info.enterprise_name,
+        chinapost_inventory_bill_log.operator_id
+        FROM chinapost_inventory_bill_log
+        LEFT JOIN ysh_enterprise_info ON ysh_enterprise_info.enterprise_id=chinapost_inventory_bill_log.operator_id
+        WHERE chinapost_inventory_bill_log.bill_id= #{billId,jdbcType=BIGINT}
+        ORDER  BY chinapost_inventory_bill_log.create_time desc
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectPurchaseIdByBillId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        select
+        purchase_id
+        from chinapost_inventory_bill
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectInventoryBillByPurchaseId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill
+        where purchase_id = #{purchaseId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByPrimaryKeyForUpdate" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill
+        where bill_id = #{billId,jdbcType=BIGINT}
+        for update
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill
+        where code = #{code,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectBillDetailByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>,
+        <include refid="Base_billItem_Column_List"/>,
+        sum(chinapost_inventory_bill_item_detail.receipt_amount) currentAmount,
+        chinapost_inventory_bill_item_detail.product_time,
+        chinapost_inventory_bill_item_detail.end_time,
+        chinapost_inventory_bill_item_detail.end_warn_day,
+        yei5.enterprise_name AS current_name,
+        yei4.enterprise_name AS creator_name,
+
+        yei2.enterprise_name AS in_name,
+        yei2.linkman ,
+        yei2.link_mobile ,
+        yei2.address ,
+        yei1.enterprise_name AS out_name,
+        inter_goods_info.available,
+        inter_goods_info.goods_info_item_no,
+        inter_goods_info.goods_info_name,
+        inter_goods_info.goods_info_type,
+        inter_goods_info.spec_string,
+        inter_goods_info.third_name,
+        inter_goods_info.third_id,
+        inter_goods_info.goods_info_settle_price
+        FROM
+        chinapost_inventory_bill
+        LEFT JOIN chinapost_inventory_bill_item ON chinapost_inventory_bill.bill_id =
+        chinapost_inventory_bill_item.bill_id
+        LEFT JOIN chinapost_inventory_bill_item_detail ON chinapost_inventory_bill_item_detail.item_id=chinapost_inventory_bill_item.item_id
+
+        LEFT JOIN ysh_enterprise_info AS yei5 ON yei5.enterprise_id = chinapost_inventory_bill.current_id
+        LEFT JOIN ysh_enterprise_info AS yei4 ON yei4.enterprise_id = chinapost_inventory_bill.creator_id
+
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = chinapost_inventory_bill.in_id
+        LEFT JOIN ysh_enterprise_info AS yei1 ON yei1.enterprise_id = chinapost_inventory_bill.out_id
+        LEFT JOIN (
+        SELECT
+        np_goods_info.goods_info_id,
+        np_goods_info.goods_info_name,
+        np_goods_info.goods_info_item_no,
+        np_goods_info.goods_info_type,
+        ifnull(np_goods_info.third_name,(select enterprise_name from ysh_enterprise_info where enterprise_id = np_goods_info_enterprise.enterprise_id))third_name,
+        np_goods_info.third_id,
+        IFNULL(np_goods_info.goods_info_settle_price,0) as goods_info_settle_price,
+        ifnull(
+        group_concat(
+        concat(
+        np_goods_spec.spec_name,
+        ":",
+        ifnull(
+        np_goods_spec_detail.spec_detail_name,
+        ""
+        )
+        )
+        ),
+        ""
+        ) AS spec_string,
+        IFNULL(
+        ysh_enterprise_inventory.available,
+        0
+        ) AS available
+        FROM
+        np_goods_info
+        left join np_goods_info_enterprise on np_goods_info_enterprise.goods_info_id = np_goods_info.goods_info_id
+        LEFT JOIN np_goods_info_rele_spec_detail ON np_goods_info_rele_spec_detail.goods_info_id =
+        np_goods_info.goods_info_id
+        LEFT JOIN np_goods_spec ON np_goods_spec.spec_id = np_goods_info_rele_spec_detail.spec_id
+        LEFT JOIN np_goods_spec_detail ON np_goods_spec_detail.spec_detail_id =
+        np_goods_info_rele_spec_detail.spec_detail_id
+        LEFT JOIN ysh_enterprise_inventory ON np_goods_info.goods_info_id = ysh_enterprise_inventory.goods_info_id
+        AND ysh_enterprise_inventory.enterprise_id = (
+        SELECT
+        creator_id
+        FROM
+        chinapost_inventory_bill
+        WHERE
+        bill_id =#{billId,jdbcType=BIGINT}
+        )
+        WHERE
+        np_goods_info.goods_info_id IN (
+        SELECT
+        chinapost_inventory_bill_item.goods_info_id
+        FROM
+        chinapost_inventory_bill_item
+        WHERE
+        chinapost_inventory_bill_item.bill_id = #{billId,jdbcType=BIGINT}
+        )
+        GROUP BY
+        goods_info_id
+        ) AS inter_goods_info ON chinapost_inventory_bill_item.goods_info_id = inter_goods_info.goods_info_id
+        WHERE
+        chinapost_inventory_bill.bill_id = #{billId,jdbcType=BIGINT}
+        GROUP BY chinapost_inventory_bill_item_detail.product_time,chinapost_inventory_bill_item_detail.end_time,
+        chinapost_inventory_bill_item.item_id;
+    </select>
+
+
+    <select id="selectByCreatorId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        yei1.enterprise_name as creator_name,
+        yei2.enterprise_name as current_name
+        from chinapost_inventory_bill
+        left join ysh_enterprise_info as yei1 on yei1.enterprise_id = chinapost_inventory_bill.creator_id
+        left join ysh_enterprise_info as yei2 on yei2.enterprise_id = chinapost_inventory_bill.current_id
+        <where>
+            creator_id = #{creatorId,jdbcType=BIGINT}
+            <if test="code!=null">
+                and
+                chinapost_inventory_bill.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="creatorName!=null">
+                and
+                yei1.enterprise_name like concat(concat('%', #{creatorName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="billType != null">
+                and bill_type = #{billType,jdbcType=VARCHAR}
+            </if>
+            <if test="billStatus != null">
+                and bill_status = #{billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and
+                  chinapost_inventory_bill.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  and
+                  chinapost_inventory_bill.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        order by chinapost_inventory_bill.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByCreatorId" resultType="java.lang.Integer">
+        select
+        count(*)
+        from chinapost_inventory_bill
+        left join ysh_enterprise_info as yei1 on yei1.enterprise_id = chinapost_inventory_bill.creator_id
+        <where>
+            creator_id = #{creatorId,jdbcType=BIGINT}
+            <if test="code!=null">
+                and
+                chinapost_inventory_bill.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="creatorName!=null">
+                and
+                yei1.enterprise_name like concat(concat('%', #{creatorName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="billType != null">
+                and bill_type = #{billType,jdbcType=VARCHAR}
+            </if>
+            <if test="billStatus != null">
+                and bill_status = #{billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and
+                  chinapost_inventory_bill.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  and
+                  chinapost_inventory_bill.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill
+        <where>
+            <if test="model.code != null">
+                code = #{model.code,jdbcType=BIGINT}
+            </if>
+            <if test="model.creatorId != null">
+                and creator_id = #{model.creatorId,jdbcType=BIGINT}
+            </if>
+            <if test="model.createTime != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.recipientTime != null">
+                and recipient_time = #{model.recipientTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.applyTime != null">
+                and apply_time = #{model.applyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.currentId != null">
+                and current_id = #{model.currentId,jdbcType=BIGINT}
+            </if>
+            <if test="model.billType != null">
+                and bill_type = #{model.model.billType,jdbcType=VARCHAR}
+            </if>
+            <if test="model.billStatus != null">
+                and bill_status = #{model.billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="model.reason != null">
+                and reason = #{model.reason,jdbcType=VARCHAR}
+            </if>
+            <if test="model.outId != null">
+                and out_id = #{model.outId,jdbcType=BIGINT}
+            </if>
+            <if test="model.inId != null">
+                and in_id = #{model.inId,jdbcType=BIGINT}
+            </if>
+            <if test="model.readFlag != null">
+                and in_id = #{model.readFlag,jdbcType=BOOLEAN}
+            </if>
+        </where>
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByModel" resultType="java.lang.Integer">
+        select
+        count(*)
+        from chinapost_inventory_bill
+        <where>
+            <if test="model.code != null">
+                code = #{model.code,jdbcType=BIGINT}
+            </if>
+            <if test="model.creatorId != null">
+                and creator_id = #{model.creatorId,jdbcType=BIGINT}
+            </if>
+            <if test="model.createTime != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.recipientTime != null">
+                and recipient_time = #{model.recipientTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.applyTime != null">
+                and apply_time = #{model.applyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.currentId != null">
+                and current_id = #{model.currentId,jdbcType=BIGINT}
+            </if>
+            <if test="model.billType != null">
+                and bill_type = #{model.model.billType,jdbcType=VARCHAR}
+            </if>
+            <if test="model.billStatus != null">
+                and bill_status = #{model.billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="model.reason != null">
+                and reason = #{model.reason,jdbcType=VARCHAR}
+            </if>
+            <if test="model.outId != null">
+                and out_id = #{model.outId,jdbcType=BIGINT}
+            </if>
+            <if test="model.inId != null">
+                and in_id = #{model.inId,jdbcType=BIGINT}
+            </if>
+            <if test="model.readFlag != null">
+                and read_flag = #{model.readFlag,jdbcType=BOOLEAN}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectHandleHistory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        chinapost_inventory_bill_history.operate_time,
+        yei1.enterprise_name as creator_name,
+        yei2.enterprise_name as current_name
+        from chinapost_inventory_bill_history
+        left join chinapost_inventory_bill
+        on chinapost_inventory_bill_history.bill_id = chinapost_inventory_bill.bill_id
+        left join ysh_enterprise_info as yei1 on
+        yei1.enterprise_id = chinapost_inventory_bill.creator_id
+        left join ysh_enterprise_info as yei2 on
+        yei2.enterprise_id = chinapost_inventory_bill.current_id
+        <where>
+            chinapost_inventory_bill_history.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+            <if test="code!=null">
+                and
+                chinapost_inventory_bill.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="creatorName!=null">
+                and
+                yei1.enterprise_name like concat(concat('%', #{creatorName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="billType != null">
+                and bill_type = #{billType,jdbcType=VARCHAR}
+            </if>
+            <if test="billStatus != null">
+                and bill_status = #{billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and
+                  chinapost_inventory_bill.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  and
+                  chinapost_inventory_bill.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        order by chinapost_inventory_bill.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countHandleHistory" resultType="java.lang.Integer">
+        select
+        count(*)
+        from chinapost_inventory_bill_history
+        left join chinapost_inventory_bill on
+        chinapost_inventory_bill_history.bill_id = chinapost_inventory_bill.bill_id
+        left join ysh_enterprise_info on
+        ysh_enterprise_info.enterprise_id = chinapost_inventory_bill.creator_id
+        <where>
+            chinapost_inventory_bill_history.enterprise_id = #{enterpriseId,jdbcType=BIGINT}
+            <if test="code!=null">
+                and
+                chinapost_inventory_bill.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="creatorName!=null">
+                and
+                ysh_enterprise_info.enterprise_name like concat(concat('%', #{creatorName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="billType != null">
+                and bill_type = #{billType,jdbcType=VARCHAR}
+            </if>
+            <if test="billStatus != null">
+                and bill_status = #{billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and
+                  chinapost_inventory_bill.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  and
+                  chinapost_inventory_bill.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectByCurrentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        yei1.enterprise_name as creator_name,
+        yei2.enterprise_name as current_name
+        from chinapost_inventory_bill
+        left join ysh_enterprise_info as yei1 on yei1.enterprise_id = chinapost_inventory_bill.creator_id
+        left join ysh_enterprise_info as yei2 on yei2.enterprise_id = chinapost_inventory_bill.current_id
+        <where>
+            current_id = #{currentId,jdbcType=BIGINT}
+            <if test="code!=null">
+                and
+                chinapost_inventory_bill.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="creatorName!=null">
+                and
+                yei1.enterprise_name like concat(concat('%', #{creatorName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="billType != null">
+                and bill_type = #{billType,jdbcType=VARCHAR}
+            </if>
+            <if test="billStatus != null">
+                and bill_status = #{billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and
+                  chinapost_inventory_bill.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  and
+                  chinapost_inventory_bill.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+        order by chinapost_inventory_bill.create_time desc
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByCurrentId" resultType="java.lang.Integer">
+        select
+        count(*)
+        from chinapost_inventory_bill
+        left join ysh_enterprise_info as yei1 on yei1.enterprise_id = chinapost_inventory_bill.creator_id
+        <where>
+            current_id = #{currentId,jdbcType=BIGINT}
+            <if test="code!=null">
+                and
+                chinapost_inventory_bill.code=#{code,jdbcType=BIGINT}
+            </if>
+            <if test="creatorName!=null">
+                and
+                yei1.enterprise_name like concat(concat('%', #{creatorName,jdbcType=VARCHAR}),'%')
+            </if>
+            <if test="billType != null">
+                and bill_type = #{billType,jdbcType=VARCHAR}
+            </if>
+            <if test="billStatus != null">
+                and bill_status = #{billStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="end!=null">
+                <![CDATA[
+                and
+                  chinapost_inventory_bill.create_time<= #{end,jdbcType=TIMESTAMP}
+                  ]]>
+            </if>
+            <if test="start!=null">
+                <![CDATA[
+                  and
+                  chinapost_inventory_bill.create_time>=#{start,jdbcType=TIMESTAMP}
+            ]]>
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from chinapost_inventory_bill
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.inventory.model.InventoryBill">
+        insert into chinapost_inventory_bill (bill_id, code, creator_id, create_time, current_id, bill_type,
+        bill_status, reason, out_id, in_id,read_flag)
+        values (#{billId,jdbcType=BIGINT}, #{code,jdbcType=BIGINT}, #{creatorId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP}, #{currentId,jdbcType=BIGINT}, #{billType,jdbcType=VARCHAR},
+        #{billStatus,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{outId,jdbcType=BIGINT}, #{inId,jdbcType=BIGINT},#{readFlag,jdbcType=BOOLEAN})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.inventory.model.InventoryBill" keyProperty="billId"
+            useGeneratedKeys="true">
+        insert into chinapost_inventory_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="billId != null">
+                bill_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="recipientTime != null">
+                recipient_time,
+            </if>
+            <if test="applyTime != null">
+                apply_time,
+            </if>
+            <if test="stockTime != null">
+                stock_time,
+            </if>
+            <if test="currentId != null">
+                current_id,
+            </if>
+            <if test="billType != null">
+                bill_type,
+            </if>
+            <if test="billStatus != null">
+                bill_status,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="outId != null">
+                out_id,
+            </if>
+            <if test="inId != null">
+                in_id,
+            </if>
+            <if test="readFlag != null">
+                read_flag,
+            </if>
+            <if test="purchaseId!=null">
+                purchase_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="billId != null">
+                #{billId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recipientTime != null">
+                #{recipientTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="applyTime != null">
+                #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stockTime != null">
+                #{stockTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="currentId != null">
+                #{currentId,jdbcType=BIGINT},
+            </if>
+            <if test="billType != null">
+                #{billType,jdbcType=VARCHAR},
+            </if>
+            <if test="billStatus != null">
+                #{billStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="outId != null">
+                #{outId,jdbcType=BIGINT},
+            </if>
+            <if test="inId != null">
+                #{inId,jdbcType=BIGINT},
+            </if>
+            <if test="readFlag != null">
+                #{readFlag,jdbcType=BOOLEAN},
+            </if>
+            <if test="purchaseId!=null">
+                #{purchaseId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.inventory.model.InventoryBill">
+        update chinapost_inventory_bill
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recipientTime != null">
+               recipient_time = #{model.recipientTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="applyTime != null">
+              apply_time = #{model.applyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="stockTime != null">
+                stock_time = #{model.stockTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="currentId != null">
+                current_id = #{currentId,jdbcType=BIGINT},
+            </if>
+            <if test="billType != null">
+                bill_type = #{billType,jdbcType=VARCHAR},
+            </if>
+            <if test="billStatus">
+                bill_status = #{billStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="outId != null">
+                out_id = #{outId,jdbcType=BIGINT},
+            </if>
+            <if test="inId != null">
+                in_id = #{inId,jdbcType=BIGINT},
+            </if>
+            <if test="readFlag != null">
+                read_flag = #{readFlag,jdbcType=BOOLEAN},
+            </if>
+        </set>
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.inventory.model.InventoryBill">
+        update chinapost_inventory_bill
+        set
+        code = #{code,jdbcType=BIGINT},
+        creator_id = #{creatorId,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        recipient_time = #{recipientTime,jdbcType=TIMESTAMP},
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+        current_id = #{currentId,jdbcType=BIGINT},
+        bill_type = #{billType,jdbcType=VARCHAR},
+        bill_status = #{billStatus,jdbcType=VARCHAR},
+        reason = #{reason,jdbcType=VARCHAR},
+        out_id = #{outId,jdbcType=BIGINT},
+        in_id = #{inId,jdbcType=BIGINT},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        read_flag = #{readFlag,jdbcType=BOOLEAN}
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </update>
+
+    <select id="getBillDataFromReplementBill" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        chinapost_inventory_bill.bill_id,
+        chinapost_inventory_bill.code,
+        chinapost_inventory_bill.creator_id as in_id,
+        chinapost_inventory_bill_item.item_id,
+        chinapost_inventory_bill_item.goods_info_id,
+        chinapost_inventory_bill_item.amount,
+        chinapost_inventory_bill_item.checked_amount,
+        yei2.enterprise_name AS in_name,
+        yei2.linkman,
+        yei2.link_mobile,
+        yei2.address,
+        yei1.enterprise_id as out_id,
+        yei1.enterprise_name AS out_name,
+        inter_goods_info.available,
+        inter_goods_info.goods_info_item_no,
+        inter_goods_info.goods_info_name,
+        inter_goods_info.spec_string,
+        inter_goods_info.third_name,
+        inter_goods_info.third_id,
+        inter_goods_info.goods_info_settle_price
+        FROM
+        chinapost_inventory_bill
+        LEFT JOIN chinapost_inventory_bill_item ON chinapost_inventory_bill.bill_id =
+        chinapost_inventory_bill_item.bill_id
+        LEFT JOIN ysh_enterprise_info AS yei2 ON yei2.enterprise_id = chinapost_inventory_bill.creator_id
+        LEFT JOIN ysh_enterprise_info AS yei1 ON yei1.enterprise_id = #{outId}
+        LEFT JOIN (
+        SELECT
+        np_goods_info.goods_info_id,
+        np_goods_info.goods_info_name,
+        np_goods_info.goods_info_item_no,
+        np_goods_info.third_name,
+        np_goods_info.third_id,
+        IFNULL(np_goods_info.goods_info_settle_price,0) as goods_info_settle_price,
+        ifnull(
+        group_concat(
+        concat(
+        np_goods_spec.spec_name,
+        ":",
+        ifnull(
+        np_goods_spec_detail.spec_detail_name,
+        ""
+        )
+        )
+        ),
+        ""
+        ) AS spec_string,
+        IFNULL(
+        ysh_enterprise_inventory.available,
+        0
+        ) AS available
+        FROM
+        np_goods_info
+        LEFT JOIN np_goods_info_rele_spec_detail ON np_goods_info_rele_spec_detail.goods_info_id =
+        np_goods_info.goods_info_id
+        LEFT JOIN np_goods_spec ON np_goods_spec.spec_id = np_goods_info_rele_spec_detail.spec_id
+        LEFT JOIN np_goods_spec_detail ON np_goods_spec_detail.spec_detail_id =
+        np_goods_info_rele_spec_detail.spec_detail_id
+        LEFT JOIN ysh_enterprise_inventory ON np_goods_info.goods_info_id = ysh_enterprise_inventory.goods_info_id
+        AND ysh_enterprise_inventory.enterprise_id =#{outId}
+        WHERE
+        np_goods_info.goods_info_id IN (
+        SELECT
+        chinapost_inventory_bill_item.goods_info_id
+        FROM
+        chinapost_inventory_bill_item
+        WHERE
+        chinapost_inventory_bill_item.bill_id = #{billId,jdbcType=BIGINT}
+        )
+        GROUP BY
+        goods_info_id
+        ) AS inter_goods_info ON chinapost_inventory_bill_item.goods_info_id = inter_goods_info.goods_info_id
+        WHERE
+        chinapost_inventory_bill.bill_id =#{billId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectBillIdByParentId" resultType="java.lang.Long" parameterType="java.lang.Long">
+      select bill_id from chinapost_inventory_bill where parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectBillSumByBillIds" resultMap="MergeResult">
+        SELECT
+        chinapost_inventory_bill_item.item_id,
+        chinapost_inventory_bill_item.goods_info_id,
+        chinapost_inventory_bill_item.receipt_amount,
+        chinapost_inventory_bill_item.goods_info_pack,
+        chinapost_inventory_bill_item.goods_info_unit,
+        SUM(
+        chinapost_inventory_bill_item.checked_amount
+        ) AS checked_amount,
+        SUM(
+        chinapost_inventory_bill_item.amount
+        ) AS amount,
+        inner_goods.spec_string,
+        inner_goods.goods_info_settle_price,
+        inner_goods.goods_info_id,
+        inner_goods.goods_info_name,
+        inner_goods.goods_info_item_no,
+        inner_goods.goods_info_type,
+        inner_goods.third_name,
+        inner_goods.third_id
+        FROM
+        chinapost_inventory_bill
+        LEFT JOIN chinapost_inventory_bill_item ON chinapost_inventory_bill.bill_id = chinapost_inventory_bill_item.bill_id
+
+        LEFT JOIN (
+        SELECT
+        np_goods_info.goods_info_id,
+        np_goods_info.goods_info_name,
+        np_goods_info.goods_info_item_no,
+        np_goods_info.goods_info_type,
+        np_goods_info.third_name,
+        np_goods_info.third_id,
+        IFNULL(
+        np_goods_info.goods_info_settle_price,
+        0
+        ) AS goods_info_settle_price,
+        ifnull(
+        GROUP_CONCAT(
+        np_goods_spec.spec_name,
+        ':',
+        np_goods_spec_detail.spec_detail_name
+        ),
+        ""
+        ) AS spec_string
+        FROM
+        np_goods_info
+        LEFT JOIN np_goods_info_rele_spec_detail ON np_goods_info_rele_spec_detail.goods_info_id = np_goods_info.goods_info_id
+        LEFT JOIN np_goods_spec ON np_goods_spec.spec_id = np_goods_info_rele_spec_detail.spec_id
+        LEFT JOIN np_goods_spec_detail ON np_goods_spec_detail.spec_detail_id = np_goods_info_rele_spec_detail.spec_detail_id
+        WHERE
+        np_goods_info.goods_info_id IN (
+        SELECT DISTINCT
+        (goods_info_id)
+        FROM
+        chinapost_inventory_bill_item
+        WHERE
+        bill_id IN
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="billIds">
+            #{item}
+        </foreach>
+        )group by np_goods_info.goods_info_id
+        ) AS inner_goods ON inner_goods.goods_info_id = chinapost_inventory_bill_item.goods_info_id
+        WHERE
+        chinapost_inventory_bill.bill_id IN
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="billIds">
+            #{item}
+        </foreach>
+        GROUP BY
+        chinapost_inventory_bill_item.goods_info_id;
+    </select>
+
+    <select id="selectBillDetailByBillIds" resultMap="MergeResult">
+        SELECT
+        chinapost_inventory_bill_item.item_id,
+        chinapost_inventory_bill_item.goods_info_id,
+        chinapost_inventory_bill_item.receipt_amount,
+        chinapost_inventory_bill_item.goods_info_pack,
+        chinapost_inventory_bill_item.goods_info_unit,
+        chinapost_inventory_bill.creator_id,
+        SUM(
+        chinapost_inventory_bill_item.checked_amount
+        ) AS checked_amount,
+        SUM(
+        chinapost_inventory_bill_item.amount
+        ) AS amount,
+        yei4.enterprise_name AS creator_name,
+        inner_goods.spec_string,
+        inner_goods.goods_info_settle_price,
+        inner_goods.goods_info_id,
+        inner_goods.goods_info_name,
+        inner_goods.goods_info_item_no,
+        inner_goods.goods_info_type,
+        inner_goods.third_name,
+        inner_goods.third_id
+        FROM
+        chinapost_inventory_bill
+        LEFT JOIN chinapost_inventory_bill_item ON chinapost_inventory_bill.bill_id = chinapost_inventory_bill_item.bill_id
+
+        LEFT JOIN ysh_enterprise_info AS yei4 ON yei4.enterprise_id = chinapost_inventory_bill.creator_id
+        LEFT JOIN (
+        SELECT
+        np_goods_info.goods_info_id,
+        np_goods_info.goods_info_name,
+        np_goods_info.goods_info_item_no,
+        np_goods_info.goods_info_type,
+        np_goods_info.third_name,
+        np_goods_info.third_id,
+        IFNULL(
+        np_goods_info.goods_info_settle_price,
+        0
+        ) AS goods_info_settle_price,
+        ifnull(
+        GROUP_CONCAT(
+        np_goods_spec.spec_name,
+        ':',
+        np_goods_spec_detail.spec_detail_name
+        ),
+        ""
+        )  AS spec_string
+        FROM
+        np_goods_info
+        LEFT JOIN np_goods_info_rele_spec_detail ON np_goods_info_rele_spec_detail.goods_info_id = np_goods_info.goods_info_id
+        LEFT JOIN np_goods_spec ON np_goods_spec.spec_id = np_goods_info_rele_spec_detail.spec_id
+        LEFT JOIN np_goods_spec_detail ON np_goods_spec_detail.spec_detail_id = np_goods_info_rele_spec_detail.spec_detail_id
+        WHERE
+        np_goods_info.goods_info_id IN (
+        SELECT DISTINCT
+        (goods_info_id)
+        FROM
+        chinapost_inventory_bill_item
+        WHERE
+        bill_id IN
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="billIds">
+            #{item}
+        </foreach>
+        )group by np_goods_info.goods_info_id
+        ) AS inner_goods ON inner_goods.goods_info_id = chinapost_inventory_bill_item.goods_info_id
+        WHERE
+        chinapost_inventory_bill.bill_id IN
+        <foreach item="item" index="index" open="(" separator="," close=")" collection="billIds">
+            #{item}
+        </foreach>
+        GROUP BY
+        chinapost_inventory_bill.creator_id,
+        chinapost_inventory_bill_item.goods_info_id;
+    </select>
+
+    <select id="selectWarnDay" resultMap="warnDay" >
+        select
+        chinapost_inventory_bill.bill_type,
+        chinapost_inventory_bill.bill_id,
+        chinapost_inventory_bill.CODE,
+        np_goods_info.goods_info_img_id,
+        np_goods_info.goods_info_name,
+        np_goods_info.goods_info_id,
+        ysh_enterprise_inventory.inventory,
+        np_goods_info.goods_info_item_no,
+        chinapost_inventory_bill_item_detail.create_time,
+        chinapost_inventory_bill_item_detail.end_time,
+        chinapost_inventory_bill_item_detail.end_warn_day,
+        chinapost_inventory_bill_item_detail.product_time,
+        chinapost_inventory_bill_item_detail.receipt_amount currentAmount,
+        chinapost_inventory_bill_item_detail.id,
+        ysh_enterprise_info.enterprise_name,
+        np_goods_info.third_name,
+        np_goods_brand.brand_name,
+        ysh_enterprise_func.catalog,
+        (
+        SELECT
+        IFNULL(
+        GROUP_CONCAT(
+        concat(
+        np_goods_spec.spec_name,
+        ":",
+        IFNULL(
+        np_goods_spec_detail.spec_detail_name,
+        ""
+        )
+        )
+        ),
+        ""
+        )
+        FROM
+        np_goods_info_rele_spec_detail
+        LEFT JOIN np_goods_spec ON np_goods_spec.spec_id = np_goods_info_rele_spec_detail.spec_id
+        LEFT JOIN np_goods_spec_detail ON np_goods_spec_detail.spec_detail_id = np_goods_info_rele_spec_detail.spec_detail_id
+        WHERE
+        goods_info_id = np_goods_info.goods_info_id
+        ) AS spec_string
+        FROM
+        chinapost_inventory_bill_item_detail
+        LEFT JOIN chinapost_inventory_bill_item ON chinapost_inventory_bill_item.item_id = chinapost_inventory_bill_item_detail.item_id
+        LEFT JOIN chinapost_inventory_bill ON chinapost_inventory_bill.bill_id = chinapost_inventory_bill_item.bill_id
+        LEFT JOIN np_goods_info ON np_goods_info.goods_info_id = chinapost_inventory_bill_item.goods_info_id
+        LEFT JOIN ysh_enterprise_inventory ON ysh_enterprise_inventory.goods_info_id = np_goods_info.goods_info_id AND ysh_enterprise_inventory.enterprise_id = chinapost_inventory_bill.in_id
+        LEFT JOIN np_goods ON np_goods.goods_id = np_goods_info.goods_id
+        LEFT JOIN np_goods_brand ON np_goods_brand.brand_id = np_goods.brand_id
+        LEFT JOIN ysh_enterprise_info ON ysh_enterprise_info.enterprise_id = chinapost_inventory_bill.in_id
+        LEFT JOIN ysh_enterprise_func ON ysh_enterprise_func.id = chinapost_inventory_bill.in_id
+        WHERE
+        (
+        chinapost_inventory_bill.bill_type IN (
+        'INVENTORY_INSTOCK',
+        'INVENTORY_TRANSFER',
+        'PURCHASE_INVENTORY_INSTOCK'
+        )
+        AND chinapost_inventory_bill.bill_status IN (
+        'FINISHED',
+        'PARTIAL_RECEIPT'
+        )
+        )
+        AND ysh_enterprise_inventory.inventory>0
+        AND chinapost_inventory_bill_item_detail.is_visible=1
+        <if test="type == 1 and catalog!=null " >
+                 and
+                    ysh_enterprise_func.catalog=#{catalog,jdbcType=BIGINT}
+        </if>
+
+
+        <if test="type == 2 and maxCatalog!=null and minCatalog!=null " >
+            <![CDATA[
+                 and
+                    ysh_enterprise_func.catalog<=#{maxCatalog,jdbcType=BIGINT}
+                 and
+                 ysh_enterprise_func.catalog>#{minCatalog,jdbcType=BIGINT}
+                 ]]>
+        </if>
+
+        <if test="code!=null">
+            AND
+            chinapost_inventory_bill.`code`=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="goodsInfoItemNo!=null and goodsInfoItemNo!=''">
+            AND
+            np_goods_info.goods_info_item_no=#{goodsInfoItemNo}
+        </if>
+
+        <if test="startDate!=null">
+            <![CDATA[
+                 and
+                    chinapost_inventory_bill_item_detail.create_time>=#{startDate}
+                 ]]>
+        </if>
+
+        <if test="endDate!=null">
+            <![CDATA[
+                 and
+                 chinapost_inventory_bill_item_detail.create_time<#{endDate}
+            ]]>
+        </if>
+        <if test="endStartDate!=null">
+            <![CDATA[
+                 and
+                    chinapost_inventory_bill_item_detail.end_time>=#{endStartDate,jdbcType=TIMESTAMP}
+                 ]]>
+        </if>
+
+        <if test="endEndDate!=null">
+            <![CDATA[
+                 and
+                 chinapost_inventory_bill_item_detail.end_time<#{endEndDate,jdbcType=TIMESTAMP}
+            ]]>
+        </if>
+        <if test="overday==1">
+
+            order by datediff(curdate(),chinapost_inventory_bill_item_detail.end_time)>0 desc,
+            chinapost_inventory_bill_item_detail.end_time desc,
+            chinapost_inventory_bill_item_detail.create_time desc
+
+        </if>
+        <if test="overday==2">
+        <![CDATA[
+                 and
+                 chinapost_inventory_bill_item_detail.end_time is NULL
+
+            ]]>
+    </if>
+        <if test="overday==3 and day!=null">
+            <![CDATA[
+                 and
+                 datediff(curdate(), chinapost_inventory_bill_item_detail.end_time)<=#{day}
+                 and
+                 datediff(curdate(), chinapost_inventory_bill_item_detail.end_time)>0
+                 order by
+                 chinapost_inventory_bill_item_detail.end_time desc
+            ]]>
+        </if>
+
+        <if test="overday==4 and day!=null" >
+            <![CDATA[
+                and
+                datediff(chinapost_inventory_bill_item_detail.end_time,curdate())<#{day}
+                and
+                datediff( chinapost_inventory_bill_item_detail.end_time,curdate())>=0
+                order by chinapost_inventory_bill_item_detail.end_time ASC
+            ]]>
+        </if>
+
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+
+
+    </select>
+
+    <select id="selectWarnDaySum" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1)
+        FROM
+        chinapost_inventory_bill_item_detail
+        LEFT JOIN chinapost_inventory_bill_item ON chinapost_inventory_bill_item.item_id = chinapost_inventory_bill_item_detail.item_id
+        LEFT JOIN chinapost_inventory_bill ON chinapost_inventory_bill.bill_id = chinapost_inventory_bill_item.bill_id
+        LEFT JOIN np_goods_info ON np_goods_info.goods_info_id = chinapost_inventory_bill_item.goods_info_id
+        LEFT JOIN ysh_enterprise_inventory ON ysh_enterprise_inventory.goods_info_id = np_goods_info.goods_info_id AND ysh_enterprise_inventory.enterprise_id = chinapost_inventory_bill.in_id
+        LEFT JOIN np_goods ON np_goods.goods_id = np_goods_info.goods_id
+        LEFT JOIN np_goods_brand ON np_goods_brand.brand_id = np_goods.brand_id
+        LEFT JOIN ysh_enterprise_info ON ysh_enterprise_info.enterprise_id = chinapost_inventory_bill.in_id
+        LEFT JOIN ysh_enterprise_func ON ysh_enterprise_func.id = chinapost_inventory_bill.in_id
+        WHERE
+        (
+        chinapost_inventory_bill.bill_type IN (
+        'INVENTORY_INSTOCK',
+        'INVENTORY_TRANSFER',
+        'PURCHASE_INVENTORY_INSTOCK'
+        )
+        AND chinapost_inventory_bill.bill_status IN (
+        'FINISHED',
+        'PARTIAL_RECEIPT'
+
+        )
+        )
+        AND ysh_enterprise_inventory.inventory>0
+        AND chinapost_inventory_bill_item_detail.is_visible=1
+        <if test="type == 1 and catalog!=null " >
+            and
+            ysh_enterprise_func.catalog=#{catalog,jdbcType=BIGINT}
+        </if>
+
+
+        <if test="type == 2 and maxCatalog!=null and minCatalog!=null " >
+            <![CDATA[
+                 and
+                    ysh_enterprise_func.catalog<=#{maxCatalog,jdbcType=BIGINT}
+                 and
+                 ysh_enterprise_func.catalog>#{minCatalog,jdbcType=BIGINT}
+                 ]]>
+        </if>
+
+        <if test="code!=null">
+            AND
+            chinapost_inventory_bill.`code`=#{code,jdbcType=BIGINT}
+        </if>
+        <if test="goodsInfoItemNo!=null and goodsInfoItemNo!=''">
+            AND
+            np_goods_info.goods_info_item_no=#{goodsInfoItemNo}
+        </if>
+
+        <if test="startDate!=null">
+            <![CDATA[
+                 and
+                    chinapost_inventory_bill_item_detail.create_time>=#{startDate}
+                 ]]>
+        </if>
+
+        <if test="endDate!=null">
+            <![CDATA[
+                 and
+                 chinapost_inventory_bill_item_detail.create_time<#{endDate}
+            ]]>
+        </if>
+        <if test="endStartDate!=null">
+            <![CDATA[
+                 and
+                    chinapost_inventory_bill_item_detail.end_time>=#{endStartDate}
+                 ]]>
+        </if>
+
+        <if test="endEndDate!=null">
+            <![CDATA[
+                 and
+                 chinapost_inventory_bill_item_detail.end_time<#{endEndDate}
+            ]]>
+        </if>
+        <if test="overday==1">
+
+            order by datediff(curdate(),chinapost_inventory_bill_item_detail.end_time)>0 desc,
+            chinapost_inventory_bill_item_detail.end_time desc,
+            chinapost_inventory_bill_item_detail.create_time desc
+
+        </if>
+        <if test="overday==2">
+            <![CDATA[
+                 and
+                 chinapost_inventory_bill_item_detail.end_time is NULL
+
+            ]]>
+        </if>
+        <if test="overday==3 and day!=null">
+            <![CDATA[
+                  and
+                 datediff(curdate(), chinapost_inventory_bill_item_detail.end_time)<=#{day}
+                 and datediff(curdate(), chinapost_inventory_bill_item_detail.end_time)>0
+            ]]>
+        </if>
+
+        <if test="overday==4 and day!=null" >
+            <![CDATA[
+                  and
+                 datediff(chinapost_inventory_bill_item_detail.end_time,curdate())<#{day}
+                and datediff( chinapost_inventory_bill_item_detail.end_time,curdate())>=0
+            ]]>
+        </if>
+
+    </select>
+
+</mapper>

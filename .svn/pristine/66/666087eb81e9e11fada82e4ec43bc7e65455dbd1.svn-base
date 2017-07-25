@@ -1,0 +1,29 @@
+
+<style>
+    .menu_item .menu_body ul li{
+        padding-left:15px;
+    }
+    .sidebar{min-height:427px;}
+    .menu_item .menu_title h4 a{background:#fff;}
+    .menu_item .menu_title h4 a.active{background:#DCE6F0;}
+</style>
+<div class="col-lg-4 col-md-5 col-sm-6 sidebar">
+
+    <div class="menu">
+        <div class="menu_item">
+            <div class="menu_title">
+                <h4><a href="queryMobHomePage.htm" class="active"><img src="#" width="18" height="18" style="margin-top:-3px;"/> 首页模板</a></h4>
+                <h4><a href="queryMobHomePage.htm"><img src="#" width="18" height="18" style="margin-top:-3px;"/> 专题模板</a></h4>
+            </div>
+        </div>
+    </div>
+        <#--<div class="menu_item">-->
+            <#--<div class="menu_body">-->
+            <#--<ul>-->
+                <#--<li class="active"><a href="queryMobHomePage.htm">首页模板</a></li>-->
+                <#--<li><a href="">专题页模板</a></li>-->
+            <#--</ul>-->
+        <#--</div>-->
+    <#--</div>-->
+
+</div>

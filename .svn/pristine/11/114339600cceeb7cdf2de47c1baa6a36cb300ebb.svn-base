@@ -1,0 +1,92 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import com.ylife.goods.model.GoodsProduct;
+import com.ylife.goods.service.GoodsProductService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value = "/GoodsInfoAdmin")
+public class GoodsInfoController  {
+
+	@Resource
+	private GoodsProductService goodsProductService;
+
+
+	/**
+	* GoodsInfoEntity List页面
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView goodsInfoListPage(GoodsProduct goodsProduct, String flag) {
+		return new ModelAndView(returnPath("PlantGoodsList")).addObject("flag",flag);
+	}
+
+	/**
+	* GoodsInfoEntity详细页
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	* */
+	/*@RequestMapping(value = "/EditPage")
+	public ModelAndView goodsInfoEditPage(GoodsInfoEntity goodsInfoEntity) {
+		return new ModelAndView(returnPath("goodsInfoAdd"));
+	}*/
+
+	/**
+	* 查询GoodsInfoEntity
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	* */
+/*	@RequestMapping(value = "/queryById")
+	@ResponseBody
+	public String findGoodsInfoData(String id) {
+		return JSON.toJSONString(goodsInfoBossService.queryById(Long.parseLong(id)));
+	}*/
+
+	/**
+	* 保存或更新GoodsInfo
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	*
+	* */
+/*	@RequestMapping(value = "/saveGoodsInfo")
+	@ResponseBody
+	public String saveGoodsInfoData(GoodsInfoEntity goodsInfoEntity,String ids) {
+		ResponseEntity rs = null;
+		if(goodsInfoEntity!=null){
+			if(goodsInfoEntity.getId()!=null){
+				rs = goodsInfoBossService.updateGoodsInfo(goodsInfoEntity);
+			}else{
+				rs = goodsInfoBossService.addGoodsInfo(goodsInfoEntity);
+			}
+		}
+		return JSON.toJSONString(rs);
+	}*/
+
+	/**
+	* 导出GoodsInfoEntity
+	* @author henry
+	* @date 2017-06-30 16:48:34
+	* @return
+	*/
+/*	@RequestMapping(value = "/exportGoodsInfoExcel")
+	public void exportGoodsInfoExcel(GoodsInfoEntity goodsInfoEntity,String ids,HttpServletResponse response) {
+		goodsInfoBossService.exportGoodsInfo(goodsInfoEntity, ids, response);
+	}*/
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.inventory.mapper.InventoryBillItemMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.inventory.model.InventoryBillItem">
+        <id column="item_id" property="itemId" jdbcType="BIGINT"/>
+        <result column="bill_id" property="billId" jdbcType="BIGINT"/>
+        <result column="goods_info_id" property="goodsInfoId" jdbcType="BIGINT"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="checked_amount" property="checkedAmount" jdbcType="INTEGER"/>
+        <result column="receipt_amount" property="receiptAmount" jdbcType="INTEGER"/>
+        <result column="goods_info_unit" property="goodsInfoUnit" jdbcType="VARCHAR" />
+        <result column="goods_info_pack" property="goodsInfoPack" jdbcType="DECIMAL" />
+        <result column="purchase_price" property="purchasePrice" jdbcType="DECIMAL"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        item_id, bill_id, goods_info_id, amount, checked_amount,receipt_amount,goods_info_unit,goods_info_pack,purchase_price
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill_item
+        where item_id = #{itemId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByBillId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from chinapost_inventory_bill_item
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from chinapost_inventory_bill_item
+        where item_id = #{itemId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByBillId" parameterType="java.lang.Long">
+        delete from chinapost_inventory_bill_item
+        where bill_id = #{billId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.inventory.model.InventoryBillItem">
+        insert into chinapost_inventory_bill_item (item_id, bill_id, goods_info_id, amount, checked_amount,receipt_amount,goods_info_unit,goods_info_pack)
+        values (
+        #{itemId,jdbcType=BIGINT}, #{billId,jdbcType=BIGINT}, #{goodsInfoId,jdbcType=BIGINT},
+        #{amount,jdbcType=INTEGER}, #{checkedAmount,jdbcType=INTEGER}, #{receiptAmount,jdbcType=INTEGER},
+         #{goodsInfoUnit,jdbcType=VARCHAR}, #{goodsInfoPack,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.inventory.model.InventoryBillItem" keyProperty="itemId"
+            useGeneratedKeys="true">
+        insert into chinapost_inventory_bill_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="itemId != null">
+                item_id,
+            </if>
+            <if test="billId != null">
+                bill_id,
+            </if>
+            <if test="goodsInfoId != null">
+                goods_info_id,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="checkedAmount != null">
+                checked_amount,
+            </if>
+            <if test="receiptAmount != null">
+                receipt_amount,
+            </if>
+            <if test="goodsInfoUnit != null">
+                goods_info_unit,
+            </if>
+            <if test="goodsInfoPack != null">
+                goods_info_pack,
+            </if>
+            <if test="purchasePrice != null">
+                purchase_price,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="itemId != null">
+                #{itemId,jdbcType=BIGINT},
+            </if>
+            <if test="billId != null">
+                #{billId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsInfoId != null">
+                #{goodsInfoId,jdbcType=BIGINT},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="checkedAmount != null">
+                #{checkedAmount,jdbcType=INTEGER},
+            </if>
+            <if test="receiptAmount != null">
+                #{receiptAmount,jdbcType=INTEGER},
+            </if>
+            <if test="goodsInfoUnit != null">
+                #{goodsInfoUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsInfoPack != null">
+                #{goodsInfoPack,jdbcType=DECIMAL},
+            </if>
+            <if test="purchasePrice != null">
+                #{purchasePrice,jdbcType=DECIMAL},
+            </if>
+
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.inventory.model.InventoryBillItem">
+        update chinapost_inventory_bill_item
+        <set>
+            <if test="billId != null">
+                bill_id = #{billId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsInfoId != null">
+                goods_info_id = #{goodsInfoId,jdbcType=BIGINT},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=INTEGER},
+            </if>
+            <if test="checkedAmount != null">
+                checked_amount = #{checkedAmount,jdbcType=INTEGER},
+            </if>
+            <if test="receiptAmount != null">
+                receipt_amount = #{receiptAmount,jdbcType=INTEGER},
+            </if>
+            <if test="goodsInfoPack != null">
+                goods_info_pack = #{goodsInfoPack,jdbcType=INTEGER},
+            </if>
+            <if test="goodsInfoUnit != null">
+                goods_info_unit = #{goodsInfoUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="purchasePrice != null">
+                purchase_price = #{purchase_price,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where item_id = #{itemId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.inventory.model.InventoryBillItem">
+        update chinapost_inventory_bill_item
+        <set>
+        <if test="billId != null">
+            bill_id = #{billId,jdbcType=BIGINT},
+        </if>
+        <if test="goodsInfoId != null">
+            goods_info_id = #{goodsInfoId,jdbcType=BIGINT},
+        </if>
+        <if test="amount != null">
+            amount = #{amount,jdbcType=INTEGER},
+        </if>
+        <if test="checkedAmount != null">
+            checked_amount = #{checkedAmount,jdbcType=INTEGER},
+        </if>
+        <if test="receiptAmount != null">
+            receipt_amount = #{receiptAmount,jdbcType=INTEGER},
+        </if>
+        <if test="goodsInfoPack != null">
+            goods_info_pack = #{goodsInfoPack,jdbcType=INTEGER},
+        </if>
+        <if test="goodsInfoUnit != null">
+            goods_info_unit = #{goodsInfoUnit,jdbcType=VARCHAR}
+        </if>
+        </set>
+        where item_id = #{itemId,jdbcType=BIGINT}
+    </update>
+</mapper>

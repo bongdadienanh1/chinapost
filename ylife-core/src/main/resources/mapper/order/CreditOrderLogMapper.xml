@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.order.mapper.CreditOrderLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.order.model.CreditOrderLog">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="back_order_id" property="backOrderId" jdbcType="BIGINT"/>
+        <result column="log_str" property="logStr" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, back_order_id, log_str, create_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from credit_order_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByCreditOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from credit_order_log
+        where back_order_id = #{creditOrderId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from credit_order_log
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.order.model.CreditOrderLog">
+        insert into credit_order_log (id, back_order_id, log_str,
+        create_time)
+        values (#{id,jdbcType=BIGINT}, #{backOrderId,jdbcType=BIGINT}, #{logStr,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.order.model.CreditOrderLog">
+        insert into credit_order_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="backOrderId != null">
+                back_order_id,
+            </if>
+            <if test="logStr != null">
+                log_str,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="backOrderId != null">
+                #{backOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="logStr != null">
+                #{logStr,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.order.model.CreditOrderLog">
+        update credit_order_log
+        <set>
+            <if test="backOrderId != null">
+                back_order_id = #{backOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="logStr != null">
+                log_str = #{logStr,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.order.model.CreditOrderLog">
+        update credit_order_log
+        set back_order_id = #{backOrderId,jdbcType=BIGINT},
+        log_str = #{logStr,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

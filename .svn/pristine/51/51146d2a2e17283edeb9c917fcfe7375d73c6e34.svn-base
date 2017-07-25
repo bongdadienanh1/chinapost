@@ -1,0 +1,188 @@
+package com.ylife.inventory.service;
+
+import com.ylife.data.page.Page;
+import com.ylife.data.page.Pageable;
+import com.ylife.inventory.mapper.pojo.InventoryMergeGoods;
+import com.ylife.inventory.model.BillStatus;
+import com.ylife.inventory.model.BillType;
+import com.ylife.inventory.model.InventoryBill;
+import com.ylife.inventory.model.InventoryPurchaseBillItem;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by InThEnd on 2016/6/14.
+ * 库存事务单据服务
+ */
+public interface InventoryBillService {
+
+    /**
+     * 根据ID获取单据。
+     *
+     * @param id ID
+     */
+    InventoryBill getBillById(long id);
+
+
+    /**
+     * 根据code获取单据。
+     *
+     * @param code 单据编号
+     */
+    InventoryBill getBillByCode(long code);
+
+    /**
+     * 获取创建的单据。
+     *
+     * @param enterpriseId 企业ID
+     */
+    Page<InventoryBill> getCreatedBills(long enterpriseId, Long code, String creatorName, Date start, Date end,BillStatus billStatus,
+                                        BillType billType, Pageable pageable);
+
+    /**
+     * 获取已处理的单据。
+     *
+     * @param enterpriseId 企业ID
+     */
+    Page<InventoryBill> getHandledBills(long enterpriseId, Long code, String creatorName, Date start, Date end,BillStatus billStatus,
+                                        BillType billType, Pageable pageable);
+
+    /**
+     * 获取待处理单据。
+     *
+     * @param enterpriseId 企业ID
+     */
+    Page<InventoryBill> getUnHandleBills(long enterpriseId, Long code, String creatorName, Date start, Date end,
+                                         BillStatus billStatus,
+                                         BillType billType, Pageable pageable);
+
+    /**
+     * 创建单据
+     *
+     * @param creatorId      创建人ID
+     * @param type           单据类型
+     * @param nextOperatorId 下一个操作者ID
+     * @param outId          出库点ID
+     * @param inId           入库点ID
+     * @param reason         申请原因
+     * @param sku            商品SKU
+     */
+    long createBill(long creatorId, BillType type, Long nextOperatorId, Long outId, Long inId,Long applyId, String reason, Map<Long, Integer> sku);
+
+    /**
+     * 批准单据
+     *
+     * @param id             ID
+     * @param nextOperatorId 下一个操作者ID
+     * @param amounts        审核数量
+     */
+    void approveBill(long id, Long nextOperatorId, Map<Long, Integer> amounts);
+
+    /**
+     * 同意单据
+     *
+     * @param id    ID
+     * @param isTop 是否为顶级账号操作
+     * @param sku   商品SKU
+     */
+    void agreeBill(long id, Boolean isTop, Map<Long, Integer> sku);
+
+    /**
+     * 终止单据
+     *
+     * @param id ID
+     */
+    void terminateBill(long id);
+
+    /**
+     * 完成单据
+     *
+     * @param id ID
+     */
+    void finishBill(long id);
+
+    /**
+     * 退回单据
+     *
+     * @param id ID
+     */
+    void backBill(long id);
+
+    /**
+     * 提交单据（报损报溢单经过退回，修改后重新提交。）
+     *
+     * @param id             单据ID
+     * @param nextOperatorId 下一个操作者ID
+     * @param sku            货品SKU
+     */
+    void submitBill(long id, Long nextOperatorId, Map<Long, Integer> sku);
+
+    /**
+     * 发货
+     *
+     * @param id  ID
+     * @param sku 商品SKU
+     */
+    void deliveryBill(long id, Map<Long, Integer> sku);
+
+    /**
+     * 收货
+     *
+     * @param id ID
+     */
+    Boolean receiptBill(long id,Map<Long,Integer> sku);
+
+
+    void updateByPrimaryKeySelective(InventoryBill inventoryBill);
+
+    InventoryBill getBillDataFromReplementBill(Long outId,Long billId);
+
+    /**
+     * 创建合并后的补货单
+     * */
+    long createMergeBill(long creatorId,BillStatus status, List<InventoryMergeGoods> inventoryMergeGoodses,String reason);
+
+    /**
+     * 根据parentId 获取补货单 id
+     * @param parentId
+     * */
+    List<Long> getBillIdByParentId(long parentId);
+
+    /**
+     * 根据补货单 数组Id获取合并单据详情
+     * @param billIds
+     * */
+    List<InventoryMergeGoods> getBillDetailByBillIds(Long[] billIds);
+
+    /**
+     *根据bill数组获取汇总单据汇总信息
+     * @param billIds
+     * @return
+     */
+    List<InventoryMergeGoods> getBillSumByBillIds(Long[] billIds);
+
+    /**
+     * 采购订单生成采购入库单
+     * */
+    void createStorageBill(Map<Long,List<InventoryPurchaseBillItem>> itemMap, Long purchaseId, Long creatorId, String reason);
+
+    /**
+     * 根据采购入库单获取采购订单Id
+     * */
+    Long getPurchaseIdByBillId(long billId);
+
+    /**
+     * 根据采购单id获取采购入库单
+     * */
+    List<InventoryBill> getInventoryBillByPurchaseId(Long purchaseId);
+
+    /**
+     * 采购单强制结算
+     * */
+    void forceFinishBill(Long billId);
+
+    int updateByPrimaryKey(InventoryBill record);
+
+}

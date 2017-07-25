@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="chinapost-enterprise:war">
+    <output-path>$PROJECT_DIR$/chinapost-enterprise/target</output-path>
+    <root id="archive" name="chinapost-enterprise-web.war">
+      <element id="artifact" artifact-name="chinapost-enterprise:war exploded" />
+    </root>
+  </artifact>
+</component>

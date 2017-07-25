@@ -1,0 +1,77 @@
+package com.ylife.chinapost.boss.service.impl;
+
+import com.ylife.chinapost.boss.service.OrderBossService;
+import com.ylife.data.page.Page;
+import com.ylife.data.page.PageImpl;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.Order;
+import com.ylife.order.service.OrderService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * OrderBossServiceImpl.
+ *
+ * @Author henry .
+ * @Create 2017-07-02 16:14.
+ */
+@Service(value="orderBossService")
+public class OrderBossServiceImpl implements OrderBossService{
+
+    @Resource
+    private OrderService orderService;
+
+    /**
+     *
+     * @author  henry
+     * @date 2017-07-02 16:14:43
+     * @see OrderBossService#queryListForPageOrder(Order order, Pageable pb,String status,String createStart,String createEnd,
+            String payStart,String payEnd)
+     * @param order
+     * @param pb
+     * @return Page
+     */
+    public Page<Order> queryListForPageOrder(Order order, Pageable pb,String status,String createStart,String createEnd,
+                                             String payStart,String payEnd) {
+        // 设置查询标识
+        order.setGoodsInfoType("1");
+        return orderService.getOrder(order,null,null,null,createStart,createEnd,payStart,payEnd,orderStatusHandle(status),pb);
+    }
+
+    /**
+     *
+     * @author  henry
+     * @date 2017-07-02 16:14:43
+     * @see OrderBossService#queryById(Long orderId)
+     * @param orderId
+     * @return
+     */
+    public Order queryById(Long orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+    /**
+     * 状态转换
+     * @param status
+     * @return
+     */
+    public static String orderStatusHandle(String status){
+        String orderStatusName = "";
+        if(status == null || "".equals(status) || "1".equals(status)){
+            orderStatusName = null;
+        }else if("2".equals(status)){
+            orderStatusName = "PAYED";
+        }else if("3".equals(status)){
+            orderStatusName = "DELIVERED";
+        }else if("4".equals(status)){
+            orderStatusName = "SUBMITED";
+        }else if("5".equals(status)){
+            orderStatusName = "RECIEVED";
+        }else if("6".equals(status)){
+            orderStatusName = "CANCELED";
+        }
+        return orderStatusName;
+    }
+}

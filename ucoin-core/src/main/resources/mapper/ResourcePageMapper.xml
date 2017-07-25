@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.authority.mapper.ResourcePageMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.authority.model.ResourcePage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="designation" property="designation" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="grade" property="grade" jdbcType="INTEGER"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="characterization" property="characterization" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, designation, url, parent_id, grade, sort, characterization
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_page
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByUrl" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_page
+        where url = #{url,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectParentUrlByUrl" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_page
+        WHERE
+        id IN (
+        SELECT
+        parent_id
+        FROM
+        ysh_enterprise_page
+        WHERE
+        url = #{url,jdbcType=VARCHAR}
+        )
+    </select>
+
+    <select id="selectByParentIdisNull" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_page
+        where parent_id is null
+    </select>
+
+    <select id="selectAllResourcePage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ysh_enterprise_page
+    </select>
+
+    <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_page
+        where
+        parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByAuthorityId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_authority_page
+        left join
+        ysh_enterprise_page
+        on
+        ysh_enterprise_page.id = ysh_enterprise_authority_page.page_id
+        where
+        authority_id = #{authority_id}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from ysh_enterprise_page
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.authority.model.ResourcePage">
+        insert into ysh_enterprise_page (id, designation, url,
+        parent_id, grade, sort,
+        characterization)
+        values (#{id,jdbcType=BIGINT}, #{designation,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+        #{parentId,jdbcType=BIGINT}, #{grade,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
+        #{characterization,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.authority.model.ResourcePage">
+        insert into ysh_enterprise_page
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="designation != null">
+                designation,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="grade != null">
+                grade,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="characterization != null">
+                characterization,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="designation != null">
+                #{designation,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="grade != null">
+                #{grade,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="characterization != null">
+                #{characterization,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.authority.model.ResourcePage">
+        update ysh_enterprise_page
+        <set>
+            <if test="designation != null">
+                designation = #{designation,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="grade != null">
+                grade = #{grade,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="characterization != null">
+                characterization = #{characterization,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.authority.model.ResourcePage">
+        update ysh_enterprise_page
+        set designation = #{designation,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=BIGINT},
+        grade = #{grade,jdbcType=INTEGER},
+        sort = #{sort,jdbcType=INTEGER},
+        characterization = #{characterization,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectTopByAuthorityId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_authority_page
+        left join
+        ysh_enterprise_page
+        on
+        ysh_enterprise_page.id = ysh_enterprise_authority_page.page_id
+        where
+        authority_id = #{authority_id} and parent_id is null
+    </select>
+
+    <select id="selectFormByAuthorityId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        ysh_enterprise_authority_page
+        left join
+        ysh_enterprise_page
+        on
+        ysh_enterprise_page.id = ysh_enterprise_authority_page.page_id
+        where
+        authority_id = #{authority_id} and (parent_id = 14 or parent_id in (select id from ysh_enterprise_page where parent_id = 14))
+    </select>
+</mapper>

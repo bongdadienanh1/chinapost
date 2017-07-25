@@ -1,0 +1,87 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.Order;
+import com.ylife.order.service.OrderService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value = "/OrderAdmin")
+public class OrderController  {
+
+	@Resource
+	private OrderService orderService;
+
+	/**
+	* OrderEntity List页面
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView orderListPage(Order order,String flag,
+									  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+									  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		return new ModelAndView(returnPath("thirdOrderList")).addObject("flag",flag).addObject("order",order)
+				.addObject("pageBean",orderService.getOrder(order,null,null,null,null,null,null,null,new Pageable(page,size)));
+	}
+
+	/**
+	* 查询OrderEntity
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	* */
+/*
+	@RequestMapping(value = "/queryById")
+	@ResponseBody
+	public String findOrderData(String id) {
+		return JSON.toJSONString(orderBossService.queryById(Long.parseLong(id)));
+	}
+*/
+
+	/**
+	* 保存或更新Order
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	*
+	* */
+/*	@RequestMapping(value = "/saveOrder")
+	@ResponseBody
+	public String saveOrderData(OrderEntity orderEntity,String ids) {
+		ResponseEntity rs = null;
+		if(orderEntity!=null){
+			if(orderEntity.getId()!=null){
+				rs = orderBossService.updateOrder(orderEntity);
+			}else{
+				rs = orderBossService.addOrder(orderEntity);
+			}
+		}
+		return JSON.toJSONString(rs);
+	}*/
+
+	/**
+	* 导出OrderEntity
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	* @return
+	*/
+/*	@RequestMapping(value = "/exportOrderExcel")
+	public void exportOrderExcel(OrderEntity orderEntity,String ids,HttpServletResponse response) {
+		orderBossService.exportOrder(orderEntity, ids, response);
+	}*/
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

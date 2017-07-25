@@ -1,0 +1,45 @@
+package com.ylife.thirdplatforminterface.mapper;
+
+import com.ylife.thirdplatforminterface.entity.ThirdPlatformInterfaceEntity;
+
+import java.util.List;
+import java.util.Map;
+
+public interface ThirdPlatformInterfaceMapper{
+
+    /**
+    * 按主键查询ThirdPlatformInterfaceEntity
+    * @author henry
+    * @date 2017-07-19 10:41:20
+    * @param id
+    * @return  ThirdPlatformInterfaceEntity
+    */
+    ThirdPlatformInterfaceEntity queryById(Long id);
+
+    /**
+    * 按thirdId查询ThirdPlatformInterfaceEntity
+    * @author henry
+    * @date 2017-07-19 10:41:20
+    * @param thirdId
+    * @return  ThirdPlatformInterfaceEntity
+    */
+    ThirdPlatformInterfaceEntity queryByThirdId(Long thirdId);
+
+    /**
+    * 插入ThirdPlatformInterfaceEntity
+    * @author henry
+    * @date 2017-07-19 10:41:20
+    * @param thirdPlatformInterfaceEntity
+    * @return int
+    */
+    int addThirdPlatformInterface(ThirdPlatformInterfaceEntity thirdPlatformInterfaceEntity);
+
+    /**
+    * 更新ThirdPlatformInterfaceEntity
+    * @author henry
+    * @date 2017-07-19 10:41:20
+    * @param thirdPlatformInterfaceEntity
+    * @return int
+    */
+    int updateThirdPlatformInterface(ThirdPlatformInterfaceEntity thirdPlatformInterfaceEntity);
+}

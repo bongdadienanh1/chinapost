@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ylife.system.mapper.BusinessTypeHistoryMapper">
+
+    <resultMap id="BaseResultMap" type="com.ylife.system.model.BusinessTypeHistory">
+        <id column="history_id" property="historyId" jdbcType="BIGINT"/>
+        <result column="type_id" property="typeId" jdbcType="BIGINT"/>
+        <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+        <result column="operation" property="operation" jdbcType="VARCHAR"/>
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+        <result column="before_ex" property="beforeEx" jdbcType="VARCHAR"/>
+        <result column="after_ex" property="afterEx" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        business_type_history.history_id,
+        business_type_history.type_id,
+        business_type_history.type_name,
+        business_type_history.operation,
+        business_type_history.note,
+        business_type_history.before_ex,
+        business_type_history.after_ex,
+        business_type_history.operator,
+        business_type_history.date
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from business_type_history
+        where history_id = #{historyId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByTypeIdAndTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from business_type_history left join system_business_type on
+        business_type_history.type_id = system_business_type.type_id
+        <where>
+            <if test="typeId != null">
+                and
+                business_type_history.type_id = #{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and
+                <![CDATA[business_type_history.date>=#{startTime,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="endTime != null">
+                and
+                <![CDATA[business_type_history.date<#{endTime,jdbcType=TIMESTAMP}]]>
+            </if>
+        </where>
+        ORDER BY business_type_history.date DESC, business_type_history.history_id DESC
+        <if test="pageable != null">
+            limit
+            #{pageable.index,jdbcType=BIGINT}, #{pageable.length,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="countByTypeIdAndTime" resultType="java.lang.Integer">
+        select
+        count(*)
+        from business_type_history
+        <where>
+            <if test="typeId != null">
+                and
+                business_type_history.type_id = #{typeId,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                and
+                <![CDATA[business_type_history.date>=#{startTime,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="endTime != null">
+                and
+                <![CDATA[business_type_history.date<#{endTime,jdbcType=TIMESTAMP}]]>
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from business_type_history
+        where history_id = #{historyId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.ylife.system.model.BusinessTypeHistory">
+        insert into business_type_history (history_id, type_id, type_name, operation,
+        note, before_ex, after_ex, operator, date)
+        values (#{historyId,jdbcType=BIGINT}, #{typeId,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR},
+        #{operation,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{beforeEx,jdbcType=VARCHAR},
+        #{afterEx,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ylife.system.model.BusinessTypeHistory" useGeneratedKeys="true"
+            keyProperty="history_id">
+        insert into business_type_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="historyId != null">
+                history_id,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="typeName != null">
+                type_name,
+            </if>
+            <if test="operation != null">
+                operation,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+            <if test="beforeEx != null">
+                before_ex,
+            </if>
+            <if test="afterEx != null">
+                after_ex,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="historyId != null">
+                #{historyId,jdbcType=BIGINT},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="operation != null">
+                #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="beforeEx != null">
+                #{beforeEx,jdbcType=VARCHAR},
+            </if>
+            <if test="afterEx != null">
+                #{afterEx,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ylife.system.model.BusinessTypeHistory">
+        update business_type_history
+        <set>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="typeName != null">
+                type_name = #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="operation != null">
+                operation = #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=VARCHAR},
+            </if>
+            <if test="beforeEx != null">
+                before_ex = #{beforeEx,jdbcType=VARCHAR},
+            </if>
+            <if test="afterEx != null">
+                after_ex = #{afterEx,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where history_id = #{historyId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ylife.system.model.BusinessTypeHistory">
+        update business_type_history
+        set type_id = #{typeId,jdbcType=BIGINT},
+        type_name = #{typeName,jdbcType=VARCHAR},
+        operation = #{operation,jdbcType=VARCHAR},
+        note = #{note,jdbcType=VARCHAR},
+        before_ex = #{beforeEx,jdbcType=VARCHAR},
+        after_ex = #{afterEx,jdbcType=VARCHAR},
+        operator = #{operator,jdbcType=VARCHAR},
+        date = #{date,jdbcType=TIMESTAMP}
+        where history_id = #{historyId,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,80 @@
+package com.ylife.chinapost.boss.controller;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSON;
+import com.ylife.chinapost.boss.service.OrderBossService;
+import com.ylife.chinapost.boss.service.ThirdPlatformBossService;
+import com.ylife.data.page.Pageable;
+import com.ylife.order.model.Order;
+import com.ylife.order.service.OrderService;
+import com.ylife.thirdplatform.entity.ThirdPlatformEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(value = "/OrderAdmin")
+public class OrderController  {
+
+	@Resource
+	private OrderBossService orderBossService;
+	@Resource
+	private ThirdPlatformBossService thirdPlatformBossService;
+
+	/**
+	* OrderEntity List页面
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	*
+	* */
+	@RequestMapping(value = "/ListPage")
+	public ModelAndView orderListPage(Order order,
+									  String createStart,String createEnd, String payStart,String payEnd,
+									  @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+									  @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+		return new ModelAndView(returnPath("thirdOrderList"))
+				.addObject("order",order).addObject("createStart",createStart).addObject("createEnd",createEnd)
+				.addObject("payStart",payStart).addObject("payEnd",payEnd)
+				.addObject("pageBean",orderBossService.queryListForPageOrder(order,new Pageable(page,size),createStart,createEnd,payStart,payEnd));
+	}
+
+	/**
+	* 查询OrderEntity
+	* @author henry
+	* @date 2017-07-01 15:38:16
+	* */
+	@RequestMapping(value = "/queryById", produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String findOrderData(String orderId) {
+		return JSON.toJSONString(orderBossService.queryById(Long.parseLong(orderId)));
+	}
+
+	/**
+	 * 对账表
+	 * @return
+	 */
+	@RequestMapping(value = "/reconciliationList")
+	public ModelAndView reconciliationList(){
+		return new ModelAndView(returnPath("reconciliationList")).addObject("platformList",thirdPlatformBossService.queryAllThirdPlatform(new ThirdPlatformEntity()));
+	}
+
+	@RequestMapping(value = "/exportReconciliation")
+    public void exportReconciliation(HttpServletResponse response){
+
+    }
+
+	/**
+	* 定义
+	*
+	*/
+	private final String MODULE_PATH = "/thirdPlatform/";
+
+	//返回路径
+	private String returnPath(String jspName) {
+		return MODULE_PATH + jspName;
+	}
+}

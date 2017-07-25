@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ylife.thirdplatforminterface.mapper.ThirdPlatformInterfaceMapper">
+
+	<resultMap type="com.ylife.thirdplatforminterface.entity.ThirdPlatformInterfaceEntity"
+		id="BaseResultMap">
+            <id property="id" column="id" />
+			<result property="thirdId" column="third_id" />
+			<result property="merchantId" column="merchant_id" />
+			<result property="merchantKey" column="merchant_key" />
+			<result property="inventoryQuery" column="inventory_query" />
+			<result property="paymentNotice" column="payment_notice" />
+			<result property="merchantRefund" column="merchant_refund" />
+			<result property="merchantSale" column="merchant_sale" />
+			<result property="merchantReturnLogistics" column="merchant_return_logistics" />
+	</resultMap>
+
+	<sql id="ThirdPlatformInterfaceAll_column">
+		thirdplatforminterface.id as id,
+		thirdplatforminterface.third_id as thirdId,
+		thirdplatforminterface.merchant_id as merchantId,
+		thirdplatforminterface.merchant_key as merchantKey,
+		thirdplatforminterface.inventory_query as inventoryQuery,
+		thirdplatforminterface.payment_notice as paymentNotice,
+		thirdplatforminterface.merchant_refund as merchantRefund,
+		thirdplatforminterface.merchant_sale as merchantSale,
+		thirdplatforminterface.merchant_return_logistics as merchantReturnLogistics 
+	</sql>
+
+	<sql id="ThirdPlatformInterfaceAll_where">
+		<where>
+				1=1
+			<if test="id != null and id !=''">
+				AND thirdplatforminterface.id =#{id}
+			</if>
+			<if test="thirdId != null and thirdId !=''">
+				AND thirdplatforminterface.third_id =#{thirdId}
+			</if>
+			<if test="merchantId != null and merchantId !=''">
+				AND thirdplatforminterface.merchant_id =#{merchantId}
+			</if>
+			<if test="merchantKey != null and merchantKey !=''">
+				AND thirdplatforminterface.merchant_key =#{merchantKey}
+			</if>
+			<if test="inventoryQuery != null and inventoryQuery !=''">
+				AND thirdplatforminterface.inventory_query =#{inventoryQuery}
+			</if>
+			<if test="paymentNotice != null and paymentNotice !=''">
+				AND thirdplatforminterface.payment_notice =#{paymentNotice}
+			</if>
+			<if test="merchantRefund != null and merchantRefund !=''">
+				AND thirdplatforminterface.merchant_refund =#{merchantRefund}
+			</if>
+			<if test="merchantSale != null and merchantSale !=''">
+				AND thirdplatforminterface.merchant_sale =#{merchantSale}
+			</if>
+			<if test="merchantReturnLogistics != null and merchantReturnLogistics !=''">
+				AND thirdplatforminterface.merchant_return_logistics =#{merchantReturnLogistics}
+			</if>
+		</where>
+	</sql>
+	<sql id="ThirdPlatformInterfaceAll_table">
+		FROM
+		ysh_third_platform_interface thirdplatforminterface
+	</sql>
+	<!-- 查全部 -->
+	<select id="queryAllThirdPlatformInterface"
+		resultMap="BaseResultMap" parameterType="com.ylife.thirdplatforminterface.entity.ThirdPlatformInterfaceEntity">
+		SELECT
+		<include refid="ThirdPlatformInterfaceAll_column" />
+		<include refid="ThirdPlatformInterfaceAll_table" />
+		<include refid="ThirdPlatformInterfaceAll_where"/>
+	</select>
+	<!-- 查全部分页 -->
+	<select id="queryListForPageThirdPlatformInterface"
+		resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT
+		<include refid="ThirdPlatformInterfaceAll_column" />
+		<include refid="ThirdPlatformInterfaceAll_table" />
+		<include refid="ThirdPlatformInterfaceAll_where"/>
+		<if test="startRowNum != null">
+			Limit #{startRowNum},#{pageSize}
+		</if>
+	</select>
+	<!-- 查数量 -->
+	<select id="queryCountThirdPlatformInterface" resultType="java.lang.Integer" parameterType="com.ylife.thirdplatforminterface.entity.ThirdPlatformInterfaceEntity">
+		SELECT
+		count(1)
+		<include refid="ThirdPlatformInterfaceAll_table" />
+		<include refid="ThirdPlatformInterfaceAll_where"/>
+	</select>
+	<!-- 按主键查询  -->
+	<select id="queryById"	resultMap="BaseResultMap"  parameterType="java.lang.Long">
+		SELECT 
+		<include refid="ThirdPlatformInterfaceAll_column" />
+		<include refid="ThirdPlatformInterfaceAll_table" />
+		WHERE thirdplatforminterface.id =#{id}
+	</select>
+	<!-- 按thirdId查询  -->
+	<select id="queryByThirdId"	resultMap="BaseResultMap"  parameterType="java.lang.Long">
+		SELECT
+		<include refid="ThirdPlatformInterfaceAll_column" />
+		<include refid="ThirdPlatformInterfaceAll_table" />
+		WHERE thirdplatforminterface.third_id =#{thirdId}
+	</select>
+    <!-- 根据主键批量查询 -->
+    <select id="queryByIds"	resultMap="BaseResultMap"  parameterType="java.util.List">
+        SELECT
+        <include refid="ThirdPlatformInterfaceAll_column" />
+        <include refid="ThirdPlatformInterfaceAll_table" />
+        <where>
+            1=1
+            <if test="ids !=null">
+                and id in
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+				#{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+	<!-- 修改  -->
+	<update id="updateThirdPlatformInterface" parameterType="com.ylife.thirdplatforminterface.entity.ThirdPlatformInterfaceEntity">
+		UPDATE
+		ysh_third_platform_interface thirdplatforminterface
+        <trim prefix="set" suffixOverrides=",">
+            <if test="thirdId != null">thirdplatforminterface.third_id =#{thirdId},</if>
+            <if test="merchantId != null">thirdplatforminterface.merchant_id =#{merchantId},</if>
+            <if test="merchantKey != null">thirdplatforminterface.merchant_key =#{merchantKey},</if>
+            <if test="inventoryQuery != null">thirdplatforminterface.inventory_query =#{inventoryQuery},</if>
+            <if test="paymentNotice != null">thirdplatforminterface.payment_notice =#{paymentNotice},</if>
+            <if test="merchantRefund != null">thirdplatforminterface.merchant_refund =#{merchantRefund},</if>
+            <if test="merchantSale != null">thirdplatforminterface.merchant_sale =#{merchantSale},</if>
+            <if test="merchantReturnLogistics != null">thirdplatforminterface.merchant_return_logistics =#{merchantReturnLogistics},</if>
+        </trim>
+        WHERE thirdplatforminterface.id =#{id}
+	</update>
+	<!-- 新增  -->
+	<insert id="addThirdPlatformInterface" parameterType="com.ylife.thirdplatforminterface.entity.ThirdPlatformInterfaceEntity">
+		INSERT INTO ysh_third_platform_interface
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				
+				<if test="thirdId != null">third_id,</if>
+				<if test="merchantId != null">merchant_id,</if>
+				<if test="merchantKey != null">merchant_key,</if>
+				<if test="inventoryQuery != null">inventory_query,</if>
+				<if test="paymentNotice != null">payment_notice,</if>
+				<if test="merchantRefund != null">merchant_refund,</if>
+				<if test="merchantSale != null">merchant_sale,</if>
+				<if test="merchantReturnLogistics != null">merchant_return_logistics</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+				
+				<if test="thirdId != null">#{thirdId},</if>
+				<if test="merchantId != null">#{merchantId},</if>
+				<if test="merchantKey != null">#{merchantKey},</if>
+				<if test="inventoryQuery != null">#{inventoryQuery},</if>
+				<if test="paymentNotice != null">#{paymentNotice},</if>
+				<if test="merchantRefund != null">#{merchantRefund},</if>
+				<if test="merchantSale != null">#{merchantSale},</if>
+				<if test="merchantReturnLogistics != null">#{merchantReturnLogistics}</if>
+        </trim>
+	</insert>
+
+	<!--批量 新增  -->
+	<insert id="addThirdPlatformInterfaces" parameterType="java.util.List">
+		INSERT INTO ysh_third_platform_interface (
+		third_id,
+		merchant_id,
+		merchant_key,
+		inventory_query,
+		payment_notice,
+		merchant_refund,
+		merchant_sale,
+		merchant_return_logistics  
+		)
+		VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+		#{item.thirdId},
+		#{item.merchantId},
+		#{item.merchantKey},
+		#{item.inventoryQuery},
+		#{item.paymentNotice},
+		#{item.merchantRefund},
+		#{item.merchantSale},
+		#{item.merchantReturnLogistics } 
+			)
+		</foreach>
+	</insert>
+	
+</mapper>

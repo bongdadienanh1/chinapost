@@ -1,0 +1,124 @@
+package com.ylife.payorder.service.impl;
+
+
+import com.ylife.payorder.service.PayOrderService;
+import com.ylife.utils.MyLogger;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+import com.ylife.payorder.mapper.PayOrderMapper;
+import com.ylife.payorder.entity.PayOrderEntity;
+
+@Service
+public class PayOrderServiceImpl implements PayOrderService {
+	/**
+	* 日志
+	* */
+	public static final MyLogger LOGGER = new MyLogger(PayOrderServiceImpl.class);
+
+	@Resource
+	private PayOrderMapper payOrderMapper;
+
+	/**
+	*
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @see PayOrderService#queryAllPayOrder(PayOrderEntity payOrderEntity)
+	* @param payOrderEntity
+	* @return List<PayOrderEntity>
+    */
+    public List<PayOrderEntity> queryAllPayOrder(PayOrderEntity payOrderEntity) {
+    	return payOrderMapper.queryAllPayOrder(payOrderEntity);
+    }
+    /**
+    *
+    * @author henry
+    * @date 2017-07-05 16:59:50
+    * @see PayOrderService#queryAllPayOrder(PayOrderEntity payOrderEntity)
+    * @param payOrderEntity
+    * @return List<PayOrderEntity>
+	*/
+	/*public List<Object> queryListForPagePayOrder(PayOrderEntity payOrderEntity, PageBean pb) {
+        Map<String,Object> paramMap = MapUtil.getParamsMap(payOrderEntity);
+        if(pb != null){
+			paramMap.put("startRowNum", pb.getStartRowNum());
+			paramMap.put("pageSize", pb.getEndRowNum());
+        }
+		return payOrderMapper.queryListForPagePayOrder(paramMap);
+	}*/
+	/**
+	*
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @see PayOrderService#queryCountPayOrder(PayOrderEntity payOrderEntity)
+	* @param payOrderEntity
+	* @return int
+	*/
+	public int queryCountPayOrder(PayOrderEntity payOrderEntity) {
+		return payOrderMapper.queryCountPayOrder(payOrderEntity);
+	}
+
+	/**
+	*
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @see PayOrderService#queryById(Long id)
+	* @param id
+	* @return
+	*/
+	public PayOrderEntity queryById(Long id) {
+		return payOrderMapper.queryById(id);
+	}
+		
+	/**
+	*
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @see PayOrderService#queryByIds(List<String> ids)
+	* @param ids
+	* @return List<PayOrderEntity>
+	*/
+	public List<PayOrderEntity> queryByIds(List<String> ids) {
+		return payOrderMapper.queryByIds(ids);
+	}
+
+	/**
+	*
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @see PayOrderService#addPayOrder(PayOrderEntity payOrderEntity)
+	* @param payOrderEntity
+	* @return int
+	*/
+	public int addPayOrder(PayOrderEntity payOrderEntity) {
+		int i = 0;
+		try{
+			i = payOrderMapper.addPayOrder(payOrderEntity);
+		}catch(Exception e){
+			LOGGER.error(e.getMessage());
+		}
+		return i;
+	}
+
+	/**
+	*
+	* @author henry
+	* @date 2017-07-05 16:59:50
+	* @see PayOrderService#updatePayOrder(PayOrderEntity payOrderEntity)
+	* @param payOrderEntity
+	* @return int
+	*/
+	public int updatePayOrder(PayOrderEntity payOrderEntity) {
+		int i = 0;
+		try{
+			i =  payOrderMapper.updatePayOrder(payOrderEntity);
+		}catch(Exception e){
+			LOGGER.error(e.getMessage());
+		}
+		return i;
+	}
+	
+}
+

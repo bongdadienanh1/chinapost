@@ -1,0 +1,320 @@
+
+
+
+
+
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>商城第三方后台-货品管理</title>
+<#assign basePath=request.contextPath />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/third.css?version=${VERSION}"/>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/css/bootstrap.min.css?v=20151016234"/>
+    <link href="http://cdn.bootcss.com/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.min.css?v=20151016234" rel="stylesheet">
+    <link href="${basePath}/static/css/material.css?v=20151016234" rel="stylesheet">
+    <link href="${basePath}/static/css/ripples.css?v=20151016234" rel="stylesheet">
+    <link rel="stylesheet" href="${basePath}/static/css/style.css?version=${VERSION}"/>
+    <link rel="stylesheet" href="${basePath}/static/css/select2.min.css"/>
+    <link rel="stylesheet" href="${basePath}/static/css/bootstrap-datetimepicker.min.css" >
+    <script type="text/javascript" src="${basePath}/static/js/jquery.min.js?v=20151016234"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.1/js/bootstrap.min.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/ripples.min.js?v=20151016234"></script>
+    <script src="${basePath}/static/js/material.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/third.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/goods_vali.js?v=20151016234"></script>
+<#--<script type="text/javascript" src="${basePath}/static/js/goods/thirdgoods.js?v=20170702"></script>-->
+    <script type="text/javascript" src="${basePath}/static/js/goods/thirdOrderList.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/thirdStockOutList.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${basePath}/static/js/goods/newupload.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${basePath}/static/js/artDialog4.1.7/artDialog.source.js?skin=default"></script>
+    <script type="text/javascript" src="${basePath}/static/js/artDialog4.1.7/plugins/iframeTools.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.slimscroll.min.js?v=20151016234"></script>
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/summernote.css?v=20151016234">
+    <script type="text/javascript" src="${basePath}/static/js/summernote.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/summernote-zh-CN.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/jquery.validate.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common/common_alert.js?version=${VERSION}"></script>
+    <script type="text/javascript" src="${basePath}/static/js/common/common_date.js?version=${VERSION}"></script>
+    <script src="${basePath}/static/js/app.js?v=20151016234"></script>
+    <link rel="stylesheet" type="text/css" href="${basePath}/static/css/goodsAdd.css?version=${VERSION}"/>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css?v=20151016234"/>
+    <link rel="stylesheet" href="${basePath}/static/css/bootstrap-chosen.css?v=20151016234"/>
+    <script src="${basePath}/static/js/chosen.jquery.min.js?v=20151016234"></script>
+    <script type="text/javascript" src="${basePath}/static/js/angular.min.js?v=20151016234"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/kindeditor.js"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="${basePath}/static/js/kindeditor/plugins/code/prettify.js"></script>
+    <script src="${basePath}/static/js/select2.min.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <style>
+        .cover{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            opacity:0.3;
+            z-index: 6;
+            display: none;
+        }
+        .coveralert{
+            background: url("${basePath}/images/loading3.gif") no-repeat;
+            height:400px;
+            width: 500px;
+            position: absolute;
+            left: 35%;
+            top: 30%;
+            background-position: center;
+            z-index: 7;
+        }
+    </style>
+</head>
+<body>
+<#--引入头部-->
+<#include "index/indextop.ftl">
+
+<div class="cover">
+    <div class="coveralert">
+
+    </div>
+</div>
+<div class="wp">
+    <input type="hidden" value="${isThirdAuditUsed!''}" id="isThirdAuditUsed"/>
+    <div class="ui-sidebar">
+        <div class="sidebar-nav">
+        <#import "index/indexleft.ftl" as leftmenu>
+        <@leftmenu.leftmenu '${basePath}' />
+        </div>
+    </div>
+
+    <div class="app show_text" style="display: none;"">
+    <div class="app-container">
+        <ol class="breadcrumb">
+            <li>您所在的位置</li>
+            <li>订单管理</li>
+            <li class="active" style="color: #07d;">出库列表</li>
+        </ol>
+    </div>
+    <div class="search-block">
+        <form action="${basePath}/orderManage/getDeliveryOrders" class="searchThirdOrderList" method="post">
+            <input type="hidden" id="page" name="page" value="${pageBean.number}">
+            <div class="filter-groups">
+                <div class="control-group">
+                    <label class="control-label">订单编号：</label>
+                    <div class="controls">
+                        <input class="form-control" value="${orderNo!''}" name="orderNo" onkeyup="value=value.replace(/[^\w\/]/ig,'')" type="text" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">手机号码：</label>
+                    <div class="controls">
+                        <input class="form-control" value="${contactPhone!''}" name="contactPhone" type="text"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">收货人姓名：</label>
+                    <div class="controls">
+                        <input class="form-control" name="receiver" value="${receiver!''}" type="text" />
+                    </div>
+                </div>
+                <div class="control-group lg-group">
+                    <label class="control-label">下单时间：</label>
+                    <div class="controls">
+                        <input type="text" name="createStart" id="createStart" class="form-control sm-input datepicker" value="${createStart!''}" data-provide="datepicker"/>
+                        ~
+                        <input type="text" name="createEnd" id="createEnd" class="form-control sm-input datepicker" value="${createEnd!''}" data-provide="datepicker"/>
+                    </div>
+                </div>
+                <#--<div class="control-group lg-group">-->
+                    <#--<label class="control-label">付款时间：</label>-->
+                    <#--<div class="controls">-->
+                        <#--<input type="text" name="payStart" class="form-control sm-input datepicker" value="${payStart!''}" data-provide="datepicker"/>-->
+                        <#--~-->
+                        <#--<input type="text" name="payEnd" class="form-control sm-input datepicker" value="${payEnd!''}" data-provide="datepicker"/>-->
+                    <#--</div>-->
+                <#--</div>-->
+            </div>
+            <div class="search-operation">
+                <button class="btn btn-primary btn-sm"  onclick="searchOrder()" type="button">查询<i class="glyphicon glyphicon-search"></i></button>
+                <#--<button class="btn btn-default btn-sm"  onclick="resetThirdOrder()"  type="button">重置<i class="glyphicon glyphicon-refresh"></i></button>-->
+            </div>
+        </form>
+    </div>
+    <div class="data_ctrl_brns mt20 clearfix" style="width:800px;">
+        <#--<a class="btn btn-primary btn-xs" style="float;left;" onclick="containerOrderIds(this)" href="javascript:;">批量出库</a>-->
+        <a class="btn btn-primary btn-xs defaultCsv" href="${basePath}/orderManage/exportTemplate">出库模板下载</a>
+        <form id="dataForm" name="dataForm" enctype="multipart/form-data" method="post" >
+            <input id="ImportFileName" class="required" name="fileName" type="file" style="display:none;">
+            <a class="btn btn-primary btn-xs defaultCsv" href="javascript:void(0);" onclick="ImportOrder()">导入数据出库</a>
+        </form>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="active tb_backOrderJj" ><a href="javascript:;">出库列表</a></li>
+    </ul>
+    <div class="cfg-content">
+        <div class="ops-bar"></div>
+        <form class="simple_search" action="<#if map.pb.url??>${map.pb.url}<#else> </#if>" method="post"></form>
+        <form class="high_search" action="<#if map.pb.url??>${map.pb.url}<#else> </#if>" method="post">
+            <table class="table table-bordered orders-table">
+                <thead>
+                <tr>
+                    <#--<th><input type="checkbox" id="check_boxs"/></th>-->
+                    <th width="20%">货品</th>
+                    <th>数量</th>
+                    <th>买家</th>
+                    <th width="10%">下单时间</th>
+                    <th>订单状态</th>
+                <#--<th>出库状态</th>-->
+                    <th>订单金额</th>
+                    <#--<th>结算价</th>-->
+                    <#--<th>操作</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <#if (pageBean.content?size) &gt; 0 >
+                    <#list pageBean.content as order>
+                    <tr class="separation-row">
+                        <td colspan="8"></td>
+                    </tr>
+                    <tr class="header-row">
+                        <td colspan="6">
+                            <p>订单号：${order.orderCode!''}</p>
+                        </td>
+                        <td class="row-ops" colspan="2">
+
+                        </td>
+                    </tr>
+                    <tr class="content-row">
+                        <td class="order-pros">
+                            <#assign goodsCont = 0/>
+                        <#--遍历该订单下面的所有货品的信息-->
+                            <#list order.orderGoodsList as goods>
+                                <a href="javascript:;" title="${goods.goodsInfoName}"><img src="${goods.goodsImg!''}" alt="${goods.goodsInfoName}" width="60" height="60"/></a>
+                                <#assign goodsCont = goodsCont+goods.goodsInfoNum/>
+                            </#list>
+                        </td>
+                        <td>
+                            （${goodsCont!'0'}件）
+                        </td>
+                        <td style="line-height: 20px;">${order.shippingPerson!''}<br/>${order.shippingMobile!''}</td>
+                        <td>${order.payTime?string('yyyy-MM-dd hh:mm:ss')}</td>
+                        <td>
+                        ${order.orderStatus!''}
+                        </td>
+                    <#--判断是店铺入驻商城还是供货商入驻商城的订单-->
+                        <td>${order.orderPrice?string("0.00")}邮豆</td>
+                        <#--<td>-->
+                            <#--<div class="btn-group" style="width: 112px;">-->
+                                <#--<a class="btn btn-primary btn-sm btn_css" href="" style="color: #ffffff">出库</a>-->
+                            <#--</div>-->
+                        <#--</td>-->
+
+                    </tr>
+                    </#list>
+                <#else >
+                    <td colspan="12">
+                        <center>暂无相关订单信息</center>
+                    </td>
+                </#if>
+                </tbody>
+            </table>
+        </form>
+        <div class="footer-operation">
+            <#include "index/searchPag.ftl">
+        </div>
+    <#--<#else>-->
+    <#--<tfoot>-->
+    <#--<tr>-->
+    <#--<td colspan="12">暂无信息~</td>-->
+    <#--</tr>-->
+    <#--</tfoot>-->
+    <#--</#if>-->
+    </div>
+</div>
+</div>
+</div>
+<#--</form>-->
+<#include "common/leftfooter.ftl">
+
+
+<script type="text/javascript" src="${basePath}/static/js/navmenu.js?v=20151016234"></script>
+<script>
+    $(function(){
+        $.material.init();
+        $(".chosen-select").chosen();
+        $(".brandsChosen").chosen();
+        $('.datepicker').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:00',
+            weekStart : 1,
+            autoclose : true,
+            language : 'zh-CN',
+            todayBtn : true,
+            viewSelect : 'hour'
+        });
+        $("#ImportFileName").change(function(){
+            var fileObj = document.getElementById("ImportFileName").files[0]; // 获取文件对象
+            var FileController = "${basePath}/orderManage/importExpress";                    // 接收上传文件的后台地址
+            var data = [];
+            // FormData 对象
+            var form = new FormData();// 可以增加表单数据
+            form.append("file", fileObj);                           // 文件对象
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", FileController, true);
+            // XMLHttpRequest 对象
+            xhr.send(form);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    str = xhr.responseText;
+                    data = JSON.parse(str);
+                    showConfirmAlertTips(data.message,"location.reload()");
+                    return true;
+                }
+                else if (xhr.status == 400) {
+                    $("#imgUpload").val("");
+                    showTipAlert("上传失败");
+                }
+            };
+        })
+    });
+
+    /*用于控制显示div层  先显示头部和左边 稍后在显示里面的内容*/
+    function show(){
+        $(".show_text").fadeOut(1000).fadeIn(1000);
+    }
+    setTimeout("show()",1000);
+
+    function getInputVal(obj){
+        $("#basic-proPack").html($(obj).val()+"/箱");
+    }
+    //搜索
+    function searchOrder(){
+        if(checkEndTime($("#createStart").val(),$("#createEnd").val())){
+            searchData(1)
+        }else {
+            showTipAlert("开始时间不能大于结束时间！");
+        }
+    }
+    //分页
+    function searchData(pageNumber){
+        $(".searchThirdOrderList").attr('action','${basePath}/orderManage/getDeliveryOrders');
+        $("#page").val(pageNumber);
+        $(".searchThirdOrderList").submit();
+    }
+    function ImportOrder(){
+        $("#ImportFileName").click();
+    }
+</script>
+<#--<#import "common/selectindex.ftl" as selectindex>-->
+<#--<@selectindex.selectindex "${n!''}" "${l!''}" />-->
+
+</body>
+</html>
+
+
